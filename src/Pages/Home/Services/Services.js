@@ -2,7 +2,7 @@ import React from 'react';
 
 const Services = () => {
     return (
-        <section className='px-6 md:px-16'>
+        <section className='px-6 md:px-16 max-w-[1440px] mx-auto'>
             <h1 className='text-center font-bold text-gray-900 my-16 text-xl md:text-3xl'>The one link to rule them all</h1>
 
             {/* ----------------service card---------------- */}
@@ -38,7 +38,7 @@ const Services = () => {
 
             {/* -------------------------------- */}
             <div className='grid md:grid-cols-2 items-center gap-8 mt-28 mx-auto'>
-                <img className='' src="https://cdn-f.heylink.me/static/img/works-anywere.gif" alt="" />
+                <img className='h-[500px]' src="https://cdn-f.heylink.me/static/img/works-anywere.gif" alt="" />
                 <div className='text-center md:text-left'>
                     <h1 className='text-gray-900 font-bold text-3xl'>Works Anywhere</h1>
                     <p className='text-xl text-gray-500 font-semibold mt-6'>Share your link on any social or digital platform: Instagram, YouTube, Facebook or TikTok, in messengers or via SMS.</p>

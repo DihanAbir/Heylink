@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DropdownCountries from '../../../components/DropdownCountries/DropdownCountries';
+import logo from '../../../assets/logo/logo.png'
 
 const Navber = () => {
     const [open, setOpen] = useState(false)
     const [dropdown, setDropdown] = useState(false)
+
+    let dropdownRef = useRef();
+
+    useEffect(() => {
+        let handler = (e) => {
+            if (!dropdownRef.current.contains(e.target)) {
+                setDropdown(false);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        }
+
+    });
+
     return (
-        <nav className='py-12 text-white'>
+        <nav ref={dropdownRef} className='py-14 text-white cursor-pointer max-w-[1440px] mx-auto'>
             <section className='flex justify-between items-center md:gap-12 px-3 md:px-8'>
                 <div className='md:flex justify-between items-center md:gap-12 text-xl font-semibold'>
-                    <Link to='/'><h1 className='font-bold md:text-3xl hover:text-sky-500 duration-300 text-md'>Heylink.me</h1></Link>
-                    <Link to='/'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Free Templates</h1></Link>
+                    <Link to='/' className='flex items-center gap-2'>
+                        <img className='w-8' src={logo} alt="" />
+                        <h1 className='font-bold md:text-3xl hover:text-sky-500 duration-300 text-md'>Heylink.me</h1>
+                    </Link>
+                    <Link to='/templates'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Free Templates</h1></Link>
                     <Link to='/'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Services & Help</h1></Link>
                     <Link to='/'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Pricing</h1></Link>
                 </div>
                 <div className='flex justify-between items-center gap-3 md:gap-12 text-xl font-semibold'>
                     <Link to='/'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Dashboard</h1></Link>
-                    <div className='relative'>
+                    <div onClick={() => setDropdown(!dropdown)} className='relative'>
                         <button onClick={() => setDropdown(!dropdown)} className=''>
                             <img className='w-8' src="https://cdn-f.heylink.me/static/img/lang-flags/en.svg" alt="" />
                         </button>
@@ -30,7 +50,9 @@ const Navber = () => {
                     <Link to='/' className='block md:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'><button>Start for free</button></Link>
 
                     {/* medium + device show */}
-                    <Link to='/' className='hidden md:block border-2 border-white hover:text-sky-500 hover:border-sky-500 py-3 px-6 rounded-[50px] duration-300'><button>Start for free</button></Link>
+                    <div className='hidden md:block border-2 border-white hover:text-sky-500 hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
+                        <button><span className='font-bold text-white text-2xl mr-6 inline-block'>> </span> Start for free</button>
+                    </div>
 
                     <div onClick={() => setOpen(!open)} className="w-10 md:hidden text-white">
                         {
@@ -52,7 +74,7 @@ const Navber = () => {
                 <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Login</h1></Link>
             </div>
             {
-                open && <div className={`bg-[#393AA7] min-h-screen flex flex-col gap-4 items-center py-6`}>
+                open && <div onClick={() => setOpen(false)} className={`bg-[#393AA7] min-h-screen flex flex-col gap-4 items-center py-6`}>
                     <div className='bg-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
                         <Link to='/'>Dashboard</Link>
                     </div>

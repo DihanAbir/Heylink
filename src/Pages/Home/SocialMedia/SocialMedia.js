@@ -22,7 +22,7 @@ import img20 from '../../../assets/icons/social-icons/img (20).svg'
 
 const SocialMedia = () => {
     return (
-        <section className='mt-16 px-12'>
+        <section className='mt-16 px-12 max-w-[1440px] mx-auto'>
             {/* ----------------social media Link---------------- */}
             <div>
                 <iframe className='mx-auto my-6 md:w-[980px] md:h-[515px]' width="100%" height="100%" src="https://www.youtube.com/embed/StyoJdAqxBY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
