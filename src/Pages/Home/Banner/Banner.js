@@ -4,9 +4,9 @@ import Navber from '../../Shared/Navber/Navber';
 
 const Banner = () => {
     return (
-        <section className='bg-[#393AA7] min-h-screen px-8'>
+        <section className='bg-[#393AA7] min-h-screen '>
             <Navber />
-            <div className='grid md:grid-cols-3'>
+            <div className='grid md:grid-cols-3 px-8'>
                 <div className='text-white'>
                     <p className='font-bold text-2xl'>LET'S CREATE!</p>
                     <h1 className='font-bold text-6xl'>Just one link for everything</h1>
