@@ -65,7 +65,7 @@ const CountryFlags = () => {
             <div className='flex justify-center bg-gray-100 py-8'>
                 <div className='grid grid-cols-2 md:grid-cols-5 gap-6 max-w-[1440px] mx-auto'>
                     {
-                        flags.map(flag => <div className='flex items-center gap-2 mt-3 mx-8'>
+                        flags.map(flag => <div className='flex items-center gap-2 mt-3 mx-4 md:mx-8'>
                             <img src={flag.img} alt="image" />
                             <div>
                                 <Link to='/' className='font-semibold'>Heylink.me</Link>

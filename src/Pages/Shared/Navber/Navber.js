@@ -1,19 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import DropdownCountries from '../../../components/DropdownCountries/DropdownCountries';
+import DropdownCountries from '../../../components/dropdowns/DropdownCountries';
 import logo from '../../../assets/logo/logo.png'
+import ServicesDropdown from '../../../components/dropdowns/ServicesDropdown';
 
 const Navber = () => {
     const [open, setOpen] = useState(false)
     const [dropdown, setDropdown] = useState(false)
+    const [viewServices, setViewServices] = useState(false)
 
     let dropdownRef = useRef();
+    let viewServicesRef = useRef();
 
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
                 setDropdown(false);
+                setViewServices(false);
             }
         };
         document.addEventListener("mousedown", handler);
@@ -31,12 +35,27 @@ const Navber = () => {
                         <img className='w-8' src={logo} alt="" />
                         <h1 className='font-bold md:text-3xl hover:text-sky-500 duration-300 text-md'>Heylink.me</h1>
                     </Link>
-                    <Link to='/templates'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Free Templates</h1></Link>
-                    <Link to='/'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Services & Help</h1></Link>
-                    <Link to='/'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Pricing</h1></Link>
+
+                    <Link to='/templates'>
+                        <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Free Templates</h1>
+                    </Link>
+
+                    {/* -----------services route click to view services dropdown----------- */}
+                    <div onClick={() => setViewServices(!viewServices)} className='relative'>
+                        <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Services & Help</h1>
+                        {
+                            viewServices && <ServicesDropdown />
+                        }
+                    </div>
+
+                    <Link to='/pricing'>
+                        <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Pricing</h1>
+                    </Link>
                 </div>
+
+                {/* -----------language dropdown----------- */}
                 <div className='flex justify-between items-center gap-3 md:gap-12 text-xl font-semibold'>
-                    <Link to='/'><h1 className='hidden md:block hover:text-sky-500 duration-300'>Dashboard</h1></Link>
+                    <Link to='/'><h1 className='hidden lg:block hover:text-sky-500 duration-300'>Dashboard</h1></Link>
                     <div onClick={() => setDropdown(!dropdown)} className='relative'>
                         <button onClick={() => setDropdown(!dropdown)} className=''>
                             <img className='w-8' src="https://cdn-f.heylink.me/static/img/lang-flags/en.svg" alt="" />
@@ -47,14 +66,15 @@ const Navber = () => {
                     </div>
 
                     {/* only small device show */}
-                    <Link to='/' className='block md:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'><button>Start for free</button></Link>
+                    <Link to='/' className='block lg:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'><button>Start for free</button></Link>
 
                     {/* medium + device show */}
-                    <div className='hidden md:block border-2 border-white hover:text-sky-500 hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
-                        <button><span className='font-bold text-white text-2xl mr-6 inline-block'>> </span> Start for free</button>
+                    <div className='hidden lg:block border-2 border-white hover:text-sky-500 hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
+                        <button><span className='font-bold text-white text-2xl mr-6 inline-block'>{'>'} </span> Start for free</button>
                     </div>
 
-                    <div onClick={() => setOpen(!open)} className="w-10 md:hidden text-white">
+                    {/* -----------toggler button----------- */}
+                    <div onClick={() => setOpen(!open)} className="w-10 lg:hidden text-white">
                         {
                             open ? <span>
                                 <svg className='w-8 mr-4 ' stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" ariaHidden="true" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z" clip-rule="evenodd"></path></svg>
@@ -65,9 +85,11 @@ const Navber = () => {
                                 </span>
                         }
                     </div>
+                    {/* -----------toggler button end----------- */}
                 </div>
             </section>
 
+            {/* -----------show only small devices after the toggler button clicked----------- */}
             <div className='md:hidden flex justify-between items-center py-2 px-6 mt-3 bg-slate-400'>
                 <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Free Templates</h1></Link>
                 <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Pricing</h1></Link>
