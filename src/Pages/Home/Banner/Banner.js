@@ -14,7 +14,7 @@ const Banner = () => {
                     <Link to='' className='font-semibold py-4 px-16 bg-orange-500 hover:bg-sky-500 duration-300 rounded-[50px]'>
                         <button>Start For Free</button>
                     </Link>
-                    <span className='my-6 block font-semibold'>Already on HeyLink.me? <Link to=''>Log In</Link></span>
+                    <span className='my-6 block font-semibold'>Already on HeyLink.me? <Link to='' className='underline'>Log In</Link></span>
                 </div>
                 <div className='col-span-2'>
                     <img className='w-full' src="https://cdn-f.heylink.me/static/img/index-header-img.png" alt="" />

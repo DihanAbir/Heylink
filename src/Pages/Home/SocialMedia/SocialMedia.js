@@ -29,7 +29,7 @@ const SocialMedia = () => {
             </div>
 
             <div className='grid md:grid-cols-2 items-center gap-6 my-16'>
-                <div className='grid grid-cols-5 gap-8 cursor-pointer'>
+                <div className='grid grid-cols-5 order-last md:order-first gap-8 cursor-pointer'>
                     <img className='w-8' src={img1} alt="" />
                     <img className='w-8' src={img2} alt="" />
                     <img className='w-8' src={img3} alt="" />
