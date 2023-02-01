@@ -11,7 +11,6 @@ const Navber = () => {
     const [viewServices, setViewServices] = useState(false)
 
     let dropdownRef = useRef();
-    let viewServicesRef = useRef();
 
     useEffect(() => {
         let handler = (e) => {
@@ -29,11 +28,11 @@ const Navber = () => {
 
     return (
         <nav ref={dropdownRef} className='py-14 text-white cursor-pointer max-w-[1440px] mx-auto'>
-            <section className='flex justify-between items-center md:gap-12 px-3 md:px-8'>
-                <div className='md:flex justify-between items-center md:gap-12 text-xl font-semibold'>
+            <section className='flex justify-between items-center md:gap-12 px-3 md:px-16'>
+                <div className='md:flex justify-between items-center md:gap-12 text-[18px]'>
                     <Link to='/' className='flex items-center gap-2'>
-                        <img className='w-8' src={logo} alt="" />
-                        <h1 className='font-bold md:text-3xl hover:text-sky-500 duration-300 text-md'>Heylink.me</h1>
+                        <img className='w-6 inline' src={logo} alt="" />
+                        <h1 className='inline-block font-bold md:text-2xl hover:text-sky-500 duration-300 text-md'>HeyLink.me</h1>
                     </Link>
 
                     <Link to='/templates'>
@@ -54,23 +53,29 @@ const Navber = () => {
                 </div>
 
                 {/* -----------language dropdown----------- */}
-                <div className='flex justify-between items-center gap-3 md:gap-12 text-xl font-semibold'>
-                    <Link to='/'><h1 className='hidden lg:block hover:text-sky-500 duration-300'>Dashboard</h1></Link>
-                    <div onClick={() => setDropdown(!dropdown)} className='relative'>
-                        <button onClick={() => setDropdown(!dropdown)} className=''>
-                            <img className='w-8' src="https://cdn-f.heylink.me/static/img/lang-flags/en.svg" alt="" />
-                        </button>
+                <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
+                    <Link to='/'>
+                        <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Dashboard</h1>
+                    </Link>
+
+                    <div onClick={() => setDropdown(!dropdown)} className='relative inline-block'>
+                        <img className='w-6 md:w-8' src="https://cdn-f.heylink.me/static/img/lang-flags/en.svg" alt="" />
                         {
                             dropdown && <DropdownCountries />
                         }
                     </div>
 
                     {/* only small device show */}
-                    <Link to='/' className='block lg:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'><button>Start for free</button></Link>
+                    <Link to='/' className='block lg:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'>
+                        <button>Start for free</button>
+                    </Link>
 
                     {/* medium + device show */}
-                    <div className='hidden lg:block border-2 border-white hover:text-sky-500 hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
-                        <button><span className='font-bold text-white text-2xl mr-6 inline-block'>{'>'} </span> Start for free</button>
+                    <div className='hidden lg:block border-2 border-white hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
+                        <div className='flex justify-between items-center gap-4 font-semibold hover:text-sky-500'>
+                            <svg className='text-sky-500' xmlns="https://www.w3.org/2000/svg" width="7" height="10"><path d="M6.745 5.582L2.403 9.8a.838.838 0 01-1.083.053A.838.838 0 01.237 9.8a.772.772 0 010-1.123L4 5.02.237 1.363a.772.772 0 010-1.123A.84.84 0 011.32.187.84.84 0 012.403.24l4.342 4.218a.773.773 0 010 1.124z" fill="#FFF"></path></svg>
+                            <span> Start for free</span>
+                        </div>
                     </div>
 
                     {/* -----------toggler button----------- */}
@@ -90,18 +95,19 @@ const Navber = () => {
             </section>
 
             {/* -----------show only small devices after the toggler button clicked----------- */}
-            <div className='md:hidden flex justify-between items-center py-2 px-6 mt-3 bg-slate-400'>
+            <div className='md:hidden flex justify-between items-center py-2 px-6 mt-3 bg-[#2a2b8b]'>
                 <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Free Templates</h1></Link>
                 <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Pricing</h1></Link>
                 <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Login</h1></Link>
             </div>
+            <hr className='border-gray-400 mt-6 md:hidden' />
             {
                 open && <div onClick={() => setOpen(false)} className={`bg-[#393AA7] min-h-screen flex flex-col gap-4 items-center py-6`}>
                     <div className='bg-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
                         <Link to='/'>Dashboard</Link>
                     </div>
                     <div className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <Link to='/'>Free Templates</Link>
+                        <Link to='/templates'>Free Templates</Link>
                     </div>
                     <div className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
                         <Link to='/'>Blog and Help</Link>

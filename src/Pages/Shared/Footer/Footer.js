@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PrimaryButtons from '../../../components/Buttons/PrimaryButtons';
 
 const Footer = () => {
     return (
@@ -7,14 +8,16 @@ const Footer = () => {
             <div className='max-w-[1440px] mx-auto'>
                 <div className='flex flex-col items-center md:flex-row md:justify-between gap-6'>
                     <h1 className='text-white font-bold text-3xl'>Ready to get started? It is easy as 1 - 2 - 3</h1>
-                    <Link to='' className='font-semibold text-white py-4 px-16 bg-orange-500 hover:bg-sky-500 duration-300 rounded-[50px]'>
-                        <button className='inline-block'>Start For Free</button>
+                    <Link to='' className=''>
+                        <PrimaryButtons>
+                            Start For Free
+                        </PrimaryButtons>
                     </Link>
                 </div>
                 <div className='flex flex-col md:flex-row md:justify-between items-center gap-6 mt-6 md:mt-16'>
                     <div className='flex flex-col md:flex-row md:justify-between items-center gap-6'>
-                        <Link to='' className='text-white font-semibold hover:text-sky-500 text-xl'>Terms</Link>
-                        <Link to='' className='text-white font-semibold hover:text-sky-500 text-xl'>Privacy</Link>
+                        <Link to='' className='text-gray-400 hover:text-sky-500 text-sm'>Terms</Link>
+                        <Link to='' className='text-gray-400 hover:text-sky-500 text-sm'>Privacy</Link>
                         <div className='grid grid-cols-5 gap-6'>
                             <a href="">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -44,10 +47,10 @@ const Footer = () => {
                         </div>
                     </div>
                     <div>
-                        <h1 className='text-white font-semibold text-2xl'>Powered by Persollo</h1>
+                        <h1 className='hidden md:block text-gray-400 text-xl'>Powered by Persollo</h1>
                     </div>
                     <div>
-                        <h1 className='text-white font-semibold text-2xl'>© HeyLink.me, 2023</h1>
+                        <h1 className='hidden md:block text-gray-400 text-xl'>© HeyLink.me, 2023</h1>
                     </div>
                 </div>
             </div>
