@@ -60,7 +60,8 @@ const Templates = () => {
                 {
                     categories.map(category => {
                         return (
-                            <div onClick={() => setViewCategory(category.id)} className='flex justify-center items-center border-2 border-white text-white hover:text-sky-600 hover:bg-white lg:py-2 lg:px-4 rounded-[50px] font-semibold lg:text-[16px]'>
+                            <div onClick={() => setViewCategory(category.id)}
+                                className={`flex justify-center items-center border-2 border-white text-white hover:text-sky-600 hover:bg-white lg:py-2 lg:px-4 rounded-[50px] font-semibold lg:text-[16px] ${viewCategory === category.id && "bg-white text-sky-600"}`}>
                                 <span>{category.name}</span>
                             </div>
                         )
