@@ -68,7 +68,7 @@ const DashboardNavber = () => {
                     </div>
                     {/* -----------bell icon end----------- */}
 
-                    <Link to='/' className='hidden lg:block lg:flex justify-between ga--4 items-center bg-[#393AA7] h-12 px-6 rounded-[50px]'>
+                    <Link to='/billing/subscription' className='hidden lg:block lg:flex justify-between ga--4 items-center bg-[#393AA7] h-12 px-6 rounded-[50px]'>
                         <div className='flex items-center gap-3'>
                             <img className='w-8' src={star} alt="" />
                             <h1 className='text-white text-[16px]'>Unlock PRO</h1>

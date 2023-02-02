@@ -3,11 +3,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import DashboardLayout from '../Layout/DashboardLayout';
 import Main from '../Layout/Main';
 import Dashboard from '../Pages/Dashboard/Dashboard/Dashboard';
-import Appearance from '../Pages/Dashboard/LinkTabs/Appearance';
-import Links from '../Pages/Dashboard/LinkTabs/Links';
-import LinkTabs from '../Pages/Dashboard/LinkTabs/LinkTabs';
-import Settings from '../Pages/Dashboard/LinkTabs/Settings';
-import Subscription from '../Pages/Dashboard/LinkTabs/Subscription';
+import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance';
+import Links from '../Pages/Dashboard/LinkTabs/Links/Links';
+import LinksTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/LinksTab';
+import Settings from '../Pages/Dashboard/LinkTabs/Settings/Settings';
+import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import Home from '../Pages/Home/Home/Home';
 import PricingCards from '../Pages/PricingCards/PricingCards';
@@ -39,10 +39,16 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard', element: <Dashboard></Dashboard>,
                 children: [
-                    { path: '/dashboard/', element: <Links /> },
                     { path: '/dashboard/appearance', element: <Appearance /> },
                     { path: '/dashboard/settings', element: <Settings /> },
                     { path: '/dashboard/billing/subscription', element: <Subscription /> },
+                    {
+                        path: '/dashboard/', element: <Links></Links>,
+                        children: [
+                            { path: '/dashboard/', element: <LinksTab></LinksTab> },
+                            { path: '/dashboard/links', element: <LinksTab></LinksTab> },
+                        ]
+                    },
                 ]
             },
 
