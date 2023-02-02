@@ -21,7 +21,7 @@ const PricingCards = () => {
             <div className='cursor-pointer grid md:grid-cols-2 gap-6 items-center justify-center md:max-w-[500px] mx-auto min-h-screen mt-2 mb-6'>
 
                 {/* ------------starter package------------ */}
-                <div className='w-[340px] md:w-96 md:absolute md:hover:scale-125 md:hover:z-10 right-[48%] duration-300 bg-white py-14 px-6 rounded-3xl shadow-md shadow-gray-500'>
+                <div className='w-[340px] md:w-96 md:absolute md:hover:scale-125 md:hover:z-10 right-[48%] duration-300 bg-white py-16 px-6 rounded-3xl shadow-md shadow-gray-500'>
                     <h1 className='font-bold text-blue-600 text-md'>STARTER</h1>
                     <div className='mt-3'>
                         <h1 className='text-2xl font-bold text-gray-700 inline-block'>Free</h1><span className='text-gray-800 font-semibold text-md'> / forever</span>
@@ -37,10 +37,10 @@ const PricingCards = () => {
                 </div>
 
                 {/* ------------pro packages //  Monthly and Yearly------------ */}
-                <div className='w-[340px] md:w-96 md:absolute md:hover:scale-110 md:hover:z-10 left-[48%] duration-300 bg-white px-6 py-8 rounded-3xl shadow-md shadow-gray-500'>
+                <div className='w-[340px] md:w-96 md:absolute md:hover:scale-110 md:hover:z-10 left-[48%] duration-300 bg-white px-6 py-4 rounded-3xl shadow-md shadow-gray-500'>
                     <div className='flex justify-between items-center'>
                         <h1 className='font-bold text-blue-600 text-md'>PRO</h1>
-                        <div className='grid grid-cols-2 gap-2 items-center px-1 h-8 w-36 rounded-[50px] bg-gray-300'>
+                        <div className='relative grid grid-cols-2 gap-2 items-center px-1 h-8 w-36 rounded-[50px] bg-gray-300'>
                             <div onClick={() => setProPkg(true)}
                                 className={`flex justify-center items-center h-6 rounded-[50px] 
                                 ${proPkg && 'bg-white'}`}>
@@ -51,7 +51,13 @@ const PricingCards = () => {
                                 ${!proPkg && 'bg-white'}`}>
                                 <small className='text-gray-600 font-semibold'>Monthly</small>
                             </div>
+
+                            {/* badgets */}
+                            <div className='absolute left-0 -top-6 h-6 w-12 flex justify-center items-center bg-orange-500 rounded-[50px]'>
+                                <span className='text-white text-sm'>SAVE!</span>
+                            </div>
                         </div>
+
                     </div>
                     <div className='mt-3'>
                         <h1 className='text-2xl font-bold text-gray-700 inline-block'>
@@ -80,6 +86,9 @@ const PricingCards = () => {
                         <div className='flex justify-center'>
                             <img className='w-28' src="https://cdn-f.heylink.me/static/img/ic_placeholder_pro_plan.gif" alt="" />
                         </div>
+                    </div>
+                    <div className='mt-3 h-10 w-40 mx-auto bg-[#239AE7] hover:bg-[#3B3DA8] flex justify-center items-center rounded-[50px]'>
+                        <button className='text-white font-semibold'>GET PRO</button>
                     </div>
                 </div>
             </div>

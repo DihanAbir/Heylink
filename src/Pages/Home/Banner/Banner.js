@@ -19,7 +19,7 @@ const Banner = () => {
                         </PrimaryButtons>
                     </Link>
                     <span className='my-6 block font-semibold'>Already on HeyLink.me?
-                        <Link to='' className='underline'>Log In</Link>
+                        <Link to='/login' className='underline'>Log In</Link>
                     </span>
                 </div>
 
