@@ -36,7 +36,7 @@ const DropdownCountries = () => {
         { img: img16, name: 'English' }
     ]
     return (
-        <div class="absolute -right-36 md:right-0 z-10 mt-2 w-[300px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div class="absolute -right-16 md:right-0 z-10 mt-2 w-[300px] rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div class="p-6">
                 <div className='grid grid-cols-2 items-center gap-6 cursor-pointer'>
                     {

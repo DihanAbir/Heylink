@@ -54,7 +54,7 @@ const Navber = () => {
 
                 {/* -----------language dropdown----------- */}
                 <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
-                    <Link to='/'>
+                    <Link to='/dashboard'>
                         <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Dashboard</h1>
                     </Link>
 
@@ -71,12 +71,12 @@ const Navber = () => {
                     </Link>
 
                     {/* medium + device show */}
-                    <div className='hidden lg:block border-2 border-white hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
+                    <Link to='/login' className='hidden lg:block border-2 border-white hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
                         <div className='flex justify-between items-center gap-4 font-semibold hover:text-sky-500'>
-                            <svg className='text-sky-500' xmlns="https://www.w3.org/2000/svg" width="7" height="10"><path d="M6.745 5.582L2.403 9.8a.838.838 0 01-1.083.053A.838.838 0 01.237 9.8a.772.772 0 010-1.123L4 5.02.237 1.363a.772.772 0 010-1.123A.84.84 0 011.32.187.84.84 0 012.403.24l4.342 4.218a.773.773 0 010 1.124z" fill="#FFF"></path></svg>
+                            <svg className='hover:fill-sky-600' xmlns="https://www.w3.org/2000/svg" width="8" height="10"><path d="M6.745 5.582L2.403 9.8a.838.838 0 01-1.083.053A.838.838 0 01.237 9.8a.772.772 0 010-1.123L4 5.02.237 1.363a.772.772 0 010-1.123A.84.84 0 011.32.187.84.84 0 012.403.24l4.342 4.218a.773.773 0 010 1.124z" fill="#FFF"></path></svg>
                             <span> Start for free</span>
                         </div>
-                    </div>
+                    </Link>
 
                     {/* -----------toggler button----------- */}
                     <div onClick={() => setOpen(!open)} className="w-10 lg:hidden text-white">
@@ -104,7 +104,7 @@ const Navber = () => {
             {
                 open && <div onClick={() => setOpen(false)} className={`bg-[#393AA7] min-h-screen flex flex-col gap-4 items-center py-6`}>
                     <div className='bg-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <Link to='/'>Dashboard</Link>
+                        <Link to='/dashboard'>Dashboard</Link>
                     </div>
                     <div className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
                         <Link to='/templates'>Free Templates</Link>
