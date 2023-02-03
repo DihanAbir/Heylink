@@ -3,12 +3,13 @@ import { Link } from 'react-router-dom';
 import proBanner from '../../../assets/icons/link-customize-icons/pro-banner.svg'
 import star from '../../../assets/icons/link-customize-icons/star.svg'
 
-const FastLinkProModal = ({ closeModal }) => {
+const FastLinkProModal = ({ closeModal, closeModal2 }) => {
     let dropdownRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
                 closeModal(false);
+                closeModal2(false);
             }
         };
         document.addEventListener("mousedown", handler);

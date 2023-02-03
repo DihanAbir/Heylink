@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import header from '../../../../../assets/icons/advanced-link-icons/header.svg'
+import header from '../../../assets/icons/advanced-link-icons/header.svg'
 
 const AdvancedLinkModal = ({ closeModal }) => {
 
@@ -16,7 +16,7 @@ const AdvancedLinkModal = ({ closeModal }) => {
         }
     });
     return (
-        <div ref={dropdownRef} className="z-50 absolute top-4">
+        <div ref={dropdownRef} className="z-50 absolute top-4 shadow rounded-md">
             <div className="md:w-[800px] bg-white p-6 flex justify-center">
                 <div>
                     <div className='grid md:grid-cols-2 gap-8'>

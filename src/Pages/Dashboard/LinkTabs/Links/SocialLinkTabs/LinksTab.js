@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import link from '../../../../../assets/icons/link.svg'
 import threeSocial from '../../../../../assets/icons/three-social.svg'
 import uparrow from '../../../../../assets/icons/gif-images/up-arrow.gif'
-import { useForm } from 'react-hook-form';
-import AdvancedLinkModal from './AdvancedLinkModal';
-import CreateLinkCustomize from './CreateLinkCustomize';
+import AdvancedLinkModal from '../../../../../components/Modals/LinksTabModals/AdvancedLinkModal';
+import CreateLinkCustomize from '../../../../../components/CreateCustomizeTables/CreateLinkCustomize';
 const LinksTab = () => {
     const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false)
     const [errorUrl, setErrorUrl] = useState('')
@@ -14,8 +13,10 @@ const LinksTab = () => {
         event.preventDefault()
         const url = event.target.url.value
         setAllUrls([...allUrls, url])
+        event.target.reset()
+        setErrorUrl('')
     }
-    console.log(allUrls);
+    // console.log(errorUrl);
 
     const closeModal = () => {
         setOpenAdvancedLinkModal(false)
@@ -52,17 +53,23 @@ const LinksTab = () => {
                     <img src={threeSocial} alt="" />
                 </div>
             </div>
-            <div className='flex justify-center items-center py-8'>
-                <img src={uparrow} alt="" />
-                <h1 className='text-gray-500 text-xl'>
-                    Paste <br />
-                    <strong>
-                        your first <br /> link </strong>
-                    here
-                </h1>
-            </div>
 
-            <CreateLinkCustomize />
+            {/* --------------Create Link------------ */}
+            {
+                allUrls && allUrls.map(url => <CreateLinkCustomize url={url} />)
+            }
+            {
+                allUrls.length === 0 && <div className='flex justify-center items-center py-8'>
+                    <img src={uparrow} alt="" />
+                    <h1 className='text-gray-500 text-xl'>
+                        Paste <br />
+                        <strong>
+                            your first <br /> link </strong>
+                        here
+                    </h1>
+                </div>
+            }
+            {/* -------------Create Link------------- */}
 
             {/* -----------Advanced Link Modal----------- */}
             <div className='flex justify-center items-center'>

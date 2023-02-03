@@ -6,6 +6,7 @@ import Dashboard from '../Pages/Dashboard/Dashboard/Dashboard';
 import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance';
 import Links from '../Pages/Dashboard/LinkTabs/Links/Links';
 import LinksTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/LinksTab';
+import SocialTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/SocialTab';
 import Settings from '../Pages/Dashboard/LinkTabs/Settings/Settings';
 import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
@@ -47,6 +48,7 @@ const router = createBrowserRouter([
                         children: [
                             { path: '/dashboard/', element: <LinksTab></LinksTab> },
                             { path: '/dashboard/links', element: <LinksTab></LinksTab> },
+                            { path: '/dashboard/links/social', element: <SocialTab></SocialTab> },
                         ]
                     },
                 ]

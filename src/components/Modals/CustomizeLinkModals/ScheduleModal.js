@@ -1,23 +1,47 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { format } from 'date-fns';
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+
 
 const ScheduleModal = ({ closeModal }) => {
-
-    let dropdownRef = useRef();
+    const [selectedDate, setSelectedDate] = useState(new Date)
+    let menuRef = useRef();
+    // console.log(selectedDate);
     useEffect(() => {
         let handler = (e) => {
-            if (!dropdownRef.current.contains(e.target)) {
+            if (!menuRef.current.contains(e.target)) {
                 closeModal(false);
             }
         };
+
         document.addEventListener("mousedown", handler);
         return () => {
             document.removeEventListener("mousedown", handler);
         }
-    });
-    return (
-        <div ref={dropdownRef} className="z-50 absolute top-4">
-            <div className="h-96 lg:w-[800px] bg-white p-4 flex justify-center">
 
+    });
+
+
+    return (
+        <div ref={menuRef} class="fixed md:w-[800px] bg-white flex justify-center left-0 sm:left-6 md:left-auto top-20 shadow rounded-md z-50 w-full md:h-fit">
+            <div className=" p-6 flex justify-center">
+                <div className='grid md:grid-cols-2 gap-6'>
+                    <div>
+                        <DayPicker
+                            mode="single"
+                            selected={selectedDate}
+                            onSelect={setSelectedDate}
+                        />
+                    </div>
+                    <div>
+                        <DayPicker
+                            mode="single"
+                            selected={selectedDate}
+                            onSelect={setSelectedDate}
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     );

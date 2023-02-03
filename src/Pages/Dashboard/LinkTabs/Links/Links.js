@@ -42,10 +42,10 @@ const Links = () => {
 
                     <Link to='/dashboard/links/social' onClick={() => setViewTab(2)}
                         className={`flex flex-col items-center py-2 rounded-md w-24
-                    ${viewTab === 2 && 'bg-blue-50'}`}>
+                        ${viewTab === 2 && 'bg-blue-50'}`}>
                         <div
                             className={`bg-gray-200 rounded-full flex justify-center items-center w-12 h-12
-                    ${viewTab === 2 && 'bg-blue-600'}`}>
+                        ${viewTab === 2 && 'bg-blue-600'}`}>
                             <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21 15.8V14H18.5C18.0394 14 17.6667 14.403 17.6667 14.9V17.6H16V19.4H17.6667V23H19.3333V19.4H21V17.6H19.3333V15.8H21Z" fill={viewTab === 2 ? 'white' : 'gray'} />
                                 <path d="M23.5 11H13.5C12.1215 11 11 12.1215 11 13.5V23.5C11 24.8785 12.1215 26 13.5 26H23.5C24.8786 26 26 24.8785 26 23.5V13.5C26 12.1215 24.8786 11 23.5 11ZM24.3333 23.5C24.3333 23.9594 23.9598 24.3333 23.5 24.3333H13.5C13.0402 24.3333 12.6667 23.9594 12.6667 23.5V13.5C12.6667 13.0406 13.0402 12.6667 13.5 12.6667H23.5C23.9598 12.6667 24.3333 13.0406 24.3333 13.5V23.5Z" fill={viewTab === 2 ? 'white' : 'gray'} />
