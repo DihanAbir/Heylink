@@ -11,13 +11,19 @@ import gridActive from '../../assets/icons/gallery-tab-icons/grid-active.svg'
 import gridInactive from '../../assets/icons/gallery-tab-icons/grid-inactive.svg'
 import { Link } from 'react-router-dom';
 import SliderGridTab from './SliderGridTab';
+import DeleteModal from '../Modals/CommonModals/DeleteModal';
 
 const GalleryCustomize = () => {
     const [open, setOpen] = useState(false)
     const [slideGrid, setSlideGrid] = useState(true)
+    const [deleteModal, setDeleteModal] = useState(false)
 
     const [toggle, setToggle] = useState(true);
     const toggleClass = " transform translate-x-5";
+
+    const closeModal = () => {
+        setDeleteModal(false)
+    }
 
     return (
         <div>
@@ -38,9 +44,15 @@ const GalleryCustomize = () => {
                     {/* -----------edit  and input icon end----------- */}
 
                     <div className='flex md:justify-center items-center gap-2 md:gap-6'>
-                        <div className='hidden md:block md:flex flex-col justify-center items-center gap-2'>
-                            <img className='w-4' src={deletes} alt="" />
-                            <span className='text-sm text-gray-500'>Delete</span>
+                        <div className='relative cursor-pointer'>
+                            <div onClick={() => setDeleteModal(!deleteModal)}
+                                className='hidden md:block md:flex flex-col justify-center items-center gap-2'>
+                                <img className='w-4' src={deletes} alt="" />
+                                <span className='text-sm text-gray-500'>Delete</span>
+                            </div>
+                            {
+                                deleteModal && <DeleteModal closeModal={closeModal}></DeleteModal>
+                            }
                         </div>
 
                         {/* -----------toggler switch start----------- */}

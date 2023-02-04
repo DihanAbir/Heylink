@@ -96,7 +96,7 @@ const SliderGridTab = ({ slideGrid }) => {
                 {
                     sliderTabView === 1 && <div>
                         <div className='flex items-center pl-6 mt-6 text-gray-600 cursor-pointer gap-6 h-16 w-full bg-blue-200 rounded-md'>
-                            <input type="radio" name="forSlider" id="forSlider" />
+                            <input checked type="radio" name="forSlider" id="forSlider" />
                             <label className='cursor-pointer' htmlFor="forSlider" id='forSlider'>For Slider</label>
                         </div>
                         <div className='flex justify-between items-center mt-6'>
@@ -125,8 +125,8 @@ const SliderGridTab = ({ slideGrid }) => {
                         </div>
 
                         <div className='flex items-center pl-6 mt-6 text-gray-600 cursor-pointer gap-6 h-16 w-full bg-gray-200 rounded-md'>
-                            <input type="radio" name="forEveryImage" id="forEveryImage" />
-                            <label className='cursor-pointer' htmlFor="forEveryImage" id='forEveryImage'>For Every Image</label>
+                            <input disabled type="radio" name="forEveryImage" id="forEveryImage" />
+                            <label disabled className='cursor-pointer' htmlFor="forEveryImage" id='forEveryImage'>For Every Image</label>
                         </div>
                     </div>
                 }
