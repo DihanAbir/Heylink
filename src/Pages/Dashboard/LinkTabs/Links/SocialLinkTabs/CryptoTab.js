@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import arrowDown from '../../../../../assets/icons/social-tab-icons/arrow-down.svg'
 import empty from '../../../../../assets/icons/crypto-tab-icons/empty.svg'
+import arrowRight from '../../../../../assets/icons/crypto-tab-icons/arrow-right.svg'
+import arrowDown from '../../../../../assets/icons/crypto-tab-icons/arrow-down.svg'
+import { Link } from 'react-router-dom';
 
 const cryptoWallets = [
     {
@@ -53,6 +55,7 @@ const CryptoTab = () => {
     const [search, setSearch] = useState(false)
     const [allSocialLinks, setAllSocialLiks] = useState([])
     const [inputError, setInputError] = useState('')
+    const [expan, setExpan] = useState(false)
     let dropdownRef = useRef();
 
     useEffect(() => {
@@ -134,13 +137,28 @@ const CryptoTab = () => {
                             </div>
                     }
                 </form>
-
             </div>
 
             <div className='flex justify-center items-center my-6'>
                 <img className='md:w-[400px]' src={empty} alt="" />
             </div>
             <h1 className='text-gray-600 text-sm text-center py-6'>You haven't added any Crypto Links yet</h1>
+
+            <div className='py-8'>
+                <div className='bg-gray-200 rounded-md px-3 py-2 h-fit'>
+                    <div onClick={() => setExpan(!expan)} className='flex justify-between items-center h-12  w-full '>
+                        <h1 className='font-bold text-gray-900'>Can't find the required Crypto?</h1>
+                        {
+                            expan ? <img className='w-4' src={arrowDown} alt="" />
+                                :
+                                <img className='w-3' src={arrowRight} alt="" />
+                        }
+                    </div>
+                    {
+                        expan && <Link to='/' className='text-blue-600 underline py-2'>Send us a request and we will do our best to add it.</Link>
+                    }
+                </div>
+            </div>
         </section>
     );
 };
