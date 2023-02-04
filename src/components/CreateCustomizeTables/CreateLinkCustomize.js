@@ -88,14 +88,14 @@ const CreateLinkCustomize = ({ url }) => {
                     {/* -----------edit and input  icon start----------- */}
                     <div className='flex-grow flex flex-col gap-2'>
                         <div className='flex justify-between items-center'>
-                            <input className={`mr-3 pr-3 rounded w-full border-none focus:outline-none text-gray-700 font-bold ${openInputChange1 && 'bg-blue-100'}`} type="text" disabled={!openInputChange1} defaultValue={url} />
+                            <input className={`mr-3 pr-3 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange1 ? 'bg-blue-100 border border-blue-600' : 'border-none'}`} type="text" disabled={!openInputChange1} defaultValue={url} />
                             <img onClick={() => setOpenInputChange1(!openInputChange1)} className='w-3' src={edit} alt="" />
                         </div>
 
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center w-full gap-4'>
                                 <a href=""><img className='w-6' src={linkClick} alt="" /></a>
-                                <input className={`mr-3 pr-3 rounded w-full border-none text-sm focus:outline-none text-blue-600 ${openInputChange2 && 'bg-blue-100'}`} type="text" disabled={!openInputChange2} defaultValue={url} />
+                                <input className={`mr-3 pr-3 rounded w-full text-sm focus:outline-none text-blue-600 ${openInputChange2 ? 'border border-blue-600' : 'border-none'}`} type="text" disabled={!openInputChange2} defaultValue={url} />
                             </div>
                             <img onClick={() => setOpenInputChange2(!openInputChange2)} className='w-3' src={edit} alt="" />
                         </div>
@@ -118,7 +118,7 @@ const CreateLinkCustomize = ({ url }) => {
                         <div className="flex flex-col justify-center items-center ">
                             <div onClick={() => setLinkToggle(!linkToggle)}
                                 className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${linkToggle ? 'bg-red-100' : 'bg-gray-100'}`}>
+                                ${linkToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
                                 <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
                                 ${linkToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
                                 </div>

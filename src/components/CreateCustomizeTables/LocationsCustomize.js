@@ -12,11 +12,13 @@ import { Link } from 'react-router-dom';
 const LocationsCustomize = ({ location }) => {
     const [open, setOpen] = useState(false)
     const [openEdit, setOpenEdit] = useState(true);
+    const [mainToggle, setMainToggle] = useState(false);
+    const [hiddenToggle, setHiddenToggle] = useState(false);
+    const [lockedToggle, setLockedToggle] = useState(false);
+    const [spotlightToggle, setSpotlightToggle] = useState(false);
     const [toggle, setToggle] = useState(true);
     const toggleClass = " transform translate-x-5";
 
-    const closeModal = () => {
-    }
     let editRef = useRef()
     useEffect(() => {
         let handler = (e) => {
@@ -53,16 +55,15 @@ const LocationsCustomize = ({ location }) => {
                             <span className='text-sm text-gray-500'>Delete</span>
                         </div>
 
-                        {/* -----------toggler switch start----------- */}
-                        <div className="flex flex-col justify-center h-screen items-center ">
-                            {/*   Switch Container */}
-                            <div onClick={() => setToggle(!toggle)}
-                                className={`md:w-12 md:h-6 w-12 h-6 flex items-center rounded-full p-1 cursor-pointer ${!toggle ? 'bg-gray-300' : 'bg-red-100'}`}>
-                                <div className={`bg-gray-600 h-4 w-4 rounded-full shadow-md transform duration-300 ease-in-out 
-                                            ${toggle && 'bg-green-600'}` + (toggle ? false : toggleClass)}></div>
+                        <div className="flex flex-col justify-center items-center ">
+                            <div onClick={() => setMainToggle(!mainToggle)}
+                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${mainToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${mainToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                </div>
                             </div>
                         </div>
-                        {/* -----------toggler switch start----------- */}
                     </div>
                 </div>
                 {
@@ -94,10 +95,14 @@ const LocationsCustomize = ({ location }) => {
                                 <p className='text-gray-500 text-sm'>Link automatically expands when visitors arrive on your HeyLink.me page</p>
                             </div>
                             {/* -----------toggler switch start----------- */}
-                            <div onClick={() => setToggle(!toggle)}
-                                className={`md:w-12 md:h-6 w-12 h-6 flex items-center rounded-full p-1 cursor-pointer ${!toggle ? 'bg-gray-300' : 'bg-red-100'}`}>
-                                <div className={`bg-gray-600 h-4 w-4 rounded-full shadow-md transform duration-300 ease-in-out 
-                                            ${toggle && 'bg-green-600'}` + (toggle ? false : toggleClass)}></div>
+                            <div className="flex flex-col justify-center items-center ">
+                                <div onClick={() => setSpotlightToggle(!spotlightToggle)}
+                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${spotlightToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                    <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${spotlightToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                    </div>
+                                </div>
                             </div>
                             {/* -----------toggler switch start----------- */}
                         </div>
@@ -110,10 +115,14 @@ const LocationsCustomize = ({ location }) => {
                                 </div>
                             </div>
                             {/* -----------toggler switch start----------- */}
-                            <div onClick={() => setToggle(!toggle)}
-                                className={`md:w-12 md:h-6 w-12 h-6 flex items-center rounded-full p-1 cursor-pointer ${!toggle ? 'bg-gray-300' : 'bg-red-100'}`}>
-                                <div className={`bg-gray-600 h-4 w-4 rounded-full shadow-md transform duration-300 ease-in-out 
-                                            ${toggle && 'bg-green-600'}` + (toggle ? false : toggleClass)}></div>
+                            <div className="flex flex-col justify-center items-center ">
+                                <div onClick={() => setHiddenToggle(!hiddenToggle)}
+                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${hiddenToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                    <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${hiddenToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                    </div>
+                                </div>
                             </div>
                             {/* -----------toggler switch start----------- */}
                         </div>
@@ -126,10 +135,14 @@ const LocationsCustomize = ({ location }) => {
                                 </div>
                             </div>
                             {/* -----------toggler switch start----------- */}
-                            <div onClick={() => setToggle(!toggle)}
-                                className={`md:w-12 md:h-6 w-12 h-6 flex items-center rounded-full p-1 cursor-pointer ${!toggle ? 'bg-gray-300' : 'bg-red-100'}`}>
-                                <div className={`bg-gray-600 h-4 w-4 rounded-full shadow-md transform duration-300 ease-in-out 
-                                            ${toggle && 'bg-green-600'}` + (toggle ? false : toggleClass)}></div>
+                            <div className="flex flex-col justify-center items-center ">
+                                <div onClick={() => setLockedToggle(!lockedToggle)}
+                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${lockedToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                    <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${lockedToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                    </div>
+                                </div>
                             </div>
                             {/* -----------toggler switch start----------- */}
                         </div>

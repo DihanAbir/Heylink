@@ -17,9 +17,8 @@ const GalleryCustomize = () => {
     const [open, setOpen] = useState(false)
     const [slideGrid, setSlideGrid] = useState(true)
     const [deleteModal, setDeleteModal] = useState(false)
-
-    const [toggle, setToggle] = useState(true);
-    const toggleClass = " transform translate-x-5";
+    const [toggle, setToggle] = useState(false);
+    const [openInputChange, setOpenInputChange] = useState(false);
 
     const closeModal = () => {
         setDeleteModal(false)
@@ -37,11 +36,13 @@ const GalleryCustomize = () => {
                     {/* -----------edit and input  icon start----------- */}
                     <div className='flex-grow flex flex-col gap-2'>
                         <div className='flex justify-between items-center'>
-                            <input className='w-32 md:w-full border-none focus:outline-none text-gray-700 font-bold' type="text" defaultValue='New Gallery Image' />
-                            <img className='w-3' src={edit} alt="" />
+                            <input className={`mr-3 w-full focus:outline-none text-gray-700 font-bold
+                           ${openInputChange ? 'bg-blue-100 border border-blue-600' : 'border-none'} `} type="text" disabled={!openInputChange} defaultValue='New Gallery Image' />
+                            <img onClick={() => setOpenInputChange(!openInputChange)} className='w-3' src={edit} alt="" />
                         </div>
                     </div>
                     {/* -----------edit  and input icon end----------- */}
+
 
                     <div className='flex md:justify-center items-center gap-2 md:gap-6'>
                         <div className='relative cursor-pointer'>
@@ -56,22 +57,13 @@ const GalleryCustomize = () => {
                         </div>
 
                         {/* -----------toggler switch start----------- */}
-                        <div className="flex flex-col justify-center h-screen items-center ">
-                            {/*   Switch Container */}
-                            <div
-                                className="md:w-14 md:h-7 w-12 h-6 flex items-center bg-red-100 rounded-full p-1 cursor-pointer"
-                                onClick={() => {
-                                    setToggle(!toggle);
-                                }}
-                            >
-                                {/* Switch */}
-                                <div
-                                    className={
-                                        `md:w-6 bg-green-600 md:h-6 h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                    ${toggle && 'bg-white'}` +
-                                        (toggle ? null : toggleClass)
-                                    }
-                                ></div>
+                        <div className="flex flex-col justify-center items-center ">
+                            <div onClick={() => setToggle(!toggle)}
+                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${toggle ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${toggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                </div>
                             </div>
                         </div>
                         {/* -----------toggler switch start----------- */}

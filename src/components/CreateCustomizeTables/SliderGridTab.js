@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 
 const SliderGridTab = ({ slideGrid }) => {
     const [sliderTabView, setSliderTabView] = useState(1);
-    const [toggle, setToggle] = useState(false);
-    const toggleClass = " transform translate-x-5";
+    const [addLinkToggle, setAddLinkToggle] = useState(false);
+    const [addDesToggle, setAddDesToggle] = useState(false);
+    const [titleToggle1, setTitleToggle1] = useState(false);
+    const [titleToggle2, setTitleToggle2] = useState(false);
     return (
         <div>
             {
@@ -16,22 +18,13 @@ const SliderGridTab = ({ slideGrid }) => {
                                 <img src="https://cdn-f.heylink.me/static/media/ic_pro_lock.f3e6f73e.svg" alt="" />
                             </div>
                         </div>
-                        <div className="flex flex-col justify-center ">
-                            {/*   Switch Container */}
-                            <div
-                                className="md:w-12 md:h-6 w-12 h-6 flex items-center bg-red-100 rounded-full p-1 cursor-pointer"
-                                onClick={() => {
-                                    setToggle(!toggle);
-                                }}
-                            >
-                                {/* Switch */}
-                                <div
-                                    className={
-                                        `md:w-6 bg-green-600 md:h-6 h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                                                ${toggle && 'bg-white'}` +
-                                        (toggle ? null : toggleClass)
-                                    }
-                                ></div>
+                        <div className="flex flex-col justify-center items-center ">
+                            <div onClick={() => setTitleToggle1(!titleToggle1)}
+                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${titleToggle1 ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${titleToggle1 ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,22 +55,13 @@ const SliderGridTab = ({ slideGrid }) => {
                                 <img src="https://cdn-f.heylink.me/static/media/ic_pro_lock.f3e6f73e.svg" alt="" />
                             </div>
                         </div>
-                        <div className="flex flex-col justify-center ">
-                            {/*   Switch Container */}
-                            <div
-                                className="md:w-12 md:h-6 w-12 h-6 flex items-center bg-red-100 rounded-full p-1 cursor-pointer"
-                                onClick={() => {
-                                    setToggle(!toggle);
-                                }}
-                            >
-                                {/* Switch */}
-                                <div
-                                    className={
-                                        `md:w-6 bg-green-600 md:h-6 h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                                                ${toggle && 'bg-white'}` +
-                                        (toggle ? null : toggleClass)
-                                    }
-                                ></div>
+                        <div className="flex flex-col justify-center items-center ">
+                            <div onClick={() => setTitleToggle2(!titleToggle2)}
+                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${titleToggle2 ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${titleToggle2 ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -103,10 +87,14 @@ const SliderGridTab = ({ slideGrid }) => {
                             <h1 className='text-gray-600 font-bold'>Add Description</h1>
                             <div className="flex items-center gap-2">
                                 <span className='text-gray-500 text-sm font-semibold'>Off</span>
-                                <div onClick={() => setToggle(!toggle)}
-                                    className={`md:w-12 md:h-6 w-12 h-6 flex items-center rounded-full p-1 cursor-pointer ${!toggle ? 'bg-gray-300' : 'bg-red-100'}`}>
-                                    <div className={`bg-gray-600 h-4 w-4 rounded-full shadow-md transform duration-300 ease-in-out 
-                                            ${toggle && 'bg-green-600'}` + (toggle ? null : toggleClass)}></div>
+                                <div className="flex flex-col justify-center items-center ">
+                                    <div onClick={() => setAddDesToggle(!addDesToggle)}
+                                        className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${addDesToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                        <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${addDesToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                        </div>
+                                    </div>
                                 </div>
                                 <span className='text-gray-500 text-sm font-semibold'>On</span>
                             </div>
@@ -115,10 +103,14 @@ const SliderGridTab = ({ slideGrid }) => {
                             <h1 className='text-gray-600 font-bold'>Add Link</h1>
                             <div className="flex items-center gap-2">
                                 <span className='text-gray-500 text-sm font-semibold'>Off</span>
-                                <div onClick={() => setToggle(!toggle)}
-                                    className={`md:w-12 md:h-6 w-12 h-6 flex items-center rounded-full p-1 cursor-pointer ${!toggle ? 'bg-gray-300' : 'bg-red-100'}`}>
-                                    <div className={`bg-gray-600 h-4 w-4 rounded-full shadow-md transform duration-300 ease-in-out 
-                                            ${toggle && 'bg-green-600'}` + (toggle ? null : toggleClass)}></div>
+                                <div className="flex flex-col justify-center items-center ">
+                                    <div onClick={() => setAddLinkToggle(!addLinkToggle)}
+                                        className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
+                                ${addLinkToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
+                                        <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
+                                ${addLinkToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
+                                        </div>
+                                    </div>
                                 </div>
                                 <span className='text-gray-500 text-sm font-semibold'>On</span>
                             </div>
