@@ -5,8 +5,10 @@ import Main from '../Layout/Main';
 import Dashboard from '../Pages/Dashboard/Dashboard/Dashboard';
 import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance';
 import Links from '../Pages/Dashboard/LinkTabs/Links/Links';
+import CryptoTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/CryptoTab';
 import GalleryTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/GalleryTab';
 import LinksTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/LinksTab';
+import MenuTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MenuTab';
 import SocialTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/SocialTab';
 import Settings from '../Pages/Dashboard/LinkTabs/Settings/Settings';
 import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription';
@@ -51,6 +53,8 @@ const router = createBrowserRouter([
                             { path: '/dashboard/links', element: <LinksTab></LinksTab> },
                             { path: '/dashboard/links/social', element: <SocialTab></SocialTab> },
                             { path: '/dashboard/links/gallery', element: <GalleryTab></GalleryTab> },
+                            { path: '/dashboard/links/menu', element: <MenuTab></MenuTab> },
+                            { path: '/dashboard/links/crypto', element: <CryptoTab></CryptoTab> },
                         ]
                     },
                 ]
