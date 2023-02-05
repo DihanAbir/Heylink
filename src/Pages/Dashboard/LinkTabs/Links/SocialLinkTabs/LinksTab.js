@@ -72,11 +72,11 @@ const LinksTab = () => {
             {/* -------------Create Link------------- */}
 
             {/* -----------Advanced Link Modal----------- */}
-            <div className='flex justify-center items-center'>
+            {/* <div className='flex justify-center items-center'>
                 {
                     openAdvancedLinkModal && <AdvancedLinkModal closeModal={closeModal} />
                 }
-            </div>
+            </div> */}
         </section>
     );
 };
