@@ -22,7 +22,7 @@ const LocationsTab = () => {
     const [search, setSearch] = useState(false)
     const [allLocations, setAllLocations] = useState([])
     let dropdownRef = useRef();
-    console.log(allLocations);
+    // console.log(allLocations);
     const handleSubmit = (event) => {
         event.preventDefault()
         const selectLocation = event.target.location.value

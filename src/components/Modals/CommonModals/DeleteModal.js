@@ -25,6 +25,7 @@ const DeleteModal = ({ id, closeModal, endPoint }) => {
       .then((data) => {
         if (data.deletedCount > 0) {
         }
+
       });
   };
   return (
@@ -40,6 +41,7 @@ const DeleteModal = ({ id, closeModal, endPoint }) => {
             src={close}
             alt=""
           />
+
         </div>
         <div>
           <h1 className="text-gray-900 font-bold text-center py-2">Delete</h1>
