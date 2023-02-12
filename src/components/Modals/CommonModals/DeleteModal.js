@@ -16,7 +16,7 @@ const DeleteModal = ({ closeModal }) => {
     });
     return (
         <div ref={dropdownRef}
-            className="cursor-pointer absolute -right-8 border z-50 mt-2 rounded-md bg-gray-50 shadow">
+            className="cursor-pointer absolute -right-8 border z-50 mt-2 rounded-md bg-gray-50 w-60 shadow">
             <div className='p-3'>
                 <div className='w-full flex justify-end'>
                     <img onClick={() => closeModal(false)} className='w-3' src={close} alt="" />

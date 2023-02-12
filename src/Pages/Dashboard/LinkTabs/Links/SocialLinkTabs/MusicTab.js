@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import link from '../../../../../assets/icons/link.svg'
 import threeSocial from '../../../../../assets/icons/three-social.svg'
 import uparrow from '../../../../../assets/icons/gif-images/up-arrow.gif'
+import MusicDesignCustomize from '../../../../../components/CreateCustomizeTables/MusicDesignCustomize';
 
 const MusicTab = () => {
     const [errorUrl, setErrorUrl] = useState('')
@@ -15,11 +16,9 @@ const MusicTab = () => {
         setErrorUrl('')
     }
 
-    const closeModal = () => {
-    }
     return (
-        <section className='min-h-screen'>
-            <div className='md:px-6 w-full lg:max-w-[980px] mx-auto'>
+        <section className='min-h-screen py-4'>
+            <div className='md:px-6 w-full lg:max-w-[1100px] mx-auto'>
                 <form onSubmit={handleUrl} className='flex justify-between w-full mx-auto' >
                     <div className='flex-grow flex items-center bg-gray-200 rounded-3xl'>
                         <div className='cursor-pointer w-12 py-3 border-r border-gray-400 flex justify-center items-center'>
@@ -48,18 +47,20 @@ const MusicTab = () => {
                     <div className='flex justify-center items-center w-5 h-5 bg-gray-400 rounded-full'><span className='text-white'>!</span></div>
                     <span className='text-gray-600 text-sm'>We support <strong>integration</strong> with <strong>Apple Music</strong>, <strong>iTunes</strong>, <strong>Spotify</strong>, <strong>Deezer</strong> and <strong>YouTube</strong>. You can also add manually <strong>Tidal, Soundcloud, Pandora, Audiomack</strong> .</span>
                 </div>
-
-                <div className='flex justify-center items-center py-8'>
-                    <img src={uparrow} alt="" />
-                    <h1 className='text-gray-500 text-xl'>
-                        Paste <br />
-                        <strong>
-                            your first music <br /> link </strong>
-                        here
-                    </h1>
-                </div>
-
             </div>
+            {
+                allUrls.length > 0 ? allUrls.map(url => <MusicDesignCustomize url={url} />)
+                    :
+                    <div className='flex justify-center items-center py-8'>
+                        <img src={uparrow} alt="" />
+                        <h1 className='text-gray-500 text-xl'>
+                            Paste <br />
+                            <strong>
+                                your first music <br /> link </strong>
+                            here
+                        </h1>
+                    </div>
+            }
         </section>
     );
 };

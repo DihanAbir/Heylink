@@ -6,6 +6,7 @@ import swap from '../../assets/icons/link-customize-icons/swap.svg'
 import edit from '../../assets/icons/link-customize-icons/edit.svg'
 import lock from '../../assets/icons/link-customize-icons/pro-lock.svg'
 import add from '../../assets/icons/locations-tab-icons/add.svg'
+import blueRight from '../../assets/icons/blue-right.png'
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -16,6 +17,20 @@ const LocationsCustomize = ({ location }) => {
     const [hiddenToggle, setHiddenToggle] = useState(false);
     const [lockedToggle, setLockedToggle] = useState(false);
     const [spotlightToggle, setSpotlightToggle] = useState(false);
+    const [openInputChange, setOpenInputChange] = useState(false);
+    const [newAddress, setNewAddress] = useState('');
+
+    const handleUpdateLocation = () => {
+        alert(newAddress + 'add korte hobe')
+        setNewAddress('')
+    }
+
+    const locationChange = (event) => {
+        const newAddress = event.target.value
+        if (newAddress !== location) {
+            setNewAddress(newAddress)
+        }
+    }
 
     let editRef = useRef()
     useEffect(() => {
@@ -30,7 +45,7 @@ const LocationsCustomize = ({ location }) => {
         }
     });
     return (
-        <div>
+        <>
             <div className='relative w-full my-6 border border-gray-200 rounded-md'>
 
                 <div className='h-28 flex justify-between items-center gap-2 md:gap-6 py-4 px-2 md:px-6'>
@@ -41,8 +56,13 @@ const LocationsCustomize = ({ location }) => {
                     {/* -----------edit and input  icon start----------- */}
                     <div className='flex-grow flex flex-col gap-2'>
                         <div className='flex justify-between items-center'>
-                            <input className='w-32 md:w-full border-none focus:outline-none text-gray-700 text-sm font-semibold' type="text" defaultValue={location} />
-                            <img className='w-3' src={edit} alt="" />
+                            <input onChange={(e) => locationChange(e)}
+                                className={`mr-3 pr-3 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange} defaultValue={location} name='address' />
+                            {
+                                newAddress ? <img onClick={() => handleUpdateLocation()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                    :
+                                    <img onClick={() => setOpenInputChange(!openInputChange)} className='w-3 cursor-pointer' src={edit} alt="" />
+                            }
                         </div>
                     </div>
                     {/* -----------edit  and input icon end----------- */}
@@ -182,7 +202,7 @@ const LocationsCustomize = ({ location }) => {
 
 
 
-        </div>
+        </>
     );
 };
 
