@@ -140,7 +140,7 @@ const CryptoTab = () => {
             </div>
 
             <div className='flex justify-center items-center my-6'>
-                <img className='md:w-[400px]' src={empty} alt="" />
+                <img className='md:max-w-[400px]' src={empty} alt="" />
             </div>
             <h1 className='text-gray-600 text-sm text-center py-6'>You haven't added any Crypto Links yet</h1>
 

@@ -43,7 +43,7 @@ const LocationsTab = () => {
         }
     });
 
-    console.log(selectedLocation);
+    // console.log(selectedLocation);
     return (
         <section className='min-h-screen'>
             <div className='px-2 w-full mx-auto'>

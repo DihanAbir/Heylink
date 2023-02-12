@@ -26,9 +26,13 @@ const CreateLinkCustomize = ({ url }) => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [openInputChange1, setOpenInputChange1] = useState(false);
     const [openInputChange2, setOpenInputChange2] = useState(false);
+    const [linkName, setLinkName] = useState('');
+    const [linkURL, setLinkURL] = useState('');
     const [linkToggle, setLinkToggle] = useState(false);
     const [imageUrl, setImageUrl] = useState('');
-    // console.log(linkToggle);
+    // console.log(linkName);
+
+
     const closeModal = () => {
         setOpenEffcetsModal(false)
         setFastLinkProModal(false)
@@ -56,7 +60,7 @@ const CreateLinkCustomize = ({ url }) => {
     });
     return (
         <div>
-            <div className='relative w-full my-6 border border-gray-200 rounded-md'>
+            <div className='relative w-full my-6 border border-gray-200 rounded-md cursor-pointer'>
 
                 <div className='h-28 flex justify-between items-center gap-2 md:gap-6 py-4 px-2 md:px-6'>
                     <div>
@@ -86,18 +90,20 @@ const CreateLinkCustomize = ({ url }) => {
                     {/* -----------image upload input field end----------- */}
 
                     {/* -----------edit and input  icon start----------- */}
-                    <div className='flex-grow flex flex-col gap-2'>
+                    <div ref={outSideRef} className='flex-grow flex flex-col gap-2'>
                         <div className='flex justify-between items-center'>
-                            <input className={`mr-3 pr-3 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange1 ? 'bg-blue-100 border border-blue-600' : 'border-none'}`} type="text" disabled={!openInputChange1} defaultValue={url} />
-                            <img onClick={() => setOpenInputChange1(!openInputChange1)} className='w-3' src={edit} alt="" />
+                            <input onChange={(e) => setLinkName(e.target.value)}
+                                className={`mr-3 pr-3 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange1 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={url} name='linkName' />
+                            <img onClick={() => setOpenInputChange1(!openInputChange1)} className='w-3 cursor-pointer' src={edit} alt="" />
                         </div>
 
                         <div className='flex justify-between items-center'>
                             <div className='flex items-center w-full gap-4'>
-                                <a href=""><img className='w-6' src={linkClick} alt="" /></a>
-                                <input className={`mr-3 pr-3 rounded w-full text-sm focus:outline-none text-blue-600 ${openInputChange2 ? 'border border-blue-600' : 'border-none'}`} type="text" disabled={!openInputChange2} defaultValue={url} />
+                                <a target='_blank' href={url}><img className='w-6' src={linkClick} alt="" /></a>
+                                <input onChange={(e) => setLinkURL(e.target.value)}
+                                    className={`mr-3 pr-3 rounded w-full text-sm focus:outline-none text-blue-600 ${openInputChange2 ? 'border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange2} defaultValue={url} name='linkURL' />
                             </div>
-                            <img onClick={() => setOpenInputChange2(!openInputChange2)} className='w-3' src={edit} alt="" />
+                            <img onClick={() => setOpenInputChange2(!openInputChange2)} className='w-3 cursor-pointer' src={edit} alt="" />
                         </div>
                     </div>
                     {/* -----------edit  and input icon end----------- */}
@@ -139,15 +145,24 @@ const CreateLinkCustomize = ({ url }) => {
                         </div>
                         {/* -----------Move to Top end----------- */}
 
+
+
                         {/* -----------schedule start----------- */}
-                        <div onClick={() => setOpenScheduleModal(!openScheduleModal)}
-                            className='flex flex-col justify-center items-center gap-2'>
-                            <div>
-                                <img className='w-4' src={schedule} alt="" />
+                        <div className=''>
+                            <div onClick={() => setOpenScheduleModal(!openScheduleModal)}
+                                className='flex flex-col justify-center items-center gap-2'>
+                                <div>
+                                    <img className='w-4' src={schedule} alt="" />
+                                </div>
+                                <h1 className='text-gray-400 text-sm'>schedule</h1>
                             </div>
-                            <h1 className='text-gray-400 text-sm'>schedule</h1>
+                            {
+                                openScheduleModal && <ScheduleModal closeModal={closeModal} />
+                            }
                         </div>
                         {/* -----------schedule end----------- */}
+
+
 
                         {/* -----------effects start----------- */}
                         <div className='relative '>
@@ -203,18 +218,7 @@ const CreateLinkCustomize = ({ url }) => {
                     <img className='w-4' src={open ? upArrow : downArrow} alt="" />
                 </div>
                 {/* -----------toggler button end----------- */}
-
-                {/* all Modals */}
-                <div>
-
-                    {
-                        openScheduleModal && <ScheduleModal closeModal={closeModal} />
-                    }
-                </div>
             </div>
-
-
-
         </div>
     );
 };

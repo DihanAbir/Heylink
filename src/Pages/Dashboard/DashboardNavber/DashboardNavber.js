@@ -41,7 +41,7 @@ const DashboardNavber = () => {
                     <h1 className='inline-block font-bold md:text-2xl text-blue-800 duration-300 text-md'>HeyLink.me</h1>
                 </Link>
 
-                <div className='hidden lg:block flex-grow lg:flex justify-between items-center bg-gray-100 px-6 rounded-[50px] h-12 w-96'>
+                <div className='hidden lg:block flex-grow lg:flex justify-between items-center bg-gray-100 px-6 rounded-[50px] h-12 w-80'>
                     <div className='flex items-center'>
                         <h1 className='text-gray-500 text-[16px]'>heylink.me/</h1>
                         <a className='underline text-blue-900 text-[16px]' target='_blank' href="https://heylink.me/robiulalam76/">robiulalam76</a>
@@ -55,12 +55,12 @@ const DashboardNavber = () => {
                     </div>
                 </div>
 
-                <div className='flex justify-between items-center gap-8'>
+                <div className='flex justify-between items-center gap-6'>
                     {/* -----------bell icon start----------- */}
                     <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
 
                         <div onClick={() => setViewNotification(!viewNotification)} className='relative inline-block'>
-                            <img className='w-6' src={bell} alt="" />
+                            <img className='w-5' src={bell} alt="" />
                             {
                                 viewNotification && <Notification />
                             }
@@ -68,10 +68,10 @@ const DashboardNavber = () => {
                     </div>
                     {/* -----------bell icon end----------- */}
 
-                    <Link to='/billing/subscription' className='hidden lg:block lg:flex justify-between ga--4 items-center bg-[#393AA7] h-12 px-6 rounded-[50px]'>
+                    <Link to='/billing/subscription' className='hidden lg:block lg:flex justify-between gap-4 items-center bg-[#393AA7] h-10 px-4 rounded-[50px]'>
                         <div className='flex items-center gap-3'>
-                            <img className='w-8' src={star} alt="" />
-                            <h1 className='text-white text-[16px] font-semibold'>Unlock PRO</h1>
+                            <img className='w-6' src={star} alt="" />
+                            <h1 className='text-white text-sm'>Unlock PRO</h1>
                         </div>
                     </Link>
 

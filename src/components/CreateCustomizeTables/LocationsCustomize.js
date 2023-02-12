@@ -16,8 +16,6 @@ const LocationsCustomize = ({ location }) => {
     const [hiddenToggle, setHiddenToggle] = useState(false);
     const [lockedToggle, setLockedToggle] = useState(false);
     const [spotlightToggle, setSpotlightToggle] = useState(false);
-    const [toggle, setToggle] = useState(true);
-    const toggleClass = " transform translate-x-5";
 
     let editRef = useRef()
     useEffect(() => {

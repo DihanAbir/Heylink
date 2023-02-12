@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import link from '../../../../../assets/icons/link.svg'
 import threeSocial from '../../../../../assets/icons/three-social.svg'
 import uparrow from '../../../../../assets/icons/gif-images/up-arrow.gif'
-import AdvancedLinkModal from '../../../../../components/Modals/LinksTabModals/AdvancedLinkModal';
 import CreateLinkCustomize from '../../../../../components/CreateCustomizeTables/CreateLinkCustomize';
 const LinksTab = () => {
     const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false)
@@ -22,9 +21,9 @@ const LinksTab = () => {
         setOpenAdvancedLinkModal(false)
     }
     return (
-        <section>
+        <section className='pb-6'>
             <form onSubmit={handleUrl} >
-                <div className='flex justify-between md:px-6 w-full lg:w-[980px] mx-auto'>
+                <div className='flex justify-between md:px-6 w-full lg:max-w-[980px] mx-auto'>
                     <div className='flex-grow flex items-center bg-gray-200 rounded-3xl'>
                         <div className='cursor-pointer w-12 py-3 border-r border-gray-400 flex justify-center items-center'>
                             <img src={link} alt="" />

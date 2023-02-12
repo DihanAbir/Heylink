@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import deletes from '../../assets/icons/link-customize-icons/delete.svg'
 import downArrow from '../../assets/icons/link-customize-icons/down-arrow.svg'
 import upArrow from '../../assets/icons/link-customize-icons/up-arrow.svg'
@@ -10,8 +10,8 @@ import sliderInactive from '../../assets/icons/gallery-tab-icons/slider-inactive
 import gridActive from '../../assets/icons/gallery-tab-icons/grid-active.svg'
 import gridInactive from '../../assets/icons/gallery-tab-icons/grid-inactive.svg'
 import { Link } from 'react-router-dom';
-import SliderGridTab from './SliderGridTab';
-import DeleteModal from '../Modals/CommonModals/DeleteModal';
+import SliderGridTab from '../CreateCustomizeTables/SlidAndGridTabs/SlidAndGridTabs/SliderGridTab';
+import DeleteModal from '../../components/Modals/CommonModals/DeleteModal';
 
 const GalleryCustomize = () => {
     const [open, setOpen] = useState(false)
@@ -19,11 +19,27 @@ const GalleryCustomize = () => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [toggle, setToggle] = useState(false);
     const [openInputChange, setOpenInputChange] = useState(false);
+    const [galleryTitleInput, setGalleryTitleInput] = useState('');
 
+    console.log(galleryTitleInput);
     const closeModal = () => {
         setDeleteModal(false)
     }
 
+
+
+    let outSideRef = useRef();
+    useEffect(() => {
+        let handler = (e) => {
+            if (!outSideRef.current.contains(e.target)) {
+                setOpenInputChange(false)
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        }
+    });
     return (
         <div>
             <div className='relative w-full my-6 border border-gray-200 rounded-md'>
@@ -34,11 +50,13 @@ const GalleryCustomize = () => {
                     </div>
 
                     {/* -----------edit and input  icon start----------- */}
-                    <div className='flex-grow flex flex-col gap-2'>
+                    <div ref={outSideRef} className='flex-grow flex flex-col gap-2'>
                         <div className='flex justify-between items-center'>
-                            <input className={`mr-3 w-full focus:outline-none text-gray-700 font-bold
-                           ${openInputChange ? 'bg-blue-100 border border-blue-600' : 'border-none'} `} type="text" disabled={!openInputChange} defaultValue='New Gallery Image' />
-                            <img onClick={() => setOpenInputChange(!openInputChange)} className='w-3' src={edit} alt="" />
+                            <input onChange={(e) => setGalleryTitleInput(e.target.value)}
+                                className={`mr-3 pr-3 rounded w-full focus:outline-none text-blue-600
+                                    ${openInputChange ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`}
+                                type="text" disabled={!openInputChange} defaultValue='New Gallery Image' name='linkName' />
+                            <img onClick={() => setOpenInputChange(!openInputChange)} className='w-3 cursor-pointer' src={edit} alt="" />
                         </div>
                     </div>
                     {/* -----------edit  and input icon end----------- */}
@@ -70,6 +88,7 @@ const GalleryCustomize = () => {
                     </div>
                 </div>
 
+                {/* if open true then slid tab show */}
                 {
                     open && <div
                         className='grid lg:grid-cols-2 gap-2 border-t border-gray-200 py-4 mx-3 sm:py-0'>
@@ -89,7 +108,7 @@ const GalleryCustomize = () => {
                                 <div className='flex justify-center items-center mx-auto my-3 h-10 w-56 rounded-[50px] bg-blue-600 px-6'>
                                     <h1 className='text-white font-semibold'>+ Add Image</h1>
                                 </div>
-                                <input className='absolute h-56 top-0 cursor-pointer w-full opacity-0' type="file" name="image" id="" />
+                                <input className='absolute h-full top-0 cursor-pointer w-full opacity-0' type="file" name="image" id="" />
                             </div>
                         </div>
 
@@ -101,13 +120,16 @@ const GalleryCustomize = () => {
                                     <img src={slideGrid ? sliderActive : sliderInactive} alt="" />
                                     <h1 className='text-gray-500 p-2'>Show as Slider</h1>
                                 </div>
+
                                 <div onClick={() => setSlideGrid(false)}
                                     className={`flex justify-center items-center h-10 w-full border rounded-r-md ${!slideGrid && 'rounded-y border border-blue-600 bg-blue-100'}`}>
                                     <img src={!slideGrid ? gridActive : gridInactive} alt="" />
                                     <h1 className='text-gray-500 p-2'>Show as Grid</h1>
                                 </div>
                             </div>
-                            <div className='h-96'>
+
+                            {/* --------------slider and grid tabs-------------- */}
+                            <div className='h-fit'>
                                 <SliderGridTab slideGrid={slideGrid} />
                             </div>
                         </div>

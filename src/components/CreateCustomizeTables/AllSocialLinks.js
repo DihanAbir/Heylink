@@ -1,16 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import downArrow from '../../assets/icons/link-customize-icons/down-arrow.svg'
 import upArrow from '../../assets/icons/link-customize-icons/up-arrow.svg'
 import swap from '../../assets/icons/link-customize-icons/swap.svg'
 import edit from '../../assets/icons/link-customize-icons/edit.svg'
 import deletes from '../../assets/icons/link-customize-icons/delete.svg'
+import DeleteModal from '../Modals/CommonModals/DeleteModal';
 
 const AllSocialLinks = ({ socialLink }) => {
+    const { name, username } = socialLink
     const [open, setOpen] = useState(false)
     const [selectBtn, setSelectBtn] = useState(true)
+    const [deleteModal, setDeleteModal] = useState(false)
+    const [openInputChange, setOpenInputChange] = useState(false);
+    const [socialLinkName, setSocialLinkName] = useState('');
+
+    console.log(socialLinkName);
+    const closeModal = () => {
+        setDeleteModal(false)
+    }
+
+
+    let outSideRef = useRef();
+    useEffect(() => {
+        let handler = (e) => {
+            if (!outSideRef.current.contains(e.target)) {
+                setOpenInputChange(false)
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        }
+    });
     return (
         <div>
-            <div className='relative w-full my-6 border border-gray-200 rounded-md'>
+            <div className='relative w-full my-6 border border-gray-200 rounded-md cursor-pointer'>
 
                 <div className='h-28 flex justify-between items-center gap-4 md:gap-6 py-4 px-2 md:px-6'>
                     <div>
@@ -22,14 +46,16 @@ const AllSocialLinks = ({ socialLink }) => {
                             <img className='w-6' src='https://cdn-icons-png.flaticon.com/128/5968/5968764.png' alt="" />
                             <h1 className='flex items-center gap-1'>
                                 <span className='text-gray-300'>My</span>
-                                <span className='text-gray-300'>Facebook</span>
+                                <span className='text-gray-300'>{name}</span>
                             </h1>
                         </div>
 
-                        <div className='flex-grow flex flex-col gap-2'>
+                        <div ref={outSideRef} className='flex-grow flex flex-col gap-2'>
                             <div className='flex justify-between items-center'>
-                                <input className='w-32 md:w-full border-none focus:outline-none text-blue-600 px-3' type="text" defaultValue={socialLink} />
-                                <img className='w-3' src={edit} alt="" />
+                                <input onChange={(e) => setSocialLinkName(e.target.value)}
+                                    className={`mr-3 pr-3 rounded w-full focus:outline-none text-blue-600
+                                    ${openInputChange ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange} defaultValue={username} name='linkName' />
+                                <img onClick={() => setOpenInputChange(!openInputChange)} className='w-3 cursor-pointer' src={edit} alt="" />
                             </div>
                         </div>
                     </div>
@@ -58,13 +84,16 @@ const AllSocialLinks = ({ socialLink }) => {
                             </div>
                         </div>
 
-                        <div className='flex flex-col justify-center items-center gap-2 my-1'>
-                            <img className='w-4' src={deletes} alt="" />
-                            <span className='text-sm text-gray-500'>Delete</span>
+                        <div className='relative'>
+                            <div onClick={() => setDeleteModal(!deleteModal)} className='flex flex-col justify-center items-center gap-2 my-1'>
+                                <img className='w-4' src={deletes} alt="" />
+                                <span className='text-sm text-gray-500'>Delete</span>
+                            </div>
+                            {
+                                deleteModal && <DeleteModal closeModal={closeModal}></DeleteModal>
+                            }
                         </div>
-
                     </div>
-
                 }
 
 

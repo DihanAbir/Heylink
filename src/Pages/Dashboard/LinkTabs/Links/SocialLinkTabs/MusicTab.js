@@ -19,7 +19,7 @@ const MusicTab = () => {
     }
     return (
         <section className='min-h-screen'>
-            <div className='md:px-6 w-full lg:w-[980px] mx-auto'>
+            <div className='md:px-6 w-full lg:max-w-[980px] mx-auto'>
                 <form onSubmit={handleUrl} className='flex justify-between w-full mx-auto' >
                     <div className='flex-grow flex items-center bg-gray-200 rounded-3xl'>
                         <div className='cursor-pointer w-12 py-3 border-r border-gray-400 flex justify-center items-center'>

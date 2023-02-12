@@ -6,8 +6,9 @@ const GalleryTab = () => {
     const [openAddGallery, setOpenAddGallery] = useState(false)
     const [viewGallery, setViewGallery] = useState(false)
 
-    let dropdownRef = useRef();
 
+
+    let dropdownRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {

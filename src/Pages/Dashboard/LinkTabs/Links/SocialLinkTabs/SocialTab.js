@@ -24,35 +24,17 @@ const socials = [
         img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
     },
     {
-        id: '3',
-        name: 'LinkedIn',
-        url: 'https://linkedin.com/username',
+        id: '4',
+        name: 'twitter',
+        url: 'https://twitter.com/username',
         img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    },
-    {
-        id: '3',
-        name: 'LinkedIn',
-        url: 'https://linkedin.com/username',
-        img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    },
-    {
-        id: '3',
-        name: 'LinkedIn',
-        url: 'https://linkedin.com/username',
-        img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    },
-    {
-        id: '3',
-        name: 'LinkedIn',
-        url: 'https://linkedin.com/username',
-        img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    },
+    }
 ]
 
 const SocialTab = () => {
-    const [selectedSocial, setSelectedSocial] = useState('Facebook')
-    const [usernamePlacehoder, setUsernamePlaceholder] = useState('https://facebook.com/username')
-    const [socialImg, setSocialImg] = useState('https://cdn-icons-png.flaticon.com/128/5968/5968764.png')
+    const [selectedSocial, setSelectedSocial] = useState('Select Popular Social Link')
+    const [usernamePlacehoder, setUsernamePlaceholder] = useState('Paste Your Social Link here')
+    const [socialImg, setSocialImg] = useState('')
     const [search, setSearch] = useState(false)
     const [allSocialLinks, setAllSocialLiks] = useState([])
     const [inputError, setInputError] = useState('')
@@ -79,20 +61,24 @@ const SocialTab = () => {
     const handleSubmit = (event) => {
         event.preventDefault()
         const username = event.target.username.value
-        setAllSocialLiks([...allSocialLinks, username])
+        const socialLinks = {
+            name: selectedSocial,
+            username: username
+        }
+        setAllSocialLiks([...allSocialLinks, socialLinks])
         event.target.reset()
         setInputError('')
     }
     return (
-        <section className='min-h-screen'>
-            <div className='px-2 w-full lg:w-[960px] mx-auto'>
+        <section className='min-h-screen pb-6'>
+            <div className='px-2 w-full lg:max-w-[960px] mx-auto cursor-pointer'>
                 <form onSubmit={handleSubmit}
                     className='grid md:grid-cols-3 gap-6'>
                     <div className='relative'>
                         <div onClick={() => setSearch(!search)}
                             className='relative border-b flex justify-between items-center px-4 h-14 w-full bg-white'>
                             <div className='flex items-center gap-4'>
-                                <img className='w-6' src={socialImg} alt="" />
+                                <img className='w-6' src={socialImg && socialImg} alt="" />
                                 <h1>{selectedSocial}</h1>
                             </div>
                             <div>
@@ -120,12 +106,14 @@ const SocialTab = () => {
                             </div>
                         }
                     </div>
+
                     <div className='rounded-[50px] h-14 w-full bg-gray-200'>
                         <input onChange={e => setInputError(e.target.value)}
                             className='w-full h-full rounded-[50px] px-4 focus:text-gray-700 text-gray-400 bg-gray-200 focus:outline-none border-none' name='username' type="text" placeholder={usernamePlacehoder} />
                     </div>
+
                     {
-                        inputError ? <div className='flex justify-center items-center gap-1 px-4 rounded-[50px] h-14 w-56 mx-auto md:w-full bg-blue-600'>
+                        inputError && selectedSocial !== 'Select Popular Social Link' ? <div className='flex justify-center items-center gap-1 px-4 rounded-[50px] h-14 w-56 mx-auto md:w-full bg-blue-600'>
                             <button className='text-white font-semibold'>+ Add</button>
                             <button className='text-white font-semibold'>{selectedSocial}</button>
                         </div>
