@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DashboardLayout from '../Layout/DashboardLayout';
 import Main from '../Layout/Main';
 import Dashboard from '../Pages/Dashboard/Dashboard/Dashboard';
-import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance';
+import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance/Appearance';
 import Links from '../Pages/Dashboard/LinkTabs/Links/Links';
 import AppsTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/AppsTab';
 import CommerceTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/CommerceTab';
@@ -48,24 +48,29 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard', element: <PriveteRoute><Dashboard></Dashboard></PriveteRoute>,
                 children: [
-                    { path: '/dashboard/appearance', element: <Appearance /> },
-                    { path: '/dashboard/settings', element: <Settings /> },
-                    { path: '/dashboard/billing/subscription', element: <Subscription /> },
                     {
                         path: '/dashboard/', element: <Links></Links>,
                         children: [
                             { path: '/dashboard/', element: <LinksTab></LinksTab> },
-                            { path: '/dashboard/links', element: <LinksTab></LinksTab> },
-                            { path: '/dashboard/links/social', element: <SocialTab></SocialTab> },
-                            { path: '/dashboard/links/gallery', element: <GalleryTab></GalleryTab> },
-                            { path: '/dashboard/links/menu', element: <MenuTab></MenuTab> },
-                            { path: '/dashboard/links/crypto', element: <CryptoTab></CryptoTab> },
-                            { path: '/dashboard/links/locations', element: <LocationsTab></LocationsTab> },
-                            { path: '/dashboard/links/music', element: <MusicTab></MusicTab> },
-                            { path: '/dashboard/links/commerce', element: <CommerceTab></CommerceTab> },
-                            { path: '/dashboard/links/apps', element: <AppsTab></AppsTab> },
+                            { path: '/dashboard/links', element: <LinksTab /> },
+                            { path: '/dashboard/links/social', element: <SocialTab /> },
+                            { path: '/dashboard/links/gallery', element: <GalleryTab /> },
+                            { path: '/dashboard/links/menu', element: <MenuTab /> },
+                            { path: '/dashboard/links/crypto', element: <CryptoTab /> },
+                            { path: '/dashboard/links/locations', element: <LocationsTab /> },
+                            { path: '/dashboard/links/music', element: <MusicTab /> },
+                            { path: '/dashboard/links/commerce', element: <CommerceTab /> },
+                            { path: '/dashboard/links/apps', element: <AppsTab /> },
                         ]
                     },
+                    {
+                        path: '/dashboard/appearance', element: <Appearance></Appearance>,
+                        children: [
+
+                        ]
+                    },
+                    { path: '/dashboard/settings', element: <Settings /> },
+                    { path: '/dashboard/billing/subscription', element: <Subscription /> },
                 ]
             },
 
