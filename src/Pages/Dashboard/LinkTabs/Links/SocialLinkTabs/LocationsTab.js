@@ -83,6 +83,9 @@ const LocationsTab = () => {
                     }
                 </form>
             </div>
+
+
+            {/* ------------------------------------------------- */}
             <div>
                 {
                     allLocations && allLocations.map(location => <LocationsCustomize location={location} />)
@@ -94,6 +97,7 @@ const LocationsTab = () => {
                     </div>
                 }
             </div>
+            {/* ------------------------------------------------- */}
 
             <h1 className='text-gray-600 text-sm text-center py-6'>You can manage multiple locations on the PRO plan.Check it <Link to='/' className='text-blue-600 underline'>here</Link></h1>
 

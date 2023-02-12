@@ -23,7 +23,7 @@ const MenuTab = () => {
                         </button>
                 }
 
-                <div className='flex items-center gap-3 h-12 max-w-[600px] mx-auto mt-6 bg-yellow-100 rounded-md px-4'>
+                <div className='flex justify-start items-center gap-3 h-12 max-w-[600px] mx-auto mt-6 bg-yellow-100 rounded-md px-4'>
                     <div className='w-8 h-8 flex justify-center items-center bg-yellow-400 rounded-full'><span className='text-white p-1'>!</span></div>
                     <p className='text-sm'>You must upgrade to PRO account in order to create more than 1 menu.</p>
                 </div>

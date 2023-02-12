@@ -23,6 +23,7 @@ import ForgotPassword from '../Pages/Profile/ForgotPassword/ForgotPassword';
 import Login from '../Pages/Profile/Login/Login';
 import Signup from '../Pages/Profile/Signup/Signup';
 import Templates from '../Pages/Templates/Templates';
+import PriveteRoute from './PriveteRoute/PriveteRoute';
 
 const router = createBrowserRouter([
     {
@@ -42,10 +43,10 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         errorElement: <ErrorPage></ErrorPage>,
-        element: <DashboardLayout></DashboardLayout>,
+        element: <PriveteRoute><DashboardLayout></DashboardLayout></PriveteRoute>,
         children: [
             {
-                path: '/dashboard', element: <Dashboard></Dashboard>,
+                path: '/dashboard', element: <PriveteRoute><Dashboard></Dashboard></PriveteRoute>,
                 children: [
                     { path: '/dashboard/appearance', element: <Appearance /> },
                     { path: '/dashboard/settings', element: <Settings /> },

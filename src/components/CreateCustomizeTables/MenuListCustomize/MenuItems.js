@@ -8,6 +8,12 @@ const MenuItems = () => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [proModal, setProModal] = useState(false)
     const [uploadImagePermit, setUploadImagePermit] = useState(false)
+
+    // ------item name and item price from input field
+    const [itemName, setItemName] = useState('')
+    const [itemPrice, setItemPrice] = useState('')
+
+    // console.log(itemName, itemPrice)
     return (
         <div className='relative cursor-pointer py-8 px-4'>
 
@@ -20,12 +26,12 @@ const MenuItems = () => {
                 <div className='grid grid-cols-1 gap-4 w-full'>
                     <div className='flex flex-col md:flex-row md:items-start gap-4 w-full'>
                         <div className='w-full h-14 flex-grow'>
-                            <input className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="text" placeholder='text item' />
+                            <input onChange={(e) => setItemName(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="text" placeholder='text item' name='itemName' />
                             <p className='text-right text-sm text-gray-500'>50 characters left</p>
                         </div>
 
                         <div className='w-full md:w-80'>
-                            <input className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="text" placeholder='Item price (optional)' />
+                            <input onChange={(e) => setItemPrice(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="text" name='itemPrice' placeholder='Item price (optional)' />
                         </div>
                     </div>
 

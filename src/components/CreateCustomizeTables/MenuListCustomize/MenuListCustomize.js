@@ -28,7 +28,9 @@ const MenuListCustomize = () => {
     const [proModal1, setProModal1] = useState(false);
     const [proModal2, setProModal2] = useState(false);
 
-    console.log(menuItems)
+    // ------menu name from input field
+    const [menuName, setMenuName] = useState('')
+
 
     let outSideRef = useRef();
     useEffect(() => {
@@ -54,7 +56,7 @@ const MenuListCustomize = () => {
                     </div>
 
                     <div className='w-full h-14'>
-                        <input className='focus:outline-none text-red-500 border-none w-full h-12 px-4 bg-gray-200' type="text" placeholder='Please enter the name of the menu or price list' />
+                        <input onChange={(e) => setMenuName(e.target.value)} className='focus:outline-none text-red-500 border-none w-full h-12 px-4 bg-gray-200' name='menuName' type="text" placeholder='Please enter the name of the menu or price list' />
                         <p className='text-right text-sm text-gray-500'>128 characters left</p>
                     </div>
 
@@ -97,7 +99,7 @@ const MenuListCustomize = () => {
                             <span className='text-blue-900 underline'>Add additional item</span>
                         </button>
 
-                        <div ref={outSideRef} className='flex items-center gap-6 mt-4'>
+                        <div ref={outSideRef} className='flex flex-col md:flex-row items-center gap-6 mt-4'>
                             <h1 className='font-semibold text-black'>Currency</h1>
                             <div className='relative'>
                                 <div onClick={() => setViewCurrency(!viewCurrency)}
