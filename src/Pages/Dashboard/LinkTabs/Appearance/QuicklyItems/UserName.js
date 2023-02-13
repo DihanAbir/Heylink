@@ -3,7 +3,7 @@ import arrowRight from '../../../../../assets/icons/appearance-tab-icons/arrowRi
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrowDown.svg'
 import edit from '../../../../../assets/icons/appearance-tab-icons/edit.svg'
 import right from '../../../../../assets/icons/appearance-tab-icons/blue-right.png'
-import AppearanceShareModal from '../../../../../components/Modals/AppearanceShareModal/AppearanceShareModal';
+import AppearanceShareModal from '../../../../../components/Modals/AppearanceModals/AppearanceShareModal';
 
 const UserName = () => {
     const [open, setOpen] = useState(true)

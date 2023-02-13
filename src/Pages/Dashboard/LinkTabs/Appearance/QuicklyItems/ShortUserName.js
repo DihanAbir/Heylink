@@ -3,13 +3,15 @@ import arrowRight from '../../../../../assets/icons/appearance-tab-icons/arrowRi
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrowDown.svg'
 import edit from '../../../../../assets/icons/appearance-tab-icons/edit.svg'
 import right from '../../../../../assets/icons/appearance-tab-icons/blue-right.png'
-import AppearanceShareModal from '../../../../../components/Modals/AppearanceShareModal/AppearanceShareModal';
+import AppearanceShareModal from '../../../../../components/Modals/AppearanceModals/AppearanceShareModal';
+import ShortUsernameModal from '../../../../../components/Modals/AppearanceModals/ShortUsernameModal';
 
 const ShortUserName = () => {
     const [open, setOpen] = useState(true)
     const [inputChange, setInputChange] = useState(false)
     const [newShortUsername, setNewShortUsername] = useState('')
     const [viewModal, setViewModal] = useState(false)
+    const [viewShortUserNameModal, setViewShortUserNameModal] = useState(false)
 
     const handleUpdate = () => {
         setNewShortUsername('')
@@ -30,7 +32,7 @@ const ShortUserName = () => {
         }
     });
     return (
-        <section id='shortcut' className='mb-4'>
+        <section id='Short-username' className='mb-4'>
             <div className='flex items-center justify-between'>
                 <h1 onClick={() => setOpen(!open)} className='text-left font-semibold text-blue-900 mb-2'>USERNAME</h1>
                 {
@@ -45,7 +47,16 @@ const ShortUserName = () => {
                     <div ref={modalRef} className='flex items-center justify-between gap-2 w-full' >
                         <div className='flex-grow'>
                             <div className='flex-grow flex items-center gap-1'>
-                                <h1 className='text-gray-500'>heylink.me/</h1>
+                                <div className='relative'>
+                                    <div onClick={() => setViewShortUserNameModal(!viewShortUserNameModal)}
+                                        className='h-8 bg-gray-300 flex items-center justify-center w-fit px-2 rounded-2xl'>
+                                        <h1 className='text-gray-500'>he1.me</h1>
+                                        <img className='w-5' src={arrowDown} alt="" />
+                                    </div>
+                                    {
+                                        viewShortUserNameModal && <ShortUsernameModal closeModal={setViewShortUserNameModal} />
+                                    }
+                                </div>
                                 <input onChange={(e) => setNewShortUsername(e.target.value)} className={`flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue='cNTsa' />
                                 {
                                     newShortUsername ? <>

@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrow-down.svg'
+import CustomeTheme from '../CustomeTheme/CustomeTheme/CustomeTheme';
+import PlacementManager from '../PlacementManager/PlacementManager';
+import AvatarTitle from '../QuicklyItems/AvatarTitle';
+import LayoutSimple from '../QuicklyItems/LayoutSimple';
 import Shortcut from '../QuicklyItems/Shortcut';
 import ShortUserName from '../QuicklyItems/ShortUserName';
 import UserName from '../QuicklyItems/UserName';
@@ -9,7 +13,9 @@ const jumpItems = [
     { name: 'username', img: arrowDown },
     { name: 'Short-username', img: arrowDown },
     { name: 'layout', img: arrowDown },
-    { name: 'avatarTitle', img: arrowDown }
+    { name: 'avatar-Title', img: arrowDown },
+    { name: 'Placement-Manager', img: arrowDown },
+    { name: 'Theme', img: arrowDown },
 ]
 
 const Appearance = () => {
@@ -36,10 +42,16 @@ const Appearance = () => {
                     }
                 </div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-4 w-full'>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 w-full'>
                 <Shortcut />
                 <UserName />
                 <ShortUserName />
+                <LayoutSimple />
+                <AvatarTitle />
+            </div>
+            <div className='mt-6'>
+                <PlacementManager />
+                <CustomeTheme />
             </div>
         </section>
     );
