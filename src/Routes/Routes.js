@@ -17,7 +17,7 @@ import MusicTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MusicTab'
 import SocialTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/SocialTab';
 import Settings from '../Pages/Dashboard/LinkTabs/Settings/Settings';
 import Signups from '../Pages/Dashboard/LinkTabs/Signups/Signups/Signups';
-import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription';
+import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription/Subscription';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import Home from '../Pages/Home/Home/Home';
 import PricingCards from '../Pages/PricingCards/PricingCards';
