@@ -60,7 +60,7 @@ const CustomeTheme = () => {
             {
                 open && <div className='grid grid-cols-1 gap-4 p-2 md:p-4 border rounded-xl h-full'>
                     <div>
-                        <div className='flex items-center gap-6'>
+                        <div className='flex items-center flex-wrap md:flex-nowrap gap-6'>
                             {
                                 themeCategories.map(themeCtg => <div onClick={() => handleData(themeCtg.id)}
                                     className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
@@ -72,7 +72,7 @@ const CustomeTheme = () => {
                         <hr className='border-gray-300' />
                     </div>
 
-                    <div className='flex items-center flex-wrap md:flex-nowrap gap-4'>
+                    <div className='flex items-center'>
                         {
                             allData.map(sub => <div className='relative flex flex-col justify-center gap-2 items-center w-32 h-32 rounded-md hover:bg-blue-200'>
                                 <div className='relative w-20 h-14'>

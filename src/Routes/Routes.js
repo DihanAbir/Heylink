@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DashboardLayout from '../Layout/DashboardLayout';
 import Main from '../Layout/Main';
 import Dashboard from '../Pages/Dashboard/Dashboard/Dashboard';
+import Analytics from '../Pages/Dashboard/LinkTabs/Analytics/Analytics/Analytics';
 import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance/Appearance';
 import Links from '../Pages/Dashboard/LinkTabs/Links/Links';
 import AppsTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/AppsTab';
@@ -63,13 +64,9 @@ const router = createBrowserRouter([
                             { path: '/dashboard/links/apps', element: <AppsTab /> },
                         ]
                     },
-                    {
-                        path: '/dashboard/appearance', element: <Appearance></Appearance>,
-                        children: [
-
-                        ]
-                    },
+                    { path: '/dashboard/appearance', element: <Appearance></Appearance> },
                     { path: '/dashboard/settings', element: <Settings /> },
+                    { path: '/dashboard/analytics', element: <Analytics /> },
                     { path: '/dashboard/billing/subscription', element: <Subscription /> },
                 ]
             },
