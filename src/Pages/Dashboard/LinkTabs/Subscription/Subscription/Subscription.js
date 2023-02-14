@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import down from '../../../../../assets/icons/down.png'
 
-const options = ['Bangladesh', 'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola']
+const countries = ['Bangladesh', 'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola']
 
 const Subscription = () => {
     const [proPkg, setProPkg] = useState(true)
     const [selectedCountry, setSelectedCountry] = useState('Bangladesh')
     const [showCountries, setShowCountries] = useState(false)
+    const [allCountries, setAllCountries] = useState(countries)
     const [couponCode, setCouponCode] = useState('')
-    console.log(couponCode)
 
     const handleApply = (e) => {
         e.preventDefault()
@@ -16,8 +16,13 @@ const Subscription = () => {
         setCouponCode('')
     }
 
-    const handleSetOption = (data) => {
-        setSelectedCountry(data)
+    const handleSearchCountries = (e) => {
+        const getCountries = allCountries.filter(country => country.toLowerCase().includes(e.target.value))
+        console.log(getCountries)
+    }
+
+    const handleSetOption = (option) => {
+        setSelectedCountry(option)
         setShowCountries(false)
     }
     return (
@@ -69,8 +74,8 @@ const Subscription = () => {
                 <div className='relative flex-grow'>
                     <div onClick={() => setShowCountries(!showCountries)}
                         className={`relative flex justify-between items-center px-4 w-full h-12 text-black
-                    ${showCountries ? 'border-t border-x rounded-t rounded-x' : 'border rounded-md'}`}>
-                        <input className='border-none focus:outline-none w-full h-full'
+                    ${showCountries ? 'border-y border-x rounded-t rounded-x' : 'border rounded-md'}`}>
+                        <input onChange={handleSearchCountries} className='border-none focus:outline-none w-full h-full'
                             defaultValue={selectedCountry} type="text" />
                         <img className='w-3 absolute right-3 top-4' src={down} alt="" />
                     </div>
@@ -79,8 +84,8 @@ const Subscription = () => {
                         showCountries && <div className={`absolute w-full bg-white h-56 overflow-y-auto 
                         ${showCountries && 'border-x border-b rounded-x rounded-b'}`} >
                             {
-                                options.map(option => <div onClick={() => handleSetOption(option)}
-                                    className='w-full h-10 hover:bg-gray-200 flex justify-start items-center px-4' >
+                                allCountries.map(option => <div onClick={() => handleSetOption(option)}
+                                    className='cursor-pointer w-full h-10 hover:bg-gray-200 flex justify-start items-center px-4' >
                                     <h1 className={`${selectedCountry === option && 'font-bold'}`}>{option}</h1>
                                 </div>)
                             }
