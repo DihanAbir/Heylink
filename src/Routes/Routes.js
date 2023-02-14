@@ -15,6 +15,7 @@ import LocationsTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/Locat
 import MenuTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MenuTab';
 import MusicTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MusicTab';
 import SocialTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/SocialTab';
+import MessagesTab from '../Pages/Dashboard/LinkTabs/Messages/MessagesTab/MessagesTab';
 import Settings from '../Pages/Dashboard/LinkTabs/Settings/Settings';
 import Signups from '../Pages/Dashboard/LinkTabs/Signups/Signups/Signups';
 import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription/Subscription';
@@ -70,6 +71,7 @@ const router = createBrowserRouter([
                     { path: '/dashboard/analytics', element: <Analytics /> },
                     { path: '/dashboard/signups', element: <Signups /> },
                     { path: '/dashboard/billing/subscription', element: <Subscription /> },
+                    { path: '/dashboard/messages', element: <MessagesTab /> },
                 ]
             },
 

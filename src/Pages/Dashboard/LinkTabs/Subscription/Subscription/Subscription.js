@@ -7,7 +7,6 @@ const Subscription = () => {
     const [proPkg, setProPkg] = useState(true)
     const [selectedCountry, setSelectedCountry] = useState('Bangladesh')
     const [showCountries, setShowCountries] = useState(false)
-    const [allCountries, setAllCountries] = useState(countries)
     const [couponCode, setCouponCode] = useState('')
 
     const handleApply = (e) => {
@@ -15,12 +14,7 @@ const Subscription = () => {
         e.target.reset()
         setCouponCode('')
     }
-
-    const handleSearchCountries = (e) => {
-        const getCountries = allCountries.filter(country => country.toLowerCase().includes(e.target.value))
-        console.log(getCountries)
-    }
-
+    console.log(selectedCountry)
     const handleSetOption = (option) => {
         setSelectedCountry(option)
         setShowCountries(false)
@@ -75,8 +69,8 @@ const Subscription = () => {
                     <div onClick={() => setShowCountries(!showCountries)}
                         className={`relative flex justify-between items-center px-4 w-full h-12 text-black
                     ${showCountries ? 'border-y border-x rounded-t rounded-x' : 'border rounded-md'}`}>
-                        <input onChange={handleSearchCountries} className='border-none focus:outline-none w-full h-full'
-                            defaultValue={selectedCountry} type="text" />
+                        <input className='cursor-pointer border-none focus:outline-none w-full h-full'
+                            value={selectedCountry} readOnly type="text" />
                         <img className='w-3 absolute right-3 top-4' src={down} alt="" />
                     </div>
 
@@ -84,7 +78,7 @@ const Subscription = () => {
                         showCountries && <div className={`absolute w-full bg-white h-56 overflow-y-auto 
                         ${showCountries && 'border-x border-b rounded-x rounded-b'}`} >
                             {
-                                allCountries.map(option => <div onClick={() => handleSetOption(option)}
+                                countries.map(option => <div onClick={() => handleSetOption(option)}
                                     className='cursor-pointer w-full h-10 hover:bg-gray-200 flex justify-start items-center px-4' >
                                     <h1 className={`${selectedCountry === option && 'font-bold'}`}>{option}</h1>
                                 </div>)
