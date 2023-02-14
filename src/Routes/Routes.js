@@ -16,6 +16,7 @@ import MenuTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MenuTab';
 import MusicTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MusicTab';
 import SocialTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/SocialTab';
 import Settings from '../Pages/Dashboard/LinkTabs/Settings/Settings';
+import Signups from '../Pages/Dashboard/LinkTabs/Signups/Signups/Signups';
 import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import Home from '../Pages/Home/Home/Home';
@@ -67,6 +68,7 @@ const router = createBrowserRouter([
                     { path: '/dashboard/appearance', element: <Appearance></Appearance> },
                     { path: '/dashboard/settings', element: <Settings /> },
                     { path: '/dashboard/analytics', element: <Analytics /> },
+                    { path: '/dashboard/signups', element: <Signups /> },
                     { path: '/dashboard/billing/subscription', element: <Subscription /> },
                 ]
             },
