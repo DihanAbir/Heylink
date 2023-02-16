@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import FastLinkProModal from '../../../../../components/Modals/CustomizeLinkModals/FastLinkProModal';
-import lock from '../../../../../assets/icons/link-customize-icons/pro-lock.svg'
+import ProButton from '../../../../../components/Buttons/ProButton';
 
 const AppsTab = () => {
     const [addIosAppLink, setAddIosAppLink] = useState('')
@@ -28,9 +28,7 @@ const AppsTab = () => {
             <div className='lg:max-w-[1180px] mx-auto'>
                 <div className='flex items-center gap-2'>
                     <h1 className='font-semibold text-[#393AA7]'>MOBILE APP LINKS</h1>
-                    <div className='flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]'>
-                        <img className='w-7' src={lock} alt="" />
-                    </div>
+                    <ProButton />
                 </div>
 
                 <div className='grid grid-cols-1 gap-3 border border-[#393AA7] rounded-md p-5'>

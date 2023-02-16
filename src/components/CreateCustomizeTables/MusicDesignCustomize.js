@@ -11,6 +11,7 @@ import DeleteModal from '../Modals/CommonModals/DeleteModal';
 import ProModal from '../Modals/CommonModals/ProModal';
 import ProButton from '../Buttons/ProButton';
 import ProToggleSwitch from '../ToggleSwitch/ProToggleSwitch';
+import DefaultSwitch from '../ToggleSwitch/DefaultSwitch';
 
 const musics = [
     {
@@ -143,15 +144,7 @@ const MusicDesignCustomize = ({ url }) => {
                         </div>
                     </div>
 
-                    <div className="flex flex-col justify-center items-center ">
-                        <div onClick={() => setMainToggle(!mainToggle)}
-                            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${mainToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                            <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${mainToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                            </div>
-                        </div>
-                    </div>
+                    <DefaultSwitch initialToggle={mainToggle} getToggle={setMainToggle} />
                 </div>
 
                 {

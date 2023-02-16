@@ -10,6 +10,7 @@ import MenuItems from './MenuItems';
 import ProButton from '../../Buttons/ProButton';
 import ProToggleSwitch from '../../ToggleSwitch/ProToggleSwitch';
 import ProModal from '../../Modals/CommonModals/ProModal';
+import DefaultSwitch from '../../ToggleSwitch/DefaultSwitch';
 
 const currencyItems = [
     'USD', 'UYU', 'UZS', 'VEF', 'VES', 'VND', 'ZWL', 'ZMW', 'ZMK', 'ZAR', 'YER', 'XPF', 'XOF', 'XCD'
@@ -72,15 +73,7 @@ const MenuListCustomize = () => {
                         </div>
 
                         {/* -----------toggler switch start----------- */}
-                        <div className="flex flex-col justify-center items-center ">
-                            <div onClick={() => setMenuToggle(!menuToggle)}
-                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                            ${menuToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                            ${menuToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                </div>
-                            </div>
-                        </div>
+                        <DefaultSwitch initialToggle={menuToggle} getToggle={setMenuToggle} />
                         {/* -----------toggler switch start----------- */}
                     </div>
                 </div>

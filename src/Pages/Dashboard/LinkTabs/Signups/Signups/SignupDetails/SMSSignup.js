@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ProButton from '../../../../../../components/Buttons/ProButton';
 import SmallIcon from '../../../../../../components/Buttons/SmallIcon';
+import DefaultSwitch from '../../../../../../components/ToggleSwitch/DefaultSwitch';
 import ProToggleSwitch from '../../../../../../components/ToggleSwitch/ProToggleSwitch';
 
 const SMSSignup = () => {
@@ -9,10 +10,6 @@ const SMSSignup = () => {
     const [termsCondition, setTermsCondition] = useState(false)
     const [appearanceToggle, setAppearanceToggle] = useState(false)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-    }
-    console.log(successMessage)
     return (
         <div className='mt-4'>
             <div className='flex justify-between items-center w-full h-full mb-4'>
@@ -46,15 +43,7 @@ const SMSSignup = () => {
                 <h1 className='text-black font-bold text-left'>Terms & Conditions (optional)</h1>
                 <div className="flex items-center gap-2">
                     <span className='text-gray-500 text-sm font-semibold'>OFF</span>
-                    <div className="flex flex-col justify-center items-center ">
-                        <div onClick={() => setTermsCondition(!termsCondition)}
-                            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                ${termsCondition ? 'bg-red-200' : 'bg-gray-300'}`}>
-                            <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                ${termsCondition ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                            </div>
-                        </div>
-                    </div>
+                    <DefaultSwitch initialToggle={termsCondition} getToggle={setTermsCondition} />
                     <span className='text-gray-500 text-sm font-semibold'>ON</span>
                 </div>
             </div>
@@ -64,15 +53,7 @@ const SMSSignup = () => {
                 <h1 className='text-black font-bold text-left'>Appearance</h1>
                 <div className="flex items-center gap-2">
                     <span className='text-gray-500 text-sm font-semibold'>OFF</span>
-                    <div className="flex flex-col justify-center items-center ">
-                        <div onClick={() => setAppearanceToggle(!appearanceToggle)}
-                            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                ${appearanceToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                            <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                ${appearanceToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                            </div>
-                        </div>
-                    </div>
+                    <DefaultSwitch initialToggle={appearanceToggle} getToggle={setAppearanceToggle} />
                     <span className='text-gray-500 text-sm font-semibold'>ON</span>
                 </div>
             </div>

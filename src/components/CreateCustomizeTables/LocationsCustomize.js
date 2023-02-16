@@ -4,25 +4,25 @@ import upArrow from '../../assets/icons/link-customize-icons/up-arrow.svg'
 import deletes from '../../assets/icons/link-customize-icons/delete.svg'
 import swap from '../../assets/icons/link-customize-icons/swap.svg'
 import edit from '../../assets/icons/link-customize-icons/edit.svg'
-import lock from '../../assets/icons/link-customize-icons/pro-lock.svg'
 import add from '../../assets/icons/locations-tab-icons/add.svg'
 import blueRight from '../../assets/icons/blue-right.png'
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import DefaultSwitch from '../ToggleSwitch/DefaultSwitch';
+import ProToggleSwitch from '../ToggleSwitch/ProToggleSwitch';
+import ProButton from '../Buttons/ProButton';
 
 const LocationsCustomize = ({ location }) => {
     const [open, setOpen] = useState(false)
     const [openEdit, setOpenEdit] = useState(true);
     const [mainToggle, setMainToggle] = useState(false);
-    const [hiddenToggle, setHiddenToggle] = useState(false);
-    const [lockedToggle, setLockedToggle] = useState(false);
-    const [spotlightToggle, setSpotlightToggle] = useState(false);
     const [openInputChange, setOpenInputChange] = useState(false);
     const [newAddress, setNewAddress] = useState('');
 
     const handleUpdateLocation = () => {
         alert(newAddress + 'add korte hobe')
         setNewAddress('')
+        setOpenInputChange(false)
     }
 
     const locationChange = (event) => {
@@ -37,6 +37,7 @@ const LocationsCustomize = ({ location }) => {
         let handler = (e) => {
             if (!editRef.current.contains(e.target)) {
                 setOpenEdit(true);
+                setOpenInputChange(false)
             }
         };
         document.addEventListener("mousedown", handler);
@@ -46,7 +47,7 @@ const LocationsCustomize = ({ location }) => {
     });
     return (
         <>
-            <div className='relative w-full my-6 border border-gray-200 rounded-md'>
+            <div className='relative w-full my-6 border border-gray-200 rounded-md cursor-pointer'>
 
                 <div className='h-28 flex justify-between items-center gap-2 md:gap-6 py-4 px-2 md:px-6'>
                     <div>
@@ -55,13 +56,16 @@ const LocationsCustomize = ({ location }) => {
 
                     {/* -----------edit and input  icon start----------- */}
                     <div className='flex-grow flex flex-col gap-2'>
-                        <div className='flex justify-between items-center'>
+                        <div ref={editRef} className='flex justify-between items-center cursor-pointer'>
                             <input onChange={(e) => locationChange(e)}
-                                className={`mr-3 pr-3 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange} defaultValue={location} name='address' />
+                                className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 
+                                ${openInputChange ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange} defaultValue={location} name='address' />
                             {
-                                newAddress ? <img onClick={() => handleUpdateLocation()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                newAddress ? <img onClick={() => handleUpdateLocation()}
+                                    className='w-4 cursor-pointer' src={blueRight} alt="" />
                                     :
-                                    <img onClick={() => setOpenInputChange(!openInputChange)} className='w-3 cursor-pointer' src={edit} alt="" />
+                                    <img onClick={() => setOpenInputChange(!openInputChange)}
+                                        className='w-4 cursor-pointer' src={edit} alt="" />
                             }
                         </div>
                     </div>
@@ -72,16 +76,7 @@ const LocationsCustomize = ({ location }) => {
                             <img className='w-4' src={deletes} alt="" />
                             <span className='text-sm text-gray-500'>Delete</span>
                         </div>
-
-                        <div className="flex flex-col justify-center items-center ">
-                            <div onClick={() => setMainToggle(!mainToggle)}
-                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${mainToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${mainToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                </div>
-                            </div>
-                        </div>
+                        <DefaultSwitch initialToggle={mainToggle} getToggle={setMainToggle} />
                     </div>
                 </div>
                 {
@@ -98,70 +93,38 @@ const LocationsCustomize = ({ location }) => {
                         <div className='flex items-center gap-4 mt-4'>
                             <img src={add} alt="" />
                             <Link to='' className='text-blue-600 underline'>Add another marker</Link>
-                            <div className='flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]'>
-                                <img className='w-7' src={lock} alt="" />
-                            </div>
+                            <ProButton />
                         </div>
                         <div className='flex justify-between items-center mt-4'>
                             <div>
                                 <div className='flex items-center gap-4'>
                                     <h1 className='text-gray-900 font-semibold'>Spotlight</h1>
-                                    <div className='flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]'>
-                                        <img className='w-7' src={lock} alt="" />
-                                    </div>
+                                    <ProButton />
                                 </div>
                                 <p className='text-gray-500 text-sm'>Link automatically expands when visitors arrive on your HeyLink.me page</p>
                             </div>
                             {/* -----------toggler switch start----------- */}
-                            <div className="flex flex-col justify-center items-center ">
-                                <div onClick={() => setSpotlightToggle(!spotlightToggle)}
-                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${spotlightToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                    <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${spotlightToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                    </div>
-                                </div>
-                            </div>
+                            <ProToggleSwitch />
                             {/* -----------toggler switch start----------- */}
                         </div>
 
                         <div className='flex justify-between items-center mt-4'>
                             <div className='flex items-center gap-4'>
                                 <h1 className='text-gray-900 font-semibold'>Map is Hidden</h1>
-                                <div className='flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]'>
-                                    <img className='w-7' src={lock} alt="" />
-                                </div>
+                                <ProButton />
                             </div>
                             {/* -----------toggler switch start----------- */}
-                            <div className="flex flex-col justify-center items-center ">
-                                <div onClick={() => setHiddenToggle(!hiddenToggle)}
-                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${hiddenToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                    <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${hiddenToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                    </div>
-                                </div>
-                            </div>
+                            <ProToggleSwitch />
                             {/* -----------toggler switch start----------- */}
                         </div>
 
                         <div className='flex justify-between items-center mt-4'>
                             <div className='flex items-center gap-4'>
                                 <h1 className='text-gray-900 font-semibold'>Map is Locked</h1>
-                                <div className='flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]'>
-                                    <img className='w-7' src={lock} alt="" />
-                                </div>
+                                <ProButton />
                             </div>
                             {/* -----------toggler switch start----------- */}
-                            <div className="flex flex-col justify-center items-center ">
-                                <div onClick={() => setLockedToggle(!lockedToggle)}
-                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${lockedToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                    <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${lockedToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                    </div>
-                                </div>
-                            </div>
+                            <ProToggleSwitch />
                             {/* -----------toggler switch start----------- */}
                         </div>
 
@@ -169,9 +132,7 @@ const LocationsCustomize = ({ location }) => {
                             <div>
                                 <div className='flex items-center gap-4'>
                                     <h1 className='text-gray-900 font-semibold'>Marker Button Color</h1>
-                                    <div className='flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]'>
-                                        <img className='w-7' src={lock} alt="" />
-                                    </div>
+                                    <ProButton />
                                 </div>
                                 <p className='text-gray-500 text-sm'>Choose the colour visitors will see for the location buttons on your page</p>
                                 <div className='h-10 w-44 mt-2 bg-orange-600 rounded-md'></div>
@@ -179,9 +140,7 @@ const LocationsCustomize = ({ location }) => {
                             <div>
                                 <div className='flex items-center gap-4'>
                                     <h1 className='text-gray-900 font-semibold'>Marker Font Color</h1>
-                                    <div className='flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]'>
-                                        <img className='w-7' src={lock} alt="" />
-                                    </div>
+                                    <ProButton />
                                 </div>
                                 <p className='text-gray-500 text-sm'>You can change the font of the location button here</p>
                                 <div className='h-10 w-44 mt-2 border border-gray-300 rounded-md'></div>

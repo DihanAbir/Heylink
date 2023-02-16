@@ -9,9 +9,11 @@ import sliderActive from '../../assets/icons/gallery-tab-icons/slider-active.svg
 import sliderInactive from '../../assets/icons/gallery-tab-icons/slider-inactive.svg'
 import gridActive from '../../assets/icons/gallery-tab-icons/grid-active.svg'
 import gridInactive from '../../assets/icons/gallery-tab-icons/grid-inactive.svg'
+import blueRight from '../../assets/icons/blue-right.png'
 import { Link } from 'react-router-dom';
 import SliderGridTab from '../CreateCustomizeTables/SlidAndGridTabs/SlidAndGridTabs/SliderGridTab';
 import DeleteModal from '../../components/Modals/CommonModals/DeleteModal';
+import DefaultSwitch from '../ToggleSwitch/DefaultSwitch';
 
 const GalleryCustomize = () => {
     const [open, setOpen] = useState(false)
@@ -19,9 +21,23 @@ const GalleryCustomize = () => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [toggle, setToggle] = useState(false);
     const [openInputChange, setOpenInputChange] = useState(false);
+    const [defaultGalleryTitle, setDefaultGalleryTitle] = useState('My First Title');
     const [galleryTitleInput, setGalleryTitleInput] = useState('');
 
-    console.log(galleryTitleInput);
+    const handleUpdateGalleryTitle = () => {
+        alert(galleryTitleInput + 'add korte hobe')
+        setGalleryTitleInput('')
+        setOpenInputChange(false)
+    }
+
+    const galleryTitleChange = (e) => {
+        const newGalleryTitle = e.target.value
+        if (newGalleryTitle !== defaultGalleryTitle) {
+            setGalleryTitleInput(newGalleryTitle)
+        }
+    }
+
+    // console.log(galleryTitleInput);
     const closeModal = () => {
         setDeleteModal(false)
     }
@@ -52,11 +68,17 @@ const GalleryCustomize = () => {
                     {/* -----------edit and input  icon start----------- */}
                     <div ref={outSideRef} className='flex-grow flex flex-col gap-2'>
                         <div className='flex justify-between items-center'>
-                            <input onChange={(e) => setGalleryTitleInput(e.target.value)}
-                                className={`mr-3 pr-3 rounded w-full focus:outline-none text-blue-600
-                                    ${openInputChange ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`}
-                                type="text" disabled={!openInputChange} defaultValue='New Gallery Image' name='linkName' />
-                            <img onClick={() => setOpenInputChange(!openInputChange)} className='w-3 cursor-pointer' src={edit} alt="" />
+                            <input onChange={(e) => galleryTitleChange(e)}
+                                className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-blue-600
+                                    ${openInputChange ? 'border border-blue-600' : 'border-none cursor-pointer'}`}
+                                type="text" disabled={!openInputChange} defaultValue={defaultGalleryTitle} name='linkName' />
+                            {
+                                galleryTitleInput ? <img onClick={() => handleUpdateGalleryTitle()}
+                                    className='w-4 cursor-pointer' src={blueRight} alt="" />
+                                    :
+                                    <img onClick={() => setOpenInputChange(!openInputChange)}
+                                        className='w-4 cursor-pointer' src={edit} alt="" />
+                            }
                         </div>
                     </div>
                     {/* -----------edit  and input icon end----------- */}
@@ -75,15 +97,7 @@ const GalleryCustomize = () => {
                         </div>
 
                         {/* -----------toggler switch start----------- */}
-                        <div className="flex flex-col justify-center items-center ">
-                            <div onClick={() => setToggle(!toggle)}
-                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${toggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${toggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                </div>
-                            </div>
-                        </div>
+                        <DefaultSwitch initialToggle={toggle} getToggle={setToggle} />
                         {/* -----------toggler switch start----------- */}
                     </div>
                 </div>

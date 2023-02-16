@@ -2,32 +2,21 @@ import React, { useState } from 'react';
 import ViewMessages from '../DetailsMessages/ViewMessages';
 import './MessagesTab.module.css'
 import download from '../../../../../assets/icons/download.png'
+import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
 
 const options = ['All Types', 'Email', 'SMS', 'Whatsup']
 
 const MessagesTab = () => {
-    const [viewMessages, setViewMessages] = useState(false)
+    const [viewMessage, setViewMessage] = useState(false)
     return (
         <section className='min-h-full py-6'>
             <div className='w-full h-full rounded-xl border p-4 mt-6 mb-4'>
                 <div className='flex justify-between items-center w-full h-full'>
                     <h1 className='text-black font-bold text-left'>Turn ON / OFF Message</h1>
-                    <div className="flex items-center gap-2">
-                        <span className='text-gray-500 text-sm font-semibold'>OFF</span>
-                        <div className="flex flex-col justify-center items-center ">
-                            <div onClick={() => setViewMessages(!viewMessages)}
-                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${viewMessages ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${viewMessages ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                </div>
-                            </div>
-                        </div>
-                        <span className='text-gray-500 text-sm font-semibold'>ON</span>
-                    </div>
+                    <DefaultSwitch initialToggle={viewMessage} getToggle={setViewMessage} />
                 </div>
                 {
-                    viewMessages && <ViewMessages />
+                    viewMessage && <ViewMessages />
                 }
             </div>
 

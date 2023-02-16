@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ProButton from '../../../../../components/Buttons/ProButton';
 import SmallIcon from '../../../../../components/Buttons/SmallIcon';
+import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
 import DisabledSwitch from '../../../../../components/ToggleSwitch/DisabledSwitch';
 import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwitch';
 
@@ -11,7 +12,7 @@ const ViewMessages = () => {
 
     // your name---------
     const [nameChecked, setNameChecked] = useState(false)
-    const [nameToggle, setNameToggle] = useState(false)
+    const [nameToggle, setNameToggle] = useState(true)
     const [yourName, setYourName] = useState('')
 
     // your email-----------
@@ -64,6 +65,8 @@ const ViewMessages = () => {
                 <button className='mt-4 w-20 h-8 flex justify-center items-center text-white bg-blue-600 rounded-md font-semibold' type='submit' ><span>SAVE</span></button>
             </div>
 
+
+            {/* ----------------------------------------------------- */}
             <div className='flex justify-between items-center mb-4'>
                 <h1 className=' text-gray-500'>Input Field Text</h1>
                 <h1 className=' text-gray-500'>Required Field</h1>
@@ -75,15 +78,7 @@ const ViewMessages = () => {
                 </div>
 
                 {
-                    nameChecked ? <div className="flex flex-col justify-center items-center ">
-                        <div onClick={() => setNameToggle(!nameToggle)}
-                            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-            ${nameToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                            <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-            ${nameToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                            </div>
-                        </div>
-                    </div>
+                    nameChecked ? <DefaultSwitch initialToggle={nameToggle} getToggle={setNameToggle} />
                         :
                         <DisabledSwitch />
                 }
@@ -97,15 +92,7 @@ const ViewMessages = () => {
                 </div>
 
                 {
-                    emailChecked ? <div className="flex flex-col justify-center items-center ">
-                        <div onClick={() => setEmailToggle(!emailToggle)}
-                            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-            ${emailToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                            <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-            ${emailToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                            </div>
-                        </div>
-                    </div>
+                    emailChecked ? <DefaultSwitch initialToggle={emailToggle} getToggle={setEmailToggle} />
                         :
                         <DisabledSwitch />
                 }
@@ -120,19 +107,13 @@ const ViewMessages = () => {
                 </div>
 
                 {
-                    phoneNumberChecked ? <div className="flex flex-col justify-center items-center ">
-                        <div onClick={() => setPhoneNumberToggle(!phoneNumberToggle)}
-                            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-            ${phoneNumberToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                            <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-            ${phoneNumberToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                            </div>
-                        </div>
-                    </div>
+                    phoneNumberChecked ? <DefaultSwitch initialToggle={phoneNumberToggle} getToggle={setPhoneNumberToggle} />
                         :
                         <DisabledSwitch />
                 }
             </div>
+
+            {/* -------------------------------------------------------------- */}
 
 
 

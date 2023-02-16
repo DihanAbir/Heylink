@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import down from '../../../../../assets/icons/down.png'
+import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
+import EmailSignup from './SignupDetails/EmailSignup';
 import SMSSignup from './SignupDetails/SMSSignup';
 import WhatsupSignup from './SignupDetails/WhatsupSignup';
 
@@ -17,7 +19,6 @@ const Signups = () => {
         setShowOptions(false)
     }
 
-    // console.log(emailSignup)
     return (
         <section className='min-h-full py-6'>
             <div className='w-full h-full rounded-xl border p-4 mt-6 mb-4'>
@@ -28,22 +29,13 @@ const Signups = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <span className='text-gray-500 text-sm font-semibold'>OFF</span>
-                        <div className="flex flex-col justify-center items-center ">
-                            <div onClick={() => setEmailSignup(!emailSignup)}
-                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                ${emailSignup ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                ${emailSignup ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                </div>
-                            </div>
-                        </div>
+                        <DefaultSwitch initialToggle={emailSignup} getToggle={setEmailSignup} />
                         <span className='text-gray-500 text-sm font-semibold'>ON</span>
                     </div>
                 </div>
                 {
-                    emailSignup && <WhatsupSignup />
+                    emailSignup && <EmailSignup />
                 }
-
             </div>
 
 
@@ -55,15 +47,7 @@ const Signups = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <span className='text-gray-500 text-sm font-semibold'>OFF</span>
-                        <div className="flex flex-col justify-center items-center ">
-                            <div onClick={() => setSMSSignup(!smsSignup)}
-                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                ${smsSignup ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                ${smsSignup ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                </div>
-                            </div>
-                        </div>
+                        <DefaultSwitch initialToggle={smsSignup} getToggle={setSMSSignup} />
                         <span className='text-gray-500 text-sm font-semibold'>ON</span>
                     </div>
                 </div>
@@ -82,20 +66,12 @@ const Signups = () => {
                     </div>
                     <div className="flex items-center gap-2">
                         <span className='text-gray-500 text-sm font-semibold'>OFF</span>
-                        <div className="flex flex-col justify-center items-center ">
-                            <div onClick={() => setWhatsupSignup(!whatsupSignup)}
-                                className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                ${whatsupSignup ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                ${whatsupSignup ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                </div>
-                            </div>
-                        </div>
+                        <DefaultSwitch initialToggle={whatsupSignup} getToggle={setWhatsupSignup} />
                         <span className='text-gray-500 text-sm font-semibold'>ON</span>
                     </div>
                 </div>
                 {
-                    whatsupSignup && <SMSSignup />
+                    whatsupSignup && <WhatsupSignup />
                 }
 
             </div>

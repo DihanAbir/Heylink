@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import appearance from '../../assets/icons/appearance.svg'
 import security from '../../assets/icons/security.svg'
 import billing from '../../assets/icons/billing.svg'
 import logout from '../../assets/icons/logout.svg'
+import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
 
 const ProfileDropdown = () => {
+    const { logout } = useContext(AuthContext)
+
     return (
         <div class="absolute right-0 z-10 mt-2 w-60 rounded-md bg-gray-50 shadow shadow-gray-400">
             <div className='p-3'>
@@ -25,7 +28,7 @@ const ProfileDropdown = () => {
                     <img className='w-6 col-span-1' src={billing} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Billing & Subscription</h1>
                 </div>
-                <div className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
+                <div onClick={() => logout()} className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
                     <img className='w-6 col-span-1' src={logout} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Log out</h1>
                 </div>

@@ -21,8 +21,9 @@ const LocationsTab = () => {
     const [selectedLocation, setSelectedLocation] = useState('')
     const [search, setSearch] = useState(false)
     const [allLocations, setAllLocations] = useState([])
-    let dropdownRef = useRef();
-    // console.log(allLocations);
+
+
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const selectLocation = event.target.location.value
@@ -31,6 +32,7 @@ const LocationsTab = () => {
         setSelectedLocation('')
     }
 
+    let dropdownRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
