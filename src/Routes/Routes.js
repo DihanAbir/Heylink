@@ -2,6 +2,7 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DashboardLayout from '../Layout/DashboardLayout';
 import Main from '../Layout/Main';
+import ViewLiveLayout from '../Layout/ViewLiveLayout';
 import Dashboard from '../Pages/Dashboard/Dashboard/Dashboard';
 import Analytics from '../Pages/Dashboard/LinkTabs/Analytics/Analytics/Analytics';
 import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance/Appearance';
@@ -21,6 +22,8 @@ import Signups from '../Pages/Dashboard/LinkTabs/Signups/Signups/Signups';
 import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription/Subscription';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import Home from '../Pages/Home/Home/Home';
+import SmallDevicePreview from '../Pages/LiveViewPage/SmallDevicePreview';
+import ViewLive from '../Pages/LiveViewPage/ViewLive';
 import PricingCards from '../Pages/PricingCards/PricingCards';
 import ForgotPassword from '../Pages/Profile/ForgotPassword/ForgotPassword';
 import Login from '../Pages/Profile/Login/Login';
@@ -40,7 +43,7 @@ const router = createBrowserRouter([
             { path: '/pricing', element: <PriveteRoute><PricingCards></PricingCards></PriveteRoute> },
             { path: '/signup', element: <Signup></Signup> },
             { path: '/login', element: <Login></Login> },
-            { path: '/forgot-password', element: <ForgotPassword></ForgotPassword> },
+            { path: '/forgot-password', element: <ForgotPassword></ForgotPassword> }
         ]
     },
     {
@@ -76,7 +79,9 @@ const router = createBrowserRouter([
             },
 
         ]
-    }
+    },
+    { path: '/:username', element: <ViewLiveLayout></ViewLiveLayout> },
+    { path: '/preview', element: <SmallDevicePreview /> }
 ])
 
 export default router;

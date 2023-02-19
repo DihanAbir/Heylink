@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
+import { toast } from "react-hot-toast";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
 
 const DeleteModal = ({ id, closeModal, endPoint }) => {
-  console.log(id, "id");
+  const token = localStorage.getItem("HeyLinkToken");
+  // console.log(id, "id");
   let dropdownRef = useRef();
   useEffect(() => {
     let handler = (e) => {
@@ -19,15 +21,20 @@ const DeleteModal = ({ id, closeModal, endPoint }) => {
 
   const DeleteHandle = () => {
     const url = `${process.env.REACT_APP_API_KEY}/app/v1/links/${endPoint}/${id}`;
-    console.log(url);
+    // console.log(url);
     fetch(url, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+      },
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.deletedCount > 0) {
+        if (data?.data.acknowledged) {
+          toast.success('Delete Successfully')
+          closeModal(false)
         }
-
       });
   };
   return (

@@ -1,17 +1,41 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import menu from '../../../../../assets/icons/menu-tab-icons/menu.svg'
 import empty from '../../../../../assets/icons/menu-tab-icons/empty.svg'
 import { Link } from 'react-router-dom';
 import MenuListCustomize from '../../../../../components/CreateCustomizeTables/MenuListCustomize/MenuListCustomize';
+import useFetch from "../../../../../Hoock/Hoock";
+import { toast } from 'react-hot-toast';
+import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 
 const MenuTab = () => {
-    const [allMenuLists, setAllMenuLists] = useState(0)
-    // console.log(allMenuLists);
+    const { userData } = useContext(AuthContext)
+    // const [allMenuLists, setAllMenuLists] = useState(0)
+    const data = useFetch("menu")
+    console.log(data);
+
+    const handleAddMenu = () => {
+        const data = {
+            name: '',
+            userInfo: userData,
+        };
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/menu`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Menu Add Successfully')
+            });
+    }
     return (
         <section className='min-h-screen'>
             <div>
                 {
-                    allMenuLists === 0 ? <button onClick={() => setAllMenuLists(allMenuLists + 1)}
+                    data.length === 0 ? <button onClick={() => handleAddMenu()}
                         className='flex justify-center items-center gap-4 w-fit px-6 mx-auto cursor-pointer h-12 rounded-[50px] bg-blue-600'>
                         <img src={menu} alt="" />
                         <h1 className='text-white font-semibold'>Add Menu or Price List</h1>
@@ -29,7 +53,7 @@ const MenuTab = () => {
                 </div>
 
                 {
-                    allMenuLists >= 1 ? <MenuListCustomize />
+                    data.length >= 1 ? <MenuListCustomize menu={data[0]} />
                         :
                         <div className='flex justify-center items-center my-6'>
                             <img className='md:w-[400px]' src={empty} alt="" />

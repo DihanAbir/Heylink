@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import blueRight from '../../../assets/icons/blue-right.png'
+import edit from '../../../assets/icons/link-customize-icons/edit.svg'
 import ProButton from '../../Buttons/ProButton';
 import DeleteModal from '../../Modals/CommonModals/DeleteModal';
 import ProModal from '../../Modals/CommonModals/ProModal';
@@ -13,6 +15,15 @@ const MenuItems = () => {
     const [itemName, setItemName] = useState('')
     const [itemPrice, setItemPrice] = useState('')
 
+    const handleUpdateItemName = () => {
+        alert(itemName + ' ' + 'Updated')
+        setItemName('')
+    }
+    const handleUpdateItemPrice = () => {
+        alert(itemPrice + ' ' + 'Updated')
+        setItemPrice('')
+    }
+
     // console.log(itemName, itemPrice)
     return (
         <div className='relative cursor-pointer py-8 px-4'>
@@ -25,13 +36,23 @@ const MenuItems = () => {
             <div className='flex flex-col md:flex-row md:items-start gap-4 w-full mt-4'>
                 <div className='grid grid-cols-1 gap-4 w-full'>
                     <div className='flex flex-col md:flex-row md:items-start gap-4 w-full'>
-                        <div className='w-full h-14 flex-grow'>
+                        <div className='w-full h-14 flex-grow relative'>
                             <input onChange={(e) => setItemName(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="text" placeholder='text item' name='itemName' />
+                            {itemName &&
+                                <div onClick={() => handleUpdateItemName()} className='absolute top-0 right-0 w-12 border-r border-y h-12 bg-white flex justify-center items-center'>
+                                    <img className='w-5 cursor-pointer' src={blueRight} alt="" />
+                                </div>
+                            }
                             <p className='text-right text-sm text-gray-500'>50 characters left</p>
                         </div>
 
-                        <div className='w-full md:w-80'>
-                            <input onChange={(e) => setItemPrice(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="text" name='itemPrice' placeholder='Item price (optional)' />
+                        <div className='w-full md:w-80 relative'>
+                            <input onChange={(e) => setItemPrice(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="number" name='itemPrice' placeholder='Item price (optional)' />
+                            {itemPrice &&
+                                <div onClick={() => handleUpdateItemPrice()} className='absolute top-0 right-0 w-12 border-r border-y h-12 bg-white flex justify-center items-center'>
+                                    <img className='w-5 cursor-pointer' src={blueRight} alt="" />
+                                </div>
+                            }
                         </div>
                     </div>
 

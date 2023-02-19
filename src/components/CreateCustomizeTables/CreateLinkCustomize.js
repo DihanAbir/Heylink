@@ -13,17 +13,23 @@ import swap from "../../assets/icons/link-customize-icons/swap.svg";
 import edit from "../../assets/icons/link-customize-icons/edit.svg";
 import EffectsModal from "../Modals/CustomizeLinkModals/EffectsModal";
 import FastLinkProModal from "../Modals/CustomizeLinkModals/FastLinkProModal";
-import ScheduleModal from "../Modals/CustomizeLinkModals/ScheduleModal";
 import ImageUploadModal from "../Modals/CustomizeLinkModals/ImageUploadModal";
 import DeleteModal from "../Modals/CommonModals/DeleteModal";
 import { Buffer } from "buffer";
 import DefaultSwitch from "../ToggleSwitch/DefaultSwitch";
-
+import CalanderData from "../Modals/CalanderModals/CalanderData";
+import { toast } from "react-hot-toast";
 const CreateLinkCustomize = ({ url }) => {
   const [open, setOpen] = useState(false);
   const [openEffcetsModal, setOpenEffcetsModal] = useState(false);
   const [fastLinkProModal, setFastLinkProModal] = useState(false);
-  const [openScheduleModal, setOpenScheduleModal] = useState(false);
+  const [openSchedule, setOpenSchedule] = useState(false);
+
+  const [startDateCalander, setStartDateCalander] = useState(false);
+  const [endDateCalander, setEndDateCalander] = useState(false);
+  const [showStartDate, setShowStartDate] = useState(url?.activeFrom);
+  const [showEndDate, setShowEndDate] = useState(url?.activeUntile);
+
   const [uploadImageModal, setUploadImageModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [openInputChange1, setOpenInputChange1] = useState(false);
@@ -33,21 +39,48 @@ const CreateLinkCustomize = ({ url }) => {
   const [linkToggle, setLinkToggle] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
+  // console.log(url);
+
+  // link name update--------------
   const handleUpdateLinkName = () => {
-    alert(linkName + ' updated')
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ linkTitle: linkName })
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
     setLinkName('')
     setOpenInputChange1(false)
   }
 
+  // link url update--------------
   const handleUpdateLinkURL = () => {
-    alert(linkURL + ' updated')
-    setLinkURL('')
-    setOpenInputChange2(false)
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ link: linkURL })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data?.data.acknowledged) {
+          toast.success('Link URL Updated')
+          setLinkURL('')
+          setOpenInputChange2(false)
+        }
+      })
   }
+
 
   const linkNameChange = (e) => {
     const newLinkName = e.target.value
-    if (newLinkName !== url.link) {
+    if (newLinkName !== url.linkTitle) {
       setLinkName(newLinkName)
     }
   }
@@ -60,20 +93,52 @@ const CreateLinkCustomize = ({ url }) => {
     }
   }
 
-  // console.log(linkName);
+  const handleActiveFrom = (date) => {
+    const startDate = new Date(date);
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ activeFrom: startDate }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.data.acknowledged) {
+          toast.success('Active From Added')
+          setStartDateCalander(false)
+          setShowStartDate(startDate)
+        }
+      });
+  }
+
+
+  const handleActiveUntile = (date) => {
+    const endDate = new Date(date);
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ activeUntile: endDate }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.data.acknowledged) {
+          toast.success('Active Untile Added')
+          setEndDateCalander(false)
+          setShowEndDate(endDate)
+        }
+      });
+  }
+
   // image convarte buffer
   const buff = Buffer.from(
     url?.image?.data?.data ? url?.image?.data?.data : imageUrl
   );
   const base64 = buff?.toString("base64");
-
-  const closeModal = () => {
-    setOpenEffcetsModal(false);
-    setFastLinkProModal(false);
-    setOpenScheduleModal(false);
-    setUploadImageModal(false);
-    setDeleteModal(false);
-  };
 
   const imageData = (imgData) => {
     setImageUrl(imgData);
@@ -114,7 +179,7 @@ const CreateLinkCustomize = ({ url }) => {
                 <label class="flex justify-center items-center">
                   <div class=" relative flex cursor-pointer items-center justify-center">
                     <img
-                      className="w-4 cursor-pointer"
+                      className="w-12 h-12 cursor-pointer"
                       src={`data:image/png;base64, ${base64}`}
                       alt=""
                     />
@@ -125,7 +190,7 @@ const CreateLinkCustomize = ({ url }) => {
                 <ImageUploadModal
                   url={url}
                   imageData={imageData}
-                  closeModal={closeModal}
+                  closeModal={setUploadImageModal}
                 />
               )}
             </div>
@@ -138,7 +203,8 @@ const CreateLinkCustomize = ({ url }) => {
               <input onChange={(e) => linkNameChange(e)}
                 className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 font-bold ${openInputChange1
                   ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"}`}
-                type="text" disabled={!openInputChange1} defaultValue={url?.link} name="linkName"
+                type="text" disabled={!openInputChange1}
+                defaultValue={url?.linkTitle ? url?.linkTitle : url?.link} name="linkName"
               />
               {
                 linkName ? <img onClick={() => handleUpdateLinkName()}
@@ -151,7 +217,7 @@ const CreateLinkCustomize = ({ url }) => {
 
             <div className="flex justify-between items-center">
               <div className="flex items-center w-full gap-2">
-                <a target="_blank" href={url}>
+                <a target="_blank" href={url?.link}>
                   <img className="w-6" src={linkClick} alt="" />
                 </a>
                 <input onChange={(e) => linkURLChange(e)}
@@ -183,7 +249,7 @@ const CreateLinkCustomize = ({ url }) => {
                 <DeleteModal
                   endPoint={"common"}
                   id={url._id}
-                  closeModal={closeModal}
+                  closeModal={setDeleteModal}
                 ></DeleteModal>
               )}
             </div>
@@ -196,20 +262,20 @@ const CreateLinkCustomize = ({ url }) => {
 
 
         {open && (
-          <div className="relative cursor-pointer flex justify-center flex-wrap sm:flex-nowrap items-center gap-6 h-36 border-t border-gray-200 py-4 sm:py-0">
-            {/* -----------Move to Top start----------- */}
-            <div className="flex flex-col justify-center items-center gap-2">
-              <div>
-                <img className="w-4" src={moveToTop} alt="" />
+          <div className="h-full border-t border-gray-200 py-12">
+            <div className="relative cursor-pointer flex justify-center flex-wrap sm:flex-nowrap items-center gap-6  ">
+              {/* -----------Move to Top start----------- */}
+              <div className="flex flex-col justify-center items-center gap-2">
+                <div>
+                  <img className="w-4" src={moveToTop} alt="" />
+                </div>
+                <h1 className="text-gray-400 text-sm">Move to Top</h1>
               </div>
-              <h1 className="text-gray-400 text-sm">Move to Top</h1>
-            </div>
-            {/* -----------Move to Top end----------- */}
+              {/* -----------Move to Top end----------- */}
 
-            {/* -----------schedule start----------- */}
-            <div className="">
+              {/* -----------schedule start----------- */}
               <div
-                onClick={() => setOpenScheduleModal(!openScheduleModal)}
+                onClick={() => setOpenSchedule(!openSchedule)}
                 className="flex flex-col justify-center items-center gap-2"
               >
                 <div>
@@ -217,57 +283,91 @@ const CreateLinkCustomize = ({ url }) => {
                 </div>
                 <h1 className="text-gray-400 text-sm">schedule</h1>
               </div>
-              {openScheduleModal && <ScheduleModal closeModal={closeModal} />}
-            </div>
-            {/* -----------schedule end----------- */}
+              {/* -----------schedule end----------- */}
 
-            {/* -----------effects start----------- */}
-            <div className="relative ">
-              <div
-                onClick={() => setOpenEffcetsModal(!openEffcetsModal)}
-                className="flex flex-col justify-center items-center gap-2"
-              >
-                <div>
-                  <img className="w-4" src={effects} alt="" />
+              {/* -----------effects start----------- */}
+              <div className="relative ">
+                <div
+                  onClick={() => setOpenEffcetsModal(!openEffcetsModal)}
+                  className="flex flex-col justify-center items-center gap-2"
+                >
+                  <div>
+                    <img className="w-4" src={effects} alt="" />
+                  </div>
+                  <h1 className="text-gray-400 text-sm">effects</h1>
                 </div>
-                <h1 className="text-gray-400 text-sm">effects</h1>
+                {openEffcetsModal && <EffectsModal closeModal={setOpenEffcetsModal} />}
               </div>
-              {openEffcetsModal && <EffectsModal closeModal={closeModal} />}
+              {/* -----------effects end----------- */}
+
+              {/* -----------Fast Link start----------- */}
+              <div className="relative">
+                <div
+                  onClick={() => setFastLinkProModal(!fastLinkProModal)}
+                  className="flex flex-col justify-center items-center gap-2"
+                >
+                  <div className="relative">
+                    <img className="w-4" src={fire} alt="" />
+
+                    <div className="absolute -top-4 -right-3 flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]">
+                      <img className="w-7" src={lock} alt="" />
+                    </div>
+                  </div>
+                  <h1 className="text-gray-400 text-sm">Fast Link</h1>
+                </div>
+                {fastLinkProModal && <FastLinkProModal closeModal={setFastLinkProModal} />}
+              </div>
+              {/* -----------Fast Link end----------- */}
+
+              {/* -----------only small device show----------- */}
+              <div className="relative cursor-pointer">
+                <div
+                  onClick={() => setDeleteModal(!deleteModal)}
+                  className="sm:hidden flex flex-col justify-center items-center gap-2"
+                >
+                  <div>
+                    <img className="w-4" src={deletes} alt="" />
+                  </div>
+                  <h1 className="text-gray-400 text-sm">Delete</h1>
+                </div>
+                {/* -----------only small device show end----------- */}
+              </div>
+
             </div>
-            {/* -----------effects end----------- */}
 
-            {/* -----------Fast Link start----------- */}
-            <div className="relative">
-              <div
-                onClick={() => setFastLinkProModal(!fastLinkProModal)}
-                className="flex flex-col justify-center items-center gap-2"
-              >
-                <div className="relative">
-                  <img className="w-4" src={fire} alt="" />
+            {openSchedule &&
+              <div className="mt-4 w-full md:ml-8 relative">
+                <h1 className="font-bold text-black text-left mb-3">Schedule Link</h1>
 
-                  <div className="absolute -top-4 -right-3 flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]">
-                    <img className="w-7" src={lock} alt="" />
+                <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
+                  <div className="flex flex-col justify-start items-start">
+                    <h1 className="text-gray-500 font-semibold text-left">Active From</h1>
+                    <div onClick={() => setStartDateCalander(!startDateCalander)}
+                      className="flex items-center justify-between gap-2 w-72 px-2 h-12 rounded-md bg-gray-200">
+                      <input className="cursor-pointer w-full focus:outline-none border-none bg-gray-200 text-gray-600" type="text" value={showStartDate && showStartDate} readOnly placeholder="Select Date" />
+                      <img className="w-5" src={schedule} alt="" />
+                    </div>
+                    {startDateCalander &&
+                      <CalanderData selectedDate={showStartDate} setSelectedDate={handleActiveFrom}
+                        closeDate={setStartDateCalander} />
+                    }
+                  </div>
+
+                  <div className="flex flex-col justify-start items-start">
+                    <h1 className="text-gray-500 font-semibold text-left">Active Until</h1>
+                    <div onClick={() => setEndDateCalander(!endDateCalander)}
+                      className="flex items-center justify-between gap-2 w-72 px-2 h-12 rounded-md bg-gray-200">
+                      <input className="cursor-pointer w-full focus:outline-none border-none bg-gray-200 text-gray-600" type="text" value={showEndDate && showEndDate} readOnly placeholder="Select Date" />
+                      <img className="w-5" src={schedule} alt="" />
+                    </div>
+                    {endDateCalander &&
+                      <CalanderData selectedDate={showEndDate} setSelectedDate={handleActiveUntile}
+                        closeDate={setEndDateCalander} />
+                    }
                   </div>
                 </div>
-                <h1 className="text-gray-400 text-sm">Fast Link</h1>
               </div>
-              {fastLinkProModal && <FastLinkProModal closeModal={closeModal} />}
-            </div>
-            {/* -----------Fast Link end----------- */}
-
-            {/* -----------only small device show----------- */}
-            <div className="relative cursor-pointer">
-              <div
-                onClick={() => setDeleteModal(!deleteModal)}
-                className="sm:hidden flex flex-col justify-center items-center gap-2"
-              >
-                <div>
-                  <img className="w-4" src={deletes} alt="" />
-                </div>
-                <h1 className="text-gray-400 text-sm">Delete</h1>
-              </div>
-              {/* -----------only small device show end----------- */}
-            </div>
+            }
           </div>
         )}
 

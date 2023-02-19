@@ -7,7 +7,6 @@ const GalleryTab = () => {
     const [viewGallery, setViewGallery] = useState(false)
 
 
-
     let dropdownRef = useRef();
     useEffect(() => {
         let handler = (e) => {

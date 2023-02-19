@@ -1,37 +1,17 @@
 import { TextField } from "@mui/material";
 import axios from "axios";
-import { FacebookAuthProvider, GoogleAuthProvider } from "firebase/auth";
-import React, { useContext } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
 
 const Login = () => {
   const token = localStorage.getItem("HeyLinkToken");
-  const { signupWithGoogle, signupWithFacebook } = useContext(AuthContext)
-  const googleProvider = new GoogleAuthProvider()
-  const facebookProvider = new FacebookAuthProvider()
   const location = useLocation()
   const navigate = useNavigate()
   const from = location.state?.from?.pathname || '/'
-  console.log(token, "gsdg");
+  // console.log(token, "gsdg");
 
-  const handleSignupGoogle = () => {
-    signupWithGoogle(googleProvider)
-      .then(result => {
-        console.log(result.user.accessToken);
-        localStorage.setItem("HeyLinkToken", result.user.accessToken);
-        navigate(from, { replace: true });
-      })
-      .catch(error => console.log(error))
-  }
-
-  const handleSignupFacebook = () => {
-    signupWithFacebook(facebookProvider)
-      .then(result => console.log(result))
-      .catch(error => console.log(error))
-  }
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
 
@@ -117,7 +97,7 @@ const Login = () => {
           {/* ---------login form end--------- */}
 
 
-          <div onClick={() => handleSignupGoogle()} className="mt-4 cursor-pointer">
+          <div className="mt-4 cursor-pointer">
             <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px]">
               <img
                 className="w-6"
@@ -132,7 +112,7 @@ const Login = () => {
           </div>
 
 
-          <div onClick={() => handleSignupFacebook()} className="mt-4 cursor-pointer">
+          <div className="mt-4 cursor-pointer">
             <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px]">
               <img
                 className="w-6"

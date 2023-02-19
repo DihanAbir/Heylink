@@ -6,20 +6,34 @@ import edit from "../../assets/icons/link-customize-icons/edit.svg";
 import blueRight from '../../assets/icons/blue-right.png'
 import deletes from "../../assets/icons/link-customize-icons/delete.svg";
 import DeleteModal from "../Modals/CommonModals/DeleteModal";
+import { toast } from "react-hot-toast";
 
 const AllSocialLinks = ({ socialLink }) => {
-  // const { name, username } = socialLink
-  console.log(socialLink);
   const [open, setOpen] = useState(false);
   const [selectBtn, setSelectBtn] = useState(true);
   const [deleteModal, setDeleteModal] = useState(false);
   const [openInputChange, setOpenInputChange] = useState(false);
   const [socialLinkName, setSocialLinkName] = useState("");
 
+
+  // handle update social link name
   const handleUpdateSocialLinkName = () => {
-    alert(socialLinkName + ' updated')
-    setSocialLinkName('')
-    setOpenInputChange(false)
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/social/${socialLink?._id}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ link: socialLinkName })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data?.data.acknowledged) {
+          toast.success('Link URL Updated')
+          setSocialLinkName('')
+          setOpenInputChange(false)
+        }
+      })
   }
 
   const socialLinkNameChange = (e) => {
@@ -29,10 +43,6 @@ const AllSocialLinks = ({ socialLink }) => {
     }
   }
 
-  // console.log(socialLinkName);
-  const closeModal = () => {
-    setDeleteModal(false);
-  };
 
   let outSideRef = useRef();
   useEffect(() => {
@@ -135,7 +145,7 @@ const AllSocialLinks = ({ socialLink }) => {
                 <DeleteModal
                   endPoint={"social"}
                   id={socialLink._id}
-                  closeModal={closeModal}
+                  closeModal={setDeleteModal}
                 ></DeleteModal>
               )}
             </div>

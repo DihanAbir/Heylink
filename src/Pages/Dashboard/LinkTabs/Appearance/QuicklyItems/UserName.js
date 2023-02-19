@@ -1,19 +1,43 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import arrowRight from '../../../../../assets/icons/appearance-tab-icons/arrowRight.svg'
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrowDown.svg'
 import edit from '../../../../../assets/icons/appearance-tab-icons/edit.svg'
 import right from '../../../../../assets/icons/appearance-tab-icons/blue-right.png'
 import AppearanceShareModal from '../../../../../components/Modals/AppearanceModals/AppearanceShareModal';
+import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 const UserName = () => {
+    const { userData } = useContext(AuthContext)
     const [open, setOpen] = useState(true)
     const [inputChange, setInputChange] = useState(false)
     const [newUsername, setNewUsername] = useState('')
     const [viewModal, setViewModal] = useState(false)
 
+    console.log(userData);
+
     const handleUpdate = () => {
-        setNewUsername('')
+        const username = { username: newUsername }
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/${userData?._id}`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(username),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.data.acknowledged) {
+                    toast.success('User Name Updated')
+                    setNewUsername('')
+                    setInputChange(false)
+                }
+            });
     }
+
+
+
 
     // console.log(newUsername)
     let modalRef = useRef();
@@ -46,11 +70,11 @@ const UserName = () => {
                         <div className='flex-grow'>
                             <div className='flex-grow flex items-center gap-1'>
                                 <h1 className='text-gray-500'>heylink.me/</h1>
-                                <input onChange={(e) => setNewUsername(e.target.value)} className={`flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue='robiulalam76' />
+                                <input onChange={(e) => setNewUsername(e.target.value)} className={`bg-white flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue={userData?.username} />
                                 {
                                     newUsername ? <>
                                         {
-                                            newUsername !== 'robiulalam76' ? <img onClick={() => handleUpdate()} className='w-4' src={right} alt="" />
+                                            newUsername !== userData?.username ? <img onClick={() => handleUpdate()} className='w-4' src={right} alt="" />
                                                 :
                                                 <img onClick={() => setInputChange(!inputChange)} className='w-4' src={edit} alt="" />
                                         }

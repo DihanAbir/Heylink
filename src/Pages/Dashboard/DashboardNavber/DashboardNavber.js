@@ -91,7 +91,7 @@ const DashboardNavber = () => {
 
                     <div className='relative'>
                         <img onClick={() => setViewProfile(!viewProfile)} className='rounded-full w-12'
-                            src={user ? user.photoURL : avatar} alt="" />
+                            src={user?.photoURL ? user?.photoURL : avatar} alt="" />
                         {
                             viewProfile && <ProfileDropdown />
                         }

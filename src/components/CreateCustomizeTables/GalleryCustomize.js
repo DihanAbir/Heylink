@@ -24,7 +24,10 @@ const GalleryCustomize = () => {
     const [defaultGalleryTitle, setDefaultGalleryTitle] = useState('My First Title');
     const [galleryTitleInput, setGalleryTitleInput] = useState('');
 
+
+    // handle update gallery title
     const handleUpdateGalleryTitle = () => {
+        console.log(galleryTitleInput);
         alert(galleryTitleInput + 'add korte hobe')
         setGalleryTitleInput('')
         setOpenInputChange(false)
@@ -36,12 +39,6 @@ const GalleryCustomize = () => {
             setGalleryTitleInput(newGalleryTitle)
         }
     }
-
-    // console.log(galleryTitleInput);
-    const closeModal = () => {
-        setDeleteModal(false)
-    }
-
 
 
     let outSideRef = useRef();
@@ -92,7 +89,7 @@ const GalleryCustomize = () => {
                                 <span className='text-sm text-gray-500'>Delete</span>
                             </div>
                             {
-                                deleteModal && <DeleteModal closeModal={closeModal}></DeleteModal>
+                                deleteModal && <DeleteModal closeModal={setDeleteModal}></DeleteModal>
                             }
                         </div>
 

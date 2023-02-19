@@ -1,34 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import link from "../../../../../assets/icons/link.svg";
 import threeSocial from "../../../../../assets/icons/three-social.svg";
 import uparrow from "../../../../../assets/icons/gif-images/up-arrow.gif";
 import CreateLinkCustomize from "../../../../../components/CreateCustomizeTables/CreateLinkCustomize";
 import { useEffect } from "react";
-import axios from "axios";
 import useFetch from "../../../../../Hoock/Hoock";
+import { toast } from "react-hot-toast";
+import { AuthContext } from "../../../../../ContextAPI/AuthProvider/AuthProvider";
 const LinksTab = () => {
+  const { userData } = useContext(AuthContext)
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
   const [errorUrl, setErrorUrl] = useState("");
   const [allUrls, setAllUrls] = useState([]);
-  const [userData, setUserData] = useState([]);
-  // const [data, setData] = useState([]);
   const data = useFetch("common");
-  const token = localStorage.getItem("HeyLinkToken");
 
-
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setUserData(data?.data?._id));
-  }, [userData]);
-
-
-  // add links
   const handleUrl = (event) => {
     event.preventDefault();
     const url = event.target.url.value;
@@ -38,17 +23,22 @@ const LinksTab = () => {
       userInfo: userData,
     };
 
-    axios
-      .post(`${process.env.REACT_APP_API_KEY}/app/v1/links/common`, data)
-      .then((res) => {
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then((data) => {
         event.target.reset();
+        toast.success('Link URL Add Successfully')
         setErrorUrl("");
       });
   };
 
-  const closeModal = () => {
-    setOpenAdvancedLinkModal(false);
-  };
   return (
     <section className="pb-6">
       <form onSubmit={handleUrl}>
@@ -66,26 +56,24 @@ const LinksTab = () => {
             />
           </div>
           {errorUrl ? (
-            <div className="bg-blue-600 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6">
-              <button className="font-semibold text-white md:hidden">
+            <button type="submit" className="bg-blue-600 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6">
+              <h1 className="font-semibold text-white md:hidden">
                 Add
-              </button>
-              <button className="font-semibold text-white hidden md:block">
+              </h1>
+              <h1 className="font-semibold text-white hidden md:block">
                 + Add New Link
-              </button>
-            </div>
+              </h1>
+            </button>
           ) : (
-            <div className="bg-blue-300 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6">
-              <button disabled className="font-semibold text-white md:hidden">
+            <button disabled className="bg-blue-300 cursor-not-allowed lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6">
+              <h1 className="font-semibold text-white md:hidden">
                 Add
-              </button>
-              <button
-                disabled
-                className="font-semibold text-white hidden md:block"
-              >
+              </h1>
+              <h1
+                className="font-semibold text-white hidden md:block">
                 + Add New Link
-              </button>
-            </div>
+              </h1>
+            </button>
           )}
         </div>
         {!errorUrl && (
@@ -124,7 +112,7 @@ const LinksTab = () => {
       {/* -----------Advanced Link Modal----------- */}
       {/* <div className='flex justify-center items-center'>
                 {
-                    openAdvancedLinkModal && <AdvancedLinkModal closeModal={closeModal} />
+                    openAdvancedLinkModal && <AdvancedLinkModal closeModal={setOpenAdvancedLinkModal} />
                 }
             </div> */}
     </section>

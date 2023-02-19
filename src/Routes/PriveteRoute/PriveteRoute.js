@@ -6,6 +6,8 @@ const PriveteRoute = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
     const location = useLocation()
 
+    // console.log(user);
+
     if (loading) {
         return <div className='flex justify-center mx-auto w-16' role="status">
             <svg aria-hidden="true" class="mr-2 w-16 h-16 text-gray-600 dark:text-gray-200 animate-spin  fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">

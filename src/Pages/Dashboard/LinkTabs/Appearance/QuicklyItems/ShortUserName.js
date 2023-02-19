@@ -34,7 +34,7 @@ const ShortUserName = () => {
     return (
         <section id='Short-username' className='mb-4'>
             <div className='flex items-center justify-between'>
-                <h1 onClick={() => setOpen(!open)} className='text-left font-semibold text-blue-900 mb-2'>USERNAME</h1>
+                <h1 onClick={() => setOpen(!open)} className='text-left font-semibold text-blue-900 mb-2'>SHORT USERNAME</h1>
                 {
                     open ? <img onClick={() => setOpen(!open)} src={arrowDown} alt="" />
                         :
@@ -57,7 +57,7 @@ const ShortUserName = () => {
                                         viewShortUserNameModal && <ShortUsernameModal closeModal={setViewShortUserNameModal} />
                                     }
                                 </div>
-                                <input onChange={(e) => setNewShortUsername(e.target.value)} className={`flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue='cNTsa' />
+                                <input onChange={(e) => setNewShortUsername(e.target.value)} className={`bg-white flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue='cNTsa' />
                                 {
                                     newShortUsername ? <>
                                         {

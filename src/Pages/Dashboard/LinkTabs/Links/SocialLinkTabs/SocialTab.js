@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 import arrowDown from "../../../../../assets/icons/social-tab-icons/arrow-down.svg";
 import empty from "../../../../../assets/icons/social-tab-icons/empty.svg";
 import AllSocialLinks from "../../../../../components/CreateCustomizeTables/AllSocialLinks";
@@ -30,6 +31,18 @@ const socials = [
     url: "https://twitter.com/username",
     img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
   },
+  {
+    id: "5",
+    name: "twitter",
+    url: "https://twitter.com/username",
+    img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
+  },
+  {
+    id: "6",
+    name: "twitter",
+    url: "https://twitter.com/username",
+    img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
+  },
 ];
 
 const SocialTab = () => {
@@ -41,12 +54,13 @@ const SocialTab = () => {
   );
   const [socialImg, setSocialImg] = useState("");
   const [search, setSearch] = useState(false);
-  const [allSocialLinks, setAllSocialLiks] = useState([]);
   const [inputError, setInputError] = useState("");
   const [userData, setUserData] = useState([]);
   let dropdownRef = useRef();
-  //   get link data from hoock
+  //   get link data from hook
   const data = useFetch("social");
+
+  // console.log(data);
 
   useEffect(() => {
     let handler = (e) => {
@@ -87,14 +101,21 @@ const SocialTab = () => {
       link: username,
       userInfo: userData,
     };
-    axios
-      .post(`${process.env.REACT_APP_API_KEY}/app/v1/links/social`, data)
-      .then((res) => {
-        console.log(res);
+
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/social`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then((data) => {
+        event.target.reset();
+        toast.success('Socail Address Add Successfully')
+        setInputError("");
       });
-    setAllSocialLiks([...allSocialLinks, username]);
-    event.target.reset();
-    setInputError("");
   };
   return (
     <section className="min-h-screen pb-6">
@@ -154,28 +175,29 @@ const SocialTab = () => {
           </div>
 
           {inputError && selectedSocial !== "Select Popular Social Link" ? (
-            <div className="flex justify-center items-center gap-1 px-4 rounded-[50px] h-14 w-56 mx-auto md:w-full bg-blue-600">
-              <button className="text-white font-semibold">+ Add</button>
-              <button className="text-white font-semibold">
+            <button className="flex justify-center items-center gap-1 px-4 rounded-[50px] h-14 w-56 mx-auto md:w-full bg-blue-600">
+              <h1 className="text-white font-semibold">+ Add</h1>
+              <h1 className="text-white font-semibold">
                 {selectedSocial}
-              </button>
-            </div>
+              </h1>
+            </button>
           ) : (
-            <div className="flex justify-center items-center gap-1 px-4 rounded-[50px] h-14 w-56 mx-auto md:w-full bg-[#9FC1EA]">
-              <button disabled className="text-white font-semibold">
+            <button disabled className="cursor-not-allowed flex justify-center items-center gap-1 px-4 rounded-[50px] h-14 w-56 mx-auto md:w-full bg-[#9FC1EA]">
+              <h1 className="text-white font-semibold">
                 + Add
-              </button>
-              <button disabled className="text-white font-semibold">
+              </h1>
+              <h1 className="text-white font-semibold">
                 {selectedSocial}
-              </button>
-            </div>
+              </h1>
+            </button>
           )}
         </form>
       </div>
+
       <div>
         {data &&
           data.map((socialLink) => <AllSocialLinks socialLink={socialLink} />)}
-        {allSocialLinks.length === 0 && (
+        {data.length === 0 && (
           <div className="flex flex-col justify-center items-center mt-12">
             <img className="md:w-96" src={empty} alt="" />
             <p className="text-center mt-6 text-gray-400">
@@ -184,6 +206,7 @@ const SocialTab = () => {
           </div>
         )}
       </div>
+
     </section>
   );
 };

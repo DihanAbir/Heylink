@@ -1,23 +1,66 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrowDown.svg'
 import arrowRight from '../../../../../assets/icons/appearance-tab-icons/arrowRight.svg'
 import edit from '../../../../../assets/icons/appearance-tab-icons/edit.svg'
 import right from '../../../../../assets/icons/appearance-tab-icons/blue-right.png'
-import blueRight from '../../../../../assets/icons/appearance-tab-icons/blue-right.svg'
+import avatar from '../../../../../assets/avatars/user-avatar.png'
 import ProButton from '../../../../../components/Buttons/ProButton';
 import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwitch';
+import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
+import { toast } from 'react-hot-toast';
 
 const AvatarTitle = () => {
+    const { userData } = useContext(AuthContext)
     const [open, setOpen] = useState(true)
     const [inputChange, setInputChange] = useState(false)
-    const [newUsername, setNewUsername] = useState('')
+    const [newProfileTitle, setNewProfileTitle] = useState('')
     const [viewModal, setViewModal] = useState(false)
+    const token = localStorage.getItem("HeyLinkToken");
+    // console.log(user);
+
 
     const handleUpdate = () => {
-        setNewUsername('')
+        const profileTitle = { profiletitle: newProfileTitle }
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/${userData?._id}`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(profileTitle),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.data.acknowledged) {
+                    toast.success('Profile Title Updated')
+                    setNewProfileTitle('')
+                    setInputChange(false)
+                }
+            });
     }
 
-    // console.log(newUsername)
+    // handle profile image update
+    const handleProfileImageUpdate = (e) => {
+        const formData = new FormData();
+        formData.append("file", e.target.files[0]);
+
+        const url = `${process.env.REACT_APP_API_KEY}/app/v1/user/${userData?._id}`;
+        fetch(url, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
+            },
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.data.acknowledged) {
+                    toast.success('Profile Image Updated')
+                }
+            });
+    }
+
+
     let modalRef = useRef();
     useEffect(() => {
         let handler = (e) => {
@@ -44,20 +87,24 @@ const AvatarTitle = () => {
             {
                 open && <div className='p-2 md:p-4 border rounded-xl w-full h-full'>
                     <div className='flex items-center gap-4'>
-                        <img className='w-16 h-16 rounded-full' src="https://heylink.me/cdn-cgi/image/f=auto,q=85,fit=crop,w=200/https://api.heylink.me/static/images/defaults/avatar_user.png" alt="" />
+                        <img className='w-16 h-16 rounded-full'
+                            src={userData?.photoURL ? userData?.image : avatar} alt="" />
 
                         <button className='relative flex justify-center items-center cursor-pointer w-36 h-10 rounded-3xl text-white bg-blue-600'>
                             <h1 className='cursor-pointer'>Upload Avatar</h1>
-                            <input className='w-full h-full opacity-0 absolute cursor-pointer' type="file" name="image" id="" />
+                            <input onChange={handleProfileImageUpdate} className='w-full h-full opacity-0 absolute cursor-pointer' type="file" name="image" id="" />
                         </button>
                     </div>
                     <div ref={modalRef} className='mt-6'>
                         <div className='flex-grow flex items-center gap-1'>
-                            <input onChange={(e) => setNewUsername(e.target.value)} className={`flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue='robiulalam76' />
+                            <input onChange={(e) => setNewProfileTitle(e.target.value)}
+                                className={`bg-white flex-grow focus:outline-none border-none 
+                                ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text"
+                                defaultValue={userData?.profiletitle ? userData.profiletitle : ''} placeholder='Add Profile Title' />
                             {
-                                newUsername ? <>
+                                newProfileTitle ? <>
                                     {
-                                        newUsername !== 'robiulalam76' ? <img onClick={() => handleUpdate()} className='w-4' src={right} alt="" />
+                                        newProfileTitle !== userData?.profiletitle ? <img onClick={() => handleUpdate()} className='w-4' src={right} alt="" />
                                             :
                                             <img onClick={() => setInputChange(!inputChange)} className='w-4' src={edit} alt="" />
                                     }

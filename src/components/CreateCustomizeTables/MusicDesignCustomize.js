@@ -12,6 +12,7 @@ import ProModal from '../Modals/CommonModals/ProModal';
 import ProButton from '../Buttons/ProButton';
 import ProToggleSwitch from '../ToggleSwitch/ProToggleSwitch';
 import DefaultSwitch from '../ToggleSwitch/DefaultSwitch';
+import { toast } from 'react-hot-toast';
 
 const musics = [
     {
@@ -50,23 +51,59 @@ const MusicDesignCustomize = ({ url }) => {
     const [descriptionSwitch, setDescriptionSwitch] = useState(false)
     const [mainToggle, setMainToggle] = useState(false);
     const [openInputChange1, setOpenInputChange1] = useState(false);
-    const [openInputChange2, setOpenInputChange2] = useState('');
-    const [newTitle, setNewTitle] = useState('');
-    const [newURL, setNewURL] = useState('');
+    const [openInputChange2, setOpenInputChange2] = useState(false);
+    const [openInputChange3, setOpenInputChange3] = useState(false);
+    const [newTitle, setNewTitle] = useState(url?.title);
+    const [newURL, setNewURL] = useState(url?.link);
 
     const [selectedMusicCtg, setSelectedMusicCtg] = useState('')
     const [musicImg, setMusicImg] = useState('')
     const [musicLink, setMusicLink] = useState('')
+    const [musicAudioLink, setMusicAudioLink] = useState('')
     const [search, setSearch] = useState(false)
 
-    console.log(selectedMusicCtg, musicImg)
+    const handleUpdateAudioMusicLink = () => {
+        alert(musicAudioLink)
+        setMusicAudioLink('')
+        openInputChange3(false)
+    }
 
     const handleTitleUpdate = () => {
-        setNewTitle('')
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/music/${url?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ title: newTitle })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.data.acknowledged) {
+                    toast.success('Music Title Added')
+                    setNewTitle('')
+                    setOpenInputChange1(false)
+                }
+            })
     }
 
     const handleURLUpdate = () => {
-        setNewURL('')
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/music/${url?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ link: newURL })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.data.acknowledged) {
+                    toast.success('Music Link Updated')
+                    setNewURL('')
+                    setOpenInputChange2(false)
+                }
+            })
     }
 
     const handleAddMusicData = (name, img) => {
@@ -100,7 +137,11 @@ const MusicDesignCustomize = ({ url }) => {
                 <div className='relative flex justify-end mr-4 mt-4'>
                     <img onClick={() => setDeleteModal(!deleteModal)} className='w-4' src={deletes} alt="" />
                     {
-                        deleteModal && <DeleteModal closeModal={setDeleteModal} />
+                        deleteModal && <DeleteModal
+                            endPoint={"music"}
+                            id={url._id}
+                            closeModal={setDeleteModal}
+                        ></DeleteModal>
                     }
                 </div>
 
@@ -118,27 +159,29 @@ const MusicDesignCustomize = ({ url }) => {
                                 <div>
                                     <div className='flex justify-between items-center'>
                                         <input onChange={(e) => setNewTitle(e.target.value)}
-                                            className={`mr-3 pr-3 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange1 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue='FARXIYA KABAYARE DHAKAC' name='' />
+                                            className={`mr-3 px-2 bg-white h-8 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange1 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={url?.title ? url.title : url.link} name='' />
                                         {
-                                            newTitle ? <img onClick={() => handleTitleUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                            newTitle !== url?.title ? <img onClick={() => handleTitleUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
                                                 :
                                                 <img onClick={() => setOpenInputChange1(!openInputChange1)} className='w-3 cursor-pointer' src={edit} alt="" />
                                         }
                                     </div>
-                                    <p className='text-sm text-gray-500'>Title</p>
+                                    <p className='text-sm text-gray-500 pl-2'>Title</p>
                                 </div>
 
                                 <div>
                                     <div className='flex justify-between items-center'>
                                         <input onChange={(e) => setNewURL(e.target.value)}
-                                            className={`mr-3 pr-3 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange2 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange2} defaultValue={url} name='address' />
+                                            className={`mr-3 px-2 bg-white h-8 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange2 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text"
+                                            disabled={!openInputChange2}
+                                            defaultValue={url.link} name='address' />
                                         {
-                                            newURL ? <img onClick={() => handleURLUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                            newURL !== url?.link ? <img onClick={() => handleURLUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
                                                 :
                                                 <img onClick={() => setOpenInputChange2(!openInputChange2)} className='w-3 cursor-pointer' src={edit} alt="" />
                                         }
                                     </div>
-                                    <p className='text-sm text-gray-500'>Scan Source</p>
+                                    <p className='text-sm text-gray-500 pl-2'>Scan Source</p>
                                 </div>
                             </div>
                         </div>
@@ -192,14 +235,15 @@ const MusicDesignCustomize = ({ url }) => {
                                 <div className='w-6 h-6 bg-blue-600 rounded-full flex justify-center items-center'>
                                     <svg className='w-4 text-white p-1' viewBox="0 0 9 10" xmlns="http://www.w3.org/2000/svg"><g><path d="M8.35471 4.34855L2.16096 0.649984C1.6365 0.33677 0.964355 0.715519 0.964355 1.32963V8.7157C0.964355 9.33284 1.63775 9.70641 2.16096 9.39623L8.35382 5.70837C8.86846 5.40141 8.86739 4.65659 8.35471 4.34855Z"></path></g></svg>
                                 </div>
-                                <input onChange={(e) => setNewTitle(e.target.value)}
-                                    className={`mr-3 pr-3 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange1 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={url} name='' />
+                                <input onChange={(e) => setMusicAudioLink(e.target.value)}
+                                    className={`mr-3 px-2 bg-white h-8 rounded w-full focus:outline-none text-gray-700 font-bold 
+                                    ${openInputChange3 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange3} defaultValue={url} name='' />
                             </div>
                             <div className='flex items-center gap-2'>
                                 {
-                                    newTitle ? <img onClick={() => handleTitleUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                    musicAudioLink ? <img onClick={() => handleUpdateAudioMusicLink()} className='w-3 cursor-pointer' src={blueRight} alt="" />
                                         :
-                                        <img onClick={() => setOpenInputChange1(!openInputChange1)} className='w-3 cursor-pointer' src={edit} alt="" />
+                                        <img onClick={() => setOpenInputChange3(!openInputChange3)} className='w-3 cursor-pointer' src={edit} alt="" />
                                 }
                                 <button className='w-16 h-8 bg-white border rounded-3xl flex justify-center items-center'><span>Play</span></button>
                                 <div className='relative'>
@@ -220,7 +264,8 @@ const MusicDesignCustomize = ({ url }) => {
                                         className='relative border-b flex justify-between items-center px-4 h-14 w-full bg-white'>
                                         <div className='flex items-center gap-4'>
                                             <img className='w-6' src={musicImg && musicImg} alt="" />
-                                            <h1>{selectedMusicCtg}</h1>
+                                            <input className='w-full cursor-pointer focus:outline-none border-none'
+                                                type="text" readOnly value={selectedMusicCtg} placeholder='Select Music Service' />
                                         </div>
                                         <div>
                                             <img className='w-3' src={arrowDown} alt="" />

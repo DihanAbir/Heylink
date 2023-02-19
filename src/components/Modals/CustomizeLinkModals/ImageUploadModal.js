@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
 import lock from "../../../assets/icons/link-customize-icons/pro-lock.svg";
 import FastLinkProModal from "./FastLinkProModal";
@@ -9,8 +10,7 @@ const ImageUploadModal = ({ closeModal, url }) => {
 
   const {
     register,
-    handleSubmit,
-    formState: { errors },
+    handleSubmit
   } = useForm();
   const [openFastLinkModal, setOpenFastLinkModal] = useState(false);
 
@@ -21,11 +21,17 @@ const ImageUploadModal = ({ closeModal, url }) => {
     const url = `http://localhost:8000/app/v1/links/common/${imageID}`;
     fetch(url, {
       method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
+      },
       body: formData,
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (data?.data.acknowledged) {
+          toast.success('Image Upload Successfully')
+          closeModal(false)
+        }
       });
   };
 

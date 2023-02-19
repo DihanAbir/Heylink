@@ -4,40 +4,33 @@ import DashboardNavber from '../DashboardNavber/DashboardNavber';
 import LinkTabs from '../LinkTabs/AllLinkTabs/LinkTabs';
 import { Outlet } from 'react-router-dom';
 import SidebarPreviewMain from '../../../components/Drawers/SidebarPreview/SidebarPreviewMain';
-import FullPagePreview from '../../../components/Drawers/SidebarPreview/FullPagePreview';
 import PreviewSmallBtn from '../../../components/Drawers/SidebarPreview/PreviewSmallBtn';
 
 const Dashboard = () => {
     const [preview, setPreview] = useState(false)
-    const [fullPagepreview, setFullPagePreview] = useState(false)
 
     return (
         <section className='bg-[#393AA7] min-h-screen'>
             <div className='min-h-screen max-w-[1440px] mx-auto py-6'>
-                {
-                    !fullPagepreview && <div className={` ${preview && 'lg:grid lg:grid-cols-4 lg:gap-5'} md:px-3`}>
-                        <div className='lg:col-span-3 bg-white md:rounded-3xl md:shadow relative'>
-                            <DashboardNavber />
-                            <LinkTabs />
-                            <div className='my-6 px-4 md:px-12'>
-                                <Outlet />
-                            </div>
-
-                            {/* -------Preview Drawer icon start------- */}
-                            <PreviewDrawer preview={preview} setPreview={setPreview} />
-                        </div>
-                        <div className={`${!preview && 'hidden'}`}>
-                            <SidebarPreviewMain />
+                <div className={` ${preview && 'lg:grid lg:grid-cols-4 lg:gap-5'} md:px-3`}>
+                    <div className='lg:col-span-3 bg-white md:rounded-3xl md:shadow relative'>
+                        <DashboardNavber />
+                        <LinkTabs />
+                        <div className='my-6 px-2 md:px-12'>
+                            <Outlet />
                         </div>
 
+                        {/* -------Preview Drawer icon start------- */}
+                        <PreviewDrawer preview={preview} setPreview={setPreview} />
                     </div>
-                }
-                {
-                    fullPagepreview && <FullPagePreview />
-                }
+                    <div className={`${!preview && 'hidden'}`}>
+                        <SidebarPreviewMain />
+                    </div>
+
+                </div>
             </div>
 
-            <PreviewSmallBtn fullPagepreview={fullPagepreview} setFullPagePreview={setFullPagePreview} />
+            <PreviewSmallBtn />
         </section>
     );
 };

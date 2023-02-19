@@ -5,18 +5,21 @@ import plus from '../../../assets/icons/plus.svg'
 import downArrow2 from '../../../assets/icons/down-arrow.svg'
 import deletes from '../../../assets/icons/link-customize-icons/delete.svg'
 import swap from '../../../assets/icons/link-customize-icons/swap.svg'
+import blueRight from '../../../assets/icons/blue-right.png'
+import edit from '../../../assets/icons/link-customize-icons/edit.svg'
 import DeleteModal from '../../Modals/CommonModals/DeleteModal';
 import MenuItems from './MenuItems';
 import ProButton from '../../Buttons/ProButton';
 import ProToggleSwitch from '../../ToggleSwitch/ProToggleSwitch';
 import ProModal from '../../Modals/CommonModals/ProModal';
 import DefaultSwitch from '../../ToggleSwitch/DefaultSwitch';
+import { toast } from 'react-hot-toast';
 
 const currencyItems = [
     'USD', 'UYU', 'UZS', 'VEF', 'VES', 'VND', 'ZWL', 'ZMW', 'ZMK', 'ZAR', 'YER', 'XPF', 'XOF', 'XCD'
 ]
 
-const MenuListCustomize = () => {
+const MenuListCustomize = ({ menu }) => {
     const [open, setOpen] = useState(false)
     const [menuToggle, setMenuToggle] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false)
@@ -28,9 +31,30 @@ const MenuListCustomize = () => {
     const [togglePermit, setTogglePermit] = useState(false);
     const [proModal1, setProModal1] = useState(false);
     const [proModal2, setProModal2] = useState(false);
-
+    const [openInputChange, setOpenInputChange] = useState(false);
     // ------menu name from input field
-    const [menuName, setMenuName] = useState('')
+    const [menuName, setMenuName] = useState(menu?.name)
+
+    // console.log(menuName);
+
+    const handleUpdateMenuName = () => {
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/menu/${menu?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ name: menuName })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.data.acknowledged) {
+                    toast.success('Menu Name Added')
+                    setMenuName('')
+                    setOpenInputChange(false)
+                }
+            })
+    }
 
 
     let outSideRef = useRef();
@@ -56,19 +80,31 @@ const MenuListCustomize = () => {
                         <img className='w-5' src={swap} alt="" />
                     </div>
 
-                    <div className='w-full h-14'>
-                        <input onChange={(e) => setMenuName(e.target.value)} className='focus:outline-none text-red-500 border-none w-full h-12 px-4 bg-gray-200' name='menuName' type="text" placeholder='Please enter the name of the menu or price list' />
-                        <p className='text-right text-sm text-gray-500'>128 characters left</p>
+                    <div className='w-full h-14 flex items-center gap-2'>
+                        <input onChange={(e) => setMenuName(e.target.value)}
+                            className='flex-grow focus:outline-none text-red-500 border-none w-full h-12 px-4 bg-gray-200' name='menuName' type="text" defaultValue={menu?.name && menu.name} placeholder='Please enter the name of the menu or price list' />
+                        {/* <p className='text-right text-sm text-gray-500'>128 characters left</p> */}
+                        {
+                            menuName !== menu?.name && menu.name ? <img onClick={() => handleUpdateMenuName()}
+                                className='w-4 cursor-pointer' src={blueRight} alt="" />
+                                :
+                                <img onClick={() => setOpenInputChange(!openInputChange)}
+                                    className='w-4 cursor-pointer' src={edit} alt="" />
+                        }
                     </div>
 
                     <div className='flex md:justify-center items-center gap-2 md:gap-6'>
-                        <div className='relative cursor-pointer'>
-                            <div onClick={() => setDeleteModal(!deleteModal)} className='hidden md:block md:flex flex-col justify-center items-center gap-2'>
+                        <div className='relative cursor-pointer hidden md:block'>
+                            <div onClick={() => setDeleteModal(!deleteModal)} className='md:flex flex-col justify-center items-center gap-2'>
                                 <img className='w-4' src={deletes} alt="" />
                                 <span className='text-sm text-gray-500'>Delete</span>
                             </div>
                             {
-                                deleteModal && <DeleteModal closeModal={setDeleteModal}></DeleteModal>
+                                deleteModal && <DeleteModal
+                                    endPoint={"menu"}
+                                    id={menu._id}
+                                    closeModal={setDeleteModal}
+                                ></DeleteModal>
                             }
                         </div>
 

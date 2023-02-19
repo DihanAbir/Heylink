@@ -1,19 +1,39 @@
-import React, { useState } from 'react';
-import link from '../../../../../assets/icons/link.svg'
-import threeSocial from '../../../../../assets/icons/three-social.svg'
+import React, { useContext, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import uparrow from '../../../../../assets/icons/gif-images/up-arrow.gif'
 import MusicDesignCustomize from '../../../../../components/CreateCustomizeTables/MusicDesignCustomize';
+import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
+import useFetch from '../../../../../Hoock/Hoock';
 
 const MusicTab = () => {
+    const { userData } = useContext(AuthContext)
     const [errorUrl, setErrorUrl] = useState('')
     const [allUrls, setAllUrls] = useState([])
+    const data = useFetch("music");
 
     const handleUrl = (event) => {
         event.preventDefault()
         const url = event.target.url.value
-        setAllUrls([...allUrls, url])
-        event.target.reset()
-        setErrorUrl('')
+
+        const data = {
+            link: url,
+            userInfo: userData,
+        };
+
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/music`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then((data) => {
+                event.target.reset();
+                toast.success('Link URL Add Successfully')
+                setErrorUrl('')
+            });
     }
 
     return (
@@ -49,7 +69,7 @@ const MusicTab = () => {
                 </div>
             </div>
             {
-                allUrls.length > 0 ? allUrls.map(url => <MusicDesignCustomize url={url} />)
+                data.length > 0 ? data.map(url => <MusicDesignCustomize url={url} />)
                     :
                     <div className='flex justify-center items-center py-8'>
                         <img src={uparrow} alt="" />
