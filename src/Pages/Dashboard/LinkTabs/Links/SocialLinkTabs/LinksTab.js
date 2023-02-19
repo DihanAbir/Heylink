@@ -3,16 +3,17 @@ import link from "../../../../../assets/icons/link.svg";
 import threeSocial from "../../../../../assets/icons/three-social.svg";
 import uparrow from "../../../../../assets/icons/gif-images/up-arrow.gif";
 import CreateLinkCustomize from "../../../../../components/CreateCustomizeTables/CreateLinkCustomize";
-import { useEffect } from "react";
-import useFetch from "../../../../../Hoock/Hoock";
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../../../../ContextAPI/AuthProvider/AuthProvider";
+import useFetch from "../../../../../Hoock/Hoock";
 const LinksTab = () => {
   const { userData } = useContext(AuthContext)
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
   const [errorUrl, setErrorUrl] = useState("");
   const [allUrls, setAllUrls] = useState([]);
   const data = useFetch("common");
+
+  // console.log(data);
 
   const handleUrl = (event) => {
     event.preventDefault();

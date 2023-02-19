@@ -2,8 +2,8 @@ import { TextField } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
 
 const Signup = () => {
@@ -14,7 +14,10 @@ const Signup = () => {
 
   const handleSignup = (data) => {
     axios.post(`${process.env.REACT_APP_API_KEY}/app/v1/user/signup`, data)
-      .then((res) => { console.log(res) });
+      .then((res) => {
+        toast.success('User Signup Successfully')
+        navigate('/login')
+      });
   };
 
   return (

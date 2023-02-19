@@ -2,6 +2,7 @@ import { TextField } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navber from "../../Shared/Navber/Navber";
 
@@ -24,7 +25,9 @@ const Login = () => {
     })
       .then((res) => {
         console.log(res.data.data.token);
+        toast.success('User Login Successfully')
         localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
+        navigate('/dashboard')
       });
   };
   return (

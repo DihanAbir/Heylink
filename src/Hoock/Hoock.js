@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-const token = localStorage.getItem("HeyLinkToken");
-// console.log(token, "token");
 
 // get fetch data
 const useFetch = (endpoint) => {
   const [data, setData] = useState([]);
-  // console.log(data);
+  const token = localStorage.getItem("HeyLinkToken")
+  // console.log(token);
+  // console.log(endpoint);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/${endpoint}`, {
