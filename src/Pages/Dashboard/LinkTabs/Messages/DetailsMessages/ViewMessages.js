@@ -4,6 +4,8 @@ import SmallIcon from '../../../../../components/Buttons/SmallIcon';
 import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
 import DisabledSwitch from '../../../../../components/ToggleSwitch/DisabledSwitch';
 import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwitch';
+import edit from "../../../../../assets/icons/link-customize-icons/edit.svg";
+import blueRight from '../../../../../assets/icons/blue-right.png'
 
 const ViewMessages = () => {
     const [messageText, setMessageText] = useState('')
@@ -36,6 +38,23 @@ const ViewMessages = () => {
     // custom field 3-----------
     const [customFieldChecked3, setCustomFieldChecked3] = useState(false)
     const [customField3, setCustomField3] = useState('')
+
+    const handleInputFieldText = (inputName) => {
+        // fetch(`${process.env.REACT_APP_API_KEY}/app/v1/message`, {
+        //     method: 'POST',
+        //     headers: {
+        //         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        //         "content-type": "application/json",
+        //     },
+        //     body: JSON.stringify(data)
+        // })
+        //     .then(res => res.json())
+        //     .then((data) => {
+        //         event.target.reset();
+        //         toast.success('Link URL Add Successfully')
+        //         setErrorUrl("");
+        //     });
+    }
 
     return (
         <div className='mt-4'>
@@ -73,8 +92,15 @@ const ViewMessages = () => {
             </div>
             <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2' >
-                    <input onClick={() => setNameChecked(!nameChecked)} checked={nameChecked} type="checkbox" name="yourName" id="yourName" />
-                    <input onChange={(e) => setYourName(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='yourName' id='yourName' defaultValue='Your Name' />
+                    <input onClick={() => setNameChecked(!nameChecked)} checked={nameChecked}
+                        type="checkbox" name="name" id="name" />
+                    <input onChange={(e) => setYourName(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='name' id='name' defaultValue='Your Name' />
+                    {
+                        yourName && <button onClick={() => handleInputFieldText('name')}
+                            className='w-10 h-full p-1 hover:bg-gray-100 rounded-md flex justify-center items-center'>
+                            <img className='w-4 h-full cursor-pointer' src={blueRight} alt="" />
+                        </button>
+                    }
                 </div>
 
                 {

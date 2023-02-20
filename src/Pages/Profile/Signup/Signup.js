@@ -82,11 +82,11 @@ const Signup = () => {
               )}
             </div>
 
-            <div className="h-12 flex justify-center items-center bg-[#239ae7] text-white rounded-[50px] my-4">
-              <button className="font-bold" type="submit">
+            <button type="submit" className="h-12 w-full flex justify-center items-center bg-[#239ae7] text-white rounded-[50px] my-4">
+              <h1 className="font-bold">
                 Sign Up
-              </button>
-            </div>
+              </h1>
+            </button>
             <div>
               <p className="text-center text-sm text-gray-600">
                 Or sign up with Google or Facebook

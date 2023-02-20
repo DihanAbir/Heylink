@@ -5,14 +5,13 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({ name: 'fdf', email: 'adv@gmail.com' })
     const [userData, setUserData] = useState(null)
     const [loading, setLoading] = useState(false)
-    const token = localStorage.getItem("HeyLinkToken");
 
-    console.log(userData);
+    // console.log(userData);
 
     useEffect(() => {
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/me`, {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
         })

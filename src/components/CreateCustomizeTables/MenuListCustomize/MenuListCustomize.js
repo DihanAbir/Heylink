@@ -85,7 +85,7 @@ const MenuListCustomize = ({ menu }) => {
                             className='flex-grow focus:outline-none text-red-500 border-none w-full h-12 px-4 bg-gray-200' name='menuName' type="text" defaultValue={menu?.name && menu.name} placeholder='Please enter the name of the menu or price list' />
                         {/* <p className='text-right text-sm text-gray-500'>128 characters left</p> */}
                         {
-                            menuName !== menu?.name && menu.name ? <img onClick={() => handleUpdateMenuName()}
+                            menuName !== menu?.name ? <img onClick={() => handleUpdateMenuName()}
                                 className='w-4 cursor-pointer' src={blueRight} alt="" />
                                 :
                                 <img onClick={() => setOpenInputChange(!openInputChange)}

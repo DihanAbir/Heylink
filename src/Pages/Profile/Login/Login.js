@@ -27,7 +27,7 @@ const Login = () => {
         console.log(res.data.data.token);
         toast.success('User Login Successfully')
         localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
-        navigate('/dashboard')
+        navigate('/dashboard');
       });
   };
   return (
@@ -86,11 +86,11 @@ const Login = () => {
             </div>
             {/* ---------Forget password--------- */}
 
-            <div className="h-12 flex justify-center items-center bg-[#239ae7] text-white rounded-[50px] my-4">
-              <button className="font-bold" type="submit">
+            <button type="submit" className="h-12 w-full flex justify-center items-center bg-[#239ae7] text-white rounded-[50px] my-4">
+              <h1 className="font-bold" >
                 Log in
-              </button>
-            </div>
+              </h1>
+            </button>
             <div>
               <p className="text-center text-sm text-gray-600">
                 Or sign up with Google or Facebook
