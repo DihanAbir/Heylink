@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrow-down.svg'
 import CustomeTheme from '../CustomeTheme/CustomeTheme/CustomeTheme';
 import PlacementManager from '../PlacementManager/PlacementManager';
@@ -20,6 +20,11 @@ const jumpItems = [
 
 const Appearance = () => {
     const [openJump, setOpenJump] = useState(false)
+
+    useEffect(() => {
+        // document.getElementById("myDiv").scrollTop = 100;
+        // $("#myDiv").scrollTop(100);
+    }, [])
     return (
         <section className='min-h-screen py-6 cursor-pointer'>
             <div onClick={() => setOpenJump(!openJump)}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import downArrow from "../../assets/icons/link-customize-icons/down-arrow.svg";
 import upArrow from "../../assets/icons/link-customize-icons/up-arrow.svg";
 import moveToTop from "../../assets/icons/link-customize-icons/move-to-top.svg";
@@ -19,7 +19,9 @@ import { Buffer } from "buffer";
 import DefaultSwitch from "../ToggleSwitch/DefaultSwitch";
 import CalanderData from "../Modals/CalanderModals/CalanderData";
 import { toast } from "react-hot-toast";
+import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
 const CreateLinkCustomize = ({ url }) => {
+  const { handleDefaultSwitch, handleTitleUpdate } = useContext(ServiceContext)
   const [open, setOpen] = useState(false);
   const [openEffcetsModal, setOpenEffcetsModal] = useState(false);
   const [fastLinkProModal, setFastLinkProModal] = useState(false);
@@ -36,10 +38,13 @@ const CreateLinkCustomize = ({ url }) => {
   const [openInputChange2, setOpenInputChange2] = useState(false);
   const [linkName, setLinkName] = useState('');
   const [linkURL, setLinkURL] = useState('');
-  const [linkToggle, setLinkToggle] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
   // console.log(url);
+
+  const handleToggleSwitch = (input) => {
+    handleDefaultSwitch(url?._id, { show: input }, 'links/common',)
+  }
 
   // link name update--------------
   const handleUpdateLinkName = () => {
@@ -52,9 +57,13 @@ const CreateLinkCustomize = ({ url }) => {
       body: JSON.stringify({ linkTitle: linkName })
     })
       .then(res => res.json())
-      .then(data => console.log(data))
-    setLinkName('')
-    setOpenInputChange1(false)
+      .then(data => {
+        if (data?.data.acknowledged) {
+          toast.success('Link Title Updated')
+          setLinkName('')
+          setOpenInputChange1(false)
+        }
+      })
   }
 
   // link url update--------------
@@ -255,7 +264,7 @@ const CreateLinkCustomize = ({ url }) => {
             </div>
 
             {/* -----------toggler switch start----------- */}
-            <DefaultSwitch initialToggle={linkToggle} getToggle={setLinkToggle} />
+            <DefaultSwitch initialToggle={url?.show === 'true'} getToggle={handleToggleSwitch} />
             {/* -----------toggler switch start----------- */}
           </div>
         </div>
@@ -296,7 +305,7 @@ const CreateLinkCustomize = ({ url }) => {
                   </div>
                   <h1 className="text-gray-400 text-sm">effects</h1>
                 </div>
-                {openEffcetsModal && <EffectsModal closeModal={setOpenEffcetsModal} />}
+                {openEffcetsModal && <EffectsModal closeModal={setOpenEffcetsModal} url={url} />}
               </div>
               {/* -----------effects end----------- */}
 

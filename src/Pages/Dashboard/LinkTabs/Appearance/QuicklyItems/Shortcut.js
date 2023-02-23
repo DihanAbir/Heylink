@@ -1,10 +1,35 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import arrowRight from '../../../../../assets/icons/appearance-tab-icons/arrowRight.svg'
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrowDown.svg'
+import { toast } from 'react-hot-toast';
+import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
+import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 
 const Shortcut = () => {
+    const { userData } = useContext(AuthContext)
     const [open, setOpen] = useState(true)
-    const [shortcutToggle, setShortcutToggle] = useState(true)
+    // const [shortcutToggle, setShortcutToggle] = useState(userData?.shortcut === "true")
+
+    console.log(userData?.shortcut === "true");
+
+    const handleShortcut = (input) => {
+        console.log(input);
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/${userData?._id}`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ shortcut: input }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.data.acknowledged) {
+                    toast.success('Shortcut Switch Updated')
+                    // setShortcutToggle(data)
+                }
+            });
+    }
     return (
         <section id='shortcut' className='mb-4 md:col-span-2'>
             <div className='flex items-center justify-between'>
@@ -24,15 +49,7 @@ const Shortcut = () => {
                     <div>
                         <div className="flex items-center gap-2">
                             <span className='text-gray-500 text-sm font-semibold'>Off</span>
-                            <div className="flex flex-col justify-center items-center ">
-                                <div onClick={() => setShortcutToggle(!shortcutToggle)}
-                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                ${shortcutToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                    <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                ${shortcutToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                    </div>
-                                </div>
-                            </div>
+                            <DefaultSwitch initialToggle={userData?.shortcut === "true"} getToggle={handleShortcut} />
                             <span className='text-gray-500 text-sm font-semibold'>On</span>
                         </div>
                     </div>

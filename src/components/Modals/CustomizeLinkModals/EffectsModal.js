@@ -5,8 +5,28 @@ import wobble from '../../../assets/icons/link-customize-icons/wobble.svg'
 import pop from '../../../assets/icons/link-customize-icons/pop.svg'
 import blink from '../../../assets/icons/link-customize-icons/blink.svg'
 import lock from '../../../assets/icons/link-customize-icons/pro-lock.svg'
+import { toast } from 'react-hot-toast';
 
-const EffectsModal = ({ closeModal }) => {
+const EffectsModal = ({ closeModal, url }) => {
+
+    const handleEffect = (input) => {
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ effects: input })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.data.acknowledged) {
+                    toast.success('Effect Updated')
+                    closeModal(false)
+                }
+            })
+    }
+
     let dropdownRef = useRef();
     useEffect(() => {
         let handler = (e) => {
@@ -30,27 +50,30 @@ const EffectsModal = ({ closeModal }) => {
                 </div>
 
                 <div className='flex justify-center items-center gap-3 md:gap-6'>
-                    <div className='flex flex-col gap-4 justify-center items-center'>
+                    <div onClick={() => handleEffect(buzz)} className='flex flex-col gap-4 justify-center items-center'>
                         <div>
                             <img className='w-12' src={buzz} alt="" />
                         </div>
-                        <div className='w-16 h-7 mt-2 bg-gray-200 rounded flex justify-center items-center'>
+                        <div className={`w-16 h-7 mt-2 bg-gray-200 rounded flex justify-center items-center
+                        ${url?.effects === 'buzz' && 'bg-blue-400'}`}>
                             <h1 className='text-gray-500 font-semibold text-sm'>Buzz</h1>
                         </div>
                     </div>
-                    <div className='flex flex-col gap-4 justify-center items-center'>
+                    <div onClick={() => handleEffect(wobble)} className='flex flex-col gap-4 justify-center items-center'>
                         <div>
                             <img className='w-6' src={wobble} alt="" />
                         </div>
-                        <div className='w-16 h-7 bg-gray-200 rounded flex justify-center items-center'>
+                        <div className={`w-16 h-7 bg-gray-200 rounded flex justify-center items-center
+                        ${url?.effects === 'wobble' && 'bg-blue-400'}`}>
                             <h1 className='text-gray-500 font-semibold text-sm'>Wobble</h1>
                         </div>
                     </div>
-                    <div className='flex flex-col gap-4 justify-center items-center'>
+                    <div onClick={() => handleEffect(pop)} className='flex flex-col gap-4 justify-center items-center'>
                         <div>
                             <img className='w-12' src={pop} alt="" />
                         </div>
-                        <div className='w-16 h-7 mt-3 bg-gray-200 rounded flex justify-center items-center'>
+                        <div className={`w-16 h-7 mt-3 bg-gray-200 rounded flex justify-center items-center
+                        ${url?.effects === 'pop' && 'bg-blue-400'}`}>
                             <h1 className='text-gray-500 font-semibold text-sm'>Pop</h1>
                         </div>
                     </div>
@@ -63,7 +86,8 @@ const EffectsModal = ({ closeModal }) => {
                                 <img className='w-7' src={lock} alt="" />
                             </div>
                         </div>
-                        <div className='w-16 h-7 mt-2 bg-gray-200 rounded flex justify-center items-center'>
+                        <div className={`w-16 h-7 mt-2 bg-gray-200 rounded flex justify-center items-center
+                        ${url?.effects === 'blink' && 'bg-blue-400'}`}>
                             <h1 className='text-gray-500 font-semibold text-sm'>Blink</h1>
                         </div>
                     </div>

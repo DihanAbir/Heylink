@@ -6,6 +6,9 @@ const PriveteRoute = ({ children }) => {
     const { user, loading } = useContext(AuthContext)
     const location = useLocation()
 
+    const token = localStorage.getItem("HeyLinkToken")
+
+
     // console.log(user);
 
     if (loading) {

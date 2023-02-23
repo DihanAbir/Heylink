@@ -10,6 +10,7 @@ import sliderInactive from '../../assets/icons/gallery-tab-icons/slider-inactive
 import gridActive from '../../assets/icons/gallery-tab-icons/grid-active.svg'
 import gridInactive from '../../assets/icons/gallery-tab-icons/grid-inactive.svg'
 import blueRight from '../../assets/icons/blue-right.png'
+import delet from '../../assets/icons/delet.png'
 import { Link } from 'react-router-dom';
 import SliderGridTab from '../CreateCustomizeTables/SlidAndGridTabs/SlidAndGridTabs/SliderGridTab';
 import DeleteModal from '../../components/Modals/CommonModals/DeleteModal';
@@ -24,10 +25,12 @@ const GalleryCustomize = () => {
     const [defaultGalleryTitle, setDefaultGalleryTitle] = useState('My First Title');
     const [galleryTitleInput, setGalleryTitleInput] = useState('');
 
+    const [imageData, setImageData] = useState()
+
 
     // handle update gallery title
     const handleUpdateGalleryTitle = () => {
-        console.log(galleryTitleInput);
+        // console.log(galleryTitleInput);
         alert(galleryTitleInput + 'add korte hobe')
         setGalleryTitleInput('')
         setOpenInputChange(false)
@@ -38,6 +41,12 @@ const GalleryCustomize = () => {
         if (newGalleryTitle !== defaultGalleryTitle) {
             setGalleryTitleInput(newGalleryTitle)
         }
+    }
+
+    const handleGalleryImageUpload = (e) => {
+        const formData = new FormData();
+        formData.append("file", e.target.files[0]);
+        setImageData(e.target.files[0])
     }
 
 
@@ -104,22 +113,39 @@ const GalleryCustomize = () => {
                     open && <div
                         className='grid lg:grid-cols-2 gap-2 border-t border-gray-200 py-4 mx-3 sm:py-0'>
                         <div className='w-full md:p-4'>
-                            <div className='relative cursor-pointer h-60 w-full rounded-xl border-2 border-dashed border-gray'>
+                            <div className='relative cursor-pointer h-fit w-full rounded-xl border-2 border-dashed border-gray'>
+
                                 <div className='p-3'>
                                     <h1 className='text-sm text-gray-400'>
                                         <span>Drop your images here, or just</span>
                                         <span className='text-blue-600 font-semibold px-1'>Browse</span>
                                         <span>your local storage</span>
                                     </h1>
+                                    {
+                                        imageData && <input onChange={(e) => handleGalleryImageUpload(e)} className='absolute h-full top-0 cursor-pointer w-full opacity-0' type="file" name="image" id="" />
+                                    }
                                 </div>
-                                <div className='flex justify-center items-center'>
-                                    <h1 className='text-gray-600'>click to <br /> <span className='text-gray-600 font-bold'>Add Image</span></h1>
-                                    <img className='w-20 md:w-28' src={gifDownArrow} alt="" />
-                                </div>
-                                <div className='flex justify-center items-center mx-auto my-3 h-10 w-56 rounded-[50px] bg-blue-600 px-6'>
-                                    <h1 className='text-white font-semibold'>+ Add Image</h1>
-                                </div>
-                                <input className='absolute h-full top-0 cursor-pointer w-full opacity-0' type="file" name="image" id="" />
+
+                                {
+                                    imageData ? <div className='group flex items-center flex-wrap gap-3 p-3'>
+                                        <div className='w-28 h-20 rounded-md relative'>
+                                            <img className='w-full h-full rounded-md group-hover:opacity-50' src="https://www.metoffice.gov.uk/binaries/content/gallery/metofficegovuk/hero-images/advice/maps-satellite-images/satellite-image-of-globe.jpg" alt="" />
+
+                                            <img className='w-10 hidden group-hover:block absolute top-0 right-0' src={delet} alt="" />
+                                        </div>
+                                    </div>
+                                        :
+                                        <>
+                                            <div className='flex justify-center items-center'>
+                                                <h1 className='text-gray-600'>click to <br /> <span className='text-gray-600 font-bold'>Add Image</span></h1>
+                                                <img className='w-20 md:w-28' src={gifDownArrow} alt="" />
+                                            </div>
+                                            <div className='flex justify-center items-center mx-auto my-3 h-10 w-56 rounded-[50px] bg-blue-600 px-6'>
+                                                <h1 className='text-white font-semibold'>+ Add Image</h1>
+                                            </div>
+                                            <input onChange={(e) => handleGalleryImageUpload(e)} className='absolute h-full top-0 cursor-pointer w-full opacity-0' type="file" name="image" id="" />
+                                        </>
+                                }
                             </div>
                         </div>
 

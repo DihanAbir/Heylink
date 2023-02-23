@@ -5,7 +5,7 @@ import arrowRight from '../../assets/icons/right-arrow.svg'
 const ViewLive = () => {
     const token = localStorage.getItem("HeyLinkToken");
     const [userData, setUserData] = useState({});
-    console.log(userData);
+    // console.log(userData);
     const linksData = useFetch("common");
     const socialData = useFetch("social");
     const galleryData = useFetch("gallery");

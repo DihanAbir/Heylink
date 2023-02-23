@@ -43,6 +43,23 @@ const AllSocialLinks = ({ socialLink }) => {
     }
   }
 
+  const handleButtonORIcon = (input) => {
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/social/${socialLink?._id}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ bottom: input })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data?.data.acknowledged) {
+          toast.success('Data Successfully Updated')
+        }
+      })
+  }
+
 
   let outSideRef = useRef();
   useEffect(() => {
@@ -114,18 +131,19 @@ const AllSocialLinks = ({ socialLink }) => {
                   </h1>
                 </div>
               </div>
-              <div
-                onClick={() => setSelectBtn(!selectBtn)}
-                className="flex items-center"
-              >
-                <div
-                  className={`flex justify-center items-center h-10 w-20 bg-blue-100 rounded-l-md ${selectBtn && "rounded-y border border-blue-600"
+              <div className="flex items-center">
+
+                <div onClick={() => handleButtonORIcon('button')}
+                  className={`flex justify-center items-center h-10 w-20 bg-blue-100 rounded-l-md 
+                  ${socialLink?.bottom === 'button' && "rounded-y border border-blue-600"
                     }`}
                 >
                   <h1 className="text-gray-500 p-2">Button</h1>
                 </div>
-                <div
-                  className={`flex justify-center items-center h-10 w-20 bg-blue-100 rounded-r-md ${!selectBtn && "rounded-y border border-blue-600"
+
+                <div onClick={() => handleButtonORIcon('icon')}
+                  className={`flex justify-center items-center h-10 w-20 bg-blue-100 rounded-r-md 
+                  ${socialLink?.bottom === 'icon' && "rounded-y border border-blue-600"
                     }`}
                 >
                   <h1 className="text-gray-500 p-2">icon</h1>

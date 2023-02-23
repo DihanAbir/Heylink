@@ -13,7 +13,7 @@ const LinksTab = () => {
   const [allUrls, setAllUrls] = useState([]);
   const data = useFetch("common");
 
-  // console.log(data);
+  console.log(data);
 
   const handleUrl = (event) => {
     event.preventDefault();

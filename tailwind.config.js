@@ -8,8 +8,8 @@ module.exports = {
   },
   variants: {
     extend: {
-      active: ['block']
-    }
+      display: ['group-focus', 'group-hover']
+    },
   },
   plugins: [],
 }
