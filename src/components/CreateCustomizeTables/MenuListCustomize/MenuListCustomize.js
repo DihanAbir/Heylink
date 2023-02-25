@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import downArrow from '../../../assets/icons/link-customize-icons/down-arrow.svg'
 import upArrow from '../../../assets/icons/link-customize-icons/up-arrow.svg'
 import plus from '../../../assets/icons/plus.svg'
@@ -14,16 +14,16 @@ import ProToggleSwitch from '../../ToggleSwitch/ProToggleSwitch';
 import ProModal from '../../Modals/CommonModals/ProModal';
 import DefaultSwitch from '../../ToggleSwitch/DefaultSwitch';
 import { toast } from 'react-hot-toast';
+import { ServiceContext } from '../../../ContextAPI/ServiceProvider/ServiceProvider';
 
 const currencyItems = [
     'USD', 'UYU', 'UZS', 'VEF', 'VES', 'VND', 'ZWL', 'ZMW', 'ZMK', 'ZAR', 'YER', 'XPF', 'XOF', 'XCD'
 ]
 
 const MenuListCustomize = ({ menu }) => {
+    const { handleDefaultSwitch } = useContext(ServiceContext)
     const [open, setOpen] = useState(false)
-    const [menuToggle, setMenuToggle] = useState(false);
     const [deleteModal, setDeleteModal] = useState(false)
-    const [menuItems, setMenuItems] = useState(['addItem'])
     const [viewCurrency, setViewCurrency] = useState(false)
     const [selectedCurrency, setSelectedCurrency] = useState('USD')
     const [spotlightToggle, setSpotlightToggle] = useState(false);
@@ -35,7 +35,29 @@ const MenuListCustomize = ({ menu }) => {
     // ------menu name from input field
     const [menuName, setMenuName] = useState(menu?.name)
 
-    // console.log(menuName);
+    console.log(menu);
+
+    const handleToggleSwitch = (input) => {
+        handleDefaultSwitch(menu?._id, { show: input }, 'links/menu',)
+    }
+
+    const handleMenuItems = () => {
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/menu`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ item: { itemText: 'D', ItemPrice: 'T' } })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data) {
+                    console.log(data);
+                    toast.success('Menu Name Added')
+                }
+            })
+    }
 
     const handleUpdateMenuName = () => {
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/menu/${menu?._id}`, {
@@ -52,6 +74,24 @@ const MenuListCustomize = ({ menu }) => {
                     toast.success('Menu Name Added')
                     setMenuName('')
                     setOpenInputChange(false)
+                }
+            })
+    }
+
+    const handleCurrency = (input) => {
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/menu/${menu?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ currency: input })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.data.acknowledged) {
+                    toast.success('Currency Added')
+                    setViewCurrency(false)
                 }
             })
     }
@@ -109,20 +149,20 @@ const MenuListCustomize = ({ menu }) => {
                         </div>
 
                         {/* -----------toggler switch start----------- */}
-                        <DefaultSwitch initialToggle={menuToggle} getToggle={setMenuToggle} />
+                        <DefaultSwitch initialToggle={menu?.show === 'true'} getToggle={handleToggleSwitch} />
                         {/* -----------toggler switch start----------- */}
                     </div>
                 </div>
 
 
                 {
-                    open && menuItems.map(item => <MenuItems />)
+                    open && menu.item.map(i => <MenuItems menuId={menu?._id} item={i} />)
                 }
 
 
                 {
                     open && <div className='px-4 cursor-pointer py-4'>
-                        <button onClick={() => setMenuItems([...menuItems, 'addItem'])}
+                        <button onClick={() => handleMenuItems()}
                             className='flex items-center gap-4 mt-5'>
                             <img className='w-5' src={plus} alt="" />
                             <span className='text-blue-900 underline'>Add additional item</span>
@@ -133,16 +173,16 @@ const MenuListCustomize = ({ menu }) => {
                             <div className='relative'>
                                 <div onClick={() => setViewCurrency(!viewCurrency)}
                                     className='flex items-center justify-between px-2 w-60 h-12 bg-gray-100 border rounded-md'>
-                                    <h1 className='text-black font-semibold'>{selectedCurrency}</h1>
+                                    <h1 className='text-black font-semibold'>{menu?.currency}</h1>
                                     <img src={downArrow2} alt="" />
                                 </div>
                                 {
                                     viewCurrency && <div className='bg-whtie absolute h-44 border w-full overflow-y-auto bg-white px-2'>
                                         {
                                             currencyItems.map(i => <div
-                                                onClick={() => setSelectedCurrency(i)}
+                                                onClick={() => handleCurrency(i)}
                                                 className='hover:bg-gray-200 h-8 w-full flex items-center justify-start'>
-                                                <h1 className={`text-black ${i === selectedCurrency && 'font-semibold'}`}>{i}</h1>
+                                                <h1 className={`text-black ${i === menu?.currency && 'font-semibold'}`}>{i}</h1>
                                             </div>)
                                         }
                                     </div>
@@ -162,15 +202,8 @@ const MenuListCustomize = ({ menu }) => {
                                 {/* -----------toggler switch start----------- */}
 
                                 {
-                                    togglePermit ? <div className="flex flex-col justify-center items-center ">
-                                        <div onClick={() => setSpotlightToggle(!spotlightToggle)}
-                                            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${spotlightToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                            <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${spotlightToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    togglePermit ?
+                                        <DefaultSwitch initialToggle={spotlightToggle} getToggle={setSpotlightToggle} />
                                         :
                                         <div className='relative'>
                                             <div onClick={() => setProModal1(!proModal1)}>
@@ -196,15 +229,8 @@ const MenuListCustomize = ({ menu }) => {
                                 {/* -----------toggler switch start----------- */}
 
                                 {
-                                    togglePermit ? <div className="flex flex-col justify-center items-center ">
-                                        <div onClick={() => setLinkURLToggle(!linkURLToggle)}
-                                            className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${linkURLToggle ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                            <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${linkURLToggle ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    togglePermit ?
+                                        <DefaultSwitch initialToggle={linkURLToggle} getToggle={setLinkURLToggle} />
                                         :
                                         <div className='relative'>
                                             <div onClick={() => setProModal2(!proModal2)}>

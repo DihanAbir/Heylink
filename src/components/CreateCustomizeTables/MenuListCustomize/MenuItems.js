@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import blueRight from '../../../assets/icons/blue-right.png'
-import edit from '../../../assets/icons/link-customize-icons/edit.svg'
 import ProButton from '../../Buttons/ProButton';
 import DeleteModal from '../../Modals/CommonModals/DeleteModal';
 import ProModal from '../../Modals/CommonModals/ProModal';
 import deletes from '../../../assets/icons/link-customize-icons/delete.svg'
+import { toast } from 'react-hot-toast';
 
-const MenuItems = () => {
+const MenuItems = ({ menuId, item }) => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [proModal, setProModal] = useState(false)
     const [uploadImagePermit, setUploadImagePermit] = useState(false)
@@ -15,13 +15,42 @@ const MenuItems = () => {
     const [itemName, setItemName] = useState('')
     const [itemPrice, setItemPrice] = useState('')
 
+    // handle update item name
     const handleUpdateItemName = () => {
-        alert(itemName + ' ' + 'Updated')
-        setItemName('')
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/menu/${menuId}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ item: { itemText: itemName, ItemPrice: item?.ItemPrice } })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.data.acknowledged) {
+                    toast.success('Menu Item Name Added')
+                    setItemName('')
+                }
+            })
     }
+
+    // handle update item price
     const handleUpdateItemPrice = () => {
-        alert(itemPrice + ' ' + 'Updated')
-        setItemPrice('')
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/menu/${menuId}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ item: { itemText: item?.itemText, ItemPrice: itemPrice } })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data?.data.acknowledged) {
+                    toast.success('Menu Item Price Added')
+                    setItemPrice('')
+                }
+            })
     }
 
     // console.log(itemName, itemPrice)
@@ -37,7 +66,7 @@ const MenuItems = () => {
                 <div className='grid grid-cols-1 gap-4 w-full'>
                     <div className='flex flex-col md:flex-row md:items-start gap-4 w-full'>
                         <div className='w-full h-14 flex-grow relative'>
-                            <input onChange={(e) => setItemName(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="text" placeholder='text item' name='itemName' />
+                            <input onChange={(e) => setItemName(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="text" placeholder='text item' name='itemName' defaultValue={item?.itemText && item?.itemText} />
                             {itemName &&
                                 <div onClick={() => handleUpdateItemName()} className='absolute top-0 right-0 w-12 border-r border-y h-12 bg-white flex justify-center items-center'>
                                     <img className='w-5 cursor-pointer' src={blueRight} alt="" />
@@ -47,7 +76,7 @@ const MenuItems = () => {
                         </div>
 
                         <div className='w-full md:w-80 relative'>
-                            <input onChange={(e) => setItemPrice(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="number" name='itemPrice' placeholder='Item price (optional)' />
+                            <input onChange={(e) => setItemPrice(e.target.value)} className='focus:outline-none border-none w-full h-12 px-4 bg-gray-200' type="number" name='itemPrice' placeholder='Item price (optional)' defaultValue={item?.ItemPrice && item?.ItemPrice} />
                             {itemPrice &&
                                 <div onClick={() => handleUpdateItemPrice()} className='absolute top-0 right-0 w-12 border-r border-y h-12 bg-white flex justify-center items-center'>
                                     <img className='w-5 cursor-pointer' src={blueRight} alt="" />

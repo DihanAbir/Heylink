@@ -7,7 +7,7 @@ import SidebarPreviewMain from '../../../components/Drawers/SidebarPreview/Sideb
 import PreviewSmallBtn from '../../../components/Drawers/SidebarPreview/PreviewSmallBtn';
 
 const Dashboard = () => {
-    const [preview, setPreview] = useState(false)
+    const [preview, setPreview] = useState(true)
 
     return (
         <section className='bg-[#393AA7] min-h-screen'>

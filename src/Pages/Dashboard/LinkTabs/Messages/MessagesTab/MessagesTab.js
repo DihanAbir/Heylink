@@ -1,22 +1,59 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ViewMessages from '../DetailsMessages/ViewMessages';
 import './MessagesTab.module.css'
 import download from '../../../../../assets/icons/download.png'
 import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
-
-const options = ['All Types', 'Email', 'SMS', 'Whatsup']
+import { ServiceContext } from '../../../../../ContextAPI/ServiceProvider/ServiceProvider';
+import { toast } from 'react-hot-toast';
+import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 
 const MessagesTab = () => {
+    const { userData } = useContext(AuthContext)
+    const { handleDefaultSwitch } = useContext(ServiceContext)
     const [viewMessage, setViewMessage] = useState(false)
+    const [messageData, setMessageData] = useState(null)
+    console.log(messageData);
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/message`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => setMessageData(data.data[0]));
+    }, []);
+
+    const handleToggleSwitch = (input) => {
+        if (messageData?.turnOnOffMessage === 'true') {
+            handleDefaultSwitch(messageData?._id, { turnOnOffMessage: input }, 'message',)
+        }
+        else {
+            fetch(`${process.env.REACT_APP_API_KEY}/app/v1/message`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify({ turnOnOffMessage: input, userInfo: userData, })
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    toast.success('Message Add Successfully')
+                });
+        }
+    }
+
     return (
         <section className='min-h-full py-6'>
             <div className='w-full h-full rounded-xl border p-4 mt-6 mb-4'>
                 <div className='flex justify-between items-center w-full h-full'>
                     <h1 className='text-black font-bold text-left'>Turn ON / OFF Message</h1>
-                    <DefaultSwitch initialToggle={viewMessage} getToggle={setViewMessage} />
+                    <DefaultSwitch initialToggle={messageData?.turnOnOffMessage === 'true'}
+                        getToggle={handleToggleSwitch} />
                 </div>
                 {
-                    viewMessage && <ViewMessages />
+                    viewMessage && <ViewMessages message={messageData} />
                 }
             </div>
 

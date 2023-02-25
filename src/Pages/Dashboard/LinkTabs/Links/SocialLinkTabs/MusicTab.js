@@ -8,8 +8,9 @@ import useFetch from '../../../../../Hoock/Hoock';
 const MusicTab = () => {
     const { userData } = useContext(AuthContext)
     const [errorUrl, setErrorUrl] = useState('')
-    const [allUrls, setAllUrls] = useState([])
     const data = useFetch("music");
+
+    console.log(data);
 
     const handleUrl = (event) => {
         event.preventDefault()

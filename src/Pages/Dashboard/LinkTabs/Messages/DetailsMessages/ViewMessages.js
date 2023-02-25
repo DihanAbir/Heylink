@@ -7,7 +7,7 @@ import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwi
 import edit from "../../../../../assets/icons/link-customize-icons/edit.svg";
 import blueRight from '../../../../../assets/icons/blue-right.png'
 
-const ViewMessages = () => {
+const ViewMessages = ({ message }) => {
     const [messageText, setMessageText] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
     const [termsCondition, setTermsCondition] = useState(false)

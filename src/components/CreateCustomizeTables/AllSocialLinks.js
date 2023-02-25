@@ -10,7 +10,6 @@ import { toast } from "react-hot-toast";
 
 const AllSocialLinks = ({ socialLink }) => {
   const [open, setOpen] = useState(false);
-  const [selectBtn, setSelectBtn] = useState(true);
   const [deleteModal, setDeleteModal] = useState(false);
   const [openInputChange, setOpenInputChange] = useState(false);
   const [socialLinkName, setSocialLinkName] = useState("");

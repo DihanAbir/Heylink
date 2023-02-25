@@ -17,6 +17,11 @@ const MenuTab = () => {
         const data = {
             name: '',
             userInfo: userData,
+            currency: 'USD',
+            item: {
+                itemText: '',
+                ItemPrice: ''
+            },
         };
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/menu`, {
             method: 'POST',

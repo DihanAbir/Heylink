@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import downArrow from '../../assets/icons/link-customize-icons/down-arrow.svg'
 import upArrow from '../../assets/icons/link-customize-icons/up-arrow.svg'
 import deletes from '../../assets/icons/link-customize-icons/delete.svg'
@@ -13,6 +13,7 @@ import ProButton from '../Buttons/ProButton';
 import ProToggleSwitch from '../ToggleSwitch/ProToggleSwitch';
 import DefaultSwitch from '../ToggleSwitch/DefaultSwitch';
 import { toast } from 'react-hot-toast';
+import { ServiceContext } from '../../ContextAPI/ServiceProvider/ServiceProvider';
 
 const musics = [
     {
@@ -43,6 +44,7 @@ const musics = [
 ]
 
 const MusicDesignCustomize = ({ url }) => {
+    const { handleDefaultSwitch } = useContext(ServiceContext)
     const [open, setOpen] = useState(false)
     const [deleteModal, setDeleteModal] = useState(false)
     const [deleteModal2, setDeleteModal2] = useState(false)
@@ -61,6 +63,10 @@ const MusicDesignCustomize = ({ url }) => {
     const [musicLink, setMusicLink] = useState('')
     const [musicAudioLink, setMusicAudioLink] = useState('')
     const [search, setSearch] = useState(false)
+
+    const handleToggleSwitch = (input) => {
+        handleDefaultSwitch(url?._id, { show: input }, 'links/music',)
+    }
 
     const handleUpdateAudioMusicLink = () => {
         alert(musicAudioLink)
@@ -187,7 +193,7 @@ const MusicDesignCustomize = ({ url }) => {
                         </div>
                     </div>
 
-                    <DefaultSwitch initialToggle={mainToggle} getToggle={setMainToggle} />
+                    <DefaultSwitch initialToggle={url?.show === 'true'} getToggle={handleToggleSwitch} />
                 </div>
 
                 {

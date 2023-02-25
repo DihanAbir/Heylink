@@ -24,7 +24,6 @@ const LocationsTab = () => {
     const { userData } = useContext(AuthContext)
     const [selectedLocation, setSelectedLocation] = useState('')
     const [search, setSearch] = useState(false)
-    const [allLocations, setAllLocations] = useState([])
     const data = useFetch("location")
     console.log(data);
 
@@ -34,7 +33,7 @@ const LocationsTab = () => {
         const selectLocation = event.target.location.value
 
         const data = {
-            name: selectLocation,
+            link: selectLocation,
             userInfo: userData,
         };
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/location`, {

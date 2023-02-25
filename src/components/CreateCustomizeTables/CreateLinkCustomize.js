@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import downArrow from "../../assets/icons/link-customize-icons/down-arrow.svg";
 import upArrow from "../../assets/icons/link-customize-icons/up-arrow.svg";
 import moveToTop from "../../assets/icons/link-customize-icons/move-to-top.svg";
+import moveToDown from "../../assets/icons/link-customize-icons/move-to-down.svg";
 import effects from "../../assets/icons/link-customize-icons/effects.svg";
 import deletes from "../../assets/icons/link-customize-icons/delete.svg";
 import linkClick from "../../assets/icons/link-customize-icons/link-click.svg";
@@ -143,6 +144,23 @@ const CreateLinkCustomize = ({ url }) => {
       });
   }
 
+  const handleMoveUpdate = (input) => {
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ moveToBottom: input })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data?.data.acknowledged) {
+          toast.success('Successfully Updated')
+        }
+      })
+  }
+
   // image convarte buffer
   const buff = Buffer.from(
     url?.image?.data?.data ? url?.image?.data?.data : imageUrl
@@ -200,6 +218,7 @@ const CreateLinkCustomize = ({ url }) => {
                   url={url}
                   imageData={imageData}
                   closeModal={setUploadImageModal}
+                  endPoint='common'
                 />
               )}
             </div>
@@ -274,12 +293,21 @@ const CreateLinkCustomize = ({ url }) => {
           <div className="h-full border-t border-gray-200 py-12">
             <div className="relative cursor-pointer flex justify-center flex-wrap sm:flex-nowrap items-center gap-6  ">
               {/* -----------Move to Top start----------- */}
-              <div className="flex flex-col justify-center items-center gap-2">
-                <div>
-                  <img className="w-4" src={moveToTop} alt="" />
+              {url?.moveToBottom === 'true' ?
+                <div onClick={() => handleMoveUpdate(false)} className="flex flex-col justify-center items-center gap-2">
+                  <div>
+                    <img className="w-4" src={moveToDown} alt="" />
+                  </div>
+                  <h1 className="text-gray-400 text-sm">Move to Down</h1>
                 </div>
-                <h1 className="text-gray-400 text-sm">Move to Top</h1>
-              </div>
+                :
+                <div onClick={() => handleMoveUpdate(true)} className="flex flex-col justify-center items-center gap-2">
+                  <div>
+                    <img className="w-4" src={moveToTop} alt="" />
+                  </div>
+                  <h1 className="text-gray-400 text-sm">Move to Top</h1>
+                </div>
+              }
               {/* -----------Move to Top end----------- */}
 
               {/* -----------schedule start----------- */}

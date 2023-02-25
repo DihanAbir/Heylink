@@ -50,7 +50,7 @@ const EffectsModal = ({ closeModal, url }) => {
                 </div>
 
                 <div className='flex justify-center items-center gap-3 md:gap-6'>
-                    <div onClick={() => handleEffect(buzz)} className='flex flex-col gap-4 justify-center items-center'>
+                    <div onClick={() => handleEffect('buzz')} className='flex flex-col gap-4 justify-center items-center'>
                         <div>
                             <img className='w-12' src={buzz} alt="" />
                         </div>
@@ -59,7 +59,7 @@ const EffectsModal = ({ closeModal, url }) => {
                             <h1 className='text-gray-500 font-semibold text-sm'>Buzz</h1>
                         </div>
                     </div>
-                    <div onClick={() => handleEffect(wobble)} className='flex flex-col gap-4 justify-center items-center'>
+                    <div onClick={() => handleEffect('wobble')} className='flex flex-col gap-4 justify-center items-center'>
                         <div>
                             <img className='w-6' src={wobble} alt="" />
                         </div>
@@ -68,7 +68,7 @@ const EffectsModal = ({ closeModal, url }) => {
                             <h1 className='text-gray-500 font-semibold text-sm'>Wobble</h1>
                         </div>
                     </div>
-                    <div onClick={() => handleEffect(pop)} className='flex flex-col gap-4 justify-center items-center'>
+                    <div onClick={() => handleEffect('pop')} className='flex flex-col gap-4 justify-center items-center'>
                         <div>
                             <img className='w-12' src={pop} alt="" />
                         </div>

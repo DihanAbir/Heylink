@@ -10,15 +10,11 @@ const LinksTab = () => {
   const { userData } = useContext(AuthContext)
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
   const [errorUrl, setErrorUrl] = useState("");
-  const [allUrls, setAllUrls] = useState([]);
   const data = useFetch("common");
-
-  console.log(data);
 
   const handleUrl = (event) => {
     event.preventDefault();
     const url = event.target.url.value;
-    setAllUrls([...allUrls, url]);
     const data = {
       link: url,
       userInfo: userData,
@@ -39,6 +35,7 @@ const LinksTab = () => {
         setErrorUrl("");
       });
   };
+
 
   return (
     <section className="pb-6">

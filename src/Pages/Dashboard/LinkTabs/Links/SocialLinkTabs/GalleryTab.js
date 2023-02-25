@@ -1,10 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import GalleryCustomize from '../../../../../components/CreateCustomizeTables/GalleryCustomize';
+import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
+import useGetData from '../../../../../Hoock/GetData';
 
 const GalleryTab = () => {
+    const { userData } = useContext(AuthContext)
     const [openAddGallery, setOpenAddGallery] = useState(false)
-    const [viewGallery, setViewGallery] = useState(false)
+    const galleryData = useGetData('gallery')
+
+    console.log(galleryData, userData);
+
+    const handleGallery = () => {
+        const data = {
+            title: 'My Gallery',
+            userInfo: userData
+        }
+        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/gallery`, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ title: 'My Gallery' })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Gallery Add Successfully')
+            });
+    }
 
 
     let dropdownRef = useRef();
@@ -24,7 +49,7 @@ const GalleryTab = () => {
             <div>
                 <h1 className='text-blue-800 mb-4 font-semibold'>IMAGE GALLERY</h1>
                 {
-                    !viewGallery && <div className='relative'>
+                    !galleryData && <div className='relative'>
                         <div onClick={() => setOpenAddGallery(true)}
                             className='cursor-pointer flex flex-col md:flex-row justify-center md:justify-start rounded-xl items-center border md:gap-6 h-32 w-full px-6'>
                             <div className='bg-blue-600 rounded-[50px] px-12 h-10 flex items-center gap-6'>
@@ -37,7 +62,7 @@ const GalleryTab = () => {
                             <h1 className='text-gray-400 text-center'>You can add multiple Image Sliders on the PRO plan.Check it <Link to='/' className='underline text-blue-600'>here</Link></h1>
                         </div>
                         {
-                            openAddGallery && <div ref={dropdownRef} onClick={() => setViewGallery(true)}
+                            openAddGallery && <div ref={dropdownRef} onClick={() => handleGallery()}
                                 class="absolute top-18 z-10 mt-2 md:w-96 rounded-md bg-gray-50 shadow">
                                 <div className='cursor-pointer p-3'>
                                     <div className='h-32 px-3 w-full hover:bg-blue-200 rounded-md flex items-center gap-6'>
@@ -55,7 +80,7 @@ const GalleryTab = () => {
                     </div>
                 }
                 {
-                    viewGallery && <GalleryCustomize />
+                    galleryData && <GalleryCustomize />
                 }
             </div>
         </section>

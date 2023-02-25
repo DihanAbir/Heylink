@@ -5,7 +5,7 @@ import close from "../../../assets/icons/link-customize-icons/close.svg";
 import lock from "../../../assets/icons/link-customize-icons/pro-lock.svg";
 import FastLinkProModal from "./FastLinkProModal";
 
-const ImageUploadModal = ({ closeModal, url }) => {
+const ImageUploadModal = ({ closeModal, url, endPoint }) => {
   const imageID = url?._id;
 
   const {
@@ -18,7 +18,7 @@ const ImageUploadModal = ({ closeModal, url }) => {
     const formData = new FormData();
     formData.append("file", data.image[0]);
 
-    const url = `http://localhost:8000/app/v1/links/common/${imageID}`;
+    const url = `http://localhost:8000/app/v1/links/${endPoint}/${imageID}`;
     fetch(url, {
       method: "PATCH",
       headers: {

@@ -23,7 +23,6 @@ import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription/
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import Home from '../Pages/Home/Home/Home';
 import SmallDevicePreview from '../Pages/LiveViewPage/SmallDevicePreview';
-import ViewLive from '../Pages/LiveViewPage/ViewLive';
 import PricingCards from '../Pages/PricingCards/PricingCards';
 import ForgotPassword from '../Pages/Profile/ForgotPassword/ForgotPassword';
 import Login from '../Pages/Profile/Login/Login';

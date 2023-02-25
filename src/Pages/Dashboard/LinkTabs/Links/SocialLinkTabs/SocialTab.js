@@ -80,11 +80,10 @@ const SocialTab = () => {
     setSocialImg(img);
   };
   // get user id
-  const token = localStorage.getItem("HeyLinkToken");
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/me`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
         "content-type": "application/json",
       },
     })

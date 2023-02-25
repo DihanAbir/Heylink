@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import downArrow from '../../assets/icons/link-customize-icons/down-arrow.svg'
 import upArrow from '../../assets/icons/link-customize-icons/up-arrow.svg'
 import deletes from '../../assets/icons/link-customize-icons/delete.svg'
@@ -13,15 +13,23 @@ import ProToggleSwitch from '../ToggleSwitch/ProToggleSwitch';
 import DeleteModal from "../Modals/CommonModals/DeleteModal";
 import ProButton from '../Buttons/ProButton';
 import { toast } from 'react-hot-toast';
+import { ServiceContext } from '../../ContextAPI/ServiceProvider/ServiceProvider';
+import ImageUploadModal from '../Modals/CustomizeLinkModals/ImageUploadModal';
+import { Buffer } from "buffer";
 
 const LocationsCustomize = ({ location }) => {
+    const { handleDefaultSwitch } = useContext(ServiceContext)
     const [open, setOpen] = useState(false)
     const [openEdit, setOpenEdit] = useState(true);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [mainToggle, setMainToggle] = useState(false);
     const [openInputChange, setOpenInputChange] = useState(false);
     const [newAddress, setNewAddress] = useState('');
     const [markersOnTheMapAddress, setMarkersOnTheMapAddress] = useState('');
+    const [uploadImageModal, setUploadImageModal] = useState(false);
+
+    const handleToggleSwitch = (input) => {
+        handleDefaultSwitch(location?._id, { show: input }, 'links/location',)
+    }
 
     const handleUpdateMarkerOnTheMapAddress = () => {
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/location/${location?._id}`, {
@@ -30,19 +38,16 @@ const LocationsCustomize = ({ location }) => {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
-            body: JSON.stringify({ name: newAddress })
+            body: JSON.stringify({ markersOnMap: markersOnTheMapAddress })
         })
             .then(res => res.json())
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Location Updated')
-                    setNewAddress('')
-                    setOpenInputChange(false)
+                    setMarkersOnTheMapAddress('')
+                    setOpenEdit(true)
                 }
             })
-        alert(markersOnTheMapAddress + 'add korte hobe')
-        setMarkersOnTheMapAddress('')
-        setOpenEdit(true)
     }
 
     const handleUpdateLocation = () => {
@@ -52,7 +57,7 @@ const LocationsCustomize = ({ location }) => {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
-            body: JSON.stringify({ name: newAddress })
+            body: JSON.stringify({ link: newAddress })
         })
             .then(res => res.json())
             .then(data => {
@@ -66,10 +71,16 @@ const LocationsCustomize = ({ location }) => {
 
     const locationChange = (event) => {
         const newAddress = event.target.value
-        if (newAddress !== location.name) {
+        if (newAddress !== location.link) {
             setNewAddress(newAddress)
         }
     }
+
+    // image convarte buffer
+    // const buff = Buffer.from(
+    //     location?.image?.data?.data && location?.image?.data?.data
+    // );
+    // const base64 = buff?.toString("base64");
 
     let editRef = useRef()
     useEffect(() => {
@@ -93,12 +104,47 @@ const LocationsCustomize = ({ location }) => {
                         <img className='w-5' src={swap} alt="" />
                     </div>
 
+                    {/* -----------image upload input field end----------- */}
+
+                    <div>
+                        <div
+                            onClick={() => setUploadImageModal(!uploadImageModal)}
+                            class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
+                        >
+                            <label class="flex justify-center items-center">
+                                <div class=" relative flex cursor-pointer items-center justify-center">
+                                    {
+                                        location?.image ? <img
+                                            className="w-12 h-12 cursor-pointer"
+                                            // src={`data:image/png;base64, ${base64}`}
+                                            alt="" />
+                                            :
+                                            <img
+                                                className="w-12 h-12 cursor-pointer"
+                                                src=''
+                                                alt=""
+                                            />
+                                    }
+                                </div>
+                            </label>
+                        </div>
+                        {uploadImageModal && (
+                            <ImageUploadModal
+                                url={location}
+                                closeModal={setUploadImageModal}
+                                endPoint='location'
+                            />
+                        )}
+                    </div>
+
+                    {/* -----------image upload input field end----------- */}
+
                     {/* -----------edit and input  icon start----------- */}
                     <div className='flex-grow flex flex-col gap-2'>
                         <div className='flex justify-between items-center cursor-pointer'>
                             <input onChange={(e) => locationChange(e)}
                                 className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 
-                                ${openInputChange ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange} defaultValue={location?.name} name='address' />
+                                ${openInputChange ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange} defaultValue={location?.link} name='address' />
                             {
                                 newAddress ? <img onClick={() => handleUpdateLocation()}
                                     className='w-4 cursor-pointer' src={blueRight} alt="" />
@@ -124,7 +170,7 @@ const LocationsCustomize = ({ location }) => {
                                 ></DeleteModal>
                             )}
                         </div>
-                        <DefaultSwitch initialToggle={mainToggle} getToggle={setMainToggle} />
+                        <DefaultSwitch initialToggle={location?.show === 'true'} getToggle={handleToggleSwitch} />
                     </div>
                 </div>
                 {
@@ -136,7 +182,7 @@ const LocationsCustomize = ({ location }) => {
                             <div className='flex items-center w-full h-12 bg-gray-200 rounded-md'>
                                 <input onChange={(e) => setMarkersOnTheMapAddress(e.target.value)}
                                     className='w-full h-full px-3 border-none bg-gray-200 focus:outline-none text-gray-700 text-sm font-semibold' type="text" disabled={openEdit}
-                                    defaultValue={location?.markersOnTheMap ? location.markersOnTheMap : location.name} />
+                                    defaultValue={location?.markersOnMap ? location.markersOnMap : location.link} />
                             </div>
                             {
                                 markersOnTheMapAddress && <img
