@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
+import { ServiceContext } from "../../../ContextAPI/ServiceProvider/ServiceProvider";
 
 const DeleteModal = ({ id, closeModal, endPoint }) => {
+  const { setRender } = useContext(ServiceContext)
   const token = localStorage.getItem("HeyLinkToken");
   // console.log(id, "id");
   let dropdownRef = useRef();
@@ -34,6 +36,7 @@ const DeleteModal = ({ id, closeModal, endPoint }) => {
         if (data?.data.acknowledged) {
           toast.success('Delete Successfully')
           closeModal(false)
+          setRender(true)
         }
       });
   };

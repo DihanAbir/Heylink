@@ -6,11 +6,16 @@ import CreateLinkCustomize from "../../../../../components/CreateCustomizeTables
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../../../../ContextAPI/AuthProvider/AuthProvider";
 import useFetch from "../../../../../Hoock/Hoock";
+import { ServiceContext } from "../../../../../ContextAPI/ServiceProvider/ServiceProvider";
+import PageLoader from "../../../../../components/loaders/PageLoader";
 const LinksTab = () => {
   const { userData } = useContext(AuthContext)
+  const { render, setRender } = useContext(ServiceContext)
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
   const [errorUrl, setErrorUrl] = useState("");
   const data = useFetch("common");
+
+  console.log(data);
 
   const handleUrl = (event) => {
     event.preventDefault();
@@ -33,8 +38,14 @@ const LinksTab = () => {
         event.target.reset();
         toast.success('Link URL Add Successfully')
         setErrorUrl("");
+        setRender(true)
       });
   };
+
+  if (data.length === 0 || data === true) {
+    return <PageLoader />
+  }
+
 
 
   return (

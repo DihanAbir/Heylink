@@ -3,21 +3,7 @@ import { toast } from 'react-hot-toast';
 
 export const ServiceContext = createContext()
 const ServiceProvider = ({ children }) => {
-    const [data, setData] = useState([]);
-
-    const getData = (input) => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/${input}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
-                "content-type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => setData(data.data));
-
-        return data;
-    }
-
+    const [render, setRender] = useState(false);
 
     const handleDefaultSwitch = (id, toggleData, endPoint) => {
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/${endPoint}/${id}`, {
@@ -32,6 +18,7 @@ const ServiceProvider = ({ children }) => {
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Switch Updated')
+                    setRender(true)
                 }
             })
     }
@@ -56,7 +43,8 @@ const ServiceProvider = ({ children }) => {
     const dataInfo = {
         handleDefaultSwitch,
         handleTitleUpdate,
-        getData
+        setRender,
+        render
     }
     return (
         <ServiceContext.Provider value={dataInfo}>

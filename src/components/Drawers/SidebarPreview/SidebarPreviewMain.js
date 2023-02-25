@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../../../Hoock/Hoock";
 import { Buffer } from "buffer";
 import { Link } from "react-router-dom";
 import arrowRight from '../../../assets/icons/right-arrow.svg'
 import avatar from '../../../assets/avatars/user-avatar.png'
 import PageLoader from "../../loaders/PageLoader";
+import { ServiceContext } from "../../../ContextAPI/ServiceProvider/ServiceProvider";
 const SidebarPreviewMain = () => {
+  const { render, setRender } = useContext(ServiceContext)
   const token = localStorage.getItem("HeyLinkToken");
   const [userData, setUserData] = useState({});
 
@@ -55,7 +57,7 @@ const SidebarPreviewMain = () => {
         <div className=" h-1 w-16 bg-gray-300 rounded-3xl absolute top-6"></div>
         <div
           className="flex flex-col justify-start items-center bg-[#ffc31b] h-[530px] w-[300px] mx-auto overflow-y-auto overflow-x-hidden">
-          {linksData.length === 0 ? <PageLoader />
+          {linksData.length === 0 || render ? <PageLoader />
             :
 
             <>
