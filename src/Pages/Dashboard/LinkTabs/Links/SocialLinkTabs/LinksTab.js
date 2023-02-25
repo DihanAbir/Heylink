@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import link from "../../../../../assets/icons/link.svg";
 import threeSocial from "../../../../../assets/icons/three-social.svg";
 import uparrow from "../../../../../assets/icons/gif-images/up-arrow.gif";
@@ -7,7 +7,7 @@ import { toast } from "react-hot-toast";
 import { AuthContext } from "../../../../../ContextAPI/AuthProvider/AuthProvider";
 import useFetch from "../../../../../Hoock/Hoock";
 const LinksTab = () => {
-  const { userData } = useContext(AuthContext)
+  const { userData } = useContext(AuthContext);
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
   const [errorUrl, setErrorUrl] = useState("");
   const data = useFetch("common");
@@ -21,21 +21,24 @@ const LinksTab = () => {
     };
 
     fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data) => {
         event.target.reset();
-        toast.success('Link URL Add Successfully')
+
+        // data = useFetch("common");
+        toast.success("Link URL Add Successfully");
         setErrorUrl("");
       });
   };
 
+  useEffect(() => {}, [errorUrl]);
 
   return (
     <section className="pb-6">
@@ -54,21 +57,22 @@ const LinksTab = () => {
             />
           </div>
           {errorUrl ? (
-            <button type="submit" className="bg-blue-600 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6">
-              <h1 className="font-semibold text-white md:hidden">
-                Add
-              </h1>
+            <button
+              type="submit"
+              className="bg-blue-600 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6"
+            >
+              <h1 className="font-semibold text-white md:hidden">Add</h1>
               <h1 className="font-semibold text-white hidden md:block">
                 + Add New Link
               </h1>
             </button>
           ) : (
-            <button disabled className="bg-blue-300 cursor-not-allowed lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6">
-              <h1 className="font-semibold text-white md:hidden">
-                Add
-              </h1>
-              <h1
-                className="font-semibold text-white hidden md:block">
+            <button
+              disabled
+              className="bg-blue-300 cursor-not-allowed lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6"
+            >
+              <h1 className="font-semibold text-white md:hidden">Add</h1>
+              <h1 className="font-semibold text-white hidden md:block">
                 + Add New Link
               </h1>
             </button>
