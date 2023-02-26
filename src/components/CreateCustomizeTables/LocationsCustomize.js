@@ -15,20 +15,32 @@ import ProButton from '../Buttons/ProButton';
 import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../ContextAPI/ServiceProvider/ServiceProvider';
 import ImageUploadModal from '../Modals/CustomizeLinkModals/ImageUploadModal';
-import { Buffer } from "buffer";
+import { useDispatch, useSelector } from 'react-redux';
+import { setRenderReducer } from '../../Slices/getDataSlice';
+import { setOpen, setOpenInputChange1, setOpenInputChange2, setDeleteModal, setUploadImageModal } from '../../Slices/controllerSlice';
+import { setMarkersOnTheMapAddress, setNewAddress } from '../../Slices/locationSlice';
 
 const LocationsCustomize = ({ location }) => {
-    const { handleDefaultSwitch } = useContext(ServiceContext)
-    const [open, setOpen] = useState(false)
-    const [openEdit, setOpenEdit] = useState(true);
-    const [deleteModal, setDeleteModal] = useState(false);
-    const [openInputChange, setOpenInputChange] = useState(false);
-    const [newAddress, setNewAddress] = useState('');
-    const [markersOnTheMapAddress, setMarkersOnTheMapAddress] = useState('');
-    const [uploadImageModal, setUploadImageModal] = useState(false);
+    const {
+        newAddress,
+        markersOnTheMapAddress
+    } = useSelector((state) => state.locationSlice)
+    const {
+        open,
+        openInputChange1,
+        openInputChange2,
+        deleteModal,
+        uploadImageModal
+    } = useSelector((state) => state.controllerSlice)
+
+    const dispatch = useDispatch()
+    const { handleDefaultSwitch, loader } = useContext(ServiceContext)
 
     const handleToggleSwitch = (input) => {
         handleDefaultSwitch(location?._id, { show: input }, 'links/location',)
+        if (loader) {
+            dispatch(setRenderReducer({ render: true }))
+        }
     }
 
     const handleUpdateMarkerOnTheMapAddress = () => {
@@ -38,14 +50,15 @@ const LocationsCustomize = ({ location }) => {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
-            body: JSON.stringify({ markersOnMap: markersOnTheMapAddress })
+            body: JSON.stringify({ markersOnMap: markersOnTheMapAddress?.address })
         })
             .then(res => res.json())
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Location Updated')
-                    setMarkersOnTheMapAddress('')
-                    setOpenEdit(true)
+                    dispatch(setRenderReducer({ render: true }))
+                    dispatch(setMarkersOnTheMapAddress({ id: '', address: '' }))
+                    dispatch(setOpenInputChange2(location?._id))
                 }
             })
     }
@@ -57,37 +70,37 @@ const LocationsCustomize = ({ location }) => {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
-            body: JSON.stringify({ link: newAddress })
+            body: JSON.stringify({ link: newAddress?.address })
         })
             .then(res => res.json())
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Location Updated')
-                    setNewAddress('')
-                    setOpenInputChange(false)
+                    dispatch(setNewAddress({ id: '', address: '' }))
+                    dispatch(setRenderReducer({ render: true }))
+                    dispatch(setOpenInputChange1(''))
                 }
             })
     }
 
-    const locationChange = (event) => {
-        const newAddress = event.target.value
-        if (newAddress !== location.link) {
-            setNewAddress(newAddress)
+    const locationChange = (e) => {
+        if (e !== location.link) {
+            dispatch(setNewAddress({ id: location?._id, address: e }))
         }
     }
 
-    // image convarte buffer
-    // const buff = Buffer.from(
-    //     location?.image?.data?.data && location?.image?.data?.data
-    // );
-    // const base64 = buff?.toString("base64");
+    const handleUpdateMarkersAddress = (e) => {
+        if (e !== location.markersOnMap) {
+            dispatch(setMarkersOnTheMapAddress({ id: location?._id, address: e }))
+        }
+    }
 
     let editRef = useRef()
     useEffect(() => {
         let handler = (e) => {
             if (!editRef.current.contains(e.target)) {
-                setOpenEdit(true);
-                setOpenInputChange(false)
+                dispatch(setOpenInputChange1(''))
+                dispatch(setOpenInputChange2(''))
             }
         };
         document.addEventListener("mousedown", handler);
@@ -99,16 +112,16 @@ const LocationsCustomize = ({ location }) => {
         <>
             <div className='relative w-full my-6 border border-gray-200 rounded-md cursor-pointer'>
 
-                <div className='h-28 flex justify-between items-center gap-2 md:gap-6 py-4 px-2 md:px-6'>
+                <div className='relative h-28 flex justify-between items-center gap-2 md:gap-6 py-4 px-2 md:px-6'>
                     <div>
                         <img className='w-5' src={swap} alt="" />
                     </div>
 
                     {/* -----------image upload input field end----------- */}
 
-                    <div>
+                    <div className=''>
                         <div
-                            onClick={() => setUploadImageModal(!uploadImageModal)}
+                            onClick={() => dispatch(setUploadImageModal(uploadImageModal ? '' : location?._id))}
                             class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
                         >
                             <label class="flex justify-center items-center">
@@ -128,10 +141,9 @@ const LocationsCustomize = ({ location }) => {
                                 </div>
                             </label>
                         </div>
-                        {uploadImageModal && (
+                        {uploadImageModal === location?._id && (
                             <ImageUploadModal
                                 url={location}
-                                closeModal={setUploadImageModal}
                                 endPoint='location'
                             />
                         )}
@@ -142,14 +154,16 @@ const LocationsCustomize = ({ location }) => {
                     {/* -----------edit and input  icon start----------- */}
                     <div className='flex-grow flex flex-col gap-2'>
                         <div className='flex justify-between items-center cursor-pointer'>
-                            <input onChange={(e) => locationChange(e)}
+                            <input onChange={(e) => locationChange(e.target.value)}
                                 className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 
-                                ${openInputChange ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange} defaultValue={location?.link} name='address' />
+                                ${openInputChange1 === location?._id ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={location?.link} name='address' />
                             {
-                                newAddress ? <img onClick={() => handleUpdateLocation()}
+                                newAddress?.id === location?._id && newAddress?.address ? <img
+                                    onClick={() => handleUpdateLocation()}
                                     className='w-4 cursor-pointer' src={blueRight} alt="" />
                                     :
-                                    <img onClick={() => setOpenInputChange(!openInputChange)}
+                                    <img
+                                        onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : location?._id))}
                                         className='w-4 cursor-pointer' src={edit} alt="" />
                             }
                         </div>
@@ -158,15 +172,15 @@ const LocationsCustomize = ({ location }) => {
 
                     <div className='flex md:justify-center items-center gap-2 md:gap-6'>
                         <div className='relative'>
-                            <div onClick={() => setDeleteModal(!deleteModal)} className='hidden md:block md:flex flex-col justify-center items-center gap-2'>
+                            <div
+                                onClick={() => dispatch(setDeleteModal(deleteModal ? '' : location?._id))} className='hidden md:block md:flex flex-col justify-center items-center gap-2'>
                                 <img className='w-4' src={deletes} alt="" />
                                 <span className='text-sm text-gray-500'>Delete</span>
                             </div>
-                            {deleteModal && (
+                            {deleteModal === location?._id && (
                                 <DeleteModal
                                     endPoint={"location"}
                                     id={location._id}
-                                    closeModal={setDeleteModal}
                                 ></DeleteModal>
                             )}
                         </div>
@@ -174,23 +188,25 @@ const LocationsCustomize = ({ location }) => {
                     </div>
                 </div>
                 {
-                    open && <div className='relative h-fit cursor-pointer border-t border-gray-200 py-4 px-4'>
+                    open === location?._id && <div className='relative h-fit cursor-pointer border-t border-gray-200 py-4 px-4'>
                         <div className='mb-2'>
                             <h1 className='text-gray-900 font-semibold text-sm'>Markers on the map</h1>
                         </div>
                         <div className='flex items-center gap-3'>
                             <div className='flex items-center w-full h-12 bg-gray-200 rounded-md'>
-                                <input onChange={(e) => setMarkersOnTheMapAddress(e.target.value)}
-                                    className='w-full h-full px-3 border-none bg-gray-200 focus:outline-none text-gray-700 text-sm font-semibold' type="text" disabled={openEdit}
+                                <input onChange={(e) => handleUpdateMarkersAddress(e.target.value)}
+                                    className='w-full h-full px-3 border-none bg-gray-200 focus:outline-none text-gray-700 text-sm font-semibold' type="text"
+                                    disabled={openInputChange2 === location?._id}
                                     defaultValue={location?.markersOnMap ? location.markersOnMap : location.link} />
                             </div>
                             {
-                                markersOnTheMapAddress && <img
+                                markersOnTheMapAddress?.id === location?._id && markersOnTheMapAddress?.address && <img
                                     onClick={() => handleUpdateMarkerOnTheMapAddress()}
                                     className='w-4 cursor-pointer' src={blueRight} alt="" />
                             }
 
-                            {openEdit && <img onClick={() => setOpenEdit(false)} className='w-3' src={edit} alt="" />}
+                            {openInputChange2 === location?._id && <img
+                                onClick={() => dispatch(setOpenInputChange2(''))} className='w-3' src={edit} alt="" />}
                         </div>
                         <div className='flex items-center gap-4 mt-4'>
                             <img src={add} alt="" />
@@ -254,7 +270,7 @@ const LocationsCustomize = ({ location }) => {
                 }
 
                 {/* -----------toggler button start----------- */}
-                <div onClick={() => setOpen(!open)}
+                <div onClick={() => dispatch(setOpen(open ? '' : location?._id))}
                     className='cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center'>
                     <img className='w-4' src={open ? upArrow : downArrow} alt="" />
                 </div>

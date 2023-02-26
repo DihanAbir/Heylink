@@ -20,34 +20,32 @@ import { Buffer } from "buffer";
 import DefaultSwitch from "../ToggleSwitch/DefaultSwitch";
 import CalanderData from "../Modals/CalanderModals/CalanderData";
 import { toast } from "react-hot-toast";
-import { setEndDateCalander, setFastLinkProModal, setLinkName, setLinkURL, setOpen, setOpenEffcetsModal, setOpenInputChange1, setOpenInputChange2, setOpenSchedule, setStartDateCalander, setUploadImageModal } from "../../Slices/linksSlice";
-import { setDeleteModal } from "../../Slices/controllerSlice";
+import { setEndDateCalander, setFastLinkProModal, setLinkName, setLinkURL, setOpenEffcetsModal, setOpenInputChange1, setOpenInputChange2, setOpenSchedule, setStartDateCalander } from "../../Slices/linksSlice";
+import { setOpen, setDeleteModal, setUploadImageModal } from "../../Slices/controllerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setRenderReducer } from "../../Slices/getDataSlice";
 import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
 const CreateLinkCustomize = ({ url }) => {
   const {
-    open,
     openEffcetsModal,
     fastLinkProModal,
     openSchedule,
     startDateCalander,
     endDateCalander,
-    uploadImageModal,
     deleteModal,
     openInputChange1,
     openInputChange2,
     linkName,
     linkURL
-
   } = useSelector((state) => state.linksSlice);
-  const { render, handleDefaultSwitch } = useContext(ServiceContext)
+  const { open, uploadImageModal } = useSelector((state) => state.controllerSlice);
+  const { loader, handleDefaultSwitch } = useContext(ServiceContext)
   const [imageData, setImageData] = useState("");
   const dispatch = useDispatch()
 
   const handleToggleSwitch = (input) => {
     handleDefaultSwitch(url?._id, { show: input }, 'links/common',)
-    if (render) {
+    if (loader) {
       dispatch(setRenderReducer({ render: true }))
     }
   }

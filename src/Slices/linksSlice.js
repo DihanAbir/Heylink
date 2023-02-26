@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   errorUrl: false,
-  open: '',
   openEffcetsModal: '',
   fastLinkProModal: '',
   openSchedule: '',
@@ -22,11 +21,6 @@ export const linksSlice = createSlice({
     setErrorUrl: (state, action) => {
       state.errorUrl = action.payload.errorUrl;
     },
-
-    setOpen: (state, action) => {
-      state.open = action.payload;
-    },
-
     setOpenEffcetsModal: (state, action) => {
       state.openEffcetsModal = action.payload;
     },
@@ -43,10 +37,6 @@ export const linksSlice = createSlice({
     },
     setEndDateCalander: (state, action) => {
       state.endDateCalander = action.payload;
-    },
-
-    setUploadImageModal: (state, action) => {
-      state.uploadImageModal = action.payload;
     },
     setOpenInputChange1: (state, action) => {
       state.openInputChange1 = action.payload;
@@ -69,14 +59,12 @@ export const linksSlice = createSlice({
 
 export const {
   setErrorUrl,
-  setOpen,
   setOpenEffcetsModal,
   handleDefaultSwitch,
   setFastLinkProModal,
   setOpenSchedule,
   setStartDateCalander,
   setEndDateCalander,
-  setUploadImageModal,
   setOpenInputChange1,
   setOpenInputChange2,
   setLinkName,

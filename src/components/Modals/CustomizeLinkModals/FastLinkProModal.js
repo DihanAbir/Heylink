@@ -4,15 +4,16 @@ import { Link } from 'react-router-dom';
 import proBanner from '../../../assets/icons/link-customize-icons/pro-banner.svg'
 import star from '../../../assets/icons/link-customize-icons/star.svg'
 import { setFastLinkProModal } from '../../../Slices/linksSlice';
+import { setOpenFastLinkModal } from '../../../Slices/controllerSlice';
 
-const FastLinkProModal = ({ closeModal2 }) => {
+const FastLinkProModal = () => {
     const dispatch = useDispatch()
     let dropdownRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
                 dispatch(setFastLinkProModal(''))
-                closeModal2(false);
+                dispatch(setOpenFastLinkModal(''))
             }
         };
         document.addEventListener("mousedown", handler);

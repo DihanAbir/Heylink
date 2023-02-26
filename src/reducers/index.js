@@ -3,6 +3,7 @@ import controllerSlice from "../Slices/controllerSlice";
 import gallerySlice from "../Slices/gallerySlice";
 import getDataReducer from "../Slices/getDataSlice";
 import linksSlice from "../Slices/linksSlice";
+import locationSlice from "../Slices/locationSlice";
 import menuSlice from "../Slices/menuSlice";
 import socialSlice from "../Slices/socialSlice";
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   socialSlice: socialSlice,
   gallerySlice: gallerySlice,
   menuSlice: menuSlice,
+  locationSlice: locationSlice,
 });
 
 export default rootReducer;

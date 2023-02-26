@@ -1,26 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
 import lock from "../../../assets/icons/link-customize-icons/pro-lock.svg";
 import { setRenderReducer } from "../../../Slices/getDataSlice";
-import { setUploadImageModal } from "../../../Slices/linksSlice";
+import { setOpenFastLinkModal, setUploadImageModal } from "../../../Slices/controllerSlice";
 import FastLinkProModal from "./FastLinkProModal";
 
 const ImageUploadModal = ({ url, endPoint }) => {
+  const { openFastLinkModal } = useSelector((state) => state.controllerSlice)
   const dispatch = useDispatch()
   const imageID = url?._id;
-
-  const closeModal = () => {
-    dispatch(setUploadImageModal(''))
-  }
 
   const {
     register,
     handleSubmit
   } = useForm();
-  const [openFastLinkModal, setOpenFastLinkModal] = useState(false);
 
   const ImageUpload = (data) => {
     const formData = new FormData();
@@ -57,9 +53,6 @@ const ImageUploadModal = ({ url, endPoint }) => {
     };
   });
 
-  const closeModal2 = () => {
-    setOpenFastLinkModal(false);
-  };
   return (
     <div
       ref={dropdownRef}
@@ -68,7 +61,7 @@ const ImageUploadModal = ({ url, endPoint }) => {
       <div className="p-3">
         <div className="w-full flex justify-end">
           <img
-            onClick={() => closeModal()}
+            onClick={() => dispatch(setUploadImageModal(''))}
             className="w-3"
             src={close}
             alt=""
@@ -98,7 +91,7 @@ const ImageUploadModal = ({ url, endPoint }) => {
               </label>
             </div>
             <div
-              onClick={() => setOpenFastLinkModal(!openFastLinkModal)}
+              onClick={() => dispatch(setOpenFastLinkModal(openFastLinkModal ? '' : url?._id))}
               className="relative w-24 h-24 flex justify-center items-center bg-gray-200 rounded-md"
             >
               <label className="cursor-pointer flex justify-center items-center">
@@ -125,7 +118,7 @@ const ImageUploadModal = ({ url, endPoint }) => {
           </div>
         </form>
 
-        {openFastLinkModal && <FastLinkProModal closeModal2={closeModal2} />}
+        {openFastLinkModal === url?._id && <FastLinkProModal />}
       </div>
     </div>
   );

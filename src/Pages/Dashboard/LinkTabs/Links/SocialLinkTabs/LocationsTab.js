@@ -1,32 +1,25 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import empty from '../../../../../assets/icons/locations-tab-icons/empty.svg'
 import LocationsCustomize from '../../../../../components/CreateCustomizeTables/LocationsCustomize';
+import PageLoader from '../../../../../components/loaders/PageLoader';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 import useFetch from '../../../../../Hoock/Hoock';
+import { setRenderReducer } from '../../../../../Slices/getDataSlice';
+import { setSelectedLocation, setSearch } from '../../../../../Slices/locationSlice';
 
-const locations = [
-    {
-        id: '1',
-        location: 'Thakurgaon, Bangladesh',
-    },
-    {
-        id: '2',
-        location: 'Thakurgaon, Bangladesh',
-    },
-    {
-        id: '3',
-        location: 'Thakurgaon, Bangladesh',
-    },
-]
 const LocationsTab = () => {
+    const {
+        locations,
+        selectedLocation,
+        search
+    } = useSelector((state) => state.locationSlice)
+    const { render } = useSelector((state) => state.getData)
+    const dispatch = useDispatch()
     const { userData } = useContext(AuthContext)
-    const [selectedLocation, setSelectedLocation] = useState('')
-    const [search, setSearch] = useState(false)
     const data = useFetch("location")
-    console.log(data);
-
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -47,8 +40,9 @@ const LocationsTab = () => {
             .then(res => res.json())
             .then((data) => {
                 toast.success('Location Add Successfully')
+                dispatch(setRenderReducer({ render: true }))
+                dispatch(setSelectedLocation(''))
                 event.target.reset()
-                setSelectedLocation('')
             });
     }
 
@@ -56,7 +50,7 @@ const LocationsTab = () => {
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
-                setSearch(false);
+                dispatch(setSearch(false))
             }
         };
         document.addEventListener("mousedown", handler);
@@ -65,16 +59,15 @@ const LocationsTab = () => {
         }
     });
 
-    // console.log(selectedLocation);
     return (
         <section className='min-h-screen'>
             <div className='px-2 w-full mx-auto'>
                 <form onSubmit={handleSubmit} className='flex flex-col md:flex-row items-center gap-6'>
                     <div className='relative w-full'>
-                        <div onClick={() => setSearch(!search)}
+                        <div onClick={() => dispatch(setSearch(search ? false : true))}
                             className='flex justify-between items-center px-3 w-full h-10 border border-blue-600 bg-gray-200 focus:outline outlien-blue-600 rounded-md'>
 
-                            <input onChange={(e) => setSelectedLocation(e.target.value)}
+                            <input onChange={(e) => dispatch(setSelectedLocation(e.target.value))}
                                 className='w-full h-full rounded-[50px] px-4 focus:text-gray-700 text-gray-400 bg-gray-200 focus:outline-none border-none' name='location' type="text"
                                 defaultValue={selectedLocation} placeholder='Type or paste location address' />
 
@@ -82,12 +75,13 @@ const LocationsTab = () => {
                         </div>
                         {
                             search && <div ref={dropdownRef}
-                                className="w-full top-16 border-x border-b right-0 cursor-pointer absolute z-50 border bg-gray-50 shadow">
+                                className="w-full border-x border-b right-0 cursor-pointer absolute z-50 border bg-gray-50 shadow">
 
                                 <div className='w-full h-44 border-t overflow-y-auto bg-white'>
                                     {
-                                        locations && locations.map(location => <div onClick={() => setSearch(!search)}>
-                                            <div onClick={() => setSelectedLocation(location.location)}
+                                        locations && locations.map(location => <div
+                                            onClick={() => dispatch(setSearch(search ? false : true))}>
+                                            <div onClick={() => dispatch(setSelectedLocation(location.location))}
                                                 className='py-2 px-4 hover:bg-blue-200'>
                                                 <h1 className='text-gray-500'>{location.location}</h1>
                                             </div>
@@ -97,7 +91,6 @@ const LocationsTab = () => {
                             </div>
                         }
                     </div>
-
                     {
                         selectedLocation ? <button type='submit' className='cursor-pointer flex justify-center items-center gap-1 px-4 rounded-[50px] h-10 w-56 mx-auto bg-blue-600'>
                             <h1 className=' text-white font-semibold'>Add Location</h1>
@@ -112,17 +105,21 @@ const LocationsTab = () => {
 
 
             {/* ------------------------------------------------- */}
-            <div>
-                {
-                    data && data.map(location => <LocationsCustomize location={location} />)
-                }
-                {
-                    data.length === 0 && <div className='flex flex-col justify-center items-center mt-12'>
-                        <img className='md:w-96' src={empty} alt="" />
-                        <p className='text-center mt-6 text-gray-400'>You can manage multiple locations on the PRO plan.Check it <Link to='/' className='text-blue-600 underline'>here</Link></p>
+            {
+                render ? <PageLoader />
+                    :
+                    <div>
+                        {
+                            data && data.map(location => <LocationsCustomize location={location} />)
+                        }
+                        {
+                            data.length === 0 && <div className='flex flex-col justify-center items-center mt-12'>
+                                <img className='md:w-96' src={empty} alt="" />
+                                <p className='text-center mt-6 text-gray-400'>You can manage multiple locations on the PRO plan.Check it <Link to='/' className='text-blue-600 underline'>here</Link></p>
+                            </div>
+                        }
                     </div>
-                }
-            </div>
+            }
             {/* ------------------------------------------------- */}
 
             <h1 className='text-gray-600 text-sm text-center py-6'>You can manage multiple locations on the PRO plan.Check it <Link to='/' className='text-blue-600 underline'>here</Link></h1>
