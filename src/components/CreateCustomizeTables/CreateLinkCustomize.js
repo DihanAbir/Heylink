@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import downArrow from "../../assets/icons/link-customize-icons/down-arrow.svg";
 import upArrow from "../../assets/icons/link-customize-icons/up-arrow.svg";
 import moveToTop from "../../assets/icons/link-customize-icons/move-to-top.svg";
@@ -20,7 +20,8 @@ import { Buffer } from "buffer";
 import DefaultSwitch from "../ToggleSwitch/DefaultSwitch";
 import CalanderData from "../Modals/CalanderModals/CalanderData";
 import { toast } from "react-hot-toast";
-import { setDeleteModal, setEndDateCalander, setFastLinkProModal, setLinkName, setLinkURL, setOpen, setOpenEffcetsModal, setOpenInputChange1, setOpenInputChange2, setOpenSchedule, setStartDateCalander, setUploadImageModal } from "../../Slices/linksSlice";
+import { setEndDateCalander, setFastLinkProModal, setLinkName, setLinkURL, setOpen, setOpenEffcetsModal, setOpenInputChange1, setOpenInputChange2, setOpenSchedule, setStartDateCalander, setUploadImageModal } from "../../Slices/linksSlice";
+import { setDeleteModal } from "../../Slices/controllerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setRenderReducer } from "../../Slices/getDataSlice";
 import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
@@ -41,10 +42,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   } = useSelector((state) => state.linksSlice);
   const { render, handleDefaultSwitch } = useContext(ServiceContext)
-
   const [imageData, setImageData] = useState("");
-
-  // const { success } = useSelector((state) => state.linksSlice);
   const dispatch = useDispatch()
 
   const handleToggleSwitch = (input) => {
@@ -62,13 +60,13 @@ const CreateLinkCustomize = ({ url }) => {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify({ linkTitle: linkName })
+      body: JSON.stringify({ linkTitle: linkName?.linkName })
     })
       .then(res => res.json())
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Link Title Updated')
-          dispatch(setLinkName(''))
+          dispatch(setLinkName({ id: '', linkName: '' }))
           dispatch(setRenderReducer({ render: true }))
           dispatch(setOpenInputChange1(''))
         }
@@ -83,13 +81,13 @@ const CreateLinkCustomize = ({ url }) => {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify({ link: linkURL })
+      body: JSON.stringify({ link: linkURL?.linkURL })
     })
       .then(res => res.json())
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Link URL Updated')
-          dispatch(setLinkURL(''))
+          dispatch(setLinkURL({ id: '', linkURL: '' }))
           dispatch(setRenderReducer({ render: true }))
           dispatch(setOpenInputChange2(''))
         }
@@ -99,13 +97,13 @@ const CreateLinkCustomize = ({ url }) => {
 
   const linkNameChange = (e) => {
     if (e !== url.linkTitle) {
-      dispatch(setLinkName(e))
+      dispatch(setLinkName({ id: url?._id, linkName: e }))
     }
   }
 
   const linkURLChange = (e) => {
     if (e !== url.link) {
-      dispatch(setLinkURL(e))
+      dispatch(setLinkURL({ id: url?._id, linkURL: e }))
     }
   }
 
@@ -174,7 +172,6 @@ const CreateLinkCustomize = ({ url }) => {
   );
   const base64 = buff?.toString("base64");
 
-
   return (
     <div>
       <div className="relative w-full my-6 border border-gray-200 rounded-md cursor-pointer">
@@ -224,7 +221,7 @@ const CreateLinkCustomize = ({ url }) => {
                 defaultValue={url?.linkTitle ? url?.linkTitle : url?.link} name="linkName"
               />
               {
-                linkName ? <img onClick={() => handleUpdateLinkName()}
+                linkName?.id === url?._id && linkName.linkName ? <img onClick={() => handleUpdateLinkName()}
                   className='w-4 cursor-pointer' src={blueRight} alt="" />
                   :
                   <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : url?._id))}
@@ -244,7 +241,7 @@ const CreateLinkCustomize = ({ url }) => {
                   defaultValue={url?.link} name="linkURL" />
               </div>
               {
-                linkURL ? <img onClick={() => handleUpdateLinkURL()}
+                linkURL?.id === url?._id && linkURL.linkURL ? <img onClick={() => handleUpdateLinkURL()}
                   className='w-4 cursor-pointer' src={blueRight} alt="" />
                   :
                   <img onClick={() => dispatch(setOpenInputChange2(openInputChange2 ? '' : url?._id))}

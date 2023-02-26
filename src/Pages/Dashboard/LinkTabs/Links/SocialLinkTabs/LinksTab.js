@@ -20,7 +20,6 @@ const LinksTab = () => {
 
   const { render } = useSelector((state) => state.getData);
   const { errorUrl } = useSelector((state) => state.linksSlice);
-  console.log();
 
   const handleUrl = (event) => {
     event.preventDefault();

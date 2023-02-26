@@ -1,71 +1,34 @@
-import axios from "axios";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
 import arrowDown from "../../../../../assets/icons/social-tab-icons/arrow-down.svg";
 import empty from "../../../../../assets/icons/social-tab-icons/empty.svg";
 import AllSocialLinks from "../../../../../components/CreateCustomizeTables/AllSocialLinks";
+import PageLoader from "../../../../../components/loaders/PageLoader";
+import { AuthContext } from "../../../../../ContextAPI/AuthProvider/AuthProvider";
 import useFetch from "../../../../../Hoock/Hoock";
-
-const socials = [
-  {
-    id: "1",
-    name: "Facebook",
-    url: "https://facebook.com/username",
-    img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-  },
-  {
-    id: "2",
-    name: "WhatsUp",
-    url: "https://whatsup.com/username",
-    img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-  },
-  {
-    id: "3",
-    name: "LinkedIn",
-    url: "https://linkedin.com/username",
-    img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-  },
-  {
-    id: "4",
-    name: "twitter",
-    url: "https://twitter.com/username",
-    img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-  },
-  {
-    id: "5",
-    name: "twitter",
-    url: "https://twitter.com/username",
-    img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-  },
-  {
-    id: "6",
-    name: "twitter",
-    url: "https://twitter.com/username",
-    img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-  },
-];
+import { setRenderReducer } from "../../../../../Slices/getDataSlice";
+import { setInputError, setSearch, setSelectedSocial, setSocialImg, setUsernamePlaceholder } from "../../../../../Slices/socialSlice";
 
 const SocialTab = () => {
-  const [selectedSocial, setSelectedSocial] = useState(
-    "Select Popular Social Link"
-  );
-  const [usernamePlacehoder, setUsernamePlaceholder] = useState(
-    "Paste Your Social Link here"
-  );
-  const [socialImg, setSocialImg] = useState("");
-  const [search, setSearch] = useState(false);
-  const [inputError, setInputError] = useState("");
-  const [userData, setUserData] = useState([]);
-  let dropdownRef = useRef();
-  //   get link data from hook
+  const {
+    socials,
+    selectedSocial,
+    usernamePlacehoder,
+    socialImg,
+    search,
+    inputError
+  } = useSelector((state) => state.socialSlice)
+  const { render } = useSelector((state) => state.getData)
+  const dispatch = useDispatch()
+  const { userData } = useContext(AuthContext)
   const data = useFetch("social");
 
-  // console.log(data);
-
+  let dropdownRef = useRef();
   useEffect(() => {
     let handler = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
-        setSearch(false);
+        dispatch(setSearch(false))
       }
     };
     document.addEventListener("mousedown", handler);
@@ -75,21 +38,11 @@ const SocialTab = () => {
   });
 
   const handleSocialSet = (url, name, img) => {
-    setSelectedSocial(name);
-    setUsernamePlaceholder(url);
-    setSocialImg(img);
+    dispatch(setSelectedSocial(name))
+    dispatch(setUsernamePlaceholder(url))
+    dispatch(setSocialImg(img))
   };
-  // get user id
-  useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/me`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
-        "content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setUserData(data?.data?._id));
-  }, [userData]);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -113,7 +66,8 @@ const SocialTab = () => {
       .then((data) => {
         event.target.reset();
         toast.success('Socail Address Add Successfully')
-        setInputError("");
+        dispatch(setRenderReducer({ render: true }))
+        dispatch(setInputError(''))
       });
   };
   return (
@@ -122,7 +76,7 @@ const SocialTab = () => {
         <form onSubmit={handleSubmit} className="grid md:grid-cols-3 gap-6">
           <div className="relative">
             <div
-              onClick={() => setSearch(!search)}
+              onClick={() => dispatch(setSearch(!search))}
               className="relative border-b flex justify-between items-center px-4 h-14 w-full bg-white"
             >
               <div className="flex items-center gap-4">
@@ -165,11 +119,11 @@ const SocialTab = () => {
 
           <div className="rounded-[50px] h-14 w-full bg-gray-200">
             <input
-              onChange={(e) => setInputError(e.target.value)}
+              onChange={(e) => dispatch(setInputError(e.target.value))}
               className="w-full h-full rounded-[50px] px-4 focus:text-gray-700 text-gray-400 bg-gray-200 focus:outline-none border-none"
               name="username"
               type="text"
-              placeholder={usernamePlacehoder}
+              placeholder={`${usernamePlacehoder}usrname`}
             />
           </div>
 
@@ -193,18 +147,22 @@ const SocialTab = () => {
         </form>
       </div>
 
-      <div>
-        {data &&
-          data.map((socialLink) => <AllSocialLinks socialLink={socialLink} />)}
-        {data.length === 0 && (
-          <div className="flex flex-col justify-center items-center mt-12">
-            <img className="md:w-96" src={empty} alt="" />
-            <p className="text-center mt-6 text-gray-400">
-              You haven't added any Social Links
-            </p>
+      {
+        render ? <PageLoader />
+          :
+          <div>
+            {data &&
+              data.map((socialLink) => <AllSocialLinks socialLink={socialLink} />)}
+            {data.length === 0 && (
+              <div className="flex flex-col justify-center items-center mt-12">
+                <img className="md:w-96" src={empty} alt="" />
+                <p className="text-center mt-6 text-gray-400">
+                  You haven't added any Social Links
+                </p>
+              </div>
+            )}
           </div>
-        )}
-      </div>
+      }
 
     </section>
   );

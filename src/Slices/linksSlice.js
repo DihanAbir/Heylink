@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { toast } from "react-hot-toast";
 
 const initialState = {
   errorUrl: false,
@@ -11,8 +10,8 @@ const initialState = {
   endDateCalander: '',
   openInputChange1: '',
   openInputChange2: '',
-  linkName: '',
-  linkURL: '',
+  linkName: { id: '', linkName: '' },
+  linkURL: { id: '', linkURL: '' },
   imageData: null,
 };
 
@@ -49,9 +48,6 @@ export const linksSlice = createSlice({
     setUploadImageModal: (state, action) => {
       state.uploadImageModal = action.payload;
     },
-    setDeleteModal: (state, action) => {
-      state.deleteModal = action.payload;
-    },
     setOpenInputChange1: (state, action) => {
       state.openInputChange1 = action.payload;
     },
@@ -81,7 +77,6 @@ export const {
   setStartDateCalander,
   setEndDateCalander,
   setUploadImageModal,
-  setDeleteModal,
   setOpenInputChange1,
   setOpenInputChange2,
   setLinkName,

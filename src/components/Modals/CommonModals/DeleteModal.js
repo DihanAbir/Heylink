@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
-import { ServiceContext } from "../../../ContextAPI/ServiceProvider/ServiceProvider";
+import { setDeleteModal } from "../../../Slices/controllerSlice";
 import { setRenderReducer } from "../../../Slices/getDataSlice";
-import { setDeleteModal } from "../../../Slices/linksSlice";
 
 const DeleteModal = ({ id, endPoint }) => {
   const token = localStorage.getItem("HeyLinkToken");

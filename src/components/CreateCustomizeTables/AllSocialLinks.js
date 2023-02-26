@@ -7,13 +7,15 @@ import blueRight from '../../assets/icons/blue-right.png'
 import deletes from "../../assets/icons/link-customize-icons/delete.svg";
 import DeleteModal from "../Modals/CommonModals/DeleteModal";
 import { toast } from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { setSocialLinkName } from "../../Slices/socialSlice";
+import { setOpen, setDeleteModal, setOpenInputChange1 } from "../../Slices/controllerSlice";
+import { setRenderReducer } from "../../Slices/getDataSlice";
 
 const AllSocialLinks = ({ socialLink }) => {
-  const [open, setOpen] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [openInputChange, setOpenInputChange] = useState(false);
-  const [socialLinkName, setSocialLinkName] = useState("");
-
+  const { socialLinkName } = useSelector((state) => state.socialSlice)
+  const { open, deleteModal, openInputChange1 } = useSelector((state) => state.controllerSlice)
+  const dispatch = useDispatch()
 
   // handle update social link name
   const handleUpdateSocialLinkName = () => {
@@ -23,22 +25,22 @@ const AllSocialLinks = ({ socialLink }) => {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify({ link: socialLinkName })
+      body: JSON.stringify({ link: socialLinkName?.linkName })
     })
       .then(res => res.json())
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Link URL Updated')
-          setSocialLinkName('')
-          setOpenInputChange(false)
+          dispatch(setSocialLinkName({ id: '', linkName: '' }))
+          dispatch(setRenderReducer({ render: true }))
+          dispatch(setOpenInputChange1(''))
         }
       })
   }
 
   const socialLinkNameChange = (e) => {
-    const newSocialLinkName = e.target.value
-    if (newSocialLinkName !== socialLink.link) {
-      setSocialLinkName(newSocialLinkName)
+    if (e !== socialLink.link) {
+      dispatch(setSocialLinkName({ id: socialLink?._id, linkName: e }))
     }
   }
 
@@ -59,19 +61,6 @@ const AllSocialLinks = ({ socialLink }) => {
       })
   }
 
-
-  let outSideRef = useRef();
-  useEffect(() => {
-    let handler = (e) => {
-      if (!outSideRef.current.contains(e.target)) {
-        setOpenInputChange(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
   return (
     <div>
       <div className="relative w-full my-6 border border-gray-200 rounded-md cursor-pointer">
@@ -93,25 +82,23 @@ const AllSocialLinks = ({ socialLink }) => {
               </h1>
             </div>
 
-            <div ref={outSideRef} className="flex-grow flex flex-col gap-2">
+            <div className="flex-grow flex flex-col gap-2">
               <div className="flex justify-between items-center">
                 <input
-                  onChange={(e) => socialLinkNameChange(e)}
+                  onChange={(e) => socialLinkNameChange(e.target.value)}
                   className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-blue-600
-                                    ${openInputChange
-                      ? "bg-blue-100 border border-blue-600"
-                      : "border-none cursor-pointer"
+                      ${openInputChange1 === socialLink?._id ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"
                     }`}
                   type="text"
-                  disabled={!openInputChange}
+                  disabled={openInputChange1 === socialLink?._id ? false : true}
                   defaultValue={socialLink.link}
                   name="linkName"
                 />
                 {
-                  socialLinkName ? <img onClick={() => handleUpdateSocialLinkName()}
+                  socialLinkName?.id === socialLink?._id && socialLinkName.linkName ? <img onClick={() => handleUpdateSocialLinkName()}
                     className='w-4 cursor-pointer' src={blueRight} alt="" />
                     :
-                    <img onClick={() => setOpenInputChange(!openInputChange)}
+                    <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : socialLink?._id))}
                       className='w-4 cursor-pointer' src={edit} alt="" />
                 }
               </div>
@@ -119,7 +106,7 @@ const AllSocialLinks = ({ socialLink }) => {
           </div>
         </div>
 
-        {open && (
+        {open === socialLink?._id && (
           <div className="flex flex-col justify-center items-center gap-2 h-36 border-t border-gray-200 py-4 sm:py-0">
             <div className="relative cursor-pointer flex justify-center flex-wrap sm:flex-nowrap items-center gap-6">
               <div>
@@ -152,7 +139,7 @@ const AllSocialLinks = ({ socialLink }) => {
 
             <div className="relative">
               <div
-                onClick={() => setDeleteModal(!deleteModal)}
+                onClick={() => dispatch(setDeleteModal(deleteModal ? '' : socialLink?._id))}
                 className="flex flex-col justify-center items-center gap-2 my-1"
               >
                 <img className="w-4" src={deletes} alt="" />
@@ -162,7 +149,6 @@ const AllSocialLinks = ({ socialLink }) => {
                 <DeleteModal
                   endPoint={"social"}
                   id={socialLink._id}
-                  closeModal={setDeleteModal}
                 ></DeleteModal>
               )}
             </div>
@@ -171,7 +157,7 @@ const AllSocialLinks = ({ socialLink }) => {
 
         {/* -----------toggler button start----------- */}
         <div
-          onClick={() => setOpen(!open)}
+          onClick={() => dispatch(setOpen(open ? '' : socialLink?._id))}
           className="cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center"
         >
           <img className="w-4" src={open ? upArrow : downArrow} alt="" />
