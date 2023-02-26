@@ -15,30 +15,28 @@ import ProModal from '../../Modals/CommonModals/ProModal';
 import DefaultSwitch from '../../ToggleSwitch/DefaultSwitch';
 import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../../ContextAPI/ServiceProvider/ServiceProvider';
-
-const currencyItems = [
-    'USD', 'UYU', 'UZS', 'VEF', 'VES', 'VND', 'ZWL', 'ZMW', 'ZMK', 'ZAR', 'YER', 'XPF', 'XOF', 'XCD'
-]
+import { useDispatch, useSelector } from 'react-redux';
+import { setOpen, setDeleteModal, setOpenInputChange1 } from '../../../Slices/controllerSlice';
+import { setMenuName, setProModal1, setProModal2, setViewCurrency } from '../../../Slices/menuSlice';
+import { setRenderReducer } from '../../../Slices/getDataSlice';
 
 const MenuListCustomize = ({ menu }) => {
-    const { handleDefaultSwitch } = useContext(ServiceContext)
-    const [open, setOpen] = useState(false)
-    const [deleteModal, setDeleteModal] = useState(false)
-    const [viewCurrency, setViewCurrency] = useState(false)
-    const [selectedCurrency, setSelectedCurrency] = useState('USD')
-    const [spotlightToggle, setSpotlightToggle] = useState(false);
-    const [linkURLToggle, setLinkURLToggle] = useState(false);
-    const [togglePermit, setTogglePermit] = useState(false);
-    const [proModal1, setProModal1] = useState(false);
-    const [proModal2, setProModal2] = useState(false);
-    const [openInputChange, setOpenInputChange] = useState(false);
-    // ------menu name from input field
-    const [menuName, setMenuName] = useState(menu?.name)
-
-    console.log(menu);
+    const {
+        currencyItems,
+        viewCurrency,
+        proModal1,
+        proModal2,
+        menuName
+    } = useSelector((state) => state.menuSlice)
+    const { open, deleteModal, openInputChange1 } = useSelector((state) => state.controllerSlice)
+    const dispatch = useDispatch()
+    const { handleDefaultSwitch, loader } = useContext(ServiceContext)
 
     const handleToggleSwitch = (input) => {
         handleDefaultSwitch(menu?._id, { show: input }, 'links/menu',)
+        if (loader) {
+            dispatch(setRenderReducer({ render: true }))
+        }
     }
 
     const handleMenuItems = () => {
@@ -53,7 +51,6 @@ const MenuListCustomize = ({ menu }) => {
             .then(res => res.json())
             .then(data => {
                 if (data) {
-                    console.log(data);
                     toast.success('Menu Name Added')
                 }
             })
@@ -72,8 +69,9 @@ const MenuListCustomize = ({ menu }) => {
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Menu Name Added')
-                    setMenuName('')
-                    setOpenInputChange(false)
+                    dispatch(setMenuName(''))
+                    dispatch(setRenderReducer({ render: true }))
+                    dispatch(setOpenInputChange1(''))
                 }
             })
     }
@@ -91,9 +89,16 @@ const MenuListCustomize = ({ menu }) => {
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Currency Added')
-                    setViewCurrency(false)
+                    dispatch(setViewCurrency(false))
+                    dispatch(setRenderReducer({ render: true }))
                 }
             })
+    }
+
+    const handleMenuName = (e) => {
+        if (e !== menu?.name) {
+            dispatch(setMenuName(e))
+        }
     }
 
 
@@ -101,9 +106,9 @@ const MenuListCustomize = ({ menu }) => {
     useEffect(() => {
         let handler = (e) => {
             if (!outSideRef.current.contains(e.target)) {
-                setViewCurrency(false)
-                setProModal1(false)
-                setProModal2(false)
+                dispatch(setViewCurrency(false))
+                dispatch(setProModal1(false))
+                dispatch(setProModal2(false))
             }
         };
         document.addEventListener("mousedown", handler);
@@ -121,29 +126,27 @@ const MenuListCustomize = ({ menu }) => {
                     </div>
 
                     <div className='w-full h-14 flex items-center gap-2'>
-                        <input onChange={(e) => setMenuName(e.target.value)}
+                        <input onChange={(e) => handleMenuName(e.target.value)}
                             className='flex-grow focus:outline-none text-red-500 border-none w-full h-12 px-4 bg-gray-200' name='menuName' type="text" defaultValue={menu?.name && menu.name} placeholder='Please enter the name of the menu or price list' />
-                        {/* <p className='text-right text-sm text-gray-500'>128 characters left</p> */}
                         {
-                            menuName !== menu?.name ? <img onClick={() => handleUpdateMenuName()}
+                            menuName ? <img onClick={() => handleUpdateMenuName()}
                                 className='w-4 cursor-pointer' src={blueRight} alt="" />
                                 :
-                                <img onClick={() => setOpenInputChange(!openInputChange)}
+                                <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : menu?._id))}
                                     className='w-4 cursor-pointer' src={edit} alt="" />
                         }
                     </div>
 
                     <div className='flex md:justify-center items-center gap-2 md:gap-6'>
                         <div className='relative cursor-pointer hidden md:block'>
-                            <div onClick={() => setDeleteModal(!deleteModal)} className='md:flex flex-col justify-center items-center gap-2'>
+                            <div onClick={() => dispatch(setDeleteModal(deleteModal ? '' : menu?._id))} className='md:flex flex-col justify-center items-center gap-2'>
                                 <img className='w-4' src={deletes} alt="" />
                                 <span className='text-sm text-gray-500'>Delete</span>
                             </div>
                             {
-                                deleteModal && <DeleteModal
+                                deleteModal === menu?._id && <DeleteModal
                                     endPoint={"menu"}
                                     id={menu._id}
-                                    closeModal={setDeleteModal}
                                 ></DeleteModal>
                             }
                         </div>
@@ -156,12 +159,12 @@ const MenuListCustomize = ({ menu }) => {
 
 
                 {
-                    open && menu.item.map(i => <MenuItems menuId={menu?._id} item={i} />)
+                    open === menu?._id && menu.item.map(i => <MenuItems menuId={menu?._id} item={i} />)
                 }
 
 
                 {
-                    open && <div className='px-4 cursor-pointer py-4'>
+                    open === menu?._id && <div className='px-4 cursor-pointer py-4'>
                         <button onClick={() => handleMenuItems()}
                             className='flex items-center gap-4 mt-5'>
                             <img className='w-5' src={plus} alt="" />
@@ -171,13 +174,13 @@ const MenuListCustomize = ({ menu }) => {
                         <div ref={outSideRef} className='flex flex-col md:flex-row items-center gap-6 mt-4'>
                             <h1 className='font-semibold text-black'>Currency</h1>
                             <div className='relative'>
-                                <div onClick={() => setViewCurrency(!viewCurrency)}
+                                <div onClick={() => dispatch(setViewCurrency(viewCurrency ? false : true))}
                                     className='flex items-center justify-between px-2 w-60 h-12 bg-gray-100 border rounded-md'>
                                     <h1 className='text-black font-semibold'>{menu?.currency}</h1>
                                     <img src={downArrow2} alt="" />
                                 </div>
                                 {
-                                    viewCurrency && <div className='bg-whtie absolute h-44 border w-full overflow-y-auto bg-white px-2'>
+                                    viewCurrency && <div className='bg-whtie absolute h-44 border w-full overflow-y-auto bg-white px-2 z-50'>
                                         {
                                             currencyItems.map(i => <div
                                                 onClick={() => handleCurrency(i)}
@@ -201,19 +204,14 @@ const MenuListCustomize = ({ menu }) => {
                                 </div>
                                 {/* -----------toggler switch start----------- */}
 
-                                {
-                                    togglePermit ?
-                                        <DefaultSwitch initialToggle={spotlightToggle} getToggle={setSpotlightToggle} />
-                                        :
-                                        <div className='relative'>
-                                            <div onClick={() => setProModal1(!proModal1)}>
-                                                <ProToggleSwitch />
-                                            </div>
-                                            {
-                                                proModal1 && <ProModal closeModal={setProModal1} />
-                                            }
-                                        </div>
-                                }
+                                <div className='relative'>
+                                    <div onClick={() => dispatch(setProModal1(proModal1 ? false : true))}>
+                                        <ProToggleSwitch />
+                                    </div>
+                                    {
+                                        proModal1 && <ProModal />
+                                    }
+                                </div>
 
                                 {/* -----------toggler switch start----------- */}
                             </div>
@@ -228,19 +226,15 @@ const MenuListCustomize = ({ menu }) => {
                                 </div>
                                 {/* -----------toggler switch start----------- */}
 
-                                {
-                                    togglePermit ?
-                                        <DefaultSwitch initialToggle={linkURLToggle} getToggle={setLinkURLToggle} />
-                                        :
-                                        <div className='relative'>
-                                            <div onClick={() => setProModal2(!proModal2)}>
-                                                <ProToggleSwitch />
-                                            </div>
-                                            {
-                                                proModal2 && <ProModal closeModal={setProModal2} />
-                                            }
-                                        </div>
-                                }
+
+                                <div className='relative'>
+                                    <div onClick={() => dispatch(setProModal2(proModal2 ? false : true))}>
+                                        <ProToggleSwitch />
+                                    </div>
+                                    {
+                                        proModal2 && <ProModal />
+                                    }
+                                </div>
 
                                 {/* -----------toggler switch start----------- */}
                             </div>
@@ -249,13 +243,13 @@ const MenuListCustomize = ({ menu }) => {
                 }
 
                 {/* -----------toggler button start----------- */}
-                <div onClick={() => setOpen(!open)}
+                <div onClick={() => dispatch(setOpen(open ? '' : menu?._id))}
                     className='cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center'>
-                    <img className='w-4' src={open ? upArrow : downArrow} alt="" />
+                    <img className='w-4' src={open === menu?._id ? upArrow : downArrow} alt="" />
                 </div>
                 {/* -----------toggler button end----------- */}
             </div>
-        </div>
+        </div >
     );
 };
 

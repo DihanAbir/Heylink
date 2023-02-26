@@ -1,16 +1,19 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import GalleryCustomize from '../../../../../components/CreateCustomizeTables/GalleryCustomize';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 import useGetData from '../../../../../Hoock/GetData';
+import { setOpenAddGallery } from '../../../../../Slices/gallerySlice';
 
 const GalleryTab = () => {
     const { userData } = useContext(AuthContext)
-    const [openAddGallery, setOpenAddGallery] = useState(false)
+    const { openAddGallery } = useSelector((state) => state.gallerySlice)
+    const dispatch = useDispatch()
     const galleryData = useGetData('gallery')
 
-    console.log(galleryData, userData);
+    console.log(openAddGallery);
 
     const handleGallery = () => {
         const data = {
@@ -36,7 +39,7 @@ const GalleryTab = () => {
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
-                setOpenAddGallery(false);
+                dispatch(setOpenAddGallery(false))
             }
         };
         document.addEventListener("mousedown", handler);
@@ -50,7 +53,7 @@ const GalleryTab = () => {
                 <h1 className='text-blue-800 mb-4 font-semibold'>IMAGE GALLERY</h1>
                 {
                     !galleryData && <div className='relative'>
-                        <div onClick={() => setOpenAddGallery(true)}
+                        <div onClick={() => dispatch(setOpenAddGallery(true))}
                             className='cursor-pointer flex flex-col md:flex-row justify-center md:justify-start rounded-xl items-center border md:gap-6 h-32 w-full px-6'>
                             <div className='bg-blue-600 rounded-[50px] px-12 h-10 flex items-center gap-6'>
                                 <svg width="27" height="24" viewBox="0 0 27 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 
 export const ServiceContext = createContext()
 const ServiceProvider = ({ children }) => {
-    const [render, setRender] = useState(false);
+    const [loader, setLoader] = useState(false);
 
     // handle toggle switch
     const handleDefaultSwitch = (id, toggleData, endPoint) => {
@@ -19,7 +19,7 @@ const ServiceProvider = ({ children }) => {
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Switch Updated')
-                    setRender(true)
+                    setLoader(true)
                 }
             })
     }
@@ -44,8 +44,8 @@ const ServiceProvider = ({ children }) => {
     const dataInfo = {
         handleDefaultSwitch,
         handleTitleUpdate,
-        setRender,
-        render
+        setLoader,
+        loader
     }
     return (
         <ServiceContext.Provider value={dataInfo}>

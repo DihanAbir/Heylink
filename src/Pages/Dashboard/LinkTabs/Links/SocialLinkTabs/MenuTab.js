@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import menu from '../../../../../assets/icons/menu-tab-icons/menu.svg'
 import empty from '../../../../../assets/icons/menu-tab-icons/empty.svg'
 import { Link } from 'react-router-dom';
@@ -6,12 +6,15 @@ import MenuListCustomize from '../../../../../components/CreateCustomizeTables/M
 import useFetch from "../../../../../Hoock/Hoock";
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
+import PageLoader from '../../../../../components/loaders/PageLoader';
+import { useDispatch, useSelector } from 'react-redux';
+import { setRenderReducer } from '../../../../../Slices/getDataSlice';
 
 const MenuTab = () => {
+    const { render } = useSelector((state) => state.getData)
     const { userData } = useContext(AuthContext)
-    // const [allMenuLists, setAllMenuLists] = useState(0)
+    const dispatch = useDispatch()
     const data = useFetch("menu")
-    console.log(data);
 
     const handleAddMenu = () => {
         const data = {
@@ -34,6 +37,7 @@ const MenuTab = () => {
             .then(res => res.json())
             .then((data) => {
                 toast.success('Menu Add Successfully')
+                dispatch(setRenderReducer({ render: true }))
             });
     }
     return (
@@ -58,11 +62,17 @@ const MenuTab = () => {
                 </div>
 
                 {
-                    data.length >= 1 ? <MenuListCustomize menu={data[0]} />
+                    render ? <PageLoader />
                         :
-                        <div className='flex justify-center items-center my-6'>
-                            <img className='md:w-[400px]' src={empty} alt="" />
-                        </div>
+                        <>
+                            {
+                                data.length >= 1 ? <MenuListCustomize menu={data[0]} />
+                                    :
+                                    <div className='flex justify-center items-center my-6'>
+                                        <img className='md:w-[400px]' src={empty} alt="" />
+                                    </div>
+                            }
+                        </>
                 }
 
 
