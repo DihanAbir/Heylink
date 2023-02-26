@@ -6,8 +6,11 @@ import pop from '../../../assets/icons/link-customize-icons/pop.svg'
 import blink from '../../../assets/icons/link-customize-icons/blink.svg'
 import lock from '../../../assets/icons/link-customize-icons/pro-lock.svg'
 import { toast } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { setOpenEffcetsModal } from '../../../Slices/linksSlice';
 
-const EffectsModal = ({ closeModal, url }) => {
+const EffectsModal = ({ url }) => {
+    const dispatch = useDispatch()
 
     const handleEffect = (input) => {
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
@@ -22,7 +25,7 @@ const EffectsModal = ({ closeModal, url }) => {
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Effect Updated')
-                    closeModal(false)
+                    dispatch(setOpenEffcetsModal(''))
                 }
             })
     }
@@ -31,7 +34,7 @@ const EffectsModal = ({ closeModal, url }) => {
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
-                closeModal(false);
+                dispatch(setOpenEffcetsModal(''))
             }
         };
         document.addEventListener("mousedown", handler);
@@ -43,7 +46,7 @@ const EffectsModal = ({ closeModal, url }) => {
         <div ref={dropdownRef} class="absolute -right-20 md:-right-16 -top-44 z-10 mt-2 md:w-96 rounded-md bg-gray-50 shadow">
             <div className='p-3'>
                 <div className='w-full flex justify-end'>
-                    <img onClick={() => closeModal(false)} className='w-3' src={close} alt="" />
+                    <img onClick={() => dispatch(setOpenEffcetsModal(''))} className='w-3' src={close} alt="" />
                 </div>
                 <div className='py-3'>
                     <h1 className='text-center font-semibold text-gray-600 text-[16px]'>Add special effects</h1>

@@ -57,7 +57,7 @@ const SidebarPreviewMain = () => {
         <div className=" h-1 w-16 bg-gray-300 rounded-3xl absolute top-6"></div>
         <div
           className="flex flex-col justify-start items-center bg-[#ffc31b] h-[530px] w-[300px] mx-auto overflow-y-auto overflow-x-hidden">
-          {linksData.length === 0 || render ? <PageLoader />
+          {linksData.length === 0 ? <PageLoader />
             :
 
             <>

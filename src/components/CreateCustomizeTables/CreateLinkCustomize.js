@@ -20,31 +20,38 @@ import { Buffer } from "buffer";
 import DefaultSwitch from "../ToggleSwitch/DefaultSwitch";
 import CalanderData from "../Modals/CalanderModals/CalanderData";
 import { toast } from "react-hot-toast";
+import { setDeleteModal, setEndDateCalander, setFastLinkProModal, setLinkName, setLinkURL, setOpen, setOpenEffcetsModal, setOpenInputChange1, setOpenInputChange2, setOpenSchedule, setStartDateCalander, setUploadImageModal } from "../../Slices/linksSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setRenderReducer } from "../../Slices/getDataSlice";
 import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
 const CreateLinkCustomize = ({ url }) => {
-  const { handleDefaultSwitch, handleTitleUpdate } = useContext(ServiceContext)
-  const [open, setOpen] = useState(false);
-  const [openEffcetsModal, setOpenEffcetsModal] = useState(false);
-  const [fastLinkProModal, setFastLinkProModal] = useState(false);
-  const [openSchedule, setOpenSchedule] = useState(false);
+  const {
+    open,
+    openEffcetsModal,
+    fastLinkProModal,
+    openSchedule,
+    startDateCalander,
+    endDateCalander,
+    uploadImageModal,
+    deleteModal,
+    openInputChange1,
+    openInputChange2,
+    linkName,
+    linkURL
 
-  const [startDateCalander, setStartDateCalander] = useState(false);
-  const [endDateCalander, setEndDateCalander] = useState(false);
-  const [showStartDate, setShowStartDate] = useState(url?.activeFrom);
-  const [showEndDate, setShowEndDate] = useState(url?.activeUntile);
+  } = useSelector((state) => state.linksSlice);
+  const { render, handleDefaultSwitch } = useContext(ServiceContext)
 
-  const [uploadImageModal, setUploadImageModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [openInputChange1, setOpenInputChange1] = useState(false);
-  const [openInputChange2, setOpenInputChange2] = useState(false);
-  const [linkName, setLinkName] = useState('');
-  const [linkURL, setLinkURL] = useState('');
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageData, setImageData] = useState("");
 
-  // console.log(url);
+  // const { success } = useSelector((state) => state.linksSlice);
+  const dispatch = useDispatch()
 
   const handleToggleSwitch = (input) => {
     handleDefaultSwitch(url?._id, { show: input }, 'links/common',)
+    if (render) {
+      dispatch(setRenderReducer({ render: true }))
+    }
   }
 
   // link name update--------------
@@ -61,8 +68,9 @@ const CreateLinkCustomize = ({ url }) => {
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Link Title Updated')
-          setLinkName('')
-          setOpenInputChange1(false)
+          dispatch(setLinkName(''))
+          dispatch(setRenderReducer({ render: true }))
+          dispatch(setOpenInputChange1(''))
         }
       })
   }
@@ -81,25 +89,23 @@ const CreateLinkCustomize = ({ url }) => {
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Link URL Updated')
-          setLinkURL('')
-          setOpenInputChange2(false)
+          dispatch(setLinkURL(''))
+          dispatch(setRenderReducer({ render: true }))
+          dispatch(setOpenInputChange2(''))
         }
       })
   }
 
 
   const linkNameChange = (e) => {
-    const newLinkName = e.target.value
-    if (newLinkName !== url.linkTitle) {
-      setLinkName(newLinkName)
+    if (e !== url.linkTitle) {
+      dispatch(setLinkName(e))
     }
   }
 
-
   const linkURLChange = (e) => {
-    const newLinkURL = e.target.value
-    if (newLinkURL !== url.link) {
-      setLinkURL(newLinkURL)
+    if (e !== url.link) {
+      dispatch(setLinkURL(e))
     }
   }
 
@@ -117,8 +123,8 @@ const CreateLinkCustomize = ({ url }) => {
       .then((data) => {
         if (data?.data.acknowledged) {
           toast.success('Active From Added')
-          setStartDateCalander(false)
-          setShowStartDate(startDate)
+          dispatch(setStartDateCalander(''))
+          dispatch(setRenderReducer({ render: true }))
         }
       });
   }
@@ -138,8 +144,8 @@ const CreateLinkCustomize = ({ url }) => {
       .then((data) => {
         if (data?.data.acknowledged) {
           toast.success('Active Untile Added')
-          setEndDateCalander(false)
-          setShowEndDate(endDate)
+          dispatch(setEndDateCalander(''))
+          dispatch(setRenderReducer({ render: true }))
         }
       });
   }
@@ -157,33 +163,18 @@ const CreateLinkCustomize = ({ url }) => {
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Successfully Updated')
+          dispatch(setRenderReducer({ render: true }))
         }
       })
   }
 
   // image convarte buffer
   const buff = Buffer.from(
-    url?.image?.data?.data ? url?.image?.data?.data : imageUrl
+    url?.image?.data?.data ? url?.image?.data?.data : imageData
   );
   const base64 = buff?.toString("base64");
 
-  const imageData = (imgData) => {
-    setImageUrl(imgData);
-  };
 
-  let outSideRef = useRef();
-  useEffect(() => {
-    let handler = (e) => {
-      if (!outSideRef.current.contains(e.target)) {
-        setOpenInputChange1(false);
-        setOpenInputChange2(false);
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  });
   return (
     <div>
       <div className="relative w-full my-6 border border-gray-200 rounded-md cursor-pointer">
@@ -193,14 +184,14 @@ const CreateLinkCustomize = ({ url }) => {
           </div>
 
           {/* -----------image upload input field end----------- */}
-          {imageUrl ? (
+          {imageData ? (
             <div class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md">
-              <img className="w-full h-full" src={imageUrl} alt="" />
+              <img className="w-full h-full" src={imageData} alt="" />
             </div>
           ) : (
             <div>
               <div
-                onClick={() => setUploadImageModal(!uploadImageModal)}
+                onClick={() => dispatch(setUploadImageModal(uploadImageModal ? '' : url?._id))}
                 class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
               >
                 <label class="flex justify-center items-center">
@@ -213,11 +204,10 @@ const CreateLinkCustomize = ({ url }) => {
                   </div>
                 </label>
               </div>
-              {uploadImageModal && (
+              {uploadImageModal === url?._id && (
                 <ImageUploadModal
                   url={url}
-                  imageData={imageData}
-                  closeModal={setUploadImageModal}
+                  imageData={setImageData}
                   endPoint='common'
                 />
               )}
@@ -226,19 +216,18 @@ const CreateLinkCustomize = ({ url }) => {
           {/* -----------image upload input field end----------- */}
 
           {/* -----------edit and input  icon start----------- */}
-          <div ref={outSideRef} className="flex-grow flex flex-col gap-2">
+          <div className="flex-grow flex flex-col gap-2">
             <div className="flex justify-between items-center">
-              <input onChange={(e) => linkNameChange(e)}
-                className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 font-bold ${openInputChange1
-                  ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"}`}
-                type="text" disabled={!openInputChange1}
+              <input onChange={(e) => linkNameChange(e.target.value)}
+                className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 font-bold ${openInputChange1 === url?._id ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"}`}
+                type="text" disabled={openInputChange1 === url?._id ? false : true}
                 defaultValue={url?.linkTitle ? url?.linkTitle : url?.link} name="linkName"
               />
               {
                 linkName ? <img onClick={() => handleUpdateLinkName()}
                   className='w-4 cursor-pointer' src={blueRight} alt="" />
                   :
-                  <img onClick={() => setOpenInputChange1(!openInputChange1)}
+                  <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : url?._id))}
                     className='w-4 cursor-pointer' src={edit} alt="" />
               }
             </div>
@@ -248,16 +237,17 @@ const CreateLinkCustomize = ({ url }) => {
                 <a target="_blank" href={url?.link}>
                   <img className="w-6" src={linkClick} alt="" />
                 </a>
-                <input onChange={(e) => linkURLChange(e)}
+                <input onChange={(e) => linkURLChange(e.target.value)}
                   className={`mr-3 px-2 h-8 bg-white rounded w-full text-sm focus:outline-none text-blue-600 
-                  ${openInputChange2 ? "border border-blue-600" : "border-none cursor-pointer"}`}
-                  type="text" disabled={!openInputChange2} defaultValue={url?.link} name="linkURL" />
+                  ${openInputChange2 === url?._id ? "border border-blue-600" : "border-none cursor-pointer"}`}
+                  type="text" disabled={openInputChange2 === url?._id ? false : true}
+                  defaultValue={url?.link} name="linkURL" />
               </div>
               {
                 linkURL ? <img onClick={() => handleUpdateLinkURL()}
                   className='w-4 cursor-pointer' src={blueRight} alt="" />
                   :
-                  <img onClick={() => setOpenInputChange2(!openInputChange2)}
+                  <img onClick={() => dispatch(setOpenInputChange2(openInputChange2 ? '' : url?._id))}
                     className='w-4 cursor-pointer' src={edit} alt="" />
               }
             </div>
@@ -267,17 +257,16 @@ const CreateLinkCustomize = ({ url }) => {
           <div className="flex md:justify-center items-center gap-2 md:gap-6">
             <div className="relative cursor-pointer">
               <div
-                onClick={() => setDeleteModal(!deleteModal)}
+                onClick={() => dispatch(setDeleteModal(deleteModal ? '' : url?._id))}
                 className="hidden md:block md:flex flex-col justify-center items-center gap-2"
               >
                 <img className="w-4" src={deletes} alt="" />
                 <span className="text-sm text-gray-500">Delete</span>
               </div>
-              {deleteModal && (
+              {deleteModal === url?._id && (
                 <DeleteModal
                   endPoint={"common"}
                   id={url._id}
-                  closeModal={setDeleteModal}
                 ></DeleteModal>
               )}
             </div>
@@ -289,7 +278,7 @@ const CreateLinkCustomize = ({ url }) => {
         </div>
 
 
-        {open && (
+        {open === url?._id && (
           <div className="h-full border-t border-gray-200 py-12">
             <div className="relative cursor-pointer flex justify-center flex-wrap sm:flex-nowrap items-center gap-6  ">
               {/* -----------Move to Top start----------- */}
@@ -312,7 +301,7 @@ const CreateLinkCustomize = ({ url }) => {
 
               {/* -----------schedule start----------- */}
               <div
-                onClick={() => setOpenSchedule(!openSchedule)}
+                onClick={() => dispatch(setOpenSchedule(openSchedule ? '' : url?._id))}
                 className="flex flex-col justify-center items-center gap-2"
               >
                 <div>
@@ -325,7 +314,7 @@ const CreateLinkCustomize = ({ url }) => {
               {/* -----------effects start----------- */}
               <div className="relative ">
                 <div
-                  onClick={() => setOpenEffcetsModal(!openEffcetsModal)}
+                  onClick={() => dispatch(setOpenEffcetsModal(openEffcetsModal ? '' : url?._id))}
                   className="flex flex-col justify-center items-center gap-2"
                 >
                   <div>
@@ -333,14 +322,14 @@ const CreateLinkCustomize = ({ url }) => {
                   </div>
                   <h1 className="text-gray-400 text-sm">effects</h1>
                 </div>
-                {openEffcetsModal && <EffectsModal closeModal={setOpenEffcetsModal} url={url} />}
+                {openEffcetsModal === url?._id && <EffectsModal url={url} />}
               </div>
               {/* -----------effects end----------- */}
 
               {/* -----------Fast Link start----------- */}
               <div className="relative">
                 <div
-                  onClick={() => setFastLinkProModal(!fastLinkProModal)}
+                  onClick={() => dispatch(setFastLinkProModal(fastLinkProModal ? '' : url?._id))}
                   className="flex flex-col justify-center items-center gap-2"
                 >
                   <div className="relative">
@@ -352,7 +341,7 @@ const CreateLinkCustomize = ({ url }) => {
                   </div>
                   <h1 className="text-gray-400 text-sm">Fast Link</h1>
                 </div>
-                {fastLinkProModal && <FastLinkProModal closeModal={setFastLinkProModal} />}
+                {fastLinkProModal === url?._id && <FastLinkProModal />}
               </div>
               {/* -----------Fast Link end----------- */}
 
@@ -372,34 +361,32 @@ const CreateLinkCustomize = ({ url }) => {
 
             </div>
 
-            {openSchedule &&
+            {openSchedule === url?._id &&
               <div className="mt-4 w-full md:ml-8 relative">
                 <h1 className="font-bold text-black text-left mb-3">Schedule Link</h1>
 
                 <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6">
                   <div className="flex flex-col justify-start items-start">
                     <h1 className="text-gray-500 font-semibold text-left">Active From</h1>
-                    <div onClick={() => setStartDateCalander(!startDateCalander)}
+                    <div onClick={() => dispatch(setStartDateCalander(startDateCalander ? '' : url?._id))}
                       className="flex items-center justify-between gap-2 w-72 px-2 h-12 rounded-md bg-gray-200">
-                      <input className="cursor-pointer w-full focus:outline-none border-none bg-gray-200 text-gray-600" type="text" value={showStartDate && showStartDate} readOnly placeholder="Select Date" />
+                      <input className="cursor-pointer w-full focus:outline-none border-none bg-gray-200 text-gray-600" type="text" value={url?.activeFrom && url?.activeFrom} readOnly placeholder="Select Date" />
                       <img className="w-5" src={schedule} alt="" />
                     </div>
-                    {startDateCalander &&
-                      <CalanderData selectedDate={showStartDate} setSelectedDate={handleActiveFrom}
-                        closeDate={setStartDateCalander} />
+                    {startDateCalander === url?._id &&
+                      <CalanderData selectedDate={url?.activeFrom} setSelectedDate={handleActiveFrom} />
                     }
                   </div>
 
                   <div className="flex flex-col justify-start items-start">
                     <h1 className="text-gray-500 font-semibold text-left">Active Until</h1>
-                    <div onClick={() => setEndDateCalander(!endDateCalander)}
+                    <div onClick={() => dispatch(setEndDateCalander(endDateCalander ? '' : url?._id))}
                       className="flex items-center justify-between gap-2 w-72 px-2 h-12 rounded-md bg-gray-200">
-                      <input className="cursor-pointer w-full focus:outline-none border-none bg-gray-200 text-gray-600" type="text" value={showEndDate && showEndDate} readOnly placeholder="Select Date" />
+                      <input className="cursor-pointer w-full focus:outline-none border-none bg-gray-200 text-gray-600" type="text" value={url?.activeUntile && url?.activeUntile} readOnly placeholder="Select Date" />
                       <img className="w-5" src={schedule} alt="" />
                     </div>
-                    {endDateCalander &&
-                      <CalanderData selectedDate={showEndDate} setSelectedDate={handleActiveUntile}
-                        closeDate={setEndDateCalander} />
+                    {endDateCalander === url?._id &&
+                      <CalanderData selectedDate={url?.activeUntile} setSelectedDate={handleActiveUntile} />
                     }
                   </div>
                 </div>
@@ -410,7 +397,7 @@ const CreateLinkCustomize = ({ url }) => {
 
         {/* -----------toggler button start----------- */}
         <div
-          onClick={() => setOpen(!open)}
+          onClick={() => dispatch(setOpen(open ? '' : url?._id))}
           className="cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center"
         >
           <img className="w-4" src={open ? upArrow : downArrow} alt="" />

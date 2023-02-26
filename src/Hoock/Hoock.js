@@ -1,10 +1,13 @@
-import { useContext, useEffect, useState } from "react";
-import { ServiceContext } from "../ContextAPI/ServiceProvider/ServiceProvider";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setRenderReducer } from "../Slices/getDataSlice";
 
 // get fetch data
 const useFetch = (endpoint) => {
-  const { render, setRender } = useContext(ServiceContext)
+  const { render } = useSelector((state) => state.getData);
   const [data, setData] = useState([]);
+  const dispatch = useDispatch()
+
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/${endpoint}`, {
@@ -14,9 +17,11 @@ const useFetch = (endpoint) => {
       },
     })
       .then((res) => res.json())
-      .then((data) => setData(data.data));
+      .then((data) => {
+        setData(data.data)
+        dispatch(setRenderReducer({ render: false }))
+      });
   }, [render]);
-
   return data;
 };
 

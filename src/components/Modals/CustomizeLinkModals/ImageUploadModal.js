@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
 import lock from "../../../assets/icons/link-customize-icons/pro-lock.svg";
+import { setRenderReducer } from "../../../Slices/getDataSlice";
+import { setUploadImageModal } from "../../../Slices/linksSlice";
 import FastLinkProModal from "./FastLinkProModal";
 
-const ImageUploadModal = ({ closeModal, url, endPoint }) => {
+const ImageUploadModal = ({ url, endPoint }) => {
+  const dispatch = useDispatch()
   const imageID = url?._id;
+
+  const closeModal = () => {
+    dispatch(setUploadImageModal(''))
+  }
 
   const {
     register,
@@ -30,7 +38,8 @@ const ImageUploadModal = ({ closeModal, url, endPoint }) => {
       .then((data) => {
         if (data?.data.acknowledged) {
           toast.success('Image Upload Successfully')
-          closeModal(false)
+          dispatch(setUploadImageModal(''))
+          dispatch(setRenderReducer({ render: true }))
         }
       });
   };
@@ -39,7 +48,7 @@ const ImageUploadModal = ({ closeModal, url, endPoint }) => {
   useEffect(() => {
     let handler = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
-        closeModal(false);
+        dispatch(setUploadImageModal(''))
       }
     };
     document.addEventListener("mousedown", handler);
@@ -59,7 +68,7 @@ const ImageUploadModal = ({ closeModal, url, endPoint }) => {
       <div className="p-3">
         <div className="w-full flex justify-end">
           <img
-            onClick={() => closeModal(false)}
+            onClick={() => closeModal()}
             className="w-3"
             src={close}
             alt=""

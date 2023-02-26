@@ -1,17 +1,25 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
 import { ServiceContext } from "../../../ContextAPI/ServiceProvider/ServiceProvider";
+import { setRenderReducer } from "../../../Slices/getDataSlice";
+import { setDeleteModal } from "../../../Slices/linksSlice";
 
-const DeleteModal = ({ id, closeModal, endPoint }) => {
-  const { setRender } = useContext(ServiceContext)
+const DeleteModal = ({ id, endPoint }) => {
   const token = localStorage.getItem("HeyLinkToken");
+
+  const closeModal = () => {
+    dispatch(setDeleteModal(''))
+  }
+
+  const dispatch = useDispatch()
   // console.log(id, "id");
   let dropdownRef = useRef();
   useEffect(() => {
     let handler = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
-        closeModal(false);
+        dispatch(setDeleteModal(''))
       }
     };
     document.addEventListener("mousedown", handler);
@@ -35,8 +43,8 @@ const DeleteModal = ({ id, closeModal, endPoint }) => {
       .then((data) => {
         if (data?.data.acknowledged) {
           toast.success('Delete Successfully')
-          closeModal(false)
-          setRender(true)
+          dispatch(setDeleteModal(''))
+          dispatch(setRenderReducer({ render: true }))
         }
       });
   };
@@ -48,7 +56,7 @@ const DeleteModal = ({ id, closeModal, endPoint }) => {
       <div className="p-3">
         <div className="w-full flex justify-end">
           <img
-            onClick={() => closeModal(false)}
+            onClick={() => closeModal()}
             className="w-3"
             src={close}
             alt=""

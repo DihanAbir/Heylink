@@ -1,14 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css'
+import { useDispatch } from 'react-redux';
+import { setEndDateCalander, setStartDateCalander } from '../../../Slices/linksSlice';
 
-const CalanderData = ({ selectedDate, setSelectedDate, closeDate }) => {
+const CalanderData = ({ selectedDate, setSelectedDate }) => {
+    const dispatch = useDispatch()
 
     let closeCalander = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (!closeCalander.current.contains(e.target)) {
-                closeDate(false);
+                dispatch(setStartDateCalander(''))
+                dispatch(setEndDateCalander(''))
             }
         };
         document.addEventListener("mousedown", handler);

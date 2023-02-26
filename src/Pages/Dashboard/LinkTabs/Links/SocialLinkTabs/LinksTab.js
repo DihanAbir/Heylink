@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import link from "../../../../../assets/icons/link.svg";
 import threeSocial from "../../../../../assets/icons/three-social.svg";
 import uparrow from "../../../../../assets/icons/gif-images/up-arrow.gif";
@@ -6,16 +6,21 @@ import CreateLinkCustomize from "../../../../../components/CreateCustomizeTables
 import { toast } from "react-hot-toast";
 import { AuthContext } from "../../../../../ContextAPI/AuthProvider/AuthProvider";
 import useFetch from "../../../../../Hoock/Hoock";
-import { ServiceContext } from "../../../../../ContextAPI/ServiceProvider/ServiceProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { setRenderReducer } from "../../../../../Slices/getDataSlice";
 import PageLoader from "../../../../../components/loaders/PageLoader";
+import { setErrorUrl } from "../../../../../Slices/linksSlice";
+
+
 const LinksTab = () => {
   const { userData } = useContext(AuthContext)
-  const { render, setRender } = useContext(ServiceContext)
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
-  const [errorUrl, setErrorUrl] = useState("");
   const data = useFetch("common");
+  const dispatch = useDispatch()
 
-  console.log(data);
+  const { render } = useSelector((state) => state.getData);
+  const { errorUrl } = useSelector((state) => state.linksSlice);
+  console.log();
 
   const handleUrl = (event) => {
     event.preventDefault();
@@ -26,26 +31,24 @@ const LinksTab = () => {
     };
 
     fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common`, {
-      method: 'POST',
+      method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
         "content-type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     })
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((data) => {
         event.target.reset();
-        toast.success('Link URL Add Successfully')
+
+        // data = useFetch("common");
+        toast.success("Link URL Add Successfully");
         setErrorUrl("");
-        setRender(true)
+        dispatch(setErrorUrl({ errorUrl: '' }));
+        dispatch(setRenderReducer({ render: true }));
       });
   };
-
-  if (data.length === 0 || data === true) {
-    return <PageLoader />
-  }
-
 
 
   return (
@@ -57,7 +60,7 @@ const LinksTab = () => {
               <img src={link} alt="" />
             </div>
             <input
-              onChange={(e) => setErrorUrl(e.target.value)}
+              onChange={(e) => dispatch(setErrorUrl({ errorUrl: e.target.value }))}
               className="flex-grow focus:outline-none focus:bg-red-50 bg-gray-200 lg:rounded-r-3xl py-3 px-2 w-full border-none"
               type="text"
               name="url"
@@ -65,21 +68,22 @@ const LinksTab = () => {
             />
           </div>
           {errorUrl ? (
-            <button type="submit" className="bg-blue-600 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6">
-              <h1 className="font-semibold text-white md:hidden">
-                Add
-              </h1>
+            <button
+              type="submit"
+              className="bg-blue-600 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6"
+            >
+              <h1 className="font-semibold text-white md:hidden">Add</h1>
               <h1 className="font-semibold text-white hidden md:block">
                 + Add New Link
               </h1>
             </button>
           ) : (
-            <button disabled className="bg-blue-300 cursor-not-allowed lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6">
-              <h1 className="font-semibold text-white md:hidden">
-                Add
-              </h1>
-              <h1
-                className="font-semibold text-white hidden md:block">
+            <button
+              disabled
+              className="bg-blue-300 cursor-not-allowed lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6"
+            >
+              <h1 className="font-semibold text-white md:hidden">Add</h1>
+              <h1 className="font-semibold text-white hidden md:block">
                 + Add New Link
               </h1>
             </button>
@@ -102,28 +106,33 @@ const LinksTab = () => {
         </div>
       </div>
 
-      {/* --------------Create Link------------ */}
-      {data && data?.map((url) => <CreateLinkCustomize url={url} />)}
-      {data?.length === 0 && (
-        <div className="flex justify-center items-center py-8">
-          <img src={uparrow} alt="" />
-          <h1 className="text-gray-500 text-xl">
-            Paste <br />
-            <strong>
-              your first <br /> link{" "}
-            </strong>
-            here
-          </h1>
-        </div>
-      )}
-      {/* -------------Create Link------------- */}
+      {render ? <PageLoader />
+        :
+        <>
+          {/* --------------Create Link------------ */}
+          {data && data?.map((url) => <CreateLinkCustomize url={url} />)}
+          {data?.length === 0 && (
+            <div className="flex justify-center items-center py-8">
+              <img src={uparrow} alt="" />
+              <h1 className="text-gray-500 text-xl">
+                Paste <br />
+                <strong>
+                  your first <br /> link{" "}
+                </strong>
+                here
+              </h1>
+            </div>
+          )}
+          {/* -------------Create Link------------- */}
 
-      {/* -----------Advanced Link Modal----------- */}
-      {/* <div className='flex justify-center items-center'>
+          {/* -----------Advanced Link Modal----------- */}
+          {/* <div className='flex justify-center items-center'>
                 {
                     openAdvancedLinkModal && <AdvancedLinkModal closeModal={setOpenAdvancedLinkModal} />
                 }
             </div> */}
+        </>
+      }
     </section>
   );
 };

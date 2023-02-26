@@ -5,6 +5,7 @@ export const ServiceContext = createContext()
 const ServiceProvider = ({ children }) => {
     const [render, setRender] = useState(false);
 
+    // handle toggle switch
     const handleDefaultSwitch = (id, toggleData, endPoint) => {
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/${endPoint}/${id}`, {
             method: 'PATCH',
