@@ -1,14 +1,17 @@
 import React, { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import proBanner from '../../../assets/icons/link-customize-icons/pro-banner.svg'
 import star from '../../../assets/icons/link-customize-icons/star.svg'
+import { setOpenProModal } from '../../../Slices/controllerSlice';
 
-const ProModal = ({ setCloseModal }) => {
+const ProModal = () => {
+    const dispatch = useDispatch()
     let dropdownRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
-                setCloseModal(false);
+                dispatch(setOpenProModal(''))
             }
         };
         document.addEventListener("mousedown", handler);

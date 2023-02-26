@@ -5,8 +5,10 @@ const initialState = {
     deleteModal: '',
     openInputChange1: '',
     openInputChange2: '',
+    openInputChange3: '',
     uploadImageModal: '',
-    openFastLinkModal: ''
+    openFastLinkModal: '',
+    openProModal: '',
 };
 
 export const controllerSlice = createSlice({
@@ -25,11 +27,17 @@ export const controllerSlice = createSlice({
         setOpenInputChange2: (state, action) => {
             state.openInputChange2 = action.payload;
         },
+        setOpenInputChange3: (state, action) => {
+            state.openInputChange3 = action.payload;
+        },
         setUploadImageModal: (state, action) => {
             state.uploadImageModal = action.payload;
         },
         setOpenFastLinkModal: (state, action) => {
             state.openFastLinkModal = action.payload;
+        },
+        setOpenProModal: (state, action) => {
+            state.openProModal = action.payload;
         },
     },
 });
@@ -39,7 +47,9 @@ export const {
     setDeleteModal,
     setOpenInputChange1,
     setOpenInputChange2,
+    setOpenInputChange3,
     setUploadImageModal,
     setOpenFastLinkModal,
+    setOpenProModal
 } = controllerSlice.actions;
 export default controllerSlice.reducer;

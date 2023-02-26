@@ -21,7 +21,7 @@ import DefaultSwitch from "../ToggleSwitch/DefaultSwitch";
 import CalanderData from "../Modals/CalanderModals/CalanderData";
 import { toast } from "react-hot-toast";
 import { setEndDateCalander, setFastLinkProModal, setLinkName, setLinkURL, setOpenEffcetsModal, setOpenInputChange1, setOpenInputChange2, setOpenSchedule, setStartDateCalander } from "../../Slices/linksSlice";
-import { setOpen, setDeleteModal, setUploadImageModal } from "../../Slices/controllerSlice";
+import { setOpen, setUploadImageModal, setDeleteModal } from "../../Slices/controllerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setRenderReducer } from "../../Slices/getDataSlice";
 import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
@@ -32,13 +32,12 @@ const CreateLinkCustomize = ({ url }) => {
     openSchedule,
     startDateCalander,
     endDateCalander,
-    deleteModal,
     openInputChange1,
     openInputChange2,
     linkName,
     linkURL
   } = useSelector((state) => state.linksSlice);
-  const { open, uploadImageModal } = useSelector((state) => state.controllerSlice);
+  const { open, uploadImageModal, deleteModal } = useSelector((state) => state.controllerSlice);
   const { loader, handleDefaultSwitch } = useContext(ServiceContext)
   const [imageData, setImageData] = useState("");
   const dispatch = useDispatch()
@@ -64,8 +63,8 @@ const CreateLinkCustomize = ({ url }) => {
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Link Title Updated')
-          dispatch(setLinkName({ id: '', linkName: '' }))
           dispatch(setRenderReducer({ render: true }))
+          dispatch(setLinkName({ id: '', linkName: '' }))
           dispatch(setOpenInputChange1(''))
         }
       })
@@ -85,8 +84,8 @@ const CreateLinkCustomize = ({ url }) => {
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Link URL Updated')
-          dispatch(setLinkURL({ id: '', linkURL: '' }))
           dispatch(setRenderReducer({ render: true }))
+          dispatch(setLinkURL({ id: '', linkURL: '' }))
           dispatch(setOpenInputChange2(''))
         }
       })
@@ -119,8 +118,8 @@ const CreateLinkCustomize = ({ url }) => {
       .then((data) => {
         if (data?.data.acknowledged) {
           toast.success('Active From Added')
-          dispatch(setStartDateCalander(''))
           dispatch(setRenderReducer({ render: true }))
+          dispatch(setStartDateCalander(''))
         }
       });
   }
@@ -140,8 +139,8 @@ const CreateLinkCustomize = ({ url }) => {
       .then((data) => {
         if (data?.data.acknowledged) {
           toast.success('Active Untile Added')
-          dispatch(setEndDateCalander(''))
           dispatch(setRenderReducer({ render: true }))
+          dispatch(setEndDateCalander(''))
         }
       });
   }

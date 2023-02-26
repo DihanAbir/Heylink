@@ -14,55 +14,39 @@ import ProToggleSwitch from '../ToggleSwitch/ProToggleSwitch';
 import DefaultSwitch from '../ToggleSwitch/DefaultSwitch';
 import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../ContextAPI/ServiceProvider/ServiceProvider';
+import { setRenderReducer } from '../../Slices/getDataSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOpen, setOpenInputChange1, setOpenInputChange2, setOpenInputChange3, setDeleteModal, setOpenProModal } from '../../Slices/controllerSlice';
+import { setNewTitle, setNewURL, setSearch } from '../../Slices/musicSlice';
 
-const musics = [
-    {
-        id: '1',
-        name: 'Anghami',
-        img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    },
-    {
-        id: '2',
-        name: 'Qobuz',
-        img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    },
-    {
-        id: '3',
-        name: 'Apple Music',
-        img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    },
-    {
-        id: '4',
-        name: 'iTunes Store',
-        img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    },
-    {
-        id: '5',
-        name: 'KKBOX',
-        img: 'https://cdn-icons-png.flaticon.com/128/5968/5968764.png'
-    }
-]
+
 
 const MusicDesignCustomize = ({ url }) => {
+    const {
+        musics,
+        search,
+        newTitle,
+        newURL
+    } = useSelector((state) => state.musicSlice)
+    const {
+        open,
+        openInputChange1,
+        openInputChange2,
+        openInputChange3,
+        deleteModal,
+        openProModal,
+    } = useSelector((state) => state.controllerSlice)
+    const dispatch = useDispatch()
     const { handleDefaultSwitch } = useContext(ServiceContext)
-    const [open, setOpen] = useState(false)
-    const [deleteModal, setDeleteModal] = useState(false)
+
+    console.log(openInputChange2);
+
     const [deleteModal2, setDeleteModal2] = useState(false)
-    const [openProModal, setOpenProModal] = useState(false)
-    const [descriptionSwitchPermit, setDescriptionSwitchPermit] = useState(false)
-    const [descriptionSwitch, setDescriptionSwitch] = useState(false)
-    const [mainToggle, setMainToggle] = useState(false);
-    const [openInputChange1, setOpenInputChange1] = useState(false);
-    const [openInputChange2, setOpenInputChange2] = useState(false);
-    const [openInputChange3, setOpenInputChange3] = useState(false);
-    const [newTitle, setNewTitle] = useState(url?.title);
-    const [newURL, setNewURL] = useState(url?.link);
 
     const [selectedMusicCtg, setSelectedMusicCtg] = useState('')
     const [musicImg, setMusicImg] = useState('')
     const [musicLink, setMusicLink] = useState('')
     const [musicAudioLink, setMusicAudioLink] = useState('')
-    const [search, setSearch] = useState(false)
 
     const handleToggleSwitch = (input) => {
         handleDefaultSwitch(url?._id, { show: input }, 'links/music',)
@@ -81,14 +65,14 @@ const MusicDesignCustomize = ({ url }) => {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
-            body: JSON.stringify({ title: newTitle })
+            body: JSON.stringify({ title: newTitle?.title })
         })
             .then(res => res.json())
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Music Title Added')
-                    setNewTitle('')
-                    setOpenInputChange1(false)
+                    dispatch(setNewTitle({ id: '', title: '' }))
+                    dispatch(setOpenInputChange1(''))
                 }
             })
     }
@@ -100,16 +84,28 @@ const MusicDesignCustomize = ({ url }) => {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
-            body: JSON.stringify({ link: newURL })
+            body: JSON.stringify({ link: newURL?.link })
         })
             .then(res => res.json())
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Music Link Updated')
-                    setNewURL('')
-                    setOpenInputChange2(false)
+                    dispatch(setRenderReducer({ render: true }))
+                    dispatch(setNewURL({ id: '', link: '' }))
+                    dispatch(setOpenInputChange2(''))
                 }
             })
+    }
+
+    const handleNewTitleUpdate = (e) => {
+        if (e !== url?.title) {
+            dispatch(setNewTitle({ id: url?._id, title: e }))
+        }
+    }
+    const handleLinkUpdate = (e) => {
+        if (e !== url?.link) {
+            dispatch(setNewURL({ id: url?._id, link: e }))
+        }
     }
 
     const handleAddMusicData = (name, img) => {
@@ -127,9 +123,7 @@ const MusicDesignCustomize = ({ url }) => {
     useEffect(() => {
         let handler = (e) => {
             if (!editRef.current.contains(e.target)) {
-                setOpenInputChange1(false);
-                setOpenInputChange2(false);
-                search(false);
+                dispatch(setSearch(''));
             }
         };
         document.addEventListener("mousedown", handler);
@@ -141,12 +135,11 @@ const MusicDesignCustomize = ({ url }) => {
         <>
             <div className='relative w-full my-6 border border-gray-200 rounded-md cursor-pointer'>
                 <div className='relative flex justify-end mr-4 mt-4'>
-                    <img onClick={() => setDeleteModal(!deleteModal)} className='w-4' src={deletes} alt="" />
+                    <img onClick={() => dispatch(setDeleteModal(deleteModal ? '' : url?._id))} className='w-4' src={deletes} alt="" />
                     {
-                        deleteModal && <DeleteModal
+                        deleteModal === url?._id && <DeleteModal
                             endPoint={"music"}
                             id={url._id}
-                            closeModal={setDeleteModal}
                         ></DeleteModal>
                     }
                 </div>
@@ -164,12 +157,17 @@ const MusicDesignCustomize = ({ url }) => {
                             <div className='flex-grow'>
                                 <div>
                                     <div className='flex justify-between items-center'>
-                                        <input onChange={(e) => setNewTitle(e.target.value)}
-                                            className={`mr-3 px-2 bg-white h-8 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange1 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={url?.title ? url.title : url.link} name='' />
+                                        <input onChange={(e) => dispatch(handleNewTitleUpdate(e.target.value))}
+                                            className={`mr-3 px-2 bg-white h-8 rounded w-full focus:outline-none text-gray-700 font-bold 
+                                            ${openInputChange1 === url?._id ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text"
+                                            disabled={openInputChange1 === url?._id ? false : true}
+                                            defaultValue={url?.title ? url.title : url.link} name='' />
                                         {
-                                            newTitle !== url?.title ? <img onClick={() => handleTitleUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                            newTitle?.id === url?._id && newTitle?.title ? <img
+                                                onClick={() => handleTitleUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
                                                 :
-                                                <img onClick={() => setOpenInputChange1(!openInputChange1)} className='w-3 cursor-pointer' src={edit} alt="" />
+                                                <img
+                                                    onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : url?._id))} className='w-3 cursor-pointer' src={edit} alt="" />
                                         }
                                     </div>
                                     <p className='text-sm text-gray-500 pl-2'>Title</p>
@@ -177,14 +175,17 @@ const MusicDesignCustomize = ({ url }) => {
 
                                 <div>
                                     <div className='flex justify-between items-center'>
-                                        <input onChange={(e) => setNewURL(e.target.value)}
-                                            className={`mr-3 px-2 bg-white h-8 rounded w-full focus:outline-none text-gray-700 font-bold $${openInputChange2 ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text"
-                                            disabled={!openInputChange2}
+                                        <input onChange={(e) => dispatch(handleLinkUpdate(e.target.value))}
+                                            className={`mr-3 px-2 bg-white h-8 rounded w-full focus:outline-none text-gray-700 font-bold 
+                                            ${openInputChange2 === url?._id ? 'bg-blue-100 border border-blue-600' : 'border-none cursor-pointer'}`} type="text"
+                                            disabled={openInputChange2 === url?._id ? false : true}
                                             defaultValue={url.link} name='address' />
                                         {
-                                            newURL !== url?.link ? <img onClick={() => handleURLUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                            newURL?.id === url?._id && newURL?.link ? <img
+                                                onClick={() => handleURLUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
                                                 :
-                                                <img onClick={() => setOpenInputChange2(!openInputChange2)} className='w-3 cursor-pointer' src={edit} alt="" />
+                                                <img
+                                                    onClick={() => dispatch(setOpenInputChange2(openInputChange2 ? '' : url?._id))} className='w-3 cursor-pointer' src={edit} alt="" />
                                         }
                                     </div>
                                     <p className='text-sm text-gray-500 pl-2'>Scan Source</p>
@@ -203,11 +204,11 @@ const MusicDesignCustomize = ({ url }) => {
                                 <img className='w-full h-full' src="https://st.depositphotos.com/1010338/2099/i/450/depositphotos_20999947-Tropical-island-with-palms..jpg" alt="" />
                             </div>
                             <div className='relative'>
-                                <button onClick={() => setOpenProModal(!openProModal)} className='flex justify-center items-center w-40 h-12 border-2 border-blue-600 rounded-[50px]'>
+                                <button onClick={() => dispatch(setOpenProModal(openProModal ? '' : url?._id))} className='flex justify-center items-center w-40 h-12 border-2 border-blue-600 rounded-[50px]'>
                                     <h1 className='text-blue-600 font-semibold'>Update Cover</h1>
                                 </button>
                                 {
-                                    openProModal && <ProModal setCloseModal={setOpenProModal} />
+                                    openProModal === url?._id && <ProModal />
                                 }
                             </div>
                         </div>
@@ -220,20 +221,7 @@ const MusicDesignCustomize = ({ url }) => {
                                 </div>
                                 <p className='text-gray-500 text-sm'>Provide a short description about this track or our new album</p>
                             </div>
-
-                            {
-                                descriptionSwitchPermit ? <div className="flex flex-col justify-center items-center ">
-                                    <div onClick={() => setDescriptionSwitch(!descriptionSwitch)}
-                                        className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer
-                                ${descriptionSwitch ? 'bg-red-200' : 'bg-gray-300'}`}>
-                                        <div className={`h-5 w-5 rounded-full shadow-md transform duration-300 ease-in-out
-                                ${descriptionSwitch ? 'bg-green-600 transform translate-x-5' : 'bg-gray-500'}`}>
-                                        </div>
-                                    </div>
-                                </div>
-                                    :
-                                    <ProToggleSwitch />
-                            }
+                            <ProToggleSwitch />
                         </div>
 
                         <div className='flex justify-between items-center mb-4'>
@@ -249,7 +237,8 @@ const MusicDesignCustomize = ({ url }) => {
                                 {
                                     musicAudioLink ? <img onClick={() => handleUpdateAudioMusicLink()} className='w-3 cursor-pointer' src={blueRight} alt="" />
                                         :
-                                        <img onClick={() => setOpenInputChange3(!openInputChange3)} className='w-3 cursor-pointer' src={edit} alt="" />
+                                        <img
+                                            onClick={() => dispatch(setOpenInputChange3(openInputChange3 ? '' : url?._id))} className='w-3 cursor-pointer' src={edit} alt="" />
                                 }
                                 <button className='w-16 h-8 bg-white border rounded-3xl flex justify-center items-center'><span>Play</span></button>
                                 <div className='relative'>
@@ -266,7 +255,7 @@ const MusicDesignCustomize = ({ url }) => {
                             className='grid grid-cols-1 gap-4'>
                             <div className='flex items-center justify-between'>
                                 <div className='flex-grow relative'>
-                                    <div onClick={() => setSearch(!search)}
+                                    <div onClick={() => dispatch(setSearch(search ? '' : url?._id))}
                                         className='relative border-b flex justify-between items-center px-4 h-14 w-full bg-white'>
                                         <div className='flex items-center gap-4'>
                                             <img className='w-6' src={musicImg && musicImg} alt="" />
@@ -320,7 +309,7 @@ const MusicDesignCustomize = ({ url }) => {
                 }
 
                 {/* -----------toggler button start----------- */}
-                <div onClick={() => setOpen(!open)}
+                <div onClick={() => dispatch(setOpen(open ? '' : url?._id))}
                     className='cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center'>
                     <img className='w-4' src={open ? upArrow : downArrow} alt="" />
                 </div>

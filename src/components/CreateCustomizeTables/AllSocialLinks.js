@@ -31,8 +31,8 @@ const AllSocialLinks = ({ socialLink }) => {
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Link URL Updated')
-          dispatch(setSocialLinkName({ id: '', linkName: '' }))
           dispatch(setRenderReducer({ render: true }))
+          dispatch(setSocialLinkName({ id: '', linkName: '' }))
           dispatch(setOpenInputChange1(''))
         }
       })
@@ -57,6 +57,7 @@ const AllSocialLinks = ({ socialLink }) => {
       .then(data => {
         if (data?.data.acknowledged) {
           toast.success('Data Successfully Updated')
+          dispatch(setRenderReducer({ render: true }))
         }
       })
   }
@@ -145,7 +146,7 @@ const AllSocialLinks = ({ socialLink }) => {
                 <img className="w-4" src={deletes} alt="" />
                 <span className="text-sm text-gray-500">Delete</span>
               </div>
-              {deleteModal && (
+              {deleteModal === socialLink?._id && (
                 <DeleteModal
                   endPoint={"social"}
                   id={socialLink._id}

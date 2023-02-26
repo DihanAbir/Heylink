@@ -1,16 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
 import uparrow from '../../../../../assets/icons/gif-images/up-arrow.gif'
 import MusicDesignCustomize from '../../../../../components/CreateCustomizeTables/MusicDesignCustomize';
+import PageLoader from '../../../../../components/loaders/PageLoader';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 import useFetch from '../../../../../Hoock/Hoock';
+import { setRenderReducer } from '../../../../../Slices/getDataSlice';
+import { setErrorUrl } from '../../../../../Slices/musicSlice';
 
 const MusicTab = () => {
+    const { errorUrl } = useSelector((state) => state.musicSlice)
+    const { render } = useSelector((state) => state.getData)
+    const dispatch = useDispatch()
     const { userData } = useContext(AuthContext)
-    const [errorUrl, setErrorUrl] = useState('')
     const data = useFetch("music");
-
-    console.log(data);
 
     const handleUrl = (event) => {
         event.preventDefault()
@@ -31,9 +35,10 @@ const MusicTab = () => {
         })
             .then(res => res.json())
             .then((data) => {
-                event.target.reset();
                 toast.success('Link URL Add Successfully')
-                setErrorUrl('')
+                dispatch(setErrorUrl(''))
+                dispatch(setRenderReducer({ render: true }))
+                event.target.reset();
             });
     }
 
@@ -45,7 +50,7 @@ const MusicTab = () => {
                         <div className='cursor-pointer w-12 py-3 border-r border-gray-400 flex justify-center items-center'>
                             <img src='https://cdn-f.heylink.me/static/media/ic_music_note.c09fa0ce.svg' alt="" />
                         </div>
-                        <input onChange={e => setErrorUrl(e.target.value)}
+                        <input onChange={e => dispatch(setErrorUrl(e.target.value))}
                             className='flex-grow focus:outline-none bg-gray-200 lg:rounded-r-3xl py-3 px-2 w-full border-none' type="text" name='url' placeholder='Paste Your Link Here' />
                     </div>
                     {
@@ -69,19 +74,27 @@ const MusicTab = () => {
                     <span className='text-gray-600 text-sm'>We support <strong>integration</strong> with <strong>Apple Music</strong>, <strong>iTunes</strong>, <strong>Spotify</strong>, <strong>Deezer</strong> and <strong>YouTube</strong>. You can also add manually <strong>Tidal, Soundcloud, Pandora, Audiomack</strong> .</span>
                 </div>
             </div>
+
             {
-                data.length > 0 ? data.map(url => <MusicDesignCustomize url={url} />)
+                render ? <PageLoader />
                     :
-                    <div className='flex justify-center items-center py-8'>
-                        <img src={uparrow} alt="" />
-                        <h1 className='text-gray-500 text-xl'>
-                            Paste <br />
-                            <strong>
-                                your first music <br /> link </strong>
-                            here
-                        </h1>
-                    </div>
+                    <>
+                        {
+                            data.length > 0 ? data.map(url => <MusicDesignCustomize url={url} />)
+                                :
+                                <div className='flex justify-center items-center py-8'>
+                                    <img src={uparrow} alt="" />
+                                    <h1 className='text-gray-500 text-xl'>
+                                        Paste <br />
+                                        <strong>
+                                            your first music <br /> link </strong>
+                                        here
+                                    </h1>
+                                </div>
+                        }
+                    </>
             }
+
         </section>
     );
 };
