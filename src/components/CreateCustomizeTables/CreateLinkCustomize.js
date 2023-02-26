@@ -42,6 +42,8 @@ const CreateLinkCustomize = ({ url }) => {
   const [imageData, setImageData] = useState("");
   const dispatch = useDispatch()
 
+  console.log(url);
+
   const handleToggleSwitch = (input) => {
     handleDefaultSwitch(url?._id, { show: input }, 'links/common',)
     if (loader) {
@@ -215,7 +217,7 @@ const CreateLinkCustomize = ({ url }) => {
               <input onChange={(e) => linkNameChange(e.target.value)}
                 className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 font-bold ${openInputChange1 === url?._id ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"}`}
                 type="text" disabled={openInputChange1 === url?._id ? false : true}
-                defaultValue={url?.linkTitle ? url?.linkTitle : url?.link} name="linkName"
+                defaultValue={url.linkTitle ? url.linkTitle : url?.link} name="linkName"
               />
               {
                 linkName?.id === url?._id && linkName.linkName ? <img onClick={() => handleUpdateLinkName()}
@@ -394,7 +396,7 @@ const CreateLinkCustomize = ({ url }) => {
           onClick={() => dispatch(setOpen(open ? '' : url?._id))}
           className="cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center"
         >
-          <img className="w-4" src={open ? upArrow : downArrow} alt="" />
+          <img className="w-4" src={open === url?._id ? upArrow : downArrow} alt="" />
         </div>
         {/* -----------toggler button end----------- */}
       </div>

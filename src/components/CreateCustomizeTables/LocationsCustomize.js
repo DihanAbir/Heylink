@@ -76,8 +76,8 @@ const LocationsCustomize = ({ location }) => {
             .then(data => {
                 if (data?.data.acknowledged) {
                     toast.success('Location Updated')
-                    dispatch(setNewAddress({ id: '', address: '' }))
                     dispatch(setRenderReducer({ render: true }))
+                    dispatch(setNewAddress({ id: '', address: '' }))
                     dispatch(setOpenInputChange1(''))
                 }
             })
@@ -272,7 +272,7 @@ const LocationsCustomize = ({ location }) => {
                 {/* -----------toggler button start----------- */}
                 <div onClick={() => dispatch(setOpen(open ? '' : location?._id))}
                     className='cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center'>
-                    <img className='w-4' src={open ? upArrow : downArrow} alt="" />
+                    <img className='w-4' src={open === location?._id ? upArrow : downArrow} alt="" />
                 </div>
                 {/* -----------toggler button end----------- */}
             </div>

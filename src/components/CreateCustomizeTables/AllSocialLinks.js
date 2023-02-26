@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import downArrow from "../../assets/icons/link-customize-icons/down-arrow.svg";
 import upArrow from "../../assets/icons/link-customize-icons/up-arrow.svg";
 import swap from "../../assets/icons/link-customize-icons/swap.svg";
@@ -161,7 +161,7 @@ const AllSocialLinks = ({ socialLink }) => {
           onClick={() => dispatch(setOpen(open ? '' : socialLink?._id))}
           className="cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center"
         >
-          <img className="w-4" src={open ? upArrow : downArrow} alt="" />
+          <img className="w-4" src={open === socialLink?._id ? upArrow : downArrow} alt="" />
         </div>
         {/* -----------toggler button end----------- */}
       </div>

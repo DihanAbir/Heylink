@@ -8,7 +8,6 @@ const useFetch = (endpoint) => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch()
 
-
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/${endpoint}`, {
       headers: {
@@ -19,8 +18,8 @@ const useFetch = (endpoint) => {
       .then((res) => res.json())
       .then((data) => {
         setData(data.data)
-        dispatch(setRenderReducer({ render: false }))
       });
+    dispatch(setRenderReducer({ render: false }))
   }, [render]);
   return data;
 };

@@ -198,7 +198,7 @@ const MusicDesignCustomize = ({ url }) => {
                 </div>
 
                 {
-                    open && <div className='py-3 px-4'>
+                    open === url?._id && <div className='py-3 px-4'>
                         <div className='flex items-center gap-6'>
                             <div className='w-16 h-16 md:w-24 md:h-24'>
                                 <img className='w-full h-full' src="https://st.depositphotos.com/1010338/2099/i/450/depositphotos_20999947-Tropical-island-with-palms..jpg" alt="" />
@@ -311,7 +311,7 @@ const MusicDesignCustomize = ({ url }) => {
                 {/* -----------toggler button start----------- */}
                 <div onClick={() => dispatch(setOpen(open ? '' : url?._id))}
                     className='cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center'>
-                    <img className='w-4' src={open ? upArrow : downArrow} alt="" />
+                    <img className='w-4' src={open === url?._id ? upArrow : downArrow} alt="" />
                 </div>
                 {/* -----------toggler button end----------- */}
             </div>
