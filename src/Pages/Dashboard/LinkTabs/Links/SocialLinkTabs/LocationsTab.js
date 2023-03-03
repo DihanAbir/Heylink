@@ -19,7 +19,7 @@ const LocationsTab = () => {
     const { render } = useSelector((state) => state.getData)
     const dispatch = useDispatch()
     const { userData } = useContext(AuthContext)
-    const data = useFetch("location")
+    const data = useFetch("links/location")
 
     const handleSubmit = (event) => {
         event.preventDefault()

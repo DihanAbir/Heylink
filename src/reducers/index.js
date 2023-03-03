@@ -1,4 +1,5 @@
 import { combineReducers } from "@reduxjs/toolkit";
+import appearanceSlice from "../Slices/appearanceSlice";
 import controllerSlice from "../Slices/controllerSlice";
 import gallerySlice from "../Slices/gallerySlice";
 import getDataReducer from "../Slices/getDataSlice";
@@ -17,6 +18,8 @@ const rootReducer = combineReducers({
   menuSlice: menuSlice,
   locationSlice: locationSlice,
   musicSlice: musicSlice,
+
+  appearanceSlice: appearanceSlice,
 });
 
 export default rootReducer;

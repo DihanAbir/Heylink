@@ -11,7 +11,7 @@ const GalleryTab = () => {
     const { userData } = useContext(AuthContext)
     const { openAddGallery } = useSelector((state) => state.gallerySlice)
     const dispatch = useDispatch()
-    const galleryData = useGetData('gallery')
+    const galleryData = useGetData('links/gallery')
 
     console.log(openAddGallery);
 

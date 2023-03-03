@@ -3,7 +3,7 @@ import React, { createContext, useEffect, useState } from 'react';
 export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState({ name: 'fdf', email: 'adv@gmail.com' })
-    const [userData, setUserData] = useState(null)
+    const [userData, setUserData] = useState({})
     const [loading, setLoading] = useState(false)
 
     // console.log(userData);
@@ -17,13 +17,15 @@ const AuthProvider = ({ children }) => {
         })
             .then((res) => res.json())
             .then((data) => setUserData(data?.data));
-    }, []);
+        setLoading(false)
+    }, [loading]);
 
 
     const authInfo = {
         user,
         userData,
-        loading
+        loading,
+        setLoading
     }
     return (
         <AuthContext.Provider value={authInfo}>

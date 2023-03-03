@@ -15,7 +15,7 @@ import { setErrorUrl } from "../../../../../Slices/linksSlice";
 const LinksTab = () => {
   const { userData } = useContext(AuthContext)
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
-  const data = useFetch("common");
+  const data = useFetch("links/common");
   const dispatch = useDispatch()
 
   const { render } = useSelector((state) => state.getData);

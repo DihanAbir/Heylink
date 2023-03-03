@@ -71,7 +71,7 @@ const CryptoTab = () => {
     });
 
     const handleCryptoAddress = (demoAd, name, img) => {
-        console.log(demoAd, name, img);
+        // console.log(demoAd, name, img);
         setSelectedSocial(name)
         setDemoAddress(demoAd)
         setSocialImg(img)

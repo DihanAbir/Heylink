@@ -8,8 +8,10 @@ const useFetch = (endpoint) => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch()
 
+  console.log(data);
+
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/${endpoint}`, {
+    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/${endpoint}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
         "content-type": "application/json",

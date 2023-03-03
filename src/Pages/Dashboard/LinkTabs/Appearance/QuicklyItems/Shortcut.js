@@ -4,16 +4,15 @@ import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrowDow
 import { toast } from 'react-hot-toast';
 import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { setOpenShortcut } from '../../../../../Slices/appearanceSlice';
 
 const Shortcut = () => {
+    const { openShortcut } = useSelector((state) => state.appearanceSlice)
+    const dispatch = useDispatch()
     const { userData } = useContext(AuthContext)
-    const [open, setOpen] = useState(true)
-    // const [shortcutToggle, setShortcutToggle] = useState(userData?.shortcut === "true")
-
-    console.log(userData?.shortcut === "true");
 
     const handleShortcut = (input) => {
-        console.log(input);
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
@@ -26,22 +25,22 @@ const Shortcut = () => {
             .then((data) => {
                 if (data?.data.acknowledged) {
                     toast.success('Shortcut Switch Updated')
-                    // setShortcutToggle(data)
+
                 }
             });
     }
     return (
         <section id='shortcut' className='mb-4 md:col-span-2'>
             <div className='flex items-center justify-between'>
-                <h1 onClick={() => setOpen(!open)} className='text-left font-semibold text-blue-900 mb-2'>SHORTCUT</h1>
+                <h1 onClick={() => dispatch(setOpenShortcut(openShortcut ? false : true))} className='text-left font-semibold text-blue-900 mb-2'>SHORTCUT</h1>
                 {
-                    open ? <img onClick={() => setOpen(!open)} src={arrowDown} alt="" />
+                    openShortcut ? <img onClick={() => dispatch(setOpenShortcut(openShortcut ? false : true))} src={arrowDown} alt="" />
                         :
-                        <img onClick={() => setOpen(!open)} src={arrowRight} alt="" />
+                        <img onClick={() => dispatch(setOpenShortcut(openShortcut ? false : true))} src={arrowRight} alt="" />
                 }
             </div>
             {
-                open && <div className='flex justify-between items-center gap-4 px-2 border rounded-xl w-full h-20'>
+                openShortcut && <div className='flex justify-between items-center gap-4 px-2 border rounded-xl w-full h-20'>
                     <div className='flex items-center gap-2'>
                         <span className='text-gray-600'>Add Shortcut to HeyLink.me page</span>
                         <h1 className='w-5 h-5 flex justify-center items-center rounded-full bg-gray-400'><span className='p-1 text-white'>!</span></h1>

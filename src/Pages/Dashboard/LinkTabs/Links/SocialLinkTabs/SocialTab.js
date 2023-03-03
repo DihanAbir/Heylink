@@ -22,7 +22,7 @@ const SocialTab = () => {
   const { render } = useSelector((state) => state.getData)
   const dispatch = useDispatch()
   const { userData } = useContext(AuthContext)
-  const data = useFetch("social");
+  const data = useFetch("links/social");
 
   let dropdownRef = useRef();
   useEffect(() => {

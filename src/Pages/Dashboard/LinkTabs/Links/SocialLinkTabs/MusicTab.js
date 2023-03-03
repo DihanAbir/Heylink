@@ -14,7 +14,7 @@ const MusicTab = () => {
     const { render } = useSelector((state) => state.getData)
     const dispatch = useDispatch()
     const { userData } = useContext(AuthContext)
-    const data = useFetch("music");
+    const data = useFetch("links/music");
 
     const handleUrl = (event) => {
         event.preventDefault()

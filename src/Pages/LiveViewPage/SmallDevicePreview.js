@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Buffer } from "buffer";
 import arrowRight from '../../assets/icons/right-arrow.svg'
 import avatar from '../../assets/avatars/user-avatar.png'
 import useFetch from "../../Hoock/Hoock";
 import PageLoader from "../../components/loaders/PageLoader";
+import { AuthContext } from "../../ContextAPI/AuthProvider/AuthProvider";
 const SmallDevicePreview = () => {
-    const token = localStorage.getItem("HeyLinkToken");
-    const [userData, setUserData] = useState({});
-    console.log(userData);
-    const linksData = useFetch("common");
-    const socialData = useFetch("social");
-    const galleryData = useFetch("gallery");
-    const menuData = useFetch("menu");
-    const cryptoData = useFetch("crypto");
-    const locationsData = useFetch("location");
-    const musicData = useFetch("music");
-    const commerceData = useFetch("commerce");
-    const appsData = useFetch("apps");
-    // console.log(menuData, locationsData);
+    const { userData } = useContext(AuthContext)
+    const linksData = useFetch("links/common");
+    const socialData = useFetch("links/social");
+    const galleryData = useFetch("links/gallery");
+    const menuData = useFetch("links/menu");
+    // const cryptoData = useFetch("links/crypto");
+    const locationsData = useFetch("links/location");
+    const musicData = useFetch("links/music");
+    // const commerceData = useFetch("links/commerce");
+    // const appsData = useFetch("links/apps");
 
     const [openLocationData, setOpenLocationData] = useState(false)
     const [openMenuData, setOpenMenuData] = useState(false)
@@ -32,17 +30,6 @@ const SmallDevicePreview = () => {
         );
         return buff?.toString("base64");
     };
-
-    useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/me`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "content-type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => setUserData(data?.data));
-    }, []);
 
     const { username } = userData;
 

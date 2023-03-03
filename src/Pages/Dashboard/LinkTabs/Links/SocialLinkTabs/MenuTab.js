@@ -14,7 +14,7 @@ const MenuTab = () => {
     const { render } = useSelector((state) => state.getData)
     const { userData } = useContext(AuthContext)
     const dispatch = useDispatch()
-    const data = useFetch("menu")
+    const data = useFetch("links/menu")
 
     const handleAddMenu = () => {
         const data = {

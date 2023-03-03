@@ -6,45 +6,45 @@ import right from '../../../../../assets/icons/appearance-tab-icons/blue-right.p
 import AppearanceShareModal from '../../../../../components/Modals/AppearanceModals/AppearanceShareModal';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
+import { setInputChange, setOpenUsername, setNewUsername } from '../../../../../Slices/appearanceSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const UserName = () => {
-    const { userData } = useContext(AuthContext)
-    const [open, setOpen] = useState(true)
-    const [inputChange, setInputChange] = useState(false)
-    const [newUsername, setNewUsername] = useState('')
+    const {
+        openUsername,
+        inputChange,
+        newUsername
+    } = useSelector((state) => state.appearanceSlice)
+    const dispatch = useDispatch()
+    const { userData, setLoading } = useContext(AuthContext)
+
     const [viewModal, setViewModal] = useState(false)
 
-    console.log(userData);
-
     const handleUpdate = () => {
-        const username = { username: newUsername }
         fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
-            body: JSON.stringify(username),
+            body: JSON.stringify({ username: newUsername }),
         })
             .then((res) => res.json())
             .then((data) => {
                 if (data?.data.acknowledged) {
                     toast.success('User Name Updated')
-                    setNewUsername('')
-                    setInputChange(false)
+                    setLoading(true)
+                    dispatch(setNewUsername(''))
+                    dispatch(setInputChange(false))
                 }
             });
     }
 
-
-
-
-    // console.log(newUsername)
     let modalRef = useRef();
     useEffect(() => {
         let handler = (e) => {
             if (!modalRef.current.contains(e.target)) {
-                setInputChange(false);
+                dispatch(setInputChange(false));
                 setViewModal(false);
             }
         };
@@ -56,31 +56,31 @@ const UserName = () => {
     return (
         <section id='shortcut' className='mb-4'>
             <div className='flex items-center justify-between'>
-                <h1 onClick={() => setOpen(!open)} className='text-left font-semibold text-blue-900 mb-2'>USERNAME</h1>
+                <h1 onClick={() => dispatch(setOpenUsername(!openUsername))} className='text-left font-semibold text-blue-900 mb-2'>USERNAME</h1>
                 {
-                    open ? <img onClick={() => setOpen(!open)} src={arrowDown} alt="" />
+                    openUsername ? <img onClick={() => dispatch(setOpenUsername(!openUsername))} src={arrowDown} alt="" />
                         :
-                        <img onClick={() => setOpen(!open)} src={arrowRight} alt="" />
+                        <img onClick={() => dispatch(setOpenUsername(!openUsername))} src={arrowRight} alt="" />
                 }
             </div>
             {
-                open && <div className='flex justify-between items-center gap-4 px-2 border rounded-xl w-full h-20'>
+                openUsername && <div className='flex justify-between items-center gap-4 px-2 border rounded-xl w-full h-20'>
 
                     <div ref={modalRef} className='flex items-center justify-between gap-2 w-full' >
                         <div className='flex-grow'>
                             <div className='flex-grow flex items-center gap-1'>
                                 <h1 className='text-gray-500'>heylink.me/</h1>
-                                <input onChange={(e) => setNewUsername(e.target.value)} className={`bg-white flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue={userData?.username} />
+                                <input onChange={(e) => dispatch(setNewUsername(e.target.value))} className={`bg-white flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue={userData?.username} />
                                 {
                                     newUsername ? <>
                                         {
                                             newUsername !== userData?.username ? <img onClick={() => handleUpdate()} className='w-4' src={right} alt="" />
                                                 :
-                                                <img onClick={() => setInputChange(!inputChange)} className='w-4' src={edit} alt="" />
+                                                <img onClick={() => dispatch(setInputChange(!inputChange))} className='w-4' src={edit} alt="" />
                                         }
                                     </>
                                         :
-                                        <img onClick={() => setInputChange(!inputChange)} className='w-4' src={edit} alt="" />
+                                        <img onClick={() => dispatch(setInputChange(!inputChange))} className='w-4' src={edit} alt="" />
                                 }
                             </div>
                             <h1 className='text-sm text-gray-500'>Profile Username</h1>
