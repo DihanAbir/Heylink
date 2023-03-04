@@ -53,7 +53,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link name update--------------
   const handleUpdateLinkName = () => {
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -74,7 +74,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link url update--------------
   const handleUpdateLinkURL = () => {
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -108,7 +108,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   const handleActiveFrom = (date) => {
     const startDate = new Date(date);
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -129,7 +129,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   const handleActiveUntile = (date) => {
     const endDate = new Date(date);
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -148,7 +148,7 @@ const CreateLinkCustomize = ({ url }) => {
   }
 
   const handleMoveUpdate = (input) => {
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common/${url?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

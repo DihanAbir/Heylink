@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
     // console.log(userData);
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/me`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/user/me`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",

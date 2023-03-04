@@ -59,7 +59,7 @@ const MusicDesignCustomize = ({ url }) => {
     }
 
     const handleTitleUpdate = () => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/music/${url?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/links/music/${url?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -78,7 +78,7 @@ const MusicDesignCustomize = ({ url }) => {
     }
 
     const handleURLUpdate = () => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/music/${url?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/links/music/${url?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

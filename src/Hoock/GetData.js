@@ -6,7 +6,7 @@ const useGetData = (endpoint) => {
     const token = localStorage.getItem("HeyLinkToken")
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/${endpoint}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/${endpoint}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "content-type": "application/json",

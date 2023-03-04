@@ -29,7 +29,7 @@ const LinksTab = () => {
       userInfo: userData,
     };
 
-    fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/common`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

@@ -29,7 +29,7 @@ const DeleteModal = ({ id, endPoint }) => {
 
 
   const DeleteHandle = () => {
-    const url = `${process.env.REACT_APP_API_KEY}/app/v1/links/${endPoint}/${id}`;
+    const url = `https://hey.ahmadalanazi.com/app/v1/links/${endPoint}/${id}`;
     // console.log(url);
     fetch(url, {
       method: "DELETE",

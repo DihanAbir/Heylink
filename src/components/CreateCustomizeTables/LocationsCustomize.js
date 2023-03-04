@@ -44,7 +44,7 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const handleUpdateMarkerOnTheMapAddress = () => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/location/${location?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -64,7 +64,7 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const handleUpdateLocation = () => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/links/location/${location?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

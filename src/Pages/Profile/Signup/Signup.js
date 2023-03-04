@@ -11,7 +11,7 @@ const Signup = () => {
   const navigate = useNavigate()
 
   const handleSignup = (data) => {
-    axios.post(`${process.env.REACT_APP_API_KEY}/app/v1/user/signup`, data)
+    axios.post(`https://hey.ahmadalanazi.com/app/v1/user/signup`, data)
       .then((res) => {
         toast.success('User Signup Successfully')
         navigate('/login')

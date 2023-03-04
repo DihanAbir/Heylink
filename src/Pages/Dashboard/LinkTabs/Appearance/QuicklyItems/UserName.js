@@ -21,7 +21,7 @@ const UserName = () => {
     const [viewModal, setViewModal] = useState(false)
 
     const handleUpdate = () => {
-        fetch(`${process.env.REACT_APP_API_KEY}/app/v1/user/${userData?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
