@@ -6,9 +6,20 @@ import DisabledSwitch from '../../../../../components/ToggleSwitch/DisabledSwitc
 import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwitch';
 import edit from "../../../../../assets/icons/link-customize-icons/edit.svg";
 import blueRight from '../../../../../assets/icons/blue-right.png'
+import { useDispatch, useSelector } from 'react-redux';
+import { setMessageText, setSuccessMessageText } from '../../../../../Slices/messageSlice';
+import { toast } from 'react-hot-toast';
 
 const ViewMessages = ({ message }) => {
-    const [messageText, setMessageText] = useState('')
+    const { messageText,
+        successMessageText,
+    } = useSelector((state) => state.messageSlice)
+    const dispatch = useDispatch()
+
+    console.log(messageText);
+
+
+    // const [messageText, setMessageText] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
     const [termsCondition, setTermsCondition] = useState(false)
 
@@ -56,6 +67,51 @@ const ViewMessages = ({ message }) => {
         //     });
     }
 
+    const handleUpdateMessageText = () => {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ messageText: messageText })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Update Successfully')
+                dispatch(setMessageText(''))
+            });
+    }
+
+
+    const handleUpdateSuccessMessageText = () => {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ successMessageText: successMessageText })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Update Successfully')
+                dispatch(setSuccessMessageText(''))
+            });
+    }
+
+
+    const handleMessageTextValild = (e) => {
+        if (e !== message?.messageText) {
+            dispatch(setMessageText(e))
+        }
+    }
+    const handleSuccessMessageTextValid = (e) => {
+        if (e !== message?.successMessageText) {
+            dispatch(setSuccessMessageText(e))
+        }
+    }
+
     return (
         <div className='mt-4'>
             <div className='flex justify-between items-center w-full h-full mb-4'>
@@ -70,18 +126,32 @@ const ViewMessages = ({ message }) => {
             <div className='mb-4'>
                 <h1 className='text-black font-bold text-left'>Appearance</h1>
                 <div className='grid md:grid-cols-2 gap-4 md:gap-8'>
-                    <div>
+                    <div className='relative'>
                         <label className='text-sm text-gray-500' htmlFor="messageText">Message Text</label>
-                        <input onChange={(e) => setMessageText(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none' type="text" name='messageText' id='messageText' defaultValue='Leave your message here...' />
+                        <input onChange={(e) => handleMessageTextValild(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none' type="text" name='messageText' id='messageText'
+                            defaultValue={message?.messageText ? message?.messageText : 'Leave your message here...'} />
+                        {
+                            messageText && <button onClick={() => handleUpdateMessageText()}
+                                className='w-10 h-10 p-2 rounded-md hover:bg-gray-200 cursor-pointer absolute right-3 bottom-0 flex justify-center items-center'>
+                                <img
+                                    className='w-full' src={blueRight} alt="" />
+                            </button>
+                        }
                     </div>
 
-                    <div>
+                    <div className='relative'>
                         <label className='text-sm text-gray-500' htmlFor="successMessageText">Success Message Text</label>
-                        <input onChange={(e) => setSuccessMessage(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none' type="text" name='successMessageText' id='successMessageText' defaultValue='Your message was sent successfully!' />
+                        <input onChange={(e) => handleSuccessMessageTextValid(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none' type="text" name='successMessageText' id='successMessageText'
+                            defaultValue={message?.successMessageText ? message?.successMessageText : 'Your message was sent successfully!'} />
+                        {
+                            successMessageText && <button onClick={() => handleUpdateSuccessMessageText()}
+                                className='w-10 h-10 p-2 rounded-md hover:bg-gray-200 cursor-pointer absolute right-3 bottom-0 flex justify-center items-center'>
+                                <img
+                                    className='w-full' src={blueRight} alt="" />
+                            </button>
+                        }
                     </div>
                 </div>
-
-                <button className='mt-4 w-20 h-8 flex justify-center items-center text-white bg-blue-600 rounded-md font-semibold' type='submit' ><span>SAVE</span></button>
             </div>
 
 
@@ -90,6 +160,7 @@ const ViewMessages = ({ message }) => {
                 <h1 className=' text-gray-500'>Input Field Text</h1>
                 <h1 className=' text-gray-500'>Required Field</h1>
             </div>
+
             <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2' >
                     <input onClick={() => setNameChecked(!nameChecked)} checked={nameChecked}

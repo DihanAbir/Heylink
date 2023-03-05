@@ -6,6 +6,7 @@ import getDataReducer from "../Slices/getDataSlice";
 import linksSlice from "../Slices/linksSlice";
 import locationSlice from "../Slices/locationSlice";
 import menuSlice from "../Slices/menuSlice";
+import messageSlice from "../Slices/messageSlice";
 import musicSlice from "../Slices/musicSlice";
 import socialSlice from "../Slices/socialSlice";
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   musicSlice: musicSlice,
 
   appearanceSlice: appearanceSlice,
+  messageSlice: messageSlice,
 });
 
 export default rootReducer;
