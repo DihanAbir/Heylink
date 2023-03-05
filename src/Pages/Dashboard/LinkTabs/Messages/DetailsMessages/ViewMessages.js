@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ProButton from '../../../../../components/Buttons/ProButton';
 import SmallIcon from '../../../../../components/Buttons/SmallIcon';
 import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
@@ -7,21 +7,22 @@ import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwi
 import edit from "../../../../../assets/icons/link-customize-icons/edit.svg";
 import blueRight from '../../../../../assets/icons/blue-right.png'
 import { useDispatch, useSelector } from 'react-redux';
-import { setMessageText, setSuccessMessageText } from '../../../../../Slices/messageSlice';
+import { setEmailPlaceholderText, setMessageText, setNamePlaceholderText, setPhoneNumbearPlaceholderText, setPhoneNumberPlaceholderText, setSuccessMessageText } from '../../../../../Slices/messageSlice';
 import { toast } from 'react-hot-toast';
+import { ServiceContext } from '../../../../../ContextAPI/ServiceProvider/ServiceProvider';
+import ChackedSwitch from '../../../../../components/ToggleSwitch/ChackedSwitch';
 
 const ViewMessages = ({ message }) => {
     const { messageText,
         successMessageText,
+        namePlaceholderText,
+        emailPlaceholderText,
+        phoneNumberPlaceholderText,
     } = useSelector((state) => state.messageSlice)
     const dispatch = useDispatch()
+    const { handleDefaultSwitch, loader } = useContext(ServiceContext)
 
     console.log(messageText);
-
-
-    // const [messageText, setMessageText] = useState('')
-    const [successMessage, setSuccessMessage] = useState('')
-    const [termsCondition, setTermsCondition] = useState(false)
 
     // your name---------
     const [nameChecked, setNameChecked] = useState(false)
@@ -51,20 +52,7 @@ const ViewMessages = ({ message }) => {
     const [customField3, setCustomField3] = useState('')
 
     const handleInputFieldText = (inputName) => {
-        // fetch(`http://localhost:8000/app/v1/message`, {
-        //     method: 'POST',
-        //     headers: {
-        //         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
-        //         "content-type": "application/json",
-        //     },
-        //     body: JSON.stringify(data)
-        // })
-        //     .then(res => res.json())
-        //     .then((data) => {
-        //         event.target.reset();
-        //         toast.success('Link URL Add Successfully')
-        //         setErrorUrl("");
-        //     });
+
     }
 
     const handleUpdateMessageText = () => {
@@ -110,6 +98,121 @@ const ViewMessages = ({ message }) => {
         if (e !== message?.successMessageText) {
             dispatch(setSuccessMessageText(e))
         }
+    }
+
+    const handleNameFieldChacked = (input) => {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ nameFieldChacked: input })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Update Successfully')
+            });
+    }
+
+    const handleEmailFieldChacked = (input) => {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ emailFieldChacked: input })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Update Successfully')
+            });
+    }
+    const handlePhoneNumberFieldChacked = (input) => {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ phoneNumberFieldChacked: input })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Update Successfully')
+            });
+    }
+
+    const handleUpdateNamePlaceholder = () => {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ namePlaceholder: namePlaceholderText })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Update Successfully')
+                dispatch(setNamePlaceholderText(''))
+            });
+    }
+    const handleUpdateEmailPlaceholder = () => {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ emailPlaceholder: emailPlaceholderText })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Update Successfully')
+                dispatch(setEmailPlaceholderText(''))
+            });
+    }
+    const handleUpdatePhoneNumberPlaceholder = () => {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ phoneNumberPlaceholder: phoneNumberPlaceholderText })
+        })
+            .then(res => res.json())
+            .then((data) => {
+                toast.success('Update Successfully')
+                dispatch(setPhoneNumberPlaceholderText(''))
+            });
+    }
+
+    const handleNamePlaceholderValid = (e) => {
+        if (e !== message?.namePlaceholder) {
+            dispatch(setNamePlaceholderText(e))
+        }
+    }
+    const handleEmailPlaceholderValid = (e) => {
+        if (e !== message?.emailPlaceholder) {
+            dispatch(setEmailPlaceholderText(e))
+        }
+    }
+    const handlePhoneNumberPlaceholderValid = (e) => {
+        if (e !== message?.phoneNumberPlaceholder) {
+            dispatch(setPhoneNumberPlaceholderText(e))
+        }
+    }
+    const handleNameToggleSwitch = (input) => {
+        handleDefaultSwitch(message?._id, { turnOnName: input }, 'message',)
+    }
+    const handleEmailToggleSwitch = (input) => {
+        handleDefaultSwitch(message?._id, { turnOnEmail: input }, 'message',)
+    }
+    const handlePhoneNumberToggleSwitch = (input) => {
+        handleDefaultSwitch(message?._id, { turnOnPhoneNumber: input }, 'message',)
     }
 
     return (
@@ -161,52 +264,80 @@ const ViewMessages = ({ message }) => {
                 <h1 className=' text-gray-500'>Required Field</h1>
             </div>
 
+
+            {/* -----------name part----------- */}
             <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2' >
-                    <input onClick={() => setNameChecked(!nameChecked)} checked={nameChecked}
+                    <input onClick={() => handleNameFieldChacked(message?.nameFieldChacked === 'true' ? 'false' : 'true')} checked={message?.nameFieldChacked === 'true' ? true : false}
                         type="checkbox" name="name" id="name" />
-                    <input onChange={(e) => setYourName(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='name' id='name' defaultValue='Your Name' />
+                    <input onChange={(e) => handleNamePlaceholderValid(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='name' id='name'
+                        defaultValue={message?.namePlaceholder ? message?.namePlaceholder : 'Your Name'} />
                     {
-                        yourName && <button onClick={() => handleInputFieldText('name')}
-                            className='w-10 h-full p-1 hover:bg-gray-100 rounded-md flex justify-center items-center'>
-                            <img className='w-4 h-full cursor-pointer' src={blueRight} alt="" />
+                        namePlaceholderText && <button onClick={() => handleUpdateNamePlaceholder()}
+                            className='w-8 h-8 p-1 rounded-md hover:bg-gray-200 cursor-pointer flex justify-center items-center'>
+                            <img className='w-full' src={blueRight} alt="" />
                         </button>
                     }
                 </div>
 
                 {
-                    nameChecked ? <DefaultSwitch initialToggle={nameToggle} getToggle={setNameToggle} />
+                    message?.nameFieldChacked === 'true' ? <DefaultSwitch
+                        initialToggle={message?.turnOnName === 'true' ? true : false}
+                        getToggle={handleNameToggleSwitch} />
                         :
-                        <DisabledSwitch />
+                        <ChackedSwitch initialToggle={message?.turnOnName === 'true' ? true : false} />
+                }
+            </div>
+
+            {/* -----------email part----------- */}
+            <div className='flex justify-between items-center w-full h-full mb-4'>
+                <div className='flex items-center gap-2' >
+                    <input onClick={() => handleEmailFieldChacked(message?.emailFieldChacked === 'true' ? 'false' : 'true')} checked={message?.emailFieldChacked === 'true' ? true : false}
+                        type="checkbox" name="email" id="email" />
+                    <input onChange={(e) => handleEmailPlaceholderValid(e.target.value)}
+                        className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='email' id='email'
+                        defaultValue={message?.emailPlaceholder ? message?.emailPlaceholder : 'Your Email Address'} />
+                    {
+                        emailPlaceholderText && <button onClick={() => handleUpdateEmailPlaceholder()}
+                            className='w-8 h-8 p-1 rounded-md hover:bg-gray-200 cursor-pointer flex justify-center items-center'>
+                            <img className='w-full' src={blueRight} alt="" />
+                        </button>
+                    }
+                </div>
+
+                {
+                    message?.emailFieldChacked === 'true' ? <DefaultSwitch
+                        initialToggle={message?.turnOnEmail === 'true' ? true : false}
+                        getToggle={handleEmailToggleSwitch} />
+                        :
+                        <ChackedSwitch initialToggle={message?.turnOnEmail === 'true' ? true : false} />
                 }
             </div>
 
 
+
+            {/* -----------phoneNumber part----------- */}
             <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2' >
-                    <input onClick={() => setEmailChecked(!emailChecked)} checked={emailChecked} type="checkbox" name="email" id="email" />
-                    <input onChange={(e) => setEmailAddress(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="email" name='email' id='email' defaultValue='Your Email Address' />
+                    <input onClick={() => handlePhoneNumberFieldChacked(message?.phoneNumberFieldChacked === 'true' ? 'false' : 'true')} checked={message?.phoneNumberFieldChacked === 'true' ? true : false}
+                        type="checkbox" name="phone" id="phone" />
+                    <input onChange={(e) => handlePhoneNumberPlaceholderValid(e.target.value)}
+                        className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='phone' id='phone'
+                        defaultValue={message?.phoneNumberPlaceholder ? message?.phoneNumberPlaceholder : 'Your Phone Number'} />
+                    {
+                        phoneNumberPlaceholderText && <button onClick={() => handleUpdatePhoneNumberPlaceholder()}
+                            className='w-8 h-8 p-1 rounded-md hover:bg-gray-200 cursor-pointer flex justify-center items-center'>
+                            <img className='w-full' src={blueRight} alt="" />
+                        </button>
+                    }
                 </div>
 
                 {
-                    emailChecked ? <DefaultSwitch initialToggle={emailToggle} getToggle={setEmailToggle} />
+                    message?.phoneNumberFieldChacked === 'true' ? <DefaultSwitch
+                        initialToggle={message?.turnOnPhoneNumber === 'true' ? true : false}
+                        getToggle={handlePhoneNumberToggleSwitch} />
                         :
-                        <DisabledSwitch />
-                }
-            </div>
-
-
-            <div className='flex justify-between items-center w-full h-full mb-4'>
-                <div className='flex items-center gap-2' >
-                    <input onClick={() => setPhoneNumberChecked(!phoneNumberChecked)} checked={phoneNumberChecked} type="checkbox" name="email" id="email" />
-                    <input onChange={(e) => setPhoneNumber(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm'
-                        type="email" name='email' id='email' defaultValue='Your Phone Number' />
-                </div>
-
-                {
-                    phoneNumberChecked ? <DefaultSwitch initialToggle={phoneNumberToggle} getToggle={setPhoneNumberToggle} />
-                        :
-                        <DisabledSwitch />
+                        <ChackedSwitch initialToggle={message?.turnOnPhoneNumber === 'true' ? true : false} />
                 }
             </div>
 
