@@ -54,7 +54,7 @@ const SocialTab = () => {
       userInfo: userData,
     };
 
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social`, {
+    fetch(`http://localhost:8000/app/v1/links/social`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -151,9 +151,8 @@ const SocialTab = () => {
         render ? <PageLoader />
           :
           <div>
-            {data &&
-              data.map((socialLink) => <AllSocialLinks socialLink={socialLink} />)}
-            {data.length === 0 && (
+            {data?.length > 0 && data?.map((socialLink) => <AllSocialLinks socialLink={socialLink} />)}
+            {data?.length === 0 && (
               <div className="flex flex-col justify-center items-center mt-12">
                 <img className="md:w-96" src={empty} alt="" />
                 <p className="text-center mt-6 text-gray-400">

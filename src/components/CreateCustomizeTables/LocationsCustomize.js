@@ -44,7 +44,7 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const handleUpdateMarkerOnTheMapAddress = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/location/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -64,13 +64,13 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const handleUpdateLocation = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/location/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
             },
-            body: JSON.stringify({ link: newAddress?.address })
+            body: JSON.stringify({ name: newAddress?.address })
         })
             .then(res => res.json())
             .then(data => {
@@ -84,13 +84,13 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const locationChange = (e) => {
-        if (e !== location.link) {
+        if (e !== location?.name) {
             dispatch(setNewAddress({ id: location?._id, address: e }))
         }
     }
 
     const handleUpdateMarkersAddress = (e) => {
-        if (e !== location.markersOnMap) {
+        if (e !== location?.markersOnMap) {
             dispatch(setMarkersOnTheMapAddress({ id: location?._id, address: e }))
         }
     }
@@ -156,7 +156,7 @@ const LocationsCustomize = ({ location }) => {
                         <div className='flex justify-between items-center cursor-pointer'>
                             <input onChange={(e) => locationChange(e.target.value)}
                                 className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 
-                                ${openInputChange1 === location?._id ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={location?.link} name='address' />
+                                ${openInputChange1 === location?._id ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={location?.name} name='address' />
                             {
                                 newAddress?.id === location?._id && newAddress?.address ? <img
                                     onClick={() => handleUpdateLocation()}
@@ -197,7 +197,7 @@ const LocationsCustomize = ({ location }) => {
                                 <input onChange={(e) => handleUpdateMarkersAddress(e.target.value)}
                                     className='w-full h-full px-3 border-none bg-gray-200 focus:outline-none text-gray-700 text-sm font-semibold' type="text"
                                     disabled={openInputChange2 === location?._id}
-                                    defaultValue={location?.markersOnMap ? location.markersOnMap : location.link} />
+                                    defaultValue={location?.markersOnMap ? location?.markersOnMap?.slice(0, 80) : location?.name?.slice(0, 80)} />
                             </div>
                             {
                                 markersOnTheMapAddress?.id === location?._id && markersOnTheMapAddress?.address && <img

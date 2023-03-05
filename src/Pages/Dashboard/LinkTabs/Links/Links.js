@@ -21,7 +21,7 @@ const Links = () => {
     return (
         <section ref={dropdownRef} className=''>
             <div className='flex justify-center items-center'>
-                <div className='flex justify-center items-center gap-2 md:gap-2 cursor-pointer w-full lg:w-[980px] mx-auto'>
+                <div className='flex justify-center items-center gap-2 md:gap-2 md:flex-wrap cursor-pointer w-full lg:w-[980px] mx-auto'>
 
 
                     <Link to='/dashboard/links' onClick={() => setViewTab(1)}

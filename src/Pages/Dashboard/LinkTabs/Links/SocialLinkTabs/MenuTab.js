@@ -26,7 +26,7 @@ const MenuTab = () => {
                 ItemPrice: ''
             },
         };
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu`, {
+        fetch(`http://localhost:8000/app/v1/links/menu`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -66,7 +66,7 @@ const MenuTab = () => {
                         :
                         <>
                             {
-                                data.length >= 1 ? <MenuListCustomize menu={data[0]} />
+                                data?.length >= 1 ? <MenuListCustomize menu={data[0]} />
                                     :
                                     <div className='flex justify-center items-center my-6'>
                                         <img className='md:w-[400px]' src={empty} alt="" />

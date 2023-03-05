@@ -26,10 +26,10 @@ const LocationsTab = () => {
         const selectLocation = event.target.location.value
 
         const data = {
-            link: selectLocation,
+            name: selectLocation,
             userInfo: userData,
         };
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location`, {
+        fetch(`http://localhost:8000/app/v1/links/location`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -110,10 +110,10 @@ const LocationsTab = () => {
                     :
                     <div>
                         {
-                            data && data.map(location => <LocationsCustomize location={location} />)
+                            data?.length > 0 && data?.map(location => <LocationsCustomize location={location} />)
                         }
                         {
-                            data.length === 0 && <div className='flex flex-col justify-center items-center mt-12'>
+                            data?.length === 0 && <div className='flex flex-col justify-center items-center mt-12'>
                                 <img className='md:w-96' src={empty} alt="" />
                                 <p className='text-center mt-6 text-gray-400'>You can manage multiple locations on the PRO plan.Check it <Link to='/' className='text-blue-600 underline'>here</Link></p>
                             </div>

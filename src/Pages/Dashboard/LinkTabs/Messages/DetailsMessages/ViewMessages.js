@@ -40,7 +40,7 @@ const ViewMessages = ({ message }) => {
     const [customField3, setCustomField3] = useState('')
 
     const handleInputFieldText = (inputName) => {
-        // fetch(`https://hey.ahmadalanazi.com/app/v1/message`, {
+        // fetch(`http://localhost:8000/app/v1/message`, {
         //     method: 'POST',
         //     headers: {
         //         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

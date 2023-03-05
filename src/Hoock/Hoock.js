@@ -4,16 +4,15 @@ import { setRenderReducer } from "../Slices/getDataSlice";
 
 // get fetch data
 const useFetch = (endpoint) => {
+  const token = localStorage.getItem("HeyLinkToken")
   const { render } = useSelector((state) => state.getData);
   const [data, setData] = useState([]);
   const dispatch = useDispatch()
 
-  console.log(data);
-
   useEffect(() => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/${endpoint}`, {
+    fetch(`http://localhost:8000/app/v1/${endpoint}`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        Authorization: `Bearer ${token}`,
         "content-type": "application/json",
       },
     })
@@ -23,6 +22,7 @@ const useFetch = (endpoint) => {
       });
     dispatch(setRenderReducer({ render: false }))
   }, [render]);
+
   return data;
 };
 

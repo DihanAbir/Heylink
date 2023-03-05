@@ -18,6 +18,8 @@ const LinksTab = () => {
   const data = useFetch("links/common");
   const dispatch = useDispatch()
 
+  console.log(data);
+
   const { render } = useSelector((state) => state.getData);
   const { errorUrl } = useSelector((state) => state.linksSlice);
 
@@ -29,7 +31,7 @@ const LinksTab = () => {
       userInfo: userData,
     };
 
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common`, {
+    fetch(`http://localhost:8000/app/v1/links/common`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -51,7 +53,7 @@ const LinksTab = () => {
 
 
   return (
-    <section className="pb-6">
+    <section className="pb-6 min-h-screen">
       <form onSubmit={handleUrl}>
         <div className="flex justify-between md:px-6 w-full lg:max-w-[980px] mx-auto">
           <div className="flex-grow flex items-center bg-gray-200 rounded-3xl">
@@ -109,7 +111,7 @@ const LinksTab = () => {
         :
         <>
           {/* --------------Create Link------------ */}
-          {data && data?.map((url) => <CreateLinkCustomize url={url} />)}
+          {data?.length > 0 && data?.map((url) => <CreateLinkCustomize url={url} />)}
           {data?.length === 0 && (
             <div className="flex justify-center items-center py-8">
               <img src={uparrow} alt="" />

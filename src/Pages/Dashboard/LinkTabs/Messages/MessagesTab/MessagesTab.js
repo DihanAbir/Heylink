@@ -10,11 +10,10 @@ import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider
 const MessagesTab = () => {
     const { userData } = useContext(AuthContext)
     const { handleDefaultSwitch } = useContext(ServiceContext)
-    const [viewMessage, setViewMessage] = useState(false)
     const [messageData, setMessageData] = useState(null)
     console.log(messageData);
     useEffect(() => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message`, {
+        fetch(`http://localhost:8000/app/v1/message`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
@@ -25,17 +24,18 @@ const MessagesTab = () => {
     }, []);
 
     const handleToggleSwitch = (input) => {
-        if (messageData?.turnOnOffMessage === 'true') {
+        if (messageData) {
             handleDefaultSwitch(messageData?._id, { turnOnOffMessage: input }, 'message',)
         }
-        else {
-            fetch(`https://hey.ahmadalanazi.com/app/v1/message`, {
+        else if (!messageData) {
+            console.log('nai data');
+            fetch(`http://localhost:8000/app/v1/message`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                     "content-type": "application/json",
                 },
-                body: JSON.stringify({ turnOnOffMessage: input, userInfo: userData, })
+                body: JSON.stringify({ turnOnOffMessage: true, userInfo: userData, })
             })
                 .then(res => res.json())
                 .then((data) => {
@@ -53,7 +53,7 @@ const MessagesTab = () => {
                         getToggle={handleToggleSwitch} />
                 </div>
                 {
-                    viewMessage && <ViewMessages message={messageData} />
+                    messageData?.turnOnOffMessage === 'true' && <ViewMessages message={messageData} />
                 }
             </div>
 

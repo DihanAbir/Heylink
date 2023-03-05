@@ -40,7 +40,7 @@ const MenuListCustomize = ({ menu }) => {
     }
 
     const handleMenuItems = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu`, {
+        fetch(`http://localhost:8000/app/v1/links/menu`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -57,7 +57,7 @@ const MenuListCustomize = ({ menu }) => {
     }
 
     const handleUpdateMenuName = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu/${menu?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/menu/${menu?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -77,7 +77,7 @@ const MenuListCustomize = ({ menu }) => {
     }
 
     const handleCurrency = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu/${menu?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/menu/${menu?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

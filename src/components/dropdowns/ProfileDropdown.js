@@ -4,8 +4,10 @@ import security from '../../assets/icons/security.svg'
 import billing from '../../assets/icons/billing.svg'
 import logout from '../../assets/icons/logout.svg'
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
 
 const ProfileDropdown = () => {
+    const { userData } = useContext(AuthContext)
     const navigate = useNavigate()
     const handleLogout = () => {
         localStorage.removeItem('HeyLinkToken')
@@ -16,8 +18,9 @@ const ProfileDropdown = () => {
         <div class="absolute right-0 z-10 mt-2 w-60 rounded-md bg-gray-50 shadow shadow-gray-400">
             <div className='p-3'>
                 <div className='flex flex-col items-center gap-0 py-4'>
-                    <span className='text-center text-gray-600 text-[16px] font-bold'>robiulalam76</span>
-                    <span className='text-center text-gray-600 text-sm '>robiulalam@gmail.com</span>
+                    <span className='text-center text-gray-600 text-[16px] font-bold'>
+                        {userData?.username && userData?.username}</span>
+                    <span className='text-center text-gray-600 text-sm '>{userData?.email && userData?.email}</span>
                 </div>
                 <hr className='mb-2 border-gray-400' />
                 <div className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>

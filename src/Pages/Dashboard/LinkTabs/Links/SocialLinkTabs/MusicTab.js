@@ -25,7 +25,7 @@ const MusicTab = () => {
             userInfo: userData,
         };
 
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/music`, {
+        fetch(`http://localhost:8000/app/v1/links/music`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -80,7 +80,7 @@ const MusicTab = () => {
                     :
                     <>
                         {
-                            data.length > 0 ? data.map(url => <MusicDesignCustomize url={url} />)
+                            data?.length > 0 ? data?.map(url => <MusicDesignCustomize url={url} />)
                                 :
                                 <div className='flex justify-center items-center py-8'>
                                     <img src={uparrow} alt="" />

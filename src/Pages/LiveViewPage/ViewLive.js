@@ -5,18 +5,20 @@ import avatar from '../../assets/avatars/user-avatar.png'
 import useFetch from "../../Hoock/Hoock";
 import PageLoader from "../../components/loaders/PageLoader";
 import { AuthContext } from "../../ContextAPI/AuthProvider/AuthProvider";
+import { useLocation } from "react-router-dom";
 const ViewLive = () => {
-    const { userData } = useContext(AuthContext)
+    const location = useLocation()
+    const [data, setData] = useState([])
+    const { userData, commonData, socialData, galleryData, menuData, locationData, musicData } = data
 
-    const linksData = useFetch("links/common");
-    const socialData = useFetch("links/social");
-    const galleryData = useFetch("links/gallery");
-    const menuData = useFetch("links/menu");
-    // const cryptoData = useFetch("links/crypto");
-    const locationsData = useFetch("links/location");
-    const musicData = useFetch("links/music");
-    // const commerceData = useFetch("links/commerce");
-    // const appsData = useFetch("links/apps");
+    useEffect(() => {
+        const name = location.pathname.slice(1, location?.pathname?.length)
+        fetch(`http://localhost:8000/${name}`)
+            .then((res) => res.json())
+            .then((data) => {
+                setData(data.data)
+            });
+    }, []);
 
     const [openLocationData, setOpenLocationData] = useState(false)
     const [openMenuData, setOpenMenuData] = useState(false)
@@ -32,13 +34,11 @@ const ViewLive = () => {
         return buff?.toString("base64");
     };
 
-    const { username } = userData;
-
     return (
         <section className="w-full min-h-screen bg-[#ffc31b]">
 
 
-            {linksData.length === 0 ? <PageLoader />
+            {data?.length === 0 ? <PageLoader />
                 :
                 <div className="max-w-[880px] mx-auto">
                     <div
@@ -49,15 +49,15 @@ const ViewLive = () => {
                                 src={userData?.photoURL ? userData?.image : avatar}
                                 alt=""
                             />
-                            <h2 className="font-bold text-2xl mt-2 text-center">{username}</h2>
+                            <h2 className="font-bold text-2xl mt-2 text-center">{userData?.username}</h2>
                         </div>
 
                         <div className="grid grid-cols-1 gap-4 mx-auto w-full px-2 mt-4 pb-4">
 
                             {/* ---------------Link tab data--------------- */}
-                            {linksData.length > 0 && (
+                            {commonData?.length > 0 && (
                                 <div className="grid grid-cols-1 gap-4 w-full">
-                                    {linksData.map((item, index) => <>
+                                    {commonData?.map((item, index) => <>
                                         {
                                             item?.show === 'true' && <div className={`flex justify-between items-center border-2 border-white w-full h-16 px-3 bg-purple-200`}>
                                                 <a
@@ -78,9 +78,9 @@ const ViewLive = () => {
 
 
                             {/* ---------------social tab data--------------- */}
-                            {socialData.length > 0 && (
+                            {socialData?.length > 0 && (
                                 <div className="flex justify-center items-center flex-wrap gap-4 w-full">
-                                    {socialData.map((item, index) => (
+                                    {socialData?.map((item, index) => (
                                         <>
                                             {
                                                 item?.bottom === 'icon' ?
@@ -107,9 +107,9 @@ const ViewLive = () => {
                             )}
 
                             {/* ---------------Gallery tab data--------------- */}
-                            {galleryData.length > 0 && (
+                            {galleryData?.length > 0 && (
                                 <div className="grid grid-cols-1 gap-4 w-full">
-                                    {galleryData.map((item, index) => (
+                                    {galleryData?.map((item, index) => (
                                         //   console.log("item number: " + index + bufferToImage(item))
                                         <img
                                             key={index}
@@ -122,9 +122,9 @@ const ViewLive = () => {
                             )}
 
                             {/* ---------------Music tab data--------------- */}
-                            {musicData.length > 0 && (
+                            {musicData?.length > 0 && (
                                 <div className="grid grid-cols-1 gap-4 w-full">
-                                    {musicData.map((music, index) => <>
+                                    {musicData?.map((music, index) => <>
                                         {
                                             music?.show === 'true' && <div
                                                 className="w-full h-20 p-2 flex justify-between items-center gap-2 border border-white bg-rose-500">
@@ -143,14 +143,14 @@ const ViewLive = () => {
 
 
                             {/* ---------------Location tab data--------------- */}
-                            {locationsData.length > 0 && (
+                            {locationData?.length > 0 && (
                                 <div className="grid grid-cols-1 gap-4 w-full">
-                                    {locationsData.map((location, index) => <>
+                                    {locationData?.map((location, index) => <>
                                         {
                                             location?.show === 'true' && <div className="w-full min-h-16 bg-purple-300 border-white border">
                                                 <div onClick={() => setOpenLocationData(!openLocationData)}
                                                     className="w-full h-16 flex justify-start items-center px-3">
-                                                    <h1 className="w-full">{location?.link.slice(0, 40)}</h1>
+                                                    <h1 className="w-full">{location?.name.slice(0, 40)}</h1>
                                                 </div>
                                                 {
                                                     openLocationData && <>
@@ -159,7 +159,9 @@ const ViewLive = () => {
                                                                 <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d28881.17424342704!2d55.28268127919007!3d25.19827208970151!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f682829c85c07%3A0xa5eda9fb3c93b69d!2sThe%20Dubai%20Mall!5e0!3m2!1sen!2sbd!4v1677291607353!5m2!1sen!2sbd" className="w-full h-full" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                                                             </div>
                                                             <button className="w-full h-14 flex justify-center items-center bg-purple-600 px-3 rounded-md">
-                                                                <a target='_blank' href="" className="text-white font-semibold">{location?.link.slice(0, 40)}</a>
+                                                                <a target='_blank' href="" className="text-white font-semibold">
+                                                                    {location?.markersOnMap ? location?.markersOnMap?.slice(0, 40) : location?.name?.slice(0, 40)}
+                                                                </a>
                                                             </button>
                                                         </div>
                                                     </>
@@ -171,29 +173,31 @@ const ViewLive = () => {
                             )}
 
                             {
-                                menuData.length > 0 && (
+                                menuData?.length > 0 && (
                                     <div className="w-full grid grid-cols-1 gap-4">
                                         {
-                                            menuData.map((menu, i) => (
-                                                <div className="w-full min-h-12 bg-purple-300 border-white border">
-                                                    <div onClick={() => setOpenMenuData(!openMenuData)}
-                                                        className="w-full h-16 flex justify-start items-center px-3">
-                                                        <h1 className="w-full">{menu?.name.slice(0, 40)}</h1>
+                                            menuData?.map((menu, i) => <>
+                                                {
+                                                    menu?.show === 'true' && <div className="w-full min-h-12 bg-purple-300 border-white border">
+                                                        <div onClick={() => setOpenMenuData(!openMenuData)}
+                                                            className="w-full h-16 flex justify-start items-center px-3">
+                                                            <h1 className="w-full">{menu?.name.slice(0, 40)}</h1>
+                                                        </div>
+                                                        {
+                                                            openMenuData && <>
+                                                                {
+                                                                    menu?.item.map((itemData, i) => (
+                                                                        <div className="w-full min-h-16 flex flex-col justify-start items-start gap-3 bg-white px-3 py-2">
+                                                                            <h1>{itemData?.itemText}</h1>
+                                                                            <h1 className="text-black font-semibold">{itemData?.ItemPrice} {menu?.currency}</h1>
+                                                                        </div>
+                                                                    ))
+                                                                }
+                                                            </>
+                                                        }
                                                     </div>
-                                                    {
-                                                        openMenuData && <>
-                                                            {
-                                                                menu?.item.map((itemData, i) => (
-                                                                    <div className="w-full min-h-16 flex flex-col justify-start items-start gap-3 bg-white px-3 py-2">
-                                                                        <h1>{itemData?.itemText}</h1>
-                                                                        <h1 className="text-black font-semibold">{itemData?.ItemPrice} {menu?.currency}</h1>
-                                                                    </div>
-                                                                ))
-                                                            }
-                                                        </>
-                                                    }
-                                                </div>
-                                            ))
+                                                }
+                                            </>)
                                         }
                                     </div>
                                 )
