@@ -31,7 +31,7 @@ const LinksTab = () => {
       userInfo: userData,
     };
 
-    fetch(`http://localhost:8000/app/v1/links/common`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

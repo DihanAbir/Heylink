@@ -20,7 +20,7 @@ const GalleryTab = () => {
             title: 'My Gallery',
             userInfo: userData
         }
-        fetch(`http://localhost:8000/app/v1/links/gallery`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/links/gallery`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

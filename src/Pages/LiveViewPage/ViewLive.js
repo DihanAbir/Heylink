@@ -1,24 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Buffer } from "buffer";
 import arrowRight from '../../assets/icons/right-arrow.svg'
 import avatar from '../../assets/avatars/user-avatar.png'
-import useFetch from "../../Hoock/Hoock";
 import PageLoader from "../../components/loaders/PageLoader";
-import { AuthContext } from "../../ContextAPI/AuthProvider/AuthProvider";
 import { useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
 const ViewLive = () => {
+    const { register, handleSubmit, formState: { errors }, } = useForm();
     const location = useLocation()
     const [data, setData] = useState([])
-    const { userData, commonData, socialData, galleryData, menuData, locationData, musicData } = data
+    const { userData, commonData, socialData, galleryData, menuData, locationData, musicData, messageData } = data;
+
+    console.log(messageData);
 
     useEffect(() => {
         const name = location.pathname.slice(1, location?.pathname?.length)
-        fetch(`http://localhost:8000/${name}`)
+        fetch(`https://hey.ahmadalanazi.com/${name}`)
             .then((res) => res.json())
             .then((data) => {
                 setData(data.data)
             });
     }, []);
+
+    const handleMessageSend = (data) => {
+        console.log(data);
+    }
 
     const [openLocationData, setOpenLocationData] = useState(false)
     const [openMenuData, setOpenMenuData] = useState(false)
@@ -86,6 +92,7 @@ const ViewLive = () => {
                                                 item?.bottom === 'icon' ?
                                                     <a
                                                         key={index}
+                                                        target='_blank'
                                                         href={`https://${item?.name}/${item?.link}`}
                                                         className="flex justify-center items-center"
                                                     >
@@ -94,6 +101,7 @@ const ViewLive = () => {
                                                     :
                                                     <a
                                                         key={index}
+                                                        target='_blank'
                                                         href={`https://${item?.name}/${item?.link}`}
                                                         className="h-16 w-full bg-purple-200 border-white border flex justify-center items-center gap-2"
                                                     >
@@ -201,6 +209,83 @@ const ViewLive = () => {
                                         }
                                     </div>
                                 )
+                            }
+
+
+                            {
+                                messageData[0] && messageData[0]?.turnOnOffMessage === 'true' && <div className="w-full h-fit bg-purple-300 p-3" >
+                                    <form onSubmit={handleSubmit(handleMessageSend)} className="">
+                                        <div className="mb-4">
+                                            <input
+                                                {...register("messageText", { required: 'Text is Required', maxLength: { value: 510, message: '510 characters remaining' } })}
+                                                className="w-full h-14 bg-transparent border-rose-600 border-b focus:outline-none focus:text-rose-600 focus:placeholder-rose-600 placeholder-gray-100 text-xl"
+                                                name="messageText"
+                                                placeholder={messageData[0]?.messageText ? messageData[0]?.messageText : 'Leave your message here...'} />
+                                            {errors.messageText && (
+                                                <div className="bg-red-600 h-6 w-full flex justify-end items-center">
+                                                    <p className="text-white text-sm py-3 px-2">
+                                                        {errors.messageText.message}
+                                                    </p>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {
+                                            messageData[0]?.nameFieldChacked === 'true' && <div className="mb-4">
+                                                <input
+                                                    {...register("name", messageData[0]?.turnOnName === 'true' && { required: 'Name is Required', maxLength: { value: 16, message: '16 characters remaining' } })}
+                                                    className="w-full h-14 bg-transparent border-rose-600 border-b focus:outline-none focus:text-rose-600 focus:placeholder-rose-600 placeholder-gray-100 text-xl"
+                                                    name="name"
+                                                    placeholder={`${messageData[0]?.namePlaceholder ? messageData[0]?.namePlaceholder : 'Enter Your Name'} ${messageData[0]?.turnOnName === 'true' ? '' : '(Optional)'}`} />
+                                                {errors.name && (
+                                                    <div className="bg-red-600 h-6 w-full flex justify-end items-center">
+                                                        <p className="text-white text-sm py-3 px-2">
+                                                            {errors.name.message}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        }
+                                        {
+                                            messageData[0]?.emailFieldChacked === 'true' && <div className="mb-4">
+                                                <input
+                                                    {...register("email", messageData[0]?.turnOnEmail === 'true' && { required: 'Email is Required', maxLength: { value: 40, message: '40 characters remaining' } })}
+                                                    className="w-full h-14 bg-transparent border-rose-600 border-b focus:outline-none focus:text-rose-600 focus:placeholder-rose-600 placeholder-gray-100 text-xl"
+                                                    name="email"
+                                                    placeholder={`${messageData[0]?.emailPlaceholder ? messageData[0]?.emailPlaceholder : 'Your Email Address'} ${messageData[0]?.turnOnEmail === 'true' ? '' : '(Optional)'}`} />
+                                                {errors.email && (
+                                                    <div className="bg-red-600 h-6 w-full flex justify-end items-center">
+                                                        <p className="text-white text-sm py-3 px-2">
+                                                            {errors.email.message}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        }
+                                        {
+                                            messageData[0]?.phoneNumberFieldChacked === 'true' && <div className="mb-4">
+                                                <input
+                                                    {...register("phoneNumber", messageData[0]?.turnOnPhoneNumber === 'true' && { required: 'Phone Number is Required', maxLength: { value: 15, message: '15 characters remaining' } })}
+                                                    className="w-full h-14 bg-transparent border-rose-600 border-b focus:outline-none focus:text-rose-600 focus:placeholder-rose-600 placeholder-gray-100 text-xl"
+                                                    name="phoneNumber"
+                                                    placeholder={`${messageData[0]?.phoneNumberPlaceholder ? messageData[0]?.phoneNumberPlaceholder : 'Your Phone Number'} ${messageData[0]?.turnOnPhoneNumber === 'true' ? '' : '(Optional)'}`} />
+                                                {errors.phoneNumber && (
+                                                    <div className="bg-red-600 h-6 w-full flex justify-end items-center">
+                                                        <p className="text-white text-sm py-3 px-2">
+                                                            {errors.phoneNumber.message}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        }
+
+
+                                        <button className="w-full h-12 bg-purple-400 flex justify-center items-center gap-3" type="submit">
+                                            <h1 className="text-rose-600 text-xl font-semibold">Send Message</h1>
+                                            <svg className="w-6" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M19.5 9.3L1.2.1C1.1 0 .9 0 .8 0 .6 0 .5.1.3.2.2.3.1.4.1.6 0 .7 0 .9.1 1l2.5 9-2.5 9v.4c0 .1.1.2.2.3.1.1.2.2.3.2 0 .1.1.1.3.1.1 0 .3 0 .4-.1l18.3-9.2c.1-.1.3-.2.3-.3s.1-.2.1-.4 0-.3-.1-.4c-.1-.2-.2-.3-.4-.3zM2.2 17.6L4 10.8l5-.8-5-.8-1.8-6.8L17.3 10 2.2 17.6z"></path></svg>
+                                        </button>
+                                    </form>
+                                </div>
                             }
 
                         </div>

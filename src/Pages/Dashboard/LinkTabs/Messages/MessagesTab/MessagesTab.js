@@ -13,7 +13,7 @@ const MessagesTab = () => {
     const [messageData, setMessageData] = useState(null)
     console.log(messageData);
     useEffect(() => {
-        fetch(`http://localhost:8000/app/v1/message`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
@@ -29,7 +29,7 @@ const MessagesTab = () => {
         }
         else if (!messageData) {
             console.log('nai data');
-            fetch(`http://localhost:8000/app/v1/message`, {
+            fetch(`https://hey.ahmadalanazi.com/app/v1/message`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

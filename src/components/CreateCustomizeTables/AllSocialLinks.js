@@ -19,7 +19,7 @@ const AllSocialLinks = ({ socialLink }) => {
 
   // handle update social link name
   const handleUpdateSocialLinkName = () => {
-    fetch(`http://localhost:8000/app/v1/links/social/${socialLink?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -45,7 +45,7 @@ const AllSocialLinks = ({ socialLink }) => {
   }
 
   const handleButtonORIcon = (input) => {
-    fetch(`http://localhost:8000/app/v1/links/social/${socialLink?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

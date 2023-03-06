@@ -54,7 +54,7 @@ const SocialTab = () => {
       userInfo: userData,
     };
 
-    fetch(`http://localhost:8000/app/v1/links/social`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

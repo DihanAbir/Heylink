@@ -2,42 +2,25 @@ import React, { useContext, useState } from 'react';
 import ProButton from '../../../../../components/Buttons/ProButton';
 import SmallIcon from '../../../../../components/Buttons/SmallIcon';
 import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
-import DisabledSwitch from '../../../../../components/ToggleSwitch/DisabledSwitch';
 import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwitch';
 import edit from "../../../../../assets/icons/link-customize-icons/edit.svg";
 import blueRight from '../../../../../assets/icons/blue-right.png'
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmailPlaceholderText, setMessageText, setNamePlaceholderText, setPhoneNumbearPlaceholderText, setPhoneNumberPlaceholderText, setSuccessMessageText } from '../../../../../Slices/messageSlice';
+import { setEmailPlaceholderText, setMessageText, setNamePlaceholderText, setPhoneNumberPlaceholderText, setSuccessMessageText } from '../../../../../Slices/messageSlice';
 import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../../../../ContextAPI/ServiceProvider/ServiceProvider';
 import ChackedSwitch from '../../../../../components/ToggleSwitch/ChackedSwitch';
 
 const ViewMessages = ({ message }) => {
-    const { messageText,
+    const {
+        messageText,
         successMessageText,
         namePlaceholderText,
         emailPlaceholderText,
         phoneNumberPlaceholderText,
     } = useSelector((state) => state.messageSlice)
     const dispatch = useDispatch()
-    const { handleDefaultSwitch, loader } = useContext(ServiceContext)
-
-    console.log(messageText);
-
-    // your name---------
-    const [nameChecked, setNameChecked] = useState(false)
-    const [nameToggle, setNameToggle] = useState(true)
-    const [yourName, setYourName] = useState('')
-
-    // your email-----------
-    const [emailChecked, setEmailChecked] = useState(false)
-    const [emailToggle, setEmailToggle] = useState(false)
-    const [emailAddress, setEmailAddress] = useState('')
-
-    // your phone number-----------
-    const [phoneNumberChecked, setPhoneNumberChecked] = useState(false)
-    const [phoneNumberToggle, setPhoneNumberToggle] = useState(false)
-    const [phoneNumber, setPhoneNumber] = useState('')
+    const { handleDefaultSwitch } = useContext(ServiceContext)
 
     // custom field 1-----------
     const [customFieldChecked1, setCustomFieldChecked1] = useState(false)
@@ -51,12 +34,8 @@ const ViewMessages = ({ message }) => {
     const [customFieldChecked3, setCustomFieldChecked3] = useState(false)
     const [customField3, setCustomField3] = useState('')
 
-    const handleInputFieldText = (inputName) => {
-
-    }
-
     const handleUpdateMessageText = () => {
-        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -73,7 +52,7 @@ const ViewMessages = ({ message }) => {
 
 
     const handleUpdateSuccessMessageText = () => {
-        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -101,7 +80,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleNameFieldChacked = (input) => {
-        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -116,7 +95,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleEmailFieldChacked = (input) => {
-        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -130,7 +109,7 @@ const ViewMessages = ({ message }) => {
             });
     }
     const handlePhoneNumberFieldChacked = (input) => {
-        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -145,7 +124,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleUpdateNamePlaceholder = () => {
-        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -160,7 +139,7 @@ const ViewMessages = ({ message }) => {
             });
     }
     const handleUpdateEmailPlaceholder = () => {
-        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -175,7 +154,7 @@ const ViewMessages = ({ message }) => {
             });
     }
     const handleUpdatePhoneNumberPlaceholder = () => {
-        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
