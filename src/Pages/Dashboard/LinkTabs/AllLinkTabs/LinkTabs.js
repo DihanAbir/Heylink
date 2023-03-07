@@ -63,10 +63,10 @@ const LinkTabs = () => {
                         {
                             viewTabsDropdown && <div class="absolute right-0 z-10 mt-2 w-60 rounded-md bg-gray-50 shadow">
                                 <div className='p-3'>
-                                    <Link to='/dashboard/analytics' onClick={() => setViewTab(5)}
+                                    {/* <Link to='/dashboard/analytics' onClick={() => setViewTab(5)}
                                         className='h-8 flex items-center justify-start hover:bg-gray-200 rounded-md text-gray-500 p-2 mb-2'>
                                         <button className=''>Analytics</button>
-                                    </Link>
+                                    </Link> */}
 
                                     {/* to='/dashboard/earn' onClick={() => setViewTab(6)} */}
                                     <div id='earnTooltip'
@@ -112,11 +112,11 @@ const LinkTabs = () => {
                     {/* ------- More button clcik to dropdown show--------- end */}
 
                     {/* -------only md + device show--------- start */}
-                    <Link to='/dashboard/analytics' onClick={() => setViewTab(5)}
+                    {/* <Link to='/dashboard/analytics' onClick={() => setViewTab(5)}
                         className={`hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
                     ${pathname === '/dashboard/analytics' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className=''>Analytics</button>
-                    </Link>
+                    </Link> */}
 
                     {/* to='/dashboard/earn' onClick={() => setViewTab(6)} */}
                     <div id='earnTooltip'

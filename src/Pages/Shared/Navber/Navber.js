@@ -1,17 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DropdownCountries from '../../../components/dropdowns/DropdownCountries';
 import logo from '../../../assets/logo/logo.png'
 import ServicesDropdown from '../../../components/dropdowns/ServicesDropdown';
+import { AuthContext } from '../../../ContextAPI/AuthProvider/AuthProvider';
 
 const Navber = () => {
+    const { userData } = useContext(AuthContext)
     const [open, setOpen] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [viewServices, setViewServices] = useState(false)
 
     let dropdownRef = useRef();
-
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
@@ -54,9 +55,11 @@ const Navber = () => {
 
                 {/* -----------language dropdown----------- */}
                 <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
-                    <Link to='/dashboard'>
-                        <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Dashboard</h1>
-                    </Link>
+                    {
+                        userData?._id && <Link to='/dashboard'>
+                            <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Dashboard</h1>
+                        </Link>
+                    }
 
                     <div onClick={() => setDropdown(!dropdown)} className='relative inline-block'>
                         <img className='w-6 md:w-8' src="https://cdn-f.heylink.me/static/img/lang-flags/en.svg" alt="" />
@@ -66,17 +69,21 @@ const Navber = () => {
                     </div>
 
                     {/* only small device show */}
-                    <Link to='/signup' className='block lg:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'>
-                        <button>Start for free</button>
-                    </Link>
+                    {
+                        !userData?._id && <Link to='/signup' className='block lg:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'>
+                            <button>Start for free</button>
+                        </Link>
+                    }
 
                     {/* medium + device show */}
-                    <Link to='/signup' className='hidden lg:block border-2 border-white hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
-                        <div className='flex justify-between items-center gap-4 font-semibold hover:text-sky-500'>
-                            <svg className='hover:fill-sky-600' xmlns="https://www.w3.org/2000/svg" width="8" height="10"><path d="M6.745 5.582L2.403 9.8a.838.838 0 01-1.083.053A.838.838 0 01.237 9.8a.772.772 0 010-1.123L4 5.02.237 1.363a.772.772 0 010-1.123A.84.84 0 011.32.187.84.84 0 012.403.24l4.342 4.218a.773.773 0 010 1.124z" fill="#FFF"></path></svg>
-                            <span> Start for free</span>
-                        </div>
-                    </Link>
+                    {
+                        !userData?._id && <Link to='/signup' className='hidden lg:block border-2 border-white hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
+                            <div className='flex justify-between items-center gap-4 font-semibold hover:text-sky-500'>
+                                <svg className='hover:fill-sky-600' xmlns="https://www.w3.org/2000/svg" width="8" height="10"><path d="M6.745 5.582L2.403 9.8a.838.838 0 01-1.083.053A.838.838 0 01.237 9.8a.772.772 0 010-1.123L4 5.02.237 1.363a.772.772 0 010-1.123A.84.84 0 011.32.187.84.84 0 012.403.24l4.342 4.218a.773.773 0 010 1.124z" fill="#FFF"></path></svg>
+                                <span> Start for free</span>
+                            </div>
+                        </Link>
+                    }
 
                     {/* -----------toggler button----------- */}
                     <div onClick={() => setOpen(!open)} className="w-10 lg:hidden text-white">
@@ -103,9 +110,11 @@ const Navber = () => {
             <hr className='border-gray-400 mt-6 md:hidden' />
             {
                 open && <div onClick={() => setOpen(false)} className={`bg-[#393AA7] min-h-screen flex flex-col gap-4 items-center py-6`}>
-                    <Link to='/dashboard' className='bg-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <h1>Dashboard</h1>
-                    </Link>
+                    {
+                        userData?._id && <Link to='/dashboard' className='bg-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
+                            <h1>Dashboard</h1>
+                        </Link>
+                    }
                     <Link to='/templates' className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
                         <h1>Free Templates</h1>
                     </Link>

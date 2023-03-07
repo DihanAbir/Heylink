@@ -46,7 +46,7 @@ const Appearance = () => {
             </div>
             <div className='mt-6'>
                 <PlacementManager />
-                <CustomeTheme />
+                {/* <CustomeTheme /> */}
             </div>
         </section>
     );

@@ -58,8 +58,7 @@ const SidebarPreviewMain = () => {
             <>
               <div className="flex flex-col justify-center items-center mt-6">
                 <img
-                  className="rounded-full w-20 border"
-                  // src={userData?.photoURL ? userData?.image : avatar}
+                  className="rounded-full w-20 h-20"
                   src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
                   alt="prifle image"
                 />

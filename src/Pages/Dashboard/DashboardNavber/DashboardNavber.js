@@ -10,11 +10,15 @@ import avatar from '../../../assets/avatars/user-avatar.png'
 import ProfileDropdown from '../../../components/dropdowns/ProfileDropdown';
 import Notification from '../../../components/dropdowns/Notification';
 import { AuthContext } from '../../../ContextAPI/AuthProvider/AuthProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { setShowLanguage } from '../../../Slices/navberSlice';
 
 const DashboardNavber = () => {
+    const { selectedLanguage, showLanguage } = useSelector((state) => state.navberSlice)
+    const dispatch = useDispatch()
+
     const { userData } = useContext(AuthContext)
     const [viewProfile, setViewProfile] = useState(false)
-    const [dropdown, setDropdown] = useState(false)
     const [viewBreadCramp, setViewBreadCramp] = useState(false)
     const [viewNotification, setViewNotification] = useState(false)
 
@@ -31,7 +35,6 @@ const DashboardNavber = () => {
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
-                setDropdown(false);
                 setViewBreadCramp(false);
                 setViewNotification(false);
             }
@@ -48,17 +51,17 @@ const DashboardNavber = () => {
             <div className='flex justify-between lg:gap-8 items-center text-[18px]'>
                 <Link to='/' className='flex items-center gap-2'>
                     <img className='w-6 inline' src={logo} alt="" />
-                    <h1 className='inline-block font-bold md:text-2xl text-blue-800 duration-300 text-md'>HeyLink.me</h1>
+                    <h1 className='inline-block font-bold md:text-2xl text-blue-800 duration-300 text-md'>HeyLink</h1>
                 </Link>
 
                 <div className='hidden lg:block flex-grow lg:flex justify-between items-center bg-gray-100 px-6 rounded-[50px] h-12 w-80'>
                     <div className='flex items-center'>
                         <h1 className='text-gray-500 text-[16px]'>heylink/</h1>
-                        <a className='underline text-blue-900 text-[16px]'
+                        <Link className='underline text-blue-900 text-[16px]'
                             target='_blank'
-                            href={`http://localhost:3000/${userData?.username}`}>
+                            to={`/${userData?.username}`}>
                             {userData?.username && userData?.username}
-                        </a>
+                        </Link>
                     </div>
 
                     <div className='relative'>
@@ -94,16 +97,16 @@ const DashboardNavber = () => {
                     <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
 
                         <div className='relative inline-block'>
-                            <img onClick={() => setDropdown(!dropdown)} className='w-8' src="https://cdn-f.heylink.me/static/img/lang-flags/en.svg" alt="" />
+                            <img onClick={() => dispatch(setShowLanguage(!showLanguage))} className='w-8' src={selectedLanguage.img} alt="" />
                             {
-                                dropdown && <DropdownCountries />
+                                showLanguage && <DropdownCountries />
                             }
                         </div>
                     </div>
                     {/* -----------language dropdown----------- */}
 
                     <div className='relative'>
-                        <img onClick={() => setViewProfile(!viewProfile)} className='rounded-full w-12'
+                        <img onClick={() => setViewProfile(!viewProfile)} className='rounded-full w-12 h-12'
                             src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`} alt="" />
                         {
                             viewProfile && <ProfileDropdown setViewProfile={setViewProfile} />

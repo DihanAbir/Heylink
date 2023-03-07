@@ -10,7 +10,7 @@ import { setOpenShortcut } from '../../../../../Slices/appearanceSlice';
 const Shortcut = () => {
     const { openShortcut } = useSelector((state) => state.appearanceSlice)
     const dispatch = useDispatch()
-    const { userData } = useContext(AuthContext)
+    const { userData, setLoading } = useContext(AuthContext)
 
     const handleShortcut = (input) => {
         fetch(`https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`, {
@@ -25,7 +25,7 @@ const Shortcut = () => {
             .then((data) => {
                 if (data?.data.acknowledged) {
                     toast.success('Shortcut Switch Updated')
-
+                    setLoading(true)
                 }
             });
     }

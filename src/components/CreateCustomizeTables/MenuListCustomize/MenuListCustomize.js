@@ -195,46 +195,46 @@ const MenuListCustomize = ({ menu }) => {
 
                         <div>
                             <div className='flex justify-between items-center mt-4'>
-                                <div>
+                                {/* <div>
                                     <div className='flex items-center gap-4'>
                                         <h1 className='text-gray-900 font-semibold'>Spotlight</h1>
                                         <ProButton />
                                     </div>
                                     <p className='text-gray-500 text-sm'>Link automatically expands when visitors arrive on your HeyLink.me page</p>
-                                </div>
+                                </div> */}
                                 {/* -----------toggler switch start----------- */}
 
-                                <div className='relative'>
+                                {/* <div className='relative'>
                                     <div onClick={() => dispatch(setProModal1(proModal1 ? false : true))}>
                                         <ProToggleSwitch />
                                     </div>
                                     {
                                         proModal1 && <ProModal />
                                     }
-                                </div>
+                                </div> */}
 
                                 {/* -----------toggler switch start----------- */}
                             </div>
 
                             <div className='flex justify-between items-center mt-4'>
-                                <div>
+                                {/* <div>
                                     <div className='flex items-center gap-4'>
                                         <h1 className='text-gray-900 font-semibold'>Add Link / URL</h1>
                                         <ProButton />
                                     </div>
                                     <p className='text-gray-500 text-sm'>Link automatically expands when visitors arrive on your HeyLink.me page</p>
-                                </div>
+                                </div> */}
                                 {/* -----------toggler switch start----------- */}
 
 
-                                <div className='relative'>
+                                {/* <div className='relative'>
                                     <div onClick={() => dispatch(setProModal2(proModal2 ? false : true))}>
                                         <ProToggleSwitch />
                                     </div>
                                     {
                                         proModal2 && <ProModal />
                                     }
-                                </div>
+                                </div> */}
 
                                 {/* -----------toggler switch start----------- */}
                             </div>

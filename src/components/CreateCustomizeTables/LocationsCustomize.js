@@ -208,61 +208,61 @@ const LocationsCustomize = ({ location }) => {
                             {openInputChange2 === location?._id && <img
                                 onClick={() => dispatch(setOpenInputChange2(''))} className='w-3' src={edit} alt="" />}
                         </div>
-                        <div className='flex items-center gap-4 mt-4'>
+                        {/* <div className='flex items-center gap-4 mt-4'>
                             <img src={add} alt="" />
                             <Link to='' className='text-blue-600 underline'>Add another marker</Link>
                             <ProButton />
-                        </div>
-                        <div className='flex justify-between items-center mt-4'>
-                            <div>
-                                <div className='flex items-center gap-4'>
-                                    <h1 className='text-gray-900 font-semibold'>Spotlight</h1>
-                                    <ProButton />
-                                </div>
-                                <p className='text-gray-500 text-sm'>Link automatically expands when visitors arrive on your HeyLink.me page</p>
-                            </div>
-                            {/* -----------toggler switch start----------- */}
-                            <ProToggleSwitch />
-                            {/* -----------toggler switch start----------- */}
-                        </div>
+                        </div> */}
+                        {/* <div className='flex justify-between items-center mt-4'> */}
+                        {/* <div> */}
+                        {/* <div className='flex items-center gap-4'> */}
+                        {/* <h1 className='text-gray-900 font-semibold'>Spotlight</h1> */}
+                        {/* <ProButton /> */}
+                        {/* </div> */}
+                        {/* <p className='text-gray-500 text-sm'>Link automatically expands when visitors arrive on your HeyLink.me page</p> */}
+                        {/* </div> */}
+                        {/* -----------toggler switch start----------- */}
+                        {/* <ProToggleSwitch /> */}
+                        {/* -----------toggler switch start----------- */}
+                        {/* </div> */}
 
-                        <div className='flex justify-between items-center mt-4'>
-                            <div className='flex items-center gap-4'>
-                                <h1 className='text-gray-900 font-semibold'>Map is Hidden</h1>
-                                <ProButton />
-                            </div>
-                            {/* -----------toggler switch start----------- */}
-                            <ProToggleSwitch />
-                            {/* -----------toggler switch start----------- */}
-                        </div>
+                        {/* <div className='flex justify-between items-center mt-4'> */}
+                        {/* <div className='flex items-center gap-4'> */}
+                        {/* <h1 className='text-gray-900 font-semibold'>Map is Hidden</h1> */}
+                        {/* <ProButton /> */}
+                        {/* </div> */}
+                        {/* -----------toggler switch start----------- */}
+                        {/* <ProToggleSwitch /> */}
+                        {/* -----------toggler switch start----------- */}
+                        {/* </div> */}
 
-                        <div className='flex justify-between items-center mt-4'>
-                            <div className='flex items-center gap-4'>
-                                <h1 className='text-gray-900 font-semibold'>Map is Locked</h1>
-                                <ProButton />
-                            </div>
-                            {/* -----------toggler switch start----------- */}
-                            <ProToggleSwitch />
-                            {/* -----------toggler switch start----------- */}
-                        </div>
+                        {/* <div className='flex justify-between items-center mt-4'> */}
+                        {/* <div className='flex items-center gap-4'> */}
+                        {/* <h1 className='text-gray-900 font-semibold'>Map is Locked</h1> */}
+                        {/* <ProButton /> */}
+                        {/* </div> */}
+                        {/* -----------toggler switch start----------- */}
+                        {/* <ProToggleSwitch /> */}
+                        {/* -----------toggler switch start----------- */}
+                        {/* </div> */}
 
                         <div className='flex flex-col md:flex-row md:items-center gap-8 mt-4'>
-                            <div>
+                            {/* <div>
                                 <div className='flex items-center gap-4'>
                                     <h1 className='text-gray-900 font-semibold'>Marker Button Color</h1>
                                     <ProButton />
                                 </div>
                                 <p className='text-gray-500 text-sm'>Choose the colour visitors will see for the location buttons on your page</p>
                                 <div className='h-10 w-44 mt-2 bg-orange-600 rounded-md'></div>
-                            </div>
-                            <div>
+                            </div> */}
+                            {/* <div>
                                 <div className='flex items-center gap-4'>
                                     <h1 className='text-gray-900 font-semibold'>Marker Font Color</h1>
                                     <ProButton />
                                 </div>
                                 <p className='text-gray-500 text-sm'>You can change the font of the location button here</p>
                                 <div className='h-10 w-44 mt-2 border border-gray-300 rounded-md'></div>
-                            </div>
+                            </div> */}
 
                         </div>
                     </div>

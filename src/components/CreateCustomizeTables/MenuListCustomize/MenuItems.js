@@ -85,7 +85,7 @@ const MenuItems = ({ menuId, item }) => {
                         </div>
                     </div>
 
-                    {uploadImagePermit ? <div className='relative cursor-pointer w-full h-32 border border-dashed border-gray-400 rounded-xl p-4'>
+                    {/* {uploadImagePermit ? <div className='relative cursor-pointer w-full h-32 border border-dashed border-gray-400 rounded-xl p-4'>
                         <div class="text-gray-500">Drop your images here, or just <span className='text-blue-600'>Browse</span> your local storage</div>
                         <h1 className='text-blue-600 text-center'>+ Upload Image</h1>
                         <input className='absolute w-full h-full opacity-0 cursor-pointer' type="file" />
@@ -103,7 +103,7 @@ const MenuItems = ({ menuId, item }) => {
                                 proModal && <ProModal setCloseModal={setProModal} />
                             }
                         </div>
-                    }
+                    } */}
                 </div>
 
 

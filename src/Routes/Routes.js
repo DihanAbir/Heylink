@@ -61,10 +61,10 @@ const router = createBrowserRouter([
                             { path: '/dashboard/links/social', element: <SocialTab /> },
                             { path: '/dashboard/links/gallery', element: <GalleryTab /> },
                             { path: '/dashboard/links/menu', element: <MenuTab /> },
-                            { path: '/dashboard/links/crypto', element: <CryptoTab /> },
+                            // { path: '/dashboard/links/crypto', element: <CryptoTab /> },
                             { path: '/dashboard/links/locations', element: <LocationsTab /> },
                             { path: '/dashboard/links/music', element: <MusicTab /> },
-                            { path: '/dashboard/links/commerce', element: <CommerceTab /> },
+                            // { path: '/dashboard/links/commerce', element: <CommerceTab /> },
                             { path: '/dashboard/links/apps', element: <AppsTab /> },
                         ]
                     },

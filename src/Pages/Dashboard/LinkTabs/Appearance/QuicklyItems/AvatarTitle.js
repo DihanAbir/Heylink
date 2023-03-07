@@ -8,15 +8,14 @@ import ProButton from '../../../../../components/Buttons/ProButton';
 import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwitch';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
+import { Buffer } from "buffer";
 
 const AvatarTitle = () => {
-    const { userData } = useContext(AuthContext)
+    const { userData, setLoading } = useContext(AuthContext)
     const [open, setOpen] = useState(true)
     const [inputChange, setInputChange] = useState(false)
     const [newProfileTitle, setNewProfileTitle] = useState('')
     const [viewModal, setViewModal] = useState(false)
-    const token = localStorage.getItem("HeyLinkToken");
-    // console.log(user);
 
 
     const handleUpdate = () => {
@@ -35,6 +34,7 @@ const AvatarTitle = () => {
                     toast.success('Profile Title Updated')
                     setNewProfileTitle('')
                     setInputChange(false)
+                    setLoading(true)
                 }
             });
     }
@@ -56,9 +56,16 @@ const AvatarTitle = () => {
             .then((data) => {
                 if (data?.data.acknowledged) {
                     toast.success('Profile Image Updated')
+                    setLoading(true)
                 }
             });
     }
+
+    // image convarte buffer
+    const buff = Buffer.from(
+        userData?.image?.data?.data ? userData?.image?.data?.data : avatar
+    );
+    const base64 = buff?.toString("base64");
 
 
     let modalRef = useRef();
@@ -88,11 +95,12 @@ const AvatarTitle = () => {
                 open && <div className='p-2 md:p-4 border rounded-xl w-full h-full'>
                     <div className='flex items-center gap-4'>
                         <img className='w-16 h-16 rounded-full'
-                            src={userData?.photoURL ? userData?.image : avatar} alt="" />
+                            src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
+                            alt="prifle image" />
 
                         <button className='relative flex justify-center items-center cursor-pointer w-36 h-10 rounded-3xl text-white bg-blue-600'>
                             <h1 className='cursor-pointer'>Upload Avatar</h1>
-                            <input onChange={handleProfileImageUpdate} className='w-full h-full opacity-0 absolute cursor-pointer' type="file" name="image" id="" />
+                            <input onChange={handleProfileImageUpdate} className='w-full h-full opacity-0 absolute cursor-pointer z-20' type="file" name="image" id="" />
                         </button>
                     </div>
                     <div ref={modalRef} className='mt-6'>

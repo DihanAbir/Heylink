@@ -90,7 +90,7 @@ const Links = () => {
                     </Link>
 
 
-                    <Link to='/dashboard/links/crypto' onClick={() => setViewTab(5)}
+                    {/* <Link to='/dashboard/links/crypto' onClick={() => setViewTab(5)}
                         className={`flex flex-col items-center py-2 rounded-md w-20
                     ${viewTab === 5 && 'bg-blue-50'}`}>
                         <div
@@ -103,7 +103,7 @@ const Links = () => {
                             </svg>
                         </div>
                         <h1 className={`text-gray-600 pt-1 ${viewTab === 5 && 'text-blue-900'}`}>Crypto</h1>
-                    </Link>
+                    </Link> */}
 
 
 
@@ -140,7 +140,7 @@ const Links = () => {
                     </Link>
 
 
-                    <Link to='/dashboard/links/commerce' onClick={() => setViewTab(8)}
+                    {/* <Link to='/dashboard/links/commerce' onClick={() => setViewTab(8)}
                         className={`hidden md:block md:flex flex-col items-center py-2 rounded-md w-20
                     ${viewTab === 8 && 'bg-blue-50'}`}>
                         <div
@@ -152,7 +152,7 @@ const Links = () => {
                             </svg>
                         </div>
                         <h1 className={`text-gray-600 pt-1 ${viewTab === 8 && 'text-blue-900'}`}>Commerce</h1>
-                    </Link>
+                    </Link> */}
 
 
                     <Link to='/dashboard/links/apps' onClick={() => setViewTab(9)}

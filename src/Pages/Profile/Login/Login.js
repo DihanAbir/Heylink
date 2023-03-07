@@ -11,7 +11,6 @@ const Login = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const from = location.state?.from?.pathname || '/'
-  // console.log(token, "gsdg");
 
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
@@ -25,8 +24,8 @@ const Login = () => {
     })
       .then((res) => {
         console.log(res.data.data.token);
-        toast.success('User Login Successfully')
         localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
+        toast.success('User Login Successfully')
         navigate('/dashboard');
       });
   };

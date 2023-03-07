@@ -99,7 +99,7 @@ const LinksTab = () => {
 
       </form>
 
-      <div className="mt-8 cursor-pointer">
+      {/* <div className="mt-8 cursor-pointer">
         <div
           onClick={() => setOpenAdvancedLinkModal(!openAdvancedLinkModal)}
           className="w-72 h-12 hover:border-2 hover:border-white hover:shadow-md mx-auto hover:shadow-blue-300 bg-[#E7F8FF] rounded-3xl flex justify-center gap-6 items-center"
@@ -107,7 +107,7 @@ const LinksTab = () => {
           <h1 className="text-blue-500 font-bold">+ Advanced Links</h1>
           <img src={threeSocial} alt="" />
         </div>
-      </div>
+      </div> */}
 
       {render ? <PageLoader />
         :

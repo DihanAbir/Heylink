@@ -8,11 +8,14 @@ import locationSlice from "../Slices/locationSlice";
 import menuSlice from "../Slices/menuSlice";
 import messageSlice from "../Slices/messageSlice";
 import musicSlice from "../Slices/musicSlice";
+import navberSlice from "../Slices/navberSlice";
 import socialSlice from "../Slices/socialSlice";
 
 const rootReducer = combineReducers({
   getData: getDataReducer,
   controllerSlice: controllerSlice,
+  navberSlice: navberSlice,
+
   linksSlice: linksSlice,
   socialSlice: socialSlice,
   gallerySlice: gallerySlice,
