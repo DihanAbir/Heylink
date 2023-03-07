@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import rightArrow from '../../../../assets/icons/right-arrow.svg'
@@ -8,6 +8,8 @@ import rightArrow from '../../../../assets/icons/right-arrow.svg'
 const LinkTabs = () => {
     const [viewTab, setViewTab] = useState(1)
     const [viewTabsDropdown, setViewTabsDropdown] = useState(false)
+    const { pathname } = useLocation()
+    console.log(pathname);
 
     let dropdownRef = useRef();
     useEffect(() => {
@@ -25,29 +27,29 @@ const LinkTabs = () => {
         <section ref={dropdownRef}>
             <div className='max-w-[1440px] mx-auto'>
 
-                <div className='flex items-center md:flex-wrap gap-5 md:gap-10 px-4 md:px-12'>
-                    <Link to='/dashboard/' onClick={() => setViewTab(1)}
+                <div className='flex items-center md:flex-wrap gap-4 md:gap-8 px-5 md:px-12'>
+                    <Link to='/dashboard'
                         className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 1 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname !== '/dashboard' && pathname === '/dashboard/links' && ' border-green-600 text-blue-900 duration-300'} ${pathname === '/dashboard' && pathname !== '/dashboard/links' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className=''>Links</button>
                     </Link>
 
-                    <Link to='/dashboard/appearance' onClick={() => setViewTab(2)}
+                    <Link to='/dashboard/appearance'
                         className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 2 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/appearance' && 'border-green-600 text-blue-900 duration-300'}`}>
                         <button className=''>Appearance</button>
                     </Link>
 
                     {/* to='/dashboard/settings' onClick={() => setViewTab(3)} */}
                     <div id='settingTooltip'
                         className={`cursor-not-allowed text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 3 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/settings' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className='cursor-not-allowed'>Settings</button>
                     </div>
 
                     <Link to='/dashboard/billing/subscription' onClick={() => setViewTab(4)}
                         className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 4 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/billing/subscription' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className=''>PRO</button>
                     </Link>
 
@@ -112,14 +114,14 @@ const LinkTabs = () => {
                     {/* -------only md + device show--------- start */}
                     <Link to='/dashboard/analytics' onClick={() => setViewTab(5)}
                         className={`hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 5 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/analytics' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className=''>Analytics</button>
                     </Link>
 
                     {/* to='/dashboard/earn' onClick={() => setViewTab(6)} */}
                     <div id='earnTooltip'
                         className={`cursor-not-allowed relative hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 6 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/earn' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className='cursor-not-allowed'>Earn</button>
                         {/* beta budget */}
                         <div className='absolute top-0 -right-4 bg-blue-400 h-4 w-8 flex justify-center items-center rounded-[50px]'>
@@ -130,26 +132,26 @@ const LinkTabs = () => {
                     {/* to='/dashboard/store' onClick={() => setViewTab(7)} */}
                     <div id='storeTooltip'
                         className={`cursor-not-allowed hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 7 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/store' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className='cursor-not-allowed'>Store</button>
                     </div>
 
                     <Link to='/dashboard/signups' onClick={() => setViewTab(8)}
                         className={`hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 8 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/signups' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className=''>Signups</button>
                     </Link>
 
                     <Link to='/dashboard/messages' onClick={() => setViewTab(9)}
                         className={`hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 9 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/messages' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className=''>Messages</button>
                     </Link>
 
                     {/* to='/dashboard/integrations' onClick={() => setViewTab(10)} */}
                     <div id='integrationTooltip' to=''
                         className={`cursor-not-allowed relative hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${viewTab === 10 && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${pathname === '/dashboard/integrations' && ' border-green-600 text-blue-900 duration-300'}`}>
                         <button className='cursor-not-allowed'>Integrations</button>
                         {/* new budget */}
                         <div className='absolute top-0 -right-4 bg-green-400 h-4 w-8 flex justify-center items-center rounded-[50px]'>
@@ -166,7 +168,7 @@ const LinkTabs = () => {
             <ReactTooltip anchorId="earnTooltip" place="top" variant="info" content="Not Allowed" />
             <ReactTooltip anchorId="storeTooltip" place="top" variant="info" content="Not Allowed" />
             <ReactTooltip anchorId="integrationTooltip" place="top" variant="info" content="Not Allowed" />
-        </section>
+        </section >
     );
 };
 

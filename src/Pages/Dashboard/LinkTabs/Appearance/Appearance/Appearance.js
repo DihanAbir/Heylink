@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrow-down.svg'
 import { setOpenJump, setOpenJumpName } from '../../../../../Slices/appearanceSlice';
-import { getFetchData } from '../../../../../Slices/getDataSlice';
 import CustomeTheme from '../CustomeTheme/CustomeTheme/CustomeTheme';
 import PlacementManager from '../PlacementManager/PlacementManager';
 import AvatarTitle from '../QuicklyItems/AvatarTitle';
@@ -13,14 +12,7 @@ import UserName from '../QuicklyItems/UserName';
 
 const Appearance = () => {
     const { jumpItems, openJump, openJumpName } = useSelector((state) => state.appearanceSlice)
-    const { data } = useSelector((state) => state.getData)
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        getFetchData()
-    }, [])
-
-    console.log(data);
 
     return (
         <section className='min-h-screen py-6 cursor-pointer'>

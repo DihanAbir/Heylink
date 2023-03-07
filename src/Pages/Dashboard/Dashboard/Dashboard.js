@@ -12,7 +12,7 @@ const Dashboard = () => {
     return (
         <section className='bg-[#393AA7] min-h-screen'>
             <div className='min-h-screen max-w-[1440px] mx-auto py-6'>
-                <div className={` ${preview && 'lg:grid lg:grid-cols-4 lg:gap-5'} md:px-3`}>
+                <div className={` ${preview && 'lg:grid lg:grid-cols-4 lg:gap-4'} md:px-3`}>
                     <div className='lg:col-span-3 bg-white md:rounded-3xl md:shadow relative'>
                         <DashboardNavber />
                         <LinkTabs />

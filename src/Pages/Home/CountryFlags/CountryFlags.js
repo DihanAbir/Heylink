@@ -58,7 +58,7 @@ const CountryFlags = () => {
             <div className='text-center my-6'>
                 <h1 className='text-black font-bold text-2xl md:text-6xl'>1,340,000 customers</h1>
                 <h1 className='text-2xl mt-4 font-bold text-gray-500'>from 195 countries trust HeyLink.me</h1>
-                <Link to='' className='mt-6 text-white font-bold text-xl inline-block py-4 px-16 bg-orange-500 hover:bg-sky-500 duration-300 rounded-[50px]'>
+                <Link to='/signup' className='mt-6 text-white font-bold text-xl inline-block py-4 px-16 bg-orange-500 hover:bg-sky-500 duration-300 rounded-[50px]'>
                     <button>Start For Free</button>
                 </Link>
             </div>

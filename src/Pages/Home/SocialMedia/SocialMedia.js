@@ -52,7 +52,7 @@ const SocialMedia = () => {
                     <img className='w-8' src={img20} alt="" />
                 </div>
                 <div>
-                    <img src="https://cdn-f.heylink.me/static/img/connect-brands-label.svg" alt="" />
+                    <img className='w-full' src="https://cdn-f.heylink.me/static/img/connect-brands-label.svg" alt="" />
                 </div>
             </div>
 

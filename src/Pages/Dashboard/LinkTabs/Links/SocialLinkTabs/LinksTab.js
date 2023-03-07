@@ -18,7 +18,7 @@ const LinksTab = () => {
   const data = useFetch("links/common");
   const dispatch = useDispatch()
 
-  console.log(data);
+  // console.log(data);
 
   const { render } = useSelector((state) => state.getData);
   const { errorUrl } = useSelector((state) => state.linksSlice);
@@ -54,47 +54,49 @@ const LinksTab = () => {
 
   return (
     <section className="pb-6 min-h-screen">
-      <form onSubmit={handleUrl}>
-        <div className="flex justify-between md:px-6 w-full lg:max-w-[980px] mx-auto">
-          <div className="flex-grow flex items-center bg-gray-200 rounded-3xl">
-            <div className="cursor-pointer w-12 py-3 border-r border-gray-400 flex justify-center items-center">
+      <form onSubmit={handleUrl}
+        className="flex justify-between md:px-6 w-full lg:max-w-[980px] mx-auto">
+        <div className="flex-grow">
+          <div className=" flex items-center bg-gray-200 rounded-3xl">
+            <div className="cursor-pointer w-12 h-12 border-r border-gray-400 flex justify-center items-center">
               <img src={link} alt="" />
             </div>
             <input
               onChange={(e) => dispatch(setErrorUrl({ errorUrl: e.target.value }))}
-              className="flex-grow focus:outline-none focus:bg-red-50 bg-gray-200 lg:rounded-r-3xl py-3 px-2 w-full border-none"
+              className="flex-grow focus:outline-none focus:bg-red-50 bg-gray-200 lg:rounded-r-3xl h-12 px-2 w-full border-none"
               type="text"
               name="url"
               placeholder="Paste Your Link Here"
             />
           </div>
-          {errorUrl ? (
-            <button
-              type="submit"
-              className="bg-blue-600 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6"
-            >
-              <h1 className="font-semibold text-white md:hidden">Add</h1>
-              <h1 className="font-semibold text-white hidden md:block">
-                + Add New Link
-              </h1>
-            </button>
-          ) : (
-            <button
-              disabled
-              className="bg-blue-300 cursor-not-allowed lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6"
-            >
-              <h1 className="font-semibold text-white md:hidden">Add</h1>
-              <h1 className="font-semibold text-white hidden md:block">
-                + Add New Link
-              </h1>
-            </button>
+          {!errorUrl && (
+            <p className="text-red-600 text-end text-sm">
+              URL should not be empty
+            </p>
           )}
         </div>
-        {!errorUrl && (
-          <p className="text-red-600 text-end lg:mr-80 pr-4 text-sm">
-            URL should not be empty
-          </p>
+        {errorUrl ? (
+          <button
+            type="submit"
+            className="h-12 bg-blue-600 lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6"
+          >
+            <h1 className="font-semibold text-white md:hidden">Add</h1>
+            <h1 className="font-semibold text-white hidden md:block">
+              + Add New Link
+            </h1>
+          </button>
+        ) : (
+          <button
+            disabled
+            className="h-12 bg-blue-300 cursor-not-allowed lg:ml-6 rounded-r-3xl lg:rounded-3xl flex justify-center items-center px-3 lg:px-6"
+          >
+            <h1 className="font-semibold text-white md:hidden">Add</h1>
+            <h1 className="font-semibold text-white hidden md:block">
+              + Add New Link
+            </h1>
+          </button>
         )}
+
       </form>
 
       <div className="mt-8 cursor-pointer">

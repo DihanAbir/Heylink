@@ -66,12 +66,12 @@ const Navber = () => {
                     </div>
 
                     {/* only small device show */}
-                    <Link to='/' className='block lg:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'>
+                    <Link to='/signup' className='block lg:hidden bg-orange-500 hover:bg-sky-500 hover:text-white border-white hover:border-sky-500 py-1 px-2 rounded-[50px] duration-300 text-sm'>
                         <button>Start for free</button>
                     </Link>
 
                     {/* medium + device show */}
-                    <Link to='/login' className='hidden lg:block border-2 border-white hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
+                    <Link to='/signup' className='hidden lg:block border-2 border-white hover:border-sky-500 py-2 px-6 rounded-[50px] duration-300'>
                         <div className='flex justify-between items-center gap-4 font-semibold hover:text-sky-500'>
                             <svg className='hover:fill-sky-600' xmlns="https://www.w3.org/2000/svg" width="8" height="10"><path d="M6.745 5.582L2.403 9.8a.838.838 0 01-1.083.053A.838.838 0 01.237 9.8a.772.772 0 010-1.123L4 5.02.237 1.363a.772.772 0 010-1.123A.84.84 0 011.32.187.84.84 0 012.403.24l4.342 4.218a.773.773 0 010 1.124z" fill="#FFF"></path></svg>
                             <span> Start for free</span>
@@ -96,31 +96,31 @@ const Navber = () => {
 
             {/* -----------show only small devices after the toggler button clicked----------- */}
             <div className='md:hidden flex justify-between items-center py-2 px-6 mt-3 bg-[#2a2b8b]'>
-                <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Free Templates</h1></Link>
-                <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Pricing</h1></Link>
-                <Link to='/'><h1 className='hover:text-sky-500 text-white duration-300'>Login</h1></Link>
+                <Link to='/templates'><h1 className='hover:text-sky-500 text-white duration-300'>Free Templates</h1></Link>
+                <Link to='/pricing'><h1 className='hover:text-sky-500 text-white duration-300'>Pricing</h1></Link>
+                <Link to='/login'><h1 className='hover:text-sky-500 text-white duration-300'>Login</h1></Link>
             </div>
             <hr className='border-gray-400 mt-6 md:hidden' />
             {
                 open && <div onClick={() => setOpen(false)} className={`bg-[#393AA7] min-h-screen flex flex-col gap-4 items-center py-6`}>
-                    <div className='bg-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <Link to='/dashboard'>Dashboard</Link>
-                    </div>
-                    <div className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <Link to='/templates'>Free Templates</Link>
-                    </div>
-                    <div className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <Link to='/'>Blog and Help</Link>
-                    </div>
-                    <div className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <Link to='/'>Contact</Link>
-                    </div>
-                    <div className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <Link to='/'>Community</Link>
-                    </div>
-                    <div className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
-                        <Link to='/'>Agency</Link>
-                    </div>
+                    <Link to='/dashboard' className='bg-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
+                        <h1>Dashboard</h1>
+                    </Link>
+                    <Link to='/templates' className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
+                        <h1>Free Templates</h1>
+                    </Link>
+                    <Link to='/blog-and-help' className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
+                        <h1>Blog and Help</h1>
+                    </Link>
+                    <Link to='/contact' className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
+                        <h1>Contact</h1>
+                    </Link>
+                    <Link to='/community' className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
+                        <h1>Community</h1>
+                    </Link>
+                    <Link to='/agency' className='border-2 border-white hover:border-sky-500 hover:text-sky-500 px-6 py-2 rounded-[50px] text-center w-44 font-semibold'>
+                        <h1>Agency</h1>
+                    </Link>
                 </div>
             }
         </nav>

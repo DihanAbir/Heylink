@@ -33,6 +33,12 @@ const SmallDevicePreview = () => {
 
     const { username } = userData;
 
+    // image convarte buffer
+    const buff = Buffer.from(
+        userData?.image?.data?.data ? userData?.image?.data?.data : "https://heylink.me/cdn-cgi/image/f=auto,q=85,fit=crop,w=200/https://api.heylink.me/static/images/defaults/avatar_user.png"
+    );
+    const base64 = buff?.toString("base64");
+
     return (
         <section className="w-full min-h-screen bg-[#ffc31b]">
 
@@ -45,7 +51,7 @@ const SmallDevicePreview = () => {
                         <div className="flex flex-col justify-center items-center mt-6">
                             <img
                                 className="rounded-full w-20 border"
-                                src={userData?.photoURL ? userData?.image : avatar}
+                                src={`data:image/png;base64, ${base64}`}
                                 alt=""
                             />
                             <h2 className="font-bold text-2xl mt-2 text-center">{username}</h2>

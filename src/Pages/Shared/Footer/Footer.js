@@ -8,7 +8,7 @@ const Footer = () => {
             <div className='max-w-[1440px] mx-auto'>
                 <div className='flex flex-col items-center md:flex-row md:justify-between gap-6'>
                     <h1 className='text-white font-bold text-3xl'>Ready to get started? It is easy as 1 - 2 - 3</h1>
-                    <Link to='' className=''>
+                    <Link to='/signup' className=''>
                         <PrimaryButtons>
                             Start For Free
                         </PrimaryButtons>

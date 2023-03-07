@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import appearance from '../../assets/icons/appearance.svg'
 import security from '../../assets/icons/security.svg'
 import billing from '../../assets/icons/billing.svg'
@@ -6,7 +6,7 @@ import logout from '../../assets/icons/logout.svg'
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
 
-const ProfileDropdown = () => {
+const ProfileDropdown = ({ setViewProfile }) => {
     const { userData } = useContext(AuthContext)
     const navigate = useNavigate()
     const handleLogout = () => {
@@ -14,8 +14,23 @@ const ProfileDropdown = () => {
         navigate('/login')
     }
 
+    let dropdownRef = useRef();
+
+    useEffect(() => {
+        let handler = (e) => {
+            if (!dropdownRef.current.contains(e.target)) {
+                setViewProfile(false);
+            }
+        };
+        document.addEventListener("mousedown", handler);
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        }
+
+    });
+
     return (
-        <div class="absolute right-0 z-10 mt-2 w-60 rounded-md bg-gray-50 shadow shadow-gray-400">
+        <div ref={dropdownRef} class="absolute right-0 z-10 mt-2 w-60 rounded-md bg-gray-50 shadow shadow-gray-400">
             <div className='p-3'>
                 <div className='flex flex-col items-center gap-0 py-4'>
                     <span className='text-center text-gray-600 text-[16px] font-bold'>

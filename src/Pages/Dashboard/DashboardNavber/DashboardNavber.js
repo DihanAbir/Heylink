@@ -5,6 +5,7 @@ import logo from '../../../assets/logo/logo.png'
 import UserNameChange from '../../../components/dropdowns/UserNameChange';
 import bell from '../../../assets/icons/bell.svg'
 import star from '../../../assets/icons/star.svg'
+import { Buffer } from "buffer";
 import avatar from '../../../assets/avatars/user-avatar.png'
 import ProfileDropdown from '../../../components/dropdowns/ProfileDropdown';
 import Notification from '../../../components/dropdowns/Notification';
@@ -19,13 +20,18 @@ const DashboardNavber = () => {
 
     // console.log(userData);
 
+    // image convarte buffer
+    const buff = Buffer.from(
+        userData?.image?.data?.data ? userData?.image?.data?.data : avatar
+    );
+    const base64 = buff?.toString("base64");
+
     let dropdownRef = useRef();
 
     useEffect(() => {
         let handler = (e) => {
             if (!dropdownRef.current.contains(e.target)) {
                 setDropdown(false);
-                setViewProfile(false);
                 setViewBreadCramp(false);
                 setViewNotification(false);
             }
@@ -98,9 +104,9 @@ const DashboardNavber = () => {
 
                     <div className='relative'>
                         <img onClick={() => setViewProfile(!viewProfile)} className='rounded-full w-12'
-                            src={userData?.image ? userData?.image : avatar} alt="" />
+                            src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`} alt="" />
                         {
-                            viewProfile && <ProfileDropdown />
+                            viewProfile && <ProfileDropdown setViewProfile={setViewProfile} />
                         }
                     </div>
                 </div>

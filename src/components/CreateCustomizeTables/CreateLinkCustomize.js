@@ -10,6 +10,7 @@ import schedule from "../../assets/icons/link-customize-icons/schedule.svg";
 import fire from "../../assets/icons/link-customize-icons/fire.svg";
 import blueRight from '../../assets/icons/blue-right.png'
 import lock from "../../assets/icons/link-customize-icons/pro-lock.svg";
+import emptyImage from "../../assets/icons/empty-image.svg";
 import swap from "../../assets/icons/link-customize-icons/swap.svg";
 import edit from "../../assets/icons/link-customize-icons/edit.svg";
 import EffectsModal from "../Modals/CustomizeLinkModals/EffectsModal";
@@ -39,10 +40,9 @@ const CreateLinkCustomize = ({ url }) => {
   } = useSelector((state) => state.linksSlice);
   const { open, uploadImageModal, deleteModal } = useSelector((state) => state.controllerSlice);
   const { loader, handleDefaultSwitch } = useContext(ServiceContext)
-  const [imageData, setImageData] = useState("");
   const dispatch = useDispatch()
 
-  console.log(url);
+  // console.log(url);
 
   const handleToggleSwitch = (input) => {
     handleDefaultSwitch(url?._id, { show: input }, 'links/common',)
@@ -167,7 +167,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // image convarte buffer
   const buff = Buffer.from(
-    url?.image?.data?.data ? url?.image?.data?.data : imageData
+    url?.image?.data?.data ? url?.image?.data?.data : emptyImage
   );
   const base64 = buff?.toString("base64");
 
@@ -180,35 +180,29 @@ const CreateLinkCustomize = ({ url }) => {
           </div>
 
           {/* -----------image upload input field end----------- */}
-          {imageData ? (
-            <div class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md">
-              <img className="w-full h-full" src={imageData} alt="" />
+
+          <div>
+            <div
+              onClick={() => dispatch(setUploadImageModal(uploadImageModal ? '' : url?._id))}
+              class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
+            >
+              <label class="flex justify-center items-center">
+                <div class=" relative flex cursor-pointer items-center justify-center">
+                  <img
+                    className="w-12 h-12 cursor-pointer"
+                    src={`${url?.image ? `data:image/png;base64, ${base64}` : emptyImage}`}
+                    alt=""
+                  />
+                </div>
+              </label>
             </div>
-          ) : (
-            <div>
-              <div
-                onClick={() => dispatch(setUploadImageModal(uploadImageModal ? '' : url?._id))}
-                class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
-              >
-                <label class="flex justify-center items-center">
-                  <div class=" relative flex cursor-pointer items-center justify-center">
-                    <img
-                      className="w-12 h-12 cursor-pointer"
-                      src={`data:image/png;base64, ${base64}`}
-                      alt=""
-                    />
-                  </div>
-                </label>
-              </div>
-              {uploadImageModal === url?._id && (
-                <ImageUploadModal
-                  url={url}
-                  imageData={setImageData}
-                  endPoint='common'
-                />
-              )}
-            </div>
-          )}
+            {uploadImageModal === url?._id && (
+              <ImageUploadModal
+                url={url}
+                endPoint='common'
+              />
+            )}
+          </div>
           {/* -----------image upload input field end----------- */}
 
           {/* -----------edit and input  icon start----------- */}

@@ -14,6 +14,11 @@ const Templates = () => {
     { id: "6", name: "Simple" },
   ];
 
+  const handleViewCategory = (id) => {
+    setViewCategory(id)
+    setDropdown(false)
+  }
+
   let dropdownRef = useRef();
 
   useEffect(() => {
@@ -79,7 +84,7 @@ const Templates = () => {
         {categories.map((category) => {
           return (
             <div
-              onClick={() => setViewCategory(category.id)}
+              onClick={() => handleViewCategory(category.id)}
               className={`flex justify-center items-center border-2 border-white text-white hover:text-sky-600 hover:bg-white lg:py-2 lg:px-4 rounded-[50px] font-semibold lg:text-[16px] ${viewCategory === category.id && "bg-white text-sky-600"
                 }`}
             >
@@ -90,9 +95,8 @@ const Templates = () => {
       </div>
 
       <div className="bg-[#393AA7] relative">
-        <div className="bg-[#393AA7] h-96"></div>
-        <div className="bg-white min-h-screen flex justify-center">
-          <div className="max-w-[1440px] flex justify-center">
+        <div className="bg-white min-h-screen flex justify-center py-12">
+          <div className="max-w-[1440px] mx-auto">
             {viewCategory === "1" && <AllTempletes />}
           </div>
         </div>

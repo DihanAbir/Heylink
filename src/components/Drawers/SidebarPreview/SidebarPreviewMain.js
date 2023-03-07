@@ -21,22 +21,29 @@ const SidebarPreviewMain = () => {
   // const commerceData = useFetch("links/commerce");
   // const appsData = useFetch("links/apps");
 
+  console.log(userData);
+
   const [openLocationData, setOpenLocationData] = useState(false)
   const [openMenuData, setOpenMenuData] = useState(false)
 
 
   const bufferToImage = (data) => {
-    const buff = Buffer.from(
-      data?.image?.data?.data
-        ? data?.image?.data?.data
-        : [
-          "https://heylink.me/cdn-cgi/image/f=auto,q=85,fit=crop,w=200/https://api.heylink.me/static/images/defaults/avatar_user.png",
-        ]
+    const buff = Buffer.from(data?.image?.data?.data
+      ? data?.image?.data?.data
+      : [
+        "https://heylink.me/cdn-cgi/image/f=auto,q=85,fit=crop,w=200/https://api.heylink.me/static/images/defaults/avatar_user.png",
+      ]
     );
     return buff?.toString("base64");
   };
 
   const { username } = userData;
+
+  // image convarte buffer
+  const buff = Buffer.from(
+    userData?.image?.data?.data ? userData?.image?.data?.data : avatar
+  );
+  const base64 = buff?.toString("base64");
 
   return (
     <div className="fixed flex flex-col justify-center items-center cursor-pointer">
@@ -52,8 +59,9 @@ const SidebarPreviewMain = () => {
               <div className="flex flex-col justify-center items-center mt-6">
                 <img
                   className="rounded-full w-20 border"
-                  src={userData?.photoURL ? userData?.image : avatar}
-                  alt=""
+                  // src={userData?.photoURL ? userData?.image : avatar}
+                  src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
+                  alt="prifle image"
                 />
                 <h2 className="font-bold text-2xl mt-2 text-center">{username}</h2>
               </div>
