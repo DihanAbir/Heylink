@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  errorUrl: false,
+  errorUrl: '',
+  showError: false,
   openEffcetsModal: '',
   fastLinkProModal: '',
   openSchedule: '',
@@ -19,7 +20,10 @@ export const linksSlice = createSlice({
   initialState,
   reducers: {
     setErrorUrl: (state, action) => {
-      state.errorUrl = action.payload.errorUrl;
+      state.errorUrl = action.payload;
+    },
+    setShowError: (state, action) => {
+      state.showError = action.payload;
     },
     setOpenEffcetsModal: (state, action) => {
       state.openEffcetsModal = action.payload;
@@ -59,6 +63,7 @@ export const linksSlice = createSlice({
 
 export const {
   setErrorUrl,
+  setShowError,
   setOpenEffcetsModal,
   handleDefaultSwitch,
   setFastLinkProModal,

@@ -9,7 +9,7 @@ import useFetch from "../../../../../Hoock/Hoock";
 import { useDispatch, useSelector } from "react-redux";
 import { setRenderReducer } from "../../../../../Slices/getDataSlice";
 import PageLoader from "../../../../../components/loaders/PageLoader";
-import { setErrorUrl } from "../../../../../Slices/linksSlice";
+import { setErrorUrl, setShowError } from "../../../../../Slices/linksSlice";
 
 
 const LinksTab = () => {
@@ -21,10 +21,14 @@ const LinksTab = () => {
   // console.log(data);
 
   const { render } = useSelector((state) => state.getData);
-  const { errorUrl } = useSelector((state) => state.linksSlice);
+  const { errorUrl, showError } = useSelector((state) => state.linksSlice);
 
   const handleUrl = (event) => {
     event.preventDefault();
+    // if (!errorUrl) {
+    //   dispatch(setShowError(true))
+    //   return;
+    // }
     const url = event.target.url.value;
     const data = {
       link: url,
@@ -62,14 +66,14 @@ const LinksTab = () => {
               <img src={link} alt="" />
             </div>
             <input
-              onChange={(e) => dispatch(setErrorUrl({ errorUrl: e.target.value }))}
+              onChange={(e) => dispatch(setErrorUrl(e.target.value))}
               className="flex-grow focus:outline-none focus:bg-red-50 bg-gray-200 lg:rounded-r-3xl h-12 px-2 w-full border-none"
               type="text"
               name="url"
               placeholder="Paste Your Link Here"
             />
           </div>
-          {!errorUrl && (
+          {showError && (
             <p className="text-red-600 text-end text-sm">
               URL should not be empty
             </p>

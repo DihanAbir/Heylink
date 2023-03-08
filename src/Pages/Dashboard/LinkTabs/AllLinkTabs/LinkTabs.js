@@ -3,13 +3,33 @@ import { Link, useLocation } from 'react-router-dom';
 import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import rightArrow from '../../../../assets/icons/right-arrow.svg'
+import { useDispatch, useSelector } from 'react-redux';
+import { setOpenTab } from '../../../../Slices/controllerSlice';
 
 
 const LinkTabs = () => {
     const [viewTab, setViewTab] = useState(1)
     const [viewTabsDropdown, setViewTabsDropdown] = useState(false)
     const { pathname } = useLocation()
-    console.log(pathname);
+    const { openTab } = useSelector((state) => state.controllerSlice)
+    const dispatch = useDispatch()
+    // console.log(pathname);
+
+    useEffect(() => {
+        dispatch(setOpenTab(true))
+    }, [])
+
+    useEffect(() => {
+        if (pathname === '/dashboard' || pathname === '/dashboard/links' || pathname === '/dashboard/social' || pathname === '/dashboard/gallery' || pathname === '/dashboard/menu' || pathname === '/dashboard/locations' || pathname === '/dashboard/music' || pathname === '/dashboard/apps') {
+            console.log('dddddddddd');
+            dispatch(setOpenTab(true))
+        }
+        else {
+            dispatch(setOpenTab(false))
+        }
+    }, [])
+
+    console.log(openTab);
 
     let dropdownRef = useRef();
     useEffect(() => {
@@ -30,9 +50,19 @@ const LinkTabs = () => {
                 <div className='flex items-center md:flex-wrap gap-4 md:gap-8 px-5 md:px-12'>
                     <Link to='/dashboard'
                         className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname !== '/dashboard' && pathname === '/dashboard/links' && ' border-green-600 text-blue-900 duration-300'} ${pathname === '/dashboard' && pathname !== '/dashboard/links' && ' border-green-600 text-blue-900 duration-300'}`}>
+                    ${openTab && ' border-green-600 text-blue-900 duration-300'} 
+                    
+                    `}>
                         <button className=''>Links</button>
                     </Link>
+                    {/* 
+                    ${pathname === '/dashboard/links' && pathname !== '/dashboard' && ' border-green-600 text-blue-900 duration-300'}
+                    ${pathname === '/dashboard/social' && pathname !== '/dashboard' && ' border-green-600 text-blue-900 duration-300'}
+                    ${pathname === '/dashboard/gallery' && pathname !== '/dashboard' && ' border-green-600 text-blue-900 duration-300'}
+                    ${pathname === '/dashboard/menu' && pathname !== '/dashboard' && ' border-green-600 text-blue-900 duration-300'}
+                    ${pathname === '/dashboard/locations' && pathname !== '/dashboard' && ' border-green-600 text-blue-900 duration-300'}
+                    ${pathname === '/dashboard/music' && pathname !== '/dashboard' && ' border-green-600 text-blue-900 duration-300'}
+                    ${pathname === '/dashboard/apps' && pathname !== '/dashboard' && ' border-green-600 text-blue-900 duration-300'} */}
 
                     <Link to='/dashboard/appearance'
                         className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  

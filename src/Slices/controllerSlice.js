@@ -9,6 +9,7 @@ const initialState = {
     uploadImageModal: '',
     openFastLinkModal: '',
     openProModal: '',
+    openTab: false,
 };
 
 export const controllerSlice = createSlice({
@@ -39,6 +40,9 @@ export const controllerSlice = createSlice({
         setOpenProModal: (state, action) => {
             state.openProModal = action.payload;
         },
+        setOpenTab: (state, action) => {
+            state.openTab = action.payload;
+        },
     },
 });
 
@@ -50,6 +54,7 @@ export const {
     setOpenInputChange3,
     setUploadImageModal,
     setOpenFastLinkModal,
-    setOpenProModal
+    setOpenProModal,
+    setOpenTab
 } = controllerSlice.actions;
 export default controllerSlice.reducer;

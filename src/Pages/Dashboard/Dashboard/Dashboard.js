@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PreviewDrawer from '../../../components/Drawers/SidebarPreview/PreviewDrawer';
 import DashboardNavber from '../DashboardNavber/DashboardNavber';
 import LinkTabs from '../LinkTabs/AllLinkTabs/LinkTabs';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import SidebarPreviewMain from '../../../components/Drawers/SidebarPreview/SidebarPreviewMain';
 import PreviewSmallBtn from '../../../components/Drawers/SidebarPreview/PreviewSmallBtn';
+import { useDispatch } from 'react-redux';
+import { setOpenTab } from '../../../Slices/controllerSlice';
 
 const Dashboard = () => {
     const [preview, setPreview] = useState(true)
+    const dispatch = useDispatch()
+    const { pathname } = useLocation()
+    if (pathname === '/dashboard') {
+        dispatch(setOpenTab(true))
+    }
 
     return (
         <section className='bg-[#393AA7] min-h-screen'>

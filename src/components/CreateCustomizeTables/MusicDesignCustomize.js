@@ -39,7 +39,7 @@ const MusicDesignCustomize = ({ url }) => {
     const dispatch = useDispatch()
     const { handleDefaultSwitch } = useContext(ServiceContext)
 
-    console.log(openInputChange2);
+    // console.log(openInputChange2);
 
     const [deleteModal2, setDeleteModal2] = useState(false)
 
@@ -197,9 +197,9 @@ const MusicDesignCustomize = ({ url }) => {
                     <DefaultSwitch initialToggle={url?.show === 'true'} getToggle={handleToggleSwitch} />
                 </div>
 
-                {
-                    open === url?._id && <div className='py-3 px-4'>
-                        <div className='flex items-center gap-6'>
+                {/* {
+                    open === url?._id && <div className='py-3 px-4'> */}
+                {/* <div className='flex items-center gap-6'>
                             <div className='w-16 h-16 md:w-24 md:h-24'>
                                 <img className='w-full h-full' src="https://st.depositphotos.com/1010338/2099/i/450/depositphotos_20999947-Tropical-island-with-palms..jpg" alt="" />
                             </div>
@@ -211,9 +211,9 @@ const MusicDesignCustomize = ({ url }) => {
                                     openProModal === url?._id && <ProModal />
                                 }
                             </div>
-                        </div>
+                        </div> */}
 
-                        <div className='flex justify-between items-center mt-4 mb-4'>
+                {/* <div className='flex justify-between items-center mt-4 mb-4'>
                             <div>
                                 <div className='flex items-center gap-4'>
                                     <h1 className='text-gray-900 font-semibold'>Add Description</h1>
@@ -222,9 +222,9 @@ const MusicDesignCustomize = ({ url }) => {
                                 <p className='text-gray-500 text-sm'>Provide a short description about this track or our new album</p>
                             </div>
                             <ProToggleSwitch />
-                        </div>
+                        </div> */}
 
-                        <div className='flex justify-between items-center mb-4'>
+                {/* <div className='flex justify-between items-center mb-4'>
                             <div className='flex-grow flex items-center gap-4'>
                                 <div className='w-6 h-6 bg-blue-600 rounded-full flex justify-center items-center'>
                                     <svg className='w-4 text-white p-1' viewBox="0 0 9 10" xmlns="http://www.w3.org/2000/svg"><g><path d="M8.35471 4.34855L2.16096 0.649984C1.6365 0.33677 0.964355 0.715519 0.964355 1.32963V8.7157C0.964355 9.33284 1.63775 9.70641 2.16096 9.39623L8.35382 5.70837C8.86846 5.40141 8.86739 4.65659 8.35471 4.34855Z"></path></g></svg>
@@ -248,10 +248,10 @@ const MusicDesignCustomize = ({ url }) => {
                                     }
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
 
-                        <form onSubmit={handleAddStore}
+                {/* <form onSubmit={handleAddStore}
                             className='grid grid-cols-1 gap-4'>
                             <div className='flex items-center justify-between'>
                                 <div className='flex-grow relative'>
@@ -303,10 +303,10 @@ const MusicDesignCustomize = ({ url }) => {
                                     <input onChange={(e) => setMusicLink(e.target.value)} className='w-full px-2 rounded-3xl h-12 bg-gray-200 focus:bg-red-100 focus:outline-none border-none' type="text" name='musicLink' placeholder='Past Your Link Here' />
                                 </div>
                             }
-                        </form>
-                    </div>
+                        </form> */}
+                {/* </div>
 
-                }
+                } */}
 
                 {/* -----------toggler button start----------- */}
                 <div onClick={() => dispatch(setOpen(open ? '' : url?._id))}
