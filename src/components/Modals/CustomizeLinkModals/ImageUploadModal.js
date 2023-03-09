@@ -71,10 +71,9 @@ const ImageUploadModal = ({ url, endPoint }) => {
           onChange={handleSubmit(ImageUpload)}
           encType="multipart/form-data"
         >
-          <div className="grid grid-cols-2 gap-6 mt-3">
+          <div className="grid grid-cols-1 gap-6 mt-3">
             <div
-              //   onClick={() => closeModal(false)}
-              className="relative w-24 h-24 flex justify-center items-center bg-gray-200 hover:bg-blue-600 rounded-md"
+              className="relative w-32 h-32 flex justify-center items-center bg-gray-200 hover:bg-blue-600 rounded-md"
             >
               <label className="cursor-pointer flex justify-center items-center">
                 <div className=" relative flex cursor-pointer items-center justify-center">
@@ -90,7 +89,7 @@ const ImageUploadModal = ({ url, endPoint }) => {
                 </div>
               </label>
             </div>
-            <div
+            {/* <div
               onClick={() => dispatch(setOpenFastLinkModal(openFastLinkModal ? '' : url?._id))}
               className="relative w-24 h-24 flex justify-center items-center bg-gray-200 rounded-md"
             >
@@ -114,11 +113,11 @@ const ImageUploadModal = ({ url, endPoint }) => {
               <div className="absolute -top-4 right-6 flex justify-center items-center w-10 h-4 rounded-3xl bg-[#F06957]">
                 <img className="w-7" src={lock} alt="" />
               </div>
-            </div>
+            </div> */}
           </div>
         </form>
 
-        {openFastLinkModal === url?._id && <FastLinkProModal />}
+        {/* {openFastLinkModal === url?._id && <FastLinkProModal />} */}
       </div>
     </div>
   );

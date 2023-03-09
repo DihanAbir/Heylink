@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import down from '../../../../../assets/icons/down.png'
+import { setOpenTab } from '../../../../../Slices/controllerSlice';
 
 const countries = ['Bangladesh', 'Afghanistan', 'Albania', 'Algeria', 'American Samoa', 'Andorra', 'Angola']
 
@@ -8,6 +10,11 @@ const Subscription = () => {
     const [selectedCountry, setSelectedCountry] = useState('Bangladesh')
     const [showCountries, setShowCountries] = useState(false)
     const [couponCode, setCouponCode] = useState('')
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setOpenTab(false))
+    }, [])
 
     const handleApply = (e) => {
         e.preventDefault()

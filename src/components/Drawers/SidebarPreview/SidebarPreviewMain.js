@@ -21,7 +21,7 @@ const SidebarPreviewMain = () => {
   // const commerceData = useFetch("links/commerce");
   // const appsData = useFetch("links/apps");
 
-  console.log(userData);
+  // console.log(userData);
 
   const [openLocationData, setOpenLocationData] = useState(false)
   const [openMenuData, setOpenMenuData] = useState(false)

@@ -10,6 +10,7 @@ const initialState = {
     openFastLinkModal: '',
     openProModal: '',
     openTab: false,
+    successfull: false,
 };
 
 export const controllerSlice = createSlice({
@@ -43,6 +44,9 @@ export const controllerSlice = createSlice({
         setOpenTab: (state, action) => {
             state.openTab = action.payload;
         },
+        setSuccessfull: (state, action) => {
+            state.successfull = action.payload;
+        },
     },
 });
 
@@ -55,6 +59,7 @@ export const {
     setUploadImageModal,
     setOpenFastLinkModal,
     setOpenProModal,
-    setOpenTab
+    setOpenTab,
+    setSuccessfull
 } = controllerSlice.actions;
 export default controllerSlice.reducer;

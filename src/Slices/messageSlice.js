@@ -6,6 +6,7 @@ const initialState = {
     namePlaceholderText: '',
     emailPlaceholderText: '',
     phoneNumberPlaceholderText: '',
+    allMessages: [],
 };
 
 export const messageSlice = createSlice({
@@ -27,6 +28,9 @@ export const messageSlice = createSlice({
         setPhoneNumberPlaceholderText: (state, action) => {
             state.phoneNumberPlaceholderText = action.payload;
         },
+        setAllMessages: (state, action) => {
+            state.allMessages = action.payload;
+        },
     },
 });
 
@@ -35,6 +39,7 @@ export const {
     setSuccessMessageText,
     setNamePlaceholderText,
     setEmailPlaceholderText,
-    setPhoneNumberPlaceholderText
+    setPhoneNumberPlaceholderText,
+    setAllMessages
 } = messageSlice.actions;
 export default messageSlice.reducer;

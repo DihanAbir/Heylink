@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import down from '../../../../../assets/icons/down.png'
 import DefaultSwitch from '../../../../../components/ToggleSwitch/DefaultSwitch';
+import { setOpenTab } from '../../../../../Slices/controllerSlice';
 import EmailSignup from './SignupDetails/EmailSignup';
 import SMSSignup from './SignupDetails/SMSSignup';
 import WhatsupSignup from './SignupDetails/WhatsupSignup';
@@ -13,6 +15,11 @@ const Signups = () => {
     const [whatsupSignup, setWhatsupSignup] = useState(false)
     const [selectedOption, setSelectedOption] = useState('All Types')
     const [showOptions, setShowOptions] = useState(false)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setOpenTab(false))
+    }, [])
 
     const handleSetOption = (data) => {
         setSelectedOption(data)

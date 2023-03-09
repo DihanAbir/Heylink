@@ -42,8 +42,8 @@ const DeleteModal = ({ id, endPoint }) => {
       .then((data) => {
         if (data?.data.acknowledged) {
           toast.success('Delete Successfully')
-          dispatch(setDeleteModal(''))
           dispatch(setRenderReducer({ render: true }))
+          dispatch(setDeleteModal(''))
         }
       });
   };

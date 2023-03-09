@@ -18,7 +18,7 @@ const MenuTab = () => {
 
     const handleAddMenu = () => {
         const data = {
-            name: '',
+            name: 'My Manu',
             userInfo: userData,
             currency: 'USD',
             item: {

@@ -26,6 +26,8 @@ import { setOpen, setUploadImageModal, setDeleteModal } from "../../Slices/contr
 import { useDispatch, useSelector } from "react-redux";
 import { setRenderReducer } from "../../Slices/getDataSlice";
 import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
+import { useForm } from "react-hook-form";
+
 const CreateLinkCustomize = ({ url }) => {
   const {
     openEffcetsModal,
@@ -171,6 +173,31 @@ const CreateLinkCustomize = ({ url }) => {
   );
   const base64 = buff?.toString("base64");
 
+  const {
+    register,
+    handleSubmit
+  } = useForm();
+
+  const ImageUpload = (data) => {
+    const formData = new FormData();
+    formData.append("file", data.image[0]);
+
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
+      },
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.data.acknowledged) {
+          toast.success('Image Upload Successfully')
+          dispatch(setRenderReducer({ render: true }))
+        }
+      });
+  };
+
   return (
     <div>
       <div className="relative w-full my-6 border border-gray-200 rounded-md cursor-pointer">
@@ -181,28 +208,22 @@ const CreateLinkCustomize = ({ url }) => {
 
           {/* -----------image upload input field end----------- */}
 
-          <div>
-            <div
-              onClick={() => dispatch(setUploadImageModal(uploadImageModal ? '' : url?._id))}
-              class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
-            >
-              <label class="flex justify-center items-center">
-                <div class=" relative flex cursor-pointer items-center justify-center">
-                  <img
-                    className="w-12 h-12 cursor-pointer"
-                    src={`${url?.image ? `data:image/png;base64, ${base64}` : emptyImage}`}
-                    alt=""
-                  />
-                </div>
-              </label>
-            </div>
-            {uploadImageModal === url?._id && (
-              <ImageUploadModal
-                url={url}
-                endPoint='common'
-              />
-            )}
-          </div>
+          <form onChange={handleSubmit(ImageUpload)}
+            encType="multipart/form-data"
+            class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
+          >
+            <img
+              className="w-12 h-12 cursor-pointer"
+              src={`${url?.image ? `data:image/png;base64, ${base64}` : emptyImage}`}
+              alt=""
+            />
+            <input
+              {...register("image", { required: "image is Required" })}
+              type="file"
+              name="image"
+              className="w-full h-full absolute opacity-0 cursor-pointer"
+            />
+          </form>
           {/* -----------image upload input field end----------- */}
 
           {/* -----------edit and input  icon start----------- */}

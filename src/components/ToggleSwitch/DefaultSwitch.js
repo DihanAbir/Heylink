@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const DefaultSwitch = ({ initialToggle, getToggle }) => {
-    console.log(initialToggle);
+    // console.log(initialToggle);
     return (
         <div className="flex flex-col justify-center items-center ">
             <div onClick={() => getToggle(!initialToggle)}

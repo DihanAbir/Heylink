@@ -16,6 +16,8 @@ const Dashboard = () => {
         dispatch(setOpenTab(true))
     }
 
+    // console.log(object);
+
     return (
         <section className='bg-[#393AA7] min-h-screen'>
             <div className='min-h-screen max-w-[1440px] mx-auto py-6'>

@@ -4,12 +4,18 @@ import ViewsAnalyticsChart from '../AnalyticsCharts/ViewsAnalyticsChart';
 import UniqueVisitors from '../AnalyticsCharts/UniqueVisitors';
 import ClicksAnalyticsChart from '../AnalyticsCharts/ClicksAnalyticsChart';
 import CtrAnalyticsChart from '../AnalyticsCharts/CtrAnalyticsChart';
+import { setOpenTab } from '../../../../../Slices/controllerSlice';
+import { useDispatch } from 'react-redux';
 
 const dateAnalytics = ['Last Week', 'Last 2 Weeks', 'Last Month', 'Last 3 Months', 'Last 6 Months']
 const Analytics = () => {
     const [viewDateAnalytics, setViewDateAnalytics] = useState(false)
     const [selectedDateAnalytics, setSelectedDateAnalytics] = useState('Last Week')
+    const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(setOpenTab(false))
+    }, [])
 
     let dropdownRef = useRef();
     useEffect(() => {
