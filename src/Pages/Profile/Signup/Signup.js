@@ -13,8 +13,12 @@ const Signup = () => {
   const handleSignup = (data) => {
     axios.post(`http://localhost:8000/app/v1/user/signup`, data)
       .then((res) => {
+        localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
         toast.success('User Signup Successfully')
-        navigate('/login')
+        console.log(res.data.data.token);
+        if (localStorage.getItem('HeyLinkToken')) {
+          navigate('/dashboard');
+        }
       });
   };
 
