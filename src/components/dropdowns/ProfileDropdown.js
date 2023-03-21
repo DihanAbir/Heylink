@@ -7,11 +7,21 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
 
 const ProfileDropdown = ({ setViewProfile }) => {
-    const { userData } = useContext(AuthContext)
+    const { userData, setUserData } = useContext(AuthContext)
+
+
     const navigate = useNavigate()
     const handleLogout = () => {
         localStorage.removeItem('HeyLinkToken')
-        navigate('/login')
+
+        setUserData({})
+        setTimeout(() => {
+            navigate('/login')
+        }, [300])
+
+        
+
+
     }
 
     let dropdownRef = useRef();

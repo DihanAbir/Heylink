@@ -1,9 +1,11 @@
 import { TextField } from "@mui/material";
 import axios from "axios";
-import React from "react";
+import React, { useContext } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
 
 const Login = () => {
@@ -12,10 +14,27 @@ const Login = () => {
   const navigate = useNavigate()
   const from = location.state?.from?.pathname || '/'
 
+  const [isLoasding, setIsLoading] = useState(false)
+
+
+  const { setUserData } = useContext(AuthContext)
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
 
+  const refetchNav = (token) => {
+    fetch(`http://localhost:8000/app/v1/user/me`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "content-type": "application/json",
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => setUserData(data?.data));
+     
+  }
+
   const handleLogin = (data) => {
+    setIsLoading(true)
     axios.post(`http://localhost:8000/app/v1/user/login`, data, {
       headers: {
         Authorization: token,
@@ -25,8 +44,24 @@ const Login = () => {
       .then((res) => {
         console.log(res.data.data.token);
         localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
-        toast.success('User Login Successfully')
-        navigate('/dashboard');
+        refetchNav(res?.data?.data?.token)
+
+
+
+        setIsLoading(false)
+        
+        setTimeout(() => {
+          const getToken = localStorage.getItem("HeyLinkToken");
+          console.log('getToken ', getToken )
+          getToken && toast.success('User Login Successfully')
+
+          // getToken && window.location.reload(true)
+
+          getToken &&  navigate('/');
+          
+        }, 1000)
+
+        
       });
   };
   return (
@@ -87,7 +122,7 @@ const Login = () => {
 
             <button type="submit" className="h-12 w-full flex justify-center items-center bg-[#239ae7] text-white rounded-[50px] my-4">
               <h1 className="font-bold" >
-                Log in
+                {!isLoasding ? "Log in" : "Loging loading...."}
               </h1>
             </button>
             <div>
