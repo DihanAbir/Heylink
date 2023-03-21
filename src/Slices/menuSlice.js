@@ -5,7 +5,8 @@ const initialState = {
     viewCurrency: false,
     proModal1: false,
     proModal2: false,
-    menuName: ''
+    menuName: '',
+    menuNameUpdateSuccess: '',
 };
 
 export const menuSlice = createSlice({
@@ -24,6 +25,9 @@ export const menuSlice = createSlice({
         setMenuName: (state, action) => {
             state.menuName = action.payload;
         },
+        setMenuNameUpdateSuccess: (state, action) => {
+            state.menuNameUpdateSuccess = action.payload;
+        },
     },
 });
 
@@ -32,5 +36,6 @@ export const {
     setProModal1,
     setProModal2,
     setMenuName,
+    setMenuNameUpdateSuccess
 } = menuSlice.actions;
 export default menuSlice.reducer;

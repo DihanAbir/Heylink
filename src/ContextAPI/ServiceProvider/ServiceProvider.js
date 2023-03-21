@@ -7,7 +7,7 @@ const ServiceProvider = ({ children }) => {
 
     // handle toggle switch
     const handleDefaultSwitch = (id, toggleData, endPoint) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/${endPoint}/${id}`, {
+        fetch(`http://localhost:8000/app/v1/${endPoint}/${id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -25,7 +25,7 @@ const ServiceProvider = ({ children }) => {
     }
 
     const handleTitleUpdate = (id, data, endPoint) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/${endPoint}/${id}`, {
+        fetch(`http://localhost:8000/app/v1/${endPoint}/${id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

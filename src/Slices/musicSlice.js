@@ -32,6 +32,8 @@ const initialState = {
     search: '',
     newTitle: { id: '', title: '' },
     newURL: { id: '', link: '' },
+    titleUpdateSuccess: { id: '' },
+    urlUpdateSuccess: { id: '' },
 };
 
 export const musicSlice = createSlice({
@@ -50,6 +52,12 @@ export const musicSlice = createSlice({
         setNewURL: (state, action) => {
             state.newURL = action.payload;
         },
+        setTitleUpdateSuccess: (state, action) => {
+            state.titleUpdateSuccess = action.payload;
+        },
+        setUrlUpdateSuccess: (state, action) => {
+            state.urlUpdateSuccess = action.payload;
+        },
     },
 });
 
@@ -57,6 +65,8 @@ export const {
     setErrorUrl,
     setSearch,
     setNewTitle,
-    setNewURL
+    setNewURL,
+    setTitleUpdateSuccess,
+    setUrlUpdateSuccess,
 } = musicSlice.actions;
 export default musicSlice.reducer;

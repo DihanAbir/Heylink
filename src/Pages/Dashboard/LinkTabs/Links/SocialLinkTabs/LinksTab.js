@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import link from "../../../../../assets/icons/link.svg";
 import threeSocial from "../../../../../assets/icons/three-social.svg";
 import uparrow from "../../../../../assets/icons/gif-images/up-arrow.gif";
@@ -25,17 +25,15 @@ const LinksTab = () => {
 
   const handleUrl = (event) => {
     event.preventDefault();
-    // if (!errorUrl) {
-    //   dispatch(setShowError(true))
-    //   return;
-    // }
     const url = event.target.url.value;
     const data = {
       link: url,
-      userInfo: userData,
+      userInfo: userData?._id,
     };
 
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common`, {
+    console.log(data);
+
+    fetch(`http://localhost:8000/app/v1/links/common`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

@@ -17,6 +17,7 @@ const initialState = {
     openUsername: true,
     inputChange: false,
     newUsername: '',
+    userNameUpdateSuccess: false,
 };
 
 export const appearanceSlice = createSlice({
@@ -41,6 +42,9 @@ export const appearanceSlice = createSlice({
         setNewUsername: (state, action) => {
             state.newUsername = action.payload;
         },
+        setUserNameUpdateSuccess: (state, action) => {
+            state.userNameUpdateSuccess = action.payload;
+        },
     },
 });
 
@@ -51,5 +55,6 @@ export const {
     setOpenUsername,
     setInputChange,
     setNewUsername,
+    setUserNameUpdateSuccess,
 } = appearanceSlice.actions;
 export default appearanceSlice.reducer;

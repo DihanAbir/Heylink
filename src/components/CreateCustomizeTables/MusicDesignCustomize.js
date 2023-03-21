@@ -17,7 +17,7 @@ import { ServiceContext } from '../../ContextAPI/ServiceProvider/ServiceProvider
 import { setRenderReducer } from '../../Slices/getDataSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOpen, setOpenInputChange1, setOpenInputChange2, setOpenInputChange3, setDeleteModal, setOpenProModal } from '../../Slices/controllerSlice';
-import { setNewTitle, setNewURL, setSearch } from '../../Slices/musicSlice';
+import { setNewTitle, setNewURL, setSearch, setTitleUpdateSuccess, setUrlUpdateSuccess } from '../../Slices/musicSlice';
 
 
 
@@ -26,7 +26,9 @@ const MusicDesignCustomize = ({ url }) => {
         musics,
         search,
         newTitle,
-        newURL
+        newURL,
+        titleUpdateSuccess,
+        urlUpdateSuccess,
     } = useSelector((state) => state.musicSlice)
     const {
         open,
@@ -59,7 +61,7 @@ const MusicDesignCustomize = ({ url }) => {
     }
 
     const handleTitleUpdate = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/music/${url?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/music/${url?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -72,13 +74,14 @@ const MusicDesignCustomize = ({ url }) => {
                 if (data?.data.acknowledged) {
                     toast.success('Music Title Added')
                     dispatch(setNewTitle({ id: '', title: '' }))
+                    dispatch(setTitleUpdateSuccess({ id: url?._id }))
                     dispatch(setOpenInputChange1(''))
                 }
             })
     }
 
     const handleURLUpdate = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/music/${url?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/music/${url?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -92,6 +95,7 @@ const MusicDesignCustomize = ({ url }) => {
                     toast.success('Music Link Updated')
                     dispatch(setRenderReducer({ render: true }))
                     dispatch(setNewURL({ id: '', link: '' }))
+                    dispatch(setUrlUpdateSuccess({ id: url?._id }))
                     dispatch(setOpenInputChange2(''))
                 }
             })
@@ -163,11 +167,20 @@ const MusicDesignCustomize = ({ url }) => {
                                             disabled={openInputChange1 === url?._id ? false : true}
                                             defaultValue={url?.title ? url.title : url.link} name='' />
                                         {
-                                            newTitle?.id === url?._id && newTitle?.title ? <img
-                                                onClick={() => handleTitleUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                            newTitle?.id === url?._id && newTitle?.title ?
+                                                <button onClick={() => handleTitleUpdate()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                                    <span>SAVE</span>
+                                                </button>
                                                 :
-                                                <img
-                                                    onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : url?._id))} className='w-3 cursor-pointer' src={edit} alt="" />
+                                                <>
+                                                    {
+                                                        titleUpdateSuccess?.id !== url?._id && <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : url?._id))}
+                                                            className='w-4 cursor-pointer' src={edit} alt="" />
+                                                    }
+                                                </>
+                                        }
+                                        {
+                                            titleUpdateSuccess?.id === url?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                                         }
                                     </div>
                                     <p className='text-sm text-gray-500 pl-2'>Title</p>
@@ -181,11 +194,20 @@ const MusicDesignCustomize = ({ url }) => {
                                             disabled={openInputChange2 === url?._id ? false : true}
                                             defaultValue={url.link} name='address' />
                                         {
-                                            newURL?.id === url?._id && newURL?.link ? <img
-                                                onClick={() => handleURLUpdate()} className='w-3 cursor-pointer' src={blueRight} alt="" />
+                                            newURL?.id === url?._id && newURL?.link ?
+                                                <button onClick={() => handleURLUpdate()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                                    <span>SAVE</span>
+                                                </button>
                                                 :
-                                                <img
-                                                    onClick={() => dispatch(setOpenInputChange2(openInputChange2 ? '' : url?._id))} className='w-3 cursor-pointer' src={edit} alt="" />
+                                                <>
+                                                    {
+                                                        urlUpdateSuccess?.id !== url?._id && <img onClick={() => dispatch(setOpenInputChange2(openInputChange2 ? '' : url?._id))}
+                                                            className='w-4 cursor-pointer' src={edit} alt="" />
+                                                    }
+                                                </>
+                                        }
+                                        {
+                                            urlUpdateSuccess?.id === url?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                                         }
                                     </div>
                                     <p className='text-sm text-gray-500 pl-2'>Scan Source</p>

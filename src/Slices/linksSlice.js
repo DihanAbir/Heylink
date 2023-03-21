@@ -10,6 +10,8 @@ const initialState = {
   endDateCalander: '',
   openInputChange1: '',
   openInputChange2: '',
+  linkNameUpdateSuccess: { id: '' },
+  linkURLUpdateSuccess: { id: '' },
   linkName: { id: '', linkName: '' },
   linkURL: { id: '', linkURL: '' },
   imageData: null,
@@ -57,6 +59,12 @@ export const linksSlice = createSlice({
     setImageData: (state, action) => {
       state.imageData = action.payload;
     },
+    setLinkURLUpdateSuccess: (state, action) => {
+      state.linkURLUpdateSuccess = action.payload;
+    },
+    setLinkNameUpdateSuccess: (state, action) => {
+      state.linkNameUpdateSuccess = action.payload;
+    },
 
   },
 });
@@ -74,7 +82,9 @@ export const {
   setOpenInputChange2,
   setLinkName,
   setLinkURL,
-  setImageData
+  setImageData,
+  setLinkNameUpdateSuccess,
+  setLinkURLUpdateSuccess,
 
 } = linksSlice.actions;
 export default linksSlice.reducer;

@@ -13,7 +13,7 @@ const EffectsModal = ({ url }) => {
     const dispatch = useDispatch()
 
     const handleEffect = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

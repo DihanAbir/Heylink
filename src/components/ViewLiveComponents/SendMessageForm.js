@@ -19,7 +19,7 @@ const SendMessageForm = ({ messageData, refetch }) => {
 
     const handleMessageSend = (data) => {
         const newMessage = data.userInfo = userData._id
-        fetch(`https://hey.ahmadalanazi.com/app/v1/all-messages`, {
+        fetch(`http://localhost:8000/app/v1/all-messages`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

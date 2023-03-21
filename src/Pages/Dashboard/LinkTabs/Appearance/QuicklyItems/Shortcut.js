@@ -13,7 +13,7 @@ const Shortcut = () => {
     const { userData, setLoading } = useContext(AuthContext)
 
     const handleShortcut = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

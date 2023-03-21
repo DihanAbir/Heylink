@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
@@ -13,7 +13,6 @@ const DeleteModal = ({ id, endPoint }) => {
   }
 
   const dispatch = useDispatch()
-  // console.log(id, "id");
   let dropdownRef = useRef();
   useEffect(() => {
     let handler = (e) => {
@@ -29,8 +28,7 @@ const DeleteModal = ({ id, endPoint }) => {
 
 
   const DeleteHandle = () => {
-    const url = `https://hey.ahmadalanazi.com/app/v1/links/${endPoint}/${id}`;
-    // console.log(url);
+    const url = `http://localhost:8000/app/v1/links/${endPoint}/${id}`;
     fetch(url, {
       method: "DELETE",
       headers: {

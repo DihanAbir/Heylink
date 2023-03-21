@@ -3,17 +3,19 @@ import arrowRight from '../../../../../assets/icons/appearance-tab-icons/arrowRi
 import arrowDown from '../../../../../assets/icons/appearance-tab-icons/arrowDown.svg'
 import edit from '../../../../../assets/icons/appearance-tab-icons/edit.svg'
 import right from '../../../../../assets/icons/appearance-tab-icons/blue-right.png'
+import blueRight from '../../../../../assets/icons/blue-right.png'
 import AppearanceShareModal from '../../../../../components/Modals/AppearanceModals/AppearanceShareModal';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
-import { setInputChange, setOpenUsername, setNewUsername } from '../../../../../Slices/appearanceSlice';
+import { setInputChange, setOpenUsername, setNewUsername, setUserNameUpdateSuccess } from '../../../../../Slices/appearanceSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const UserName = () => {
     const {
         openUsername,
         inputChange,
-        newUsername
+        newUsername,
+        userNameUpdateSuccess,
     } = useSelector((state) => state.appearanceSlice)
     const dispatch = useDispatch()
     const { userData, setLoading } = useContext(AuthContext)
@@ -21,7 +23,7 @@ const UserName = () => {
     const [viewModal, setViewModal] = useState(false)
 
     const handleUpdate = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -35,6 +37,7 @@ const UserName = () => {
                     toast.success('User Name Updated')
                     setLoading(true)
                     dispatch(setNewUsername(''))
+                    dispatch(setUserNameUpdateSuccess(true))
                     dispatch(setInputChange(false))
                 }
             });
@@ -74,9 +77,20 @@ const UserName = () => {
                                 {
                                     newUsername ? <>
                                         {
-                                            newUsername !== userData?.username ? <img onClick={() => handleUpdate()} className='w-4' src={right} alt="" />
+                                            newUsername !== userData?.username ?
+                                                <button onClick={() => handleUpdate()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                                    <span>SAVE</span>
+                                                </button>
                                                 :
-                                                <img onClick={() => dispatch(setInputChange(!inputChange))} className='w-4' src={edit} alt="" />
+                                                <>
+                                                    {
+                                                        userNameUpdateSuccess === false && <img onClick={() => dispatch(setInputChange(!inputChange))}
+                                                            className='w-4 cursor-pointer' src={edit} alt="" />
+                                                    }
+                                                </>
+                                        }
+                                        {
+                                            userNameUpdateSuccess === true && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                                         }
                                     </>
                                         :

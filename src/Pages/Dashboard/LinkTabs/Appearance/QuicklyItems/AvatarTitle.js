@@ -14,13 +14,14 @@ const AvatarTitle = () => {
     const { userData, setLoading } = useContext(AuthContext)
     const [open, setOpen] = useState(true)
     const [inputChange, setInputChange] = useState(false)
+    const [profileTitleUpdateSuccess, setProfileTitleUpdateSuccess] = useState(false)
     const [newProfileTitle, setNewProfileTitle] = useState('')
     const [viewModal, setViewModal] = useState(false)
 
 
     const handleUpdate = () => {
         const profileTitle = { profiletitle: newProfileTitle }
-        fetch(`https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -34,6 +35,7 @@ const AvatarTitle = () => {
                     toast.success('Profile Title Updated')
                     setNewProfileTitle('')
                     setInputChange(false)
+                    setProfileTitleUpdateSuccess(true)
                     setLoading(true)
                 }
             });
@@ -44,7 +46,7 @@ const AvatarTitle = () => {
         const formData = new FormData();
         formData.append("file", e.target.files[0]);
 
-        const url = `https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`;
+        const url = `http://localhost:8000/app/v1/user/${userData?._id}`;
         fetch(url, {
             method: "PATCH",
             headers: {
@@ -112,14 +114,26 @@ const AvatarTitle = () => {
                             {
                                 newProfileTitle ? <>
                                     {
-                                        newProfileTitle !== userData?.profiletitle ? <img onClick={() => handleUpdate()} className='w-4' src={right} alt="" />
+                                        newProfileTitle !== userData?.profiletitle ?
+                                            <button onClick={() => handleUpdate()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                                <span>SAVE</span>
+                                            </button>
                                             :
-                                            <img onClick={() => setInputChange(!inputChange)} className='w-4' src={edit} alt="" />
+                                            <>
+                                                {
+                                                    profileTitleUpdateSuccess === false && <img onClick={() => setInputChange(!inputChange)}
+                                                        className='w-4 cursor-pointer' src={edit} alt="" />
+                                                }
+                                            </>
                                     }
                                 </>
                                     :
                                     <img onClick={() => setInputChange(!inputChange)} className='w-4' src={edit} alt="" />
                             }
+                            {
+                                profileTitleUpdateSuccess === true && <img className='w-4 cursor-pointer' src={right} alt="" />
+                            }
+
                         </div>
                         <h1 className='text-sm text-gray-500 flex items-center gap-2 mt-2'>
                             <span>Profile Title</span>

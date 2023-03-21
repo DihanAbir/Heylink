@@ -8,18 +8,18 @@ import deletes from "../../assets/icons/link-customize-icons/delete.svg";
 import DeleteModal from "../Modals/CommonModals/DeleteModal";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { setSocialLinkName } from "../../Slices/socialSlice";
+import { setSocialLinkName, setSocialLinkNameUpdateSuccess } from "../../Slices/socialSlice";
 import { setOpen, setDeleteModal, setOpenInputChange1 } from "../../Slices/controllerSlice";
 import { setRenderReducer } from "../../Slices/getDataSlice";
 
 const AllSocialLinks = ({ socialLink }) => {
-  const { socialLinkName } = useSelector((state) => state.socialSlice)
+  const { socialLinkName, socialLinkNameUpdateSuccess } = useSelector((state) => state.socialSlice)
   const { open, deleteModal, openInputChange1 } = useSelector((state) => state.controllerSlice)
   const dispatch = useDispatch()
 
   // handle update social link name
   const handleUpdateSocialLinkName = () => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social/${socialLink?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -33,6 +33,7 @@ const AllSocialLinks = ({ socialLink }) => {
           toast.success('Link URL Updated')
           dispatch(setRenderReducer({ render: true }))
           dispatch(setSocialLinkName({ id: '', linkName: '' }))
+          dispatch(setSocialLinkNameUpdateSuccess({ id: socialLink?._id }))
           dispatch(setOpenInputChange1(''))
         }
       })
@@ -45,7 +46,7 @@ const AllSocialLinks = ({ socialLink }) => {
   }
 
   const handleButtonORIcon = (input) => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social/${socialLink?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -96,11 +97,20 @@ const AllSocialLinks = ({ socialLink }) => {
                   name="linkName"
                 />
                 {
-                  socialLinkName?.id === socialLink?._id && socialLinkName.linkName ? <img onClick={() => handleUpdateSocialLinkName()}
-                    className='w-4 cursor-pointer' src={blueRight} alt="" />
+                  socialLinkName?.id === socialLink?._id && socialLinkName.linkName ?
+                    <button onClick={() => handleUpdateSocialLinkName()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                      <span>SAVE</span>
+                    </button>
                     :
-                    <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : socialLink?._id))}
-                      className='w-4 cursor-pointer' src={edit} alt="" />
+                    <>
+                      {
+                        socialLinkNameUpdateSuccess?.id !== socialLink?._id && <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : socialLink?._id))}
+                          className='w-4 cursor-pointer' src={edit} alt="" />
+                      }
+                    </>
+                }
+                {
+                  socialLinkNameUpdateSuccess?.id === socialLink?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                 }
               </div>
             </div>

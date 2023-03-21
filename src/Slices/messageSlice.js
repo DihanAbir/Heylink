@@ -7,6 +7,11 @@ const initialState = {
     emailPlaceholderText: '',
     phoneNumberPlaceholderText: '',
     allMessages: [],
+    messageTextUpdateSuccess: false,
+    successMessageTextUpdateSuccess: false,
+    namePlaceholderUpdateSuccess: false,
+    emailPlaceholderUpdateSuccess: false,
+    phoneNumberPlaceholderUpdateSuccess: false,
 };
 
 export const messageSlice = createSlice({
@@ -31,6 +36,21 @@ export const messageSlice = createSlice({
         setAllMessages: (state, action) => {
             state.allMessages = action.payload;
         },
+        setMessageTextUpdateSuccess: (state, action) => {
+            state.messageTextUpdateSuccess = action.payload;
+        },
+        setSuccessMessageTextUpdateSuccess: (state, action) => {
+            state.successMessageTextUpdateSuccess = action.payload;
+        },
+        setNamePlaceholderUpdateSuccess: (state, action) => {
+            state.namePlaceholderUpdateSuccess = action.payload;
+        },
+        setEmailPlaceholderUpdateSuccess: (state, action) => {
+            state.emailPlaceholderUpdateSuccess = action.payload;
+        },
+        setPhoneNumberPlaceholderUpdateSuccess: (state, action) => {
+            state.phoneNumberPlaceholderUpdateSuccess = action.payload;
+        },
     },
 });
 
@@ -40,6 +60,11 @@ export const {
     setNamePlaceholderText,
     setEmailPlaceholderText,
     setPhoneNumberPlaceholderText,
-    setAllMessages
+    setAllMessages,
+    setMessageTextUpdateSuccess,
+    setSuccessMessageTextUpdateSuccess,
+    setNamePlaceholderUpdateSuccess,
+    setEmailPlaceholderUpdateSuccess,
+    setPhoneNumberPlaceholderUpdateSuccess,
 } = messageSlice.actions;
 export default messageSlice.reducer;

@@ -44,6 +44,7 @@ const initialState = {
     search: false,
     inputError: '',
     socialLinkName: { id: '', linkName: '' },
+    socialLinkNameUpdateSuccess: { id: '' },
 };
 
 export const socialSlice = createSlice({
@@ -71,6 +72,9 @@ export const socialSlice = createSlice({
         setSocialLinkName: (state, action) => {
             state.socialLinkName = action.payload;
         },
+        setSocialLinkNameUpdateSuccess: (state, action) => {
+            state.socialLinkNameUpdateSuccess = action.payload;
+        },
 
     },
 });
@@ -83,5 +87,6 @@ export const {
     setSearch,
     setInputError,
     setSocialLinkName,
+    setSocialLinkNameUpdateSuccess
 } = socialSlice.actions;
 export default socialSlice.reducer;

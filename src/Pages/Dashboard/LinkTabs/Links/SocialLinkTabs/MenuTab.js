@@ -19,14 +19,14 @@ const MenuTab = () => {
     const handleAddMenu = () => {
         const data = {
             name: 'My Manu',
-            userInfo: userData,
+            userInfo: userData?._id,
             currency: 'USD',
             item: {
                 itemText: '',
                 ItemPrice: ''
             },
         };
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu`, {
+        fetch(`http://localhost:8000/app/v1/links/menu`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

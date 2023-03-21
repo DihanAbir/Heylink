@@ -27,9 +27,9 @@ const LocationsTab = () => {
 
         const data = {
             name: selectLocation,
-            userInfo: userData,
+            userInfo: userData?._id,
         };
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location`, {
+        fetch(`http://localhost:8000/app/v1/links/location`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

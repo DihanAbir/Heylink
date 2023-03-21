@@ -18,7 +18,9 @@ const initialState = {
     selectedLocation: '',
     search: false,
     newAddress: { id: '', address: '' },
-    markersOnTheMapAddress: { id: '', address: '' }
+    markersOnTheMapAddress: { id: '', address: '' },
+    locationAddressUpdateSuccess: { id: '' },
+    mapAddressUpdateSuccess: { id: '' },
 };
 
 export const locationSlice = createSlice({
@@ -37,6 +39,12 @@ export const locationSlice = createSlice({
         setMarkersOnTheMapAddress: (state, action) => {
             state.markersOnTheMapAddress = action.payload;
         },
+        setLocationAddressUpdateSuccess: (state, action) => {
+            state.locationAddressUpdateSuccess = action.payload;
+        },
+        setMapAddressUpdateSuccess: (state, action) => {
+            state.mapAddressUpdateSuccess = action.payload;
+        },
     },
 });
 
@@ -44,6 +52,8 @@ export const {
     setSelectedLocation,
     setSearch,
     setNewAddress,
-    setMarkersOnTheMapAddress
+    setMarkersOnTheMapAddress,
+    setLocationAddressUpdateSuccess,
+    setMapAddressUpdateSuccess,
 } = locationSlice.actions;
 export default locationSlice.reducer;

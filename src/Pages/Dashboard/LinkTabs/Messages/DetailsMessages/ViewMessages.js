@@ -6,7 +6,7 @@ import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwi
 import edit from "../../../../../assets/icons/link-customize-icons/edit.svg";
 import blueRight from '../../../../../assets/icons/blue-right.png'
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmailPlaceholderText, setMessageText, setNamePlaceholderText, setPhoneNumberPlaceholderText, setSuccessMessageText } from '../../../../../Slices/messageSlice';
+import { setEmailPlaceholderText, setEmailPlaceholderUpdateSuccess, setMessageText, setMessageTextUpdateSuccess, setNamePlaceholderText, setNamePlaceholderUpdateSuccess, setPhoneNumberPlaceholderText, setPhoneNumberPlaceholderUpdateSuccess, setSuccessMessageText, setSuccessMessageTextUpdateSuccess } from '../../../../../Slices/messageSlice';
 import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../../../../ContextAPI/ServiceProvider/ServiceProvider';
 import ChackedSwitch from '../../../../../components/ToggleSwitch/ChackedSwitch';
@@ -18,6 +18,11 @@ const ViewMessages = ({ message }) => {
         namePlaceholderText,
         emailPlaceholderText,
         phoneNumberPlaceholderText,
+        messageTextUpdateSuccess,
+        successMessageTextUpdateSuccess,
+        namePlaceholderUpdateSuccess,
+        emailPlaceholderUpdateSuccess,
+        phoneNumberPlaceholderUpdateSuccess,
     } = useSelector((state) => state.messageSlice)
     const dispatch = useDispatch()
     const { handleDefaultSwitch } = useContext(ServiceContext)
@@ -35,7 +40,7 @@ const ViewMessages = ({ message }) => {
     const [customField3, setCustomField3] = useState('')
 
     const handleUpdateMessageText = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -46,13 +51,14 @@ const ViewMessages = ({ message }) => {
             .then(res => res.json())
             .then((data) => {
                 toast.success('Update Successfully')
+                dispatch(setMessageTextUpdateSuccess(true))
                 dispatch(setMessageText(''))
             });
     }
 
 
     const handleUpdateSuccessMessageText = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -63,6 +69,7 @@ const ViewMessages = ({ message }) => {
             .then(res => res.json())
             .then((data) => {
                 toast.success('Update Successfully')
+                dispatch(setSuccessMessageTextUpdateSuccess(true))
                 dispatch(setSuccessMessageText(''))
             });
     }
@@ -80,7 +87,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleNameFieldChacked = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -95,7 +102,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleEmailFieldChacked = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -109,7 +116,7 @@ const ViewMessages = ({ message }) => {
             });
     }
     const handlePhoneNumberFieldChacked = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -124,7 +131,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleUpdateNamePlaceholder = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -135,11 +142,14 @@ const ViewMessages = ({ message }) => {
             .then(res => res.json())
             .then((data) => {
                 toast.success('Update Successfully')
+                dispatch(setNamePlaceholderUpdateSuccess(true))
                 dispatch(setNamePlaceholderText(''))
             });
     }
+
+
     const handleUpdateEmailPlaceholder = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -150,11 +160,12 @@ const ViewMessages = ({ message }) => {
             .then(res => res.json())
             .then((data) => {
                 toast.success('Update Successfully')
+                dispatch(setEmailPlaceholderUpdateSuccess(true))
                 dispatch(setEmailPlaceholderText(''))
             });
     }
     const handleUpdatePhoneNumberPlaceholder = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -165,6 +176,7 @@ const ViewMessages = ({ message }) => {
             .then(res => res.json())
             .then((data) => {
                 toast.success('Update Successfully')
+                dispatch(setPhoneNumberPlaceholderUpdateSuccess(true))
                 dispatch(setPhoneNumberPlaceholderText(''))
             });
     }
@@ -213,11 +225,13 @@ const ViewMessages = ({ message }) => {
                         <input onChange={(e) => handleMessageTextValild(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none' type="text" name='messageText' id='messageText'
                             defaultValue={message?.messageText ? message?.messageText : 'Leave your message here...'} />
                         {
-                            messageText && <button onClick={() => handleUpdateMessageText()}
-                                className='w-10 h-10 p-2 rounded-md hover:bg-gray-200 cursor-pointer absolute right-3 bottom-0 flex justify-center items-center'>
-                                <img
-                                    className='w-full' src={blueRight} alt="" />
+                            messageText &&
+                            <button onClick={() => handleUpdateMessageText()} className="w-12 h-8 absolute right-3 bottom-0 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                <span>SAVE</span>
                             </button>
+                        }
+                        {
+                            messageTextUpdateSuccess === true && <img className='w-4 absolute right-3 bottom-0 cursor-pointer' src={blueRight} alt="" />
                         }
                     </div>
 
@@ -226,11 +240,13 @@ const ViewMessages = ({ message }) => {
                         <input onChange={(e) => handleSuccessMessageTextValid(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none' type="text" name='successMessageText' id='successMessageText'
                             defaultValue={message?.successMessageText ? message?.successMessageText : 'Your message was sent successfully!'} />
                         {
-                            successMessageText && <button onClick={() => handleUpdateSuccessMessageText()}
-                                className='w-10 h-10 p-2 rounded-md hover:bg-gray-200 cursor-pointer absolute right-3 bottom-0 flex justify-center items-center'>
-                                <img
-                                    className='w-full' src={blueRight} alt="" />
+                            successMessageText &&
+                            <button onClick={() => handleUpdateSuccessMessageText()} className="w-12 h-8 absolute right-3 bottom-0 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                <span>SAVE</span>
                             </button>
+                        }
+                        {
+                            successMessageTextUpdateSuccess === true && <img className='w-4 absolute right-3 bottom-0 cursor-pointer' src={blueRight} alt="" />
                         }
                     </div>
                 </div>
@@ -252,10 +268,13 @@ const ViewMessages = ({ message }) => {
                     <input onChange={(e) => handleNamePlaceholderValid(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='name' id='name'
                         defaultValue={message?.namePlaceholder ? message?.namePlaceholder : 'Your Name'} />
                     {
-                        namePlaceholderText && <button onClick={() => handleUpdateNamePlaceholder()}
-                            className='w-8 h-8 p-1 rounded-md hover:bg-gray-200 cursor-pointer flex justify-center items-center'>
-                            <img className='w-full' src={blueRight} alt="" />
+                        namePlaceholderText &&
+                        <button onClick={() => handleUpdateNamePlaceholder()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                            <span>SAVE</span>
                         </button>
+                    }
+                    {
+                        namePlaceholderUpdateSuccess === true && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                     }
                 </div>
 
@@ -277,10 +296,13 @@ const ViewMessages = ({ message }) => {
                         className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='email' id='email'
                         defaultValue={message?.emailPlaceholder ? message?.emailPlaceholder : 'Your Email Address'} />
                     {
-                        emailPlaceholderText && <button onClick={() => handleUpdateEmailPlaceholder()}
-                            className='w-8 h-8 p-1 rounded-md hover:bg-gray-200 cursor-pointer flex justify-center items-center'>
-                            <img className='w-full' src={blueRight} alt="" />
+                        emailPlaceholderText &&
+                        <button onClick={() => handleUpdateEmailPlaceholder()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                            <span>SAVE</span>
                         </button>
+                    }
+                    {
+                        emailPlaceholderUpdateSuccess === true && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                     }
                 </div>
 
@@ -304,10 +326,13 @@ const ViewMessages = ({ message }) => {
                         className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='phone' id='phone'
                         defaultValue={message?.phoneNumberPlaceholder ? message?.phoneNumberPlaceholder : 'Your Phone Number'} />
                     {
-                        phoneNumberPlaceholderText && <button onClick={() => handleUpdatePhoneNumberPlaceholder()}
-                            className='w-8 h-8 p-1 rounded-md hover:bg-gray-200 cursor-pointer flex justify-center items-center'>
-                            <img className='w-full' src={blueRight} alt="" />
+                        phoneNumberPlaceholderText &&
+                        <button onClick={() => handleUpdatePhoneNumberPlaceholder()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                            <span>SAVE</span>
                         </button>
+                    }
+                    {
+                        phoneNumberPlaceholderUpdateSuccess === true && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                     }
                 </div>
 

@@ -21,7 +21,7 @@ import { Buffer } from "buffer";
 import DefaultSwitch from "../ToggleSwitch/DefaultSwitch";
 import CalanderData from "../Modals/CalanderModals/CalanderData";
 import { toast } from "react-hot-toast";
-import { setEndDateCalander, setFastLinkProModal, setLinkName, setLinkURL, setOpenEffcetsModal, setOpenInputChange1, setOpenInputChange2, setOpenSchedule, setStartDateCalander } from "../../Slices/linksSlice";
+import { setEndDateCalander, setFastLinkProModal, setLinkName, setLinkNameUpdateSuccess, setLinkURL, setLinkURLUpdateSuccess, setOpenEffcetsModal, setOpenInputChange1, setOpenInputChange2, setOpenSchedule, setStartDateCalander } from "../../Slices/linksSlice";
 import { setOpen, setUploadImageModal, setDeleteModal } from "../../Slices/controllerSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { setRenderReducer } from "../../Slices/getDataSlice";
@@ -38,7 +38,9 @@ const CreateLinkCustomize = ({ url }) => {
     openInputChange1,
     openInputChange2,
     linkName,
-    linkURL
+    linkURL,
+    linkURLUpdateSuccess,
+    linkNameUpdateSuccess,
   } = useSelector((state) => state.linksSlice);
   const { open, uploadImageModal, deleteModal } = useSelector((state) => state.controllerSlice);
   const { loader, handleDefaultSwitch } = useContext(ServiceContext)
@@ -55,7 +57,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link name update--------------
   const handleUpdateLinkName = () => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -69,6 +71,7 @@ const CreateLinkCustomize = ({ url }) => {
           toast.success('Link Title Updated')
           dispatch(setRenderReducer({ render: true }))
           dispatch(setLinkName({ id: '', linkName: '' }))
+          dispatch(setLinkNameUpdateSuccess({ id: url?._id }))
           dispatch(setOpenInputChange1(''))
         }
       })
@@ -76,7 +79,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link url update--------------
   const handleUpdateLinkURL = () => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -90,6 +93,7 @@ const CreateLinkCustomize = ({ url }) => {
           toast.success('Link URL Updated')
           dispatch(setRenderReducer({ render: true }))
           dispatch(setLinkURL({ id: '', linkURL: '' }))
+          dispatch(setLinkURLUpdateSuccess({ id: url?._id }))
           dispatch(setOpenInputChange2(''))
         }
       })
@@ -110,7 +114,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   const handleActiveFrom = (date) => {
     const startDate = new Date(date);
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -131,7 +135,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   const handleActiveUntile = (date) => {
     const endDate = new Date(date);
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -150,7 +154,7 @@ const CreateLinkCustomize = ({ url }) => {
   }
 
   const handleMoveUpdate = (input) => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -182,7 +186,7 @@ const CreateLinkCustomize = ({ url }) => {
     const formData = new FormData();
     formData.append("file", data.image[0]);
 
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
@@ -235,11 +239,20 @@ const CreateLinkCustomize = ({ url }) => {
                 defaultValue={url.linkTitle ? url.linkTitle : url?.link} name="linkName"
               />
               {
-                linkName?.id === url?._id && linkName.linkName ? <img onClick={() => handleUpdateLinkName()}
-                  className='w-4 cursor-pointer' src={blueRight} alt="" />
+                linkName?.id === url?._id && linkName.linkName ?
+                  <button onClick={() => handleUpdateLinkName()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                    <span>SAVE</span>
+                  </button>
                   :
-                  <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : url?._id))}
-                    className='w-4 cursor-pointer' src={edit} alt="" />
+                  <>
+                    {
+                      linkNameUpdateSuccess?.id !== url?._id && <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : url?._id))}
+                        className='w-4 cursor-pointer' src={edit} alt="" />
+                    }
+                  </>
+              }
+              {
+                linkNameUpdateSuccess?.id === url?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
               }
             </div>
 
@@ -254,12 +267,22 @@ const CreateLinkCustomize = ({ url }) => {
                   type="text" disabled={openInputChange2 === url?._id ? false : true}
                   defaultValue={url?.link} name="linkURL" />
               </div>
+
               {
-                linkURL?.id === url?._id && linkURL.linkURL ? <img onClick={() => handleUpdateLinkURL()}
-                  className='w-4 cursor-pointer' src={blueRight} alt="" />
+                linkURL?.id === url?._id && linkURL.linkURL ?
+                  <button onClick={() => handleUpdateLinkURL()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                    <span>SAVE</span>
+                  </button>
                   :
-                  <img onClick={() => dispatch(setOpenInputChange2(openInputChange2 ? '' : url?._id))}
-                    className='w-4 cursor-pointer' src={edit} alt="" />
+                  <>
+                    {
+                      linkURLUpdateSuccess?.id !== url?._id && <img onClick={() => dispatch(setOpenInputChange2(openInputChange2 ? '' : url?._id))}
+                        className='w-4 cursor-pointer' src={edit} alt="" />
+                    }
+                  </>
+              }
+              {
+                linkURLUpdateSuccess?.id === url?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
               }
             </div>
           </div>

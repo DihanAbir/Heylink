@@ -22,7 +22,7 @@ const ImageUploadModal = ({ url, endPoint }) => {
     const formData = new FormData();
     formData.append("file", data.image[0]);
 
-    const url = `https://hey.ahmadalanazi.com/app/v1/links/${endPoint}/${imageID}`;
+    const url = `http://localhost:8000/app/v1/links/${endPoint}/${imageID}`;
     fetch(url, {
       method: "PATCH",
       headers: {

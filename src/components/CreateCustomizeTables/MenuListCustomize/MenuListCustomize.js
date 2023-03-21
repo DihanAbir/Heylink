@@ -17,7 +17,7 @@ import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../../ContextAPI/ServiceProvider/ServiceProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOpen, setDeleteModal, setOpenInputChange1 } from '../../../Slices/controllerSlice';
-import { setMenuName, setProModal1, setProModal2, setViewCurrency } from '../../../Slices/menuSlice';
+import { setMenuName, setMenuNameUpdateSuccess, setProModal1, setProModal2, setViewCurrency } from '../../../Slices/menuSlice';
 import { setRenderReducer } from '../../../Slices/getDataSlice';
 
 const MenuListCustomize = ({ menu }) => {
@@ -26,7 +26,8 @@ const MenuListCustomize = ({ menu }) => {
         viewCurrency,
         proModal1,
         proModal2,
-        menuName
+        menuName,
+        menuNameUpdateSuccess
     } = useSelector((state) => state.menuSlice)
     const { open, deleteModal, openInputChange1 } = useSelector((state) => state.controllerSlice)
     const dispatch = useDispatch()
@@ -40,7 +41,7 @@ const MenuListCustomize = ({ menu }) => {
     }
 
     const handleMenuItems = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu`, {
+        fetch(`http://localhost:8000/app/v1/links/menu`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -57,7 +58,7 @@ const MenuListCustomize = ({ menu }) => {
     }
 
     const handleUpdateMenuName = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu/${menu?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/menu/${menu?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -71,13 +72,14 @@ const MenuListCustomize = ({ menu }) => {
                     toast.success('Menu Name Added')
                     dispatch(setMenuName(''))
                     dispatch(setRenderReducer({ render: true }))
+                    dispatch(setMenuNameUpdateSuccess(menu?._id))
                     dispatch(setOpenInputChange1(''))
                 }
             })
     }
 
     const handleCurrency = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu/${menu?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/menu/${menu?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -129,11 +131,20 @@ const MenuListCustomize = ({ menu }) => {
                         <input onChange={(e) => handleMenuName(e.target.value)}
                             className='flex-grow focus:outline-none text-red-500 border-none w-full h-12 px-4 bg-gray-200' name='menuName' type="text" defaultValue={menu?.name && menu.name} placeholder='Please enter the name of the menu or price list' />
                         {
-                            menuName ? <img onClick={() => handleUpdateMenuName()}
-                                className='w-4 cursor-pointer' src={blueRight} alt="" />
+                            menuName ?
+                                <button onClick={() => handleUpdateMenuName()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                    <span>SAVE</span>
+                                </button>
                                 :
-                                <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : menu?._id))}
-                                    className='w-4 cursor-pointer' src={edit} alt="" />
+                                <>
+                                    {
+                                        menuNameUpdateSuccess !== menu?._id && <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : menu?._id))}
+                                            className='w-4 cursor-pointer' src={edit} alt="" />
+                                    }
+                                </>
+                        }
+                        {
+                            menuNameUpdateSuccess === menu?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                         }
                     </div>
 
@@ -146,7 +157,7 @@ const MenuListCustomize = ({ menu }) => {
                             {
                                 deleteModal === menu?._id && <DeleteModal
                                     endPoint={"menu"}
-                                    id={menu._id}
+                                    id={menu?._id}
                                 ></DeleteModal>
                             }
                         </div>

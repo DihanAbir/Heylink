@@ -50,9 +50,7 @@ const LinkTabs = () => {
                 <div className='flex items-center md:flex-wrap gap-4 md:gap-8 px-5 md:px-12'>
                     <Link to='/dashboard'
                         className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${openTab === true && ' border-green-600 text-blue-600 border-b-4'} 
-                    
-                    `}>
+                    ${openTab === true && ' border-green-600 text-blue-600 border-b-4'}`}>
                         <button className=''>Links</button>
                     </Link>
 

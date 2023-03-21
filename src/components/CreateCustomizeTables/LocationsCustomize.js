@@ -18,12 +18,14 @@ import ImageUploadModal from '../Modals/CustomizeLinkModals/ImageUploadModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRenderReducer } from '../../Slices/getDataSlice';
 import { setOpen, setOpenInputChange1, setOpenInputChange2, setDeleteModal, setUploadImageModal } from '../../Slices/controllerSlice';
-import { setMarkersOnTheMapAddress, setNewAddress } from '../../Slices/locationSlice';
+import { setLocationAddressUpdateSuccess, setMapAddressUpdateSuccess, setMarkersOnTheMapAddress, setNewAddress } from '../../Slices/locationSlice';
 
 const LocationsCustomize = ({ location }) => {
     const {
         newAddress,
-        markersOnTheMapAddress
+        markersOnTheMapAddress,
+        locationAddressUpdateSuccess,
+        mapAddressUpdateSuccess,
     } = useSelector((state) => state.locationSlice)
     const {
         open,
@@ -44,7 +46,7 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const handleUpdateMarkerOnTheMapAddress = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/location/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -58,13 +60,14 @@ const LocationsCustomize = ({ location }) => {
                     toast.success('Location Updated')
                     dispatch(setRenderReducer({ render: true }))
                     dispatch(setMarkersOnTheMapAddress({ id: '', address: '' }))
+                    dispatch(setMapAddressUpdateSuccess({ id: location?._id }))
                     dispatch(setOpenInputChange2(location?._id))
                 }
             })
     }
 
     const handleUpdateLocation = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/location/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -78,6 +81,7 @@ const LocationsCustomize = ({ location }) => {
                     toast.success('Location Updated')
                     dispatch(setRenderReducer({ render: true }))
                     dispatch(setNewAddress({ id: '', address: '' }))
+                    dispatch(setLocationAddressUpdateSuccess({ id: location?._id }))
                     dispatch(setOpenInputChange1(''))
                 }
             })
@@ -158,13 +162,20 @@ const LocationsCustomize = ({ location }) => {
                                 className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 
                                 ${openInputChange1 === location?._id ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={location?.name} name='address' />
                             {
-                                newAddress?.id === location?._id && newAddress?.address ? <img
-                                    onClick={() => handleUpdateLocation()}
-                                    className='w-4 cursor-pointer' src={blueRight} alt="" />
+                                newAddress?.id === location?._id && newAddress?.address ?
+                                    <button onClick={() => handleUpdateLocation()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                        <span>SAVE</span>
+                                    </button>
                                     :
-                                    <img
-                                        onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : location?._id))}
-                                        className='w-4 cursor-pointer' src={edit} alt="" />
+                                    <>
+                                        {
+                                            locationAddressUpdateSuccess?.id !== location?._id && <img onClick={() => dispatch(setOpenInputChange1(openInputChange1 ? '' : location?._id))}
+                                                className='w-4 cursor-pointer' src={edit} alt="" />
+                                        }
+                                    </>
+                            }
+                            {
+                                locationAddressUpdateSuccess?.id === location?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
                             }
                         </div>
                     </div>
@@ -200,13 +211,20 @@ const LocationsCustomize = ({ location }) => {
                                     defaultValue={location?.markersOnMap ? location?.markersOnMap?.slice(0, 80) : location?.name?.slice(0, 80)} />
                             </div>
                             {
-                                markersOnTheMapAddress?.id === location?._id && markersOnTheMapAddress?.address && <img
-                                    onClick={() => handleUpdateMarkerOnTheMapAddress()}
-                                    className='w-4 cursor-pointer' src={blueRight} alt="" />
+                                markersOnTheMapAddress?.id === location?._id && markersOnTheMapAddress?.address &&
+                                <button onClick={() => handleUpdateMarkerOnTheMapAddress()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                    <span>SAVE</span>
+                                </button>
                             }
 
-                            {openInputChange2 === location?._id && <img
-                                onClick={() => dispatch(setOpenInputChange2(''))} className='w-3' src={edit} alt="" />}
+                            {
+                                openInputChange2 === location?._id && mapAddressUpdateSuccess?.id !== location?._id &&
+                                <img
+                                    onClick={() => dispatch(setOpenInputChange2(''))} className='w-3' src={edit} alt="" />
+                            }
+                            {
+                                mapAddressUpdateSuccess?.id === location?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
+                            }
                         </div>
                         {/* <div className='flex items-center gap-4 mt-4'>
                             <img src={add} alt="" />
