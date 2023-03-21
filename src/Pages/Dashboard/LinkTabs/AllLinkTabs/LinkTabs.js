@@ -13,7 +13,7 @@ const LinkTabs = () => {
     const { pathname } = useLocation()
     const { openTab } = useSelector((state) => state.controllerSlice)
     const dispatch = useDispatch()
-    // console.log(pathname);
+    console.log(pathname === '/dashboard/appearance');
 
     useEffect(() => {
         dispatch(setOpenTab(true))
@@ -49,27 +49,27 @@ const LinkTabs = () => {
 
                 <div className='flex items-center md:flex-wrap gap-4 md:gap-8 px-5 md:px-12'>
                     <Link to='/dashboard'
-                        className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${openTab === true && ' border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`text-gray-500 pb-2 pt-2 
+                    ${openTab === true ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white '}`}>
                         <button className=''>Links</button>
                     </Link>
 
                     <Link to='/dashboard/appearance'
-                        className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/appearance' && 'border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`text-gray-500 pb-2 pt-2
+                    ${pathname === '/dashboard/appearance' ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white'}`}>
                         <button className=''>Appearance</button>
                     </Link>
 
                     {/* to='/dashboard/settings' onClick={() => setViewTab(3)} */}
                     <div id='settingTooltip'
-                        className={`cursor-not-allowed text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/settings' && ' border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`cursor-not-allowed text-gray-500 pb-2 pt-2 
+                    ${pathname === '/dashboard/settings' ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white'}`}>
                         <button className='cursor-not-allowed'>Settings</button>
                     </div>
 
                     <Link to='/dashboard/billing/subscription' onClick={() => setViewTab(4)}
-                        className={`text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/billing/subscription' && ' border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`text-gray-500 pb-2 pt-2
+                    ${pathname === '/dashboard/billing/subscription' ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white'}`}>
                         <button className=''>PRO</button>
                     </Link>
 
@@ -134,14 +134,14 @@ const LinkTabs = () => {
                     {/* -------only md + device show--------- start */}
                     {/* <Link to='/dashboard/analytics' onClick={() => setViewTab(5)}
                         className={`hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/analytics' && ' border-green-600 text-blue-600 border-b-4'}`}>
+                    ${pathname === '/dashboard/analytics'? ' border-green-600 text-blue-600 border-b-4':'border-b-4 border-white'}`}>
                         <button className=''>Analytics</button>
                     </Link> */}
 
                     {/* to='/dashboard/earn' onClick={() => setViewTab(6)} */}
                     <div id='earnTooltip'
-                        className={`cursor-not-allowed relative hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/earn' && ' border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`cursor-not-allowed relative hidden md:block text-gray-500 pb-2 pt-2
+                    ${pathname === '/dashboard/earn' ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white'}`}>
                         <button className='cursor-not-allowed'>Earn</button>
                         {/* beta budget */}
                         <div className='absolute top-0 -right-4 bg-blue-400 h-4 w-8 flex justify-center items-center rounded-[50px]'>
@@ -151,27 +151,27 @@ const LinkTabs = () => {
 
                     {/* to='/dashboard/store' onClick={() => setViewTab(7)} */}
                     <div id='storeTooltip'
-                        className={`cursor-not-allowed hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/store' && ' border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`cursor-not-allowed hidden md:block text-gray-500 pb-2 pt-2  
+                    ${pathname === '/dashboard/store' ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white'}`}>
                         <button className='cursor-not-allowed'>Store</button>
                     </div>
 
                     <Link to='/dashboard/signups' onClick={() => setViewTab(8)}
-                        className={`hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/signups' && ' border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`hidden md:block text-gray-500 pb-2 pt-2  
+                    ${pathname === '/dashboard/signups' ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white'}`}>
                         <button className=''>Signups</button>
                     </Link>
 
                     <Link to='/dashboard/messages' onClick={() => setViewTab(9)}
-                        className={`hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/messages' && ' border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`hidden md:block text-gray-500 pb-2 pt-2 
+                    ${pathname === '/dashboard/messages' ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white'}`}>
                         <button className=''>Messages</button>
                     </Link>
 
                     {/* to='/dashboard/integrations' onClick={() => setViewTab(10)} */}
                     <div id='integrationTooltip' to=''
-                        className={`cursor-not-allowed relative hidden md:block text-gray-500 pb-2 pt-2 border-b-4 border-white  
-                    ${pathname === '/dashboard/integrations' && ' border-green-600 text-blue-600 border-b-4'}`}>
+                        className={`cursor-not-allowed relative hidden md:block text-gray-500 pb-2 pt-2 
+                    ${pathname === '/dashboard/integrations' ? ' border-green-600 text-blue-600 border-b-4' : 'border-b-4 border-white'}`}>
                         <button className='cursor-not-allowed'>Integrations</button>
                         {/* new budget */}
                         <div className='absolute top-0 -right-4 bg-green-400 h-4 w-8 flex justify-center items-center rounded-[50px]'>
