@@ -2,15 +2,25 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DropdownCountries from '../../../components/dropdowns/DropdownCountries';
+import avatar from '../../../assets/avatars/user-avatar.png'
 import logo from '../../../assets/logo/logo.png'
 import ServicesDropdown from '../../../components/dropdowns/ServicesDropdown';
 import { AuthContext } from '../../../ContextAPI/AuthProvider/AuthProvider';
+import ProfileDropdown from '../../../components/dropdowns/ProfileDropdown';
+import { Buffer } from "buffer";
 
 const Navber = () => {
     const { userData } = useContext(AuthContext)
     const [open, setOpen] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [viewServices, setViewServices] = useState(false)
+    const [viewProfile, setViewProfile] = useState(false)
+
+    // image convarte buffer
+    const buff = Buffer.from(
+        userData?.image?.data?.data ? userData?.image?.data?.data : avatar
+    );
+    const base64 = buff?.toString("base64");
 
     let dropdownRef = useRef();
     useEffect(() => {
@@ -61,12 +71,22 @@ const Navber = () => {
                         </Link>
                     }
 
-                    <div onClick={() => setDropdown(!dropdown)} className='relative inline-block'>
+                    {/* <div onClick={() => setDropdown(!dropdown)} className='relative inline-block'>
                         <img className='w-6 md:w-8' src="https://cdn-f.heylink.me/static/img/lang-flags/en.svg" alt="" />
                         {
                             dropdown && <DropdownCountries />
                         }
-                    </div>
+                    </div> */}
+
+                    {
+                        userData?._id && <div className='relative'>
+                            <img onClick={() => setViewProfile(!viewProfile)} className='rounded-full w-12 h-12'
+                                src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`} alt="" />
+                            {
+                                viewProfile && <ProfileDropdown setViewProfile={setViewProfile} />
+                            }
+                        </div>
+                    }
 
                     {/* only small device show */}
                     {

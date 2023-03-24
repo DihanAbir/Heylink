@@ -8,11 +8,12 @@ import PageLoader from "../../../../../components/loaders/PageLoader";
 import { AuthContext } from "../../../../../ContextAPI/AuthProvider/AuthProvider";
 import useFetch from "../../../../../Hoock/Hoock";
 import { setRenderReducer } from "../../../../../Slices/getDataSlice";
-import { setInputError, setSearch, setSelectedSocial, setSocialImg, setUsernamePlaceholder } from "../../../../../Slices/socialSlice";
+import { setInputError, setSearch, setSearchSocials, setSelectedSocial, setSocialImg, setUsernamePlaceholder } from "../../../../../Slices/socialSlice";
 
 const SocialTab = () => {
   const {
     socials,
+    searchSocials,
     selectedSocial,
     usernamePlacehoder,
     socialImg,
@@ -29,6 +30,7 @@ const SocialTab = () => {
     let handler = (e) => {
       if (!dropdownRef.current.contains(e.target)) {
         dispatch(setSearch(false))
+        dispatch(setSearchSocials([]));
       }
     };
     document.addEventListener("mousedown", handler);
@@ -44,6 +46,13 @@ const SocialTab = () => {
   };
 
 
+  // handle search social media
+  const handleSearchSocial = (e) => {
+    const results = socials.filter((social) => social?.name.toLowerCase().includes(e.toLowerCase()))
+    dispatch(setSearchSocials(results));
+  }
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const username = event.target.username.value;
@@ -54,7 +63,7 @@ const SocialTab = () => {
       userInfo: userData?._id,
     };
 
-    fetch(`http://localhost:8000/app/v1/links/social`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -77,7 +86,7 @@ const SocialTab = () => {
           <div className="relative">
             <div
               onClick={() => dispatch(setSearch(!search))}
-              className="relative border-b flex justify-between items-center px-4 h-14 w-full bg-white"
+              className="relative border-b flex justify-between items-center px-4 h-12 w-full bg-white"
             >
               <div className="flex items-center gap-4">
                 <img className="w-6" src={socialImg && socialImg} alt="" />
@@ -94,30 +103,49 @@ const SocialTab = () => {
               >
                 <div className="p-3">
                   <div className="w-full h-12 border border-blue-600 bg-gray-200">
-                    <input
+                    <input onChange={(e) => handleSearchSocial(e.target.value)}
                       className="w-full h-full rounded-[50px] px-4 focus:text-gray-700 text-gray-400 bg-gray-200 focus:outline-none border-none"
-                      type="text"
+                      type="search"
                       placeholder="Start typing or select..."
                     />
                   </div>
                 </div>
                 <div className="w-full h-44 border-t overflow-y-auto bg-white">
-                  {socials &&
-                    socials?.map((s) => (
-                      <div
-                        onClick={() => handleSocialSet(s.url, s.name, s.img)}
-                        className="h-8 w-full flex items-center gap-4 mb-2 hover:bg-blue-200 px-2"
-                      >
-                        <img className="w-6" src={s.img} alt="" />
-                        <h1 className="text-gray-900">{s.name}</h1>
-                      </div>
-                    ))}
+                  {searchSocials?.length > 0 ? <>
+                    {
+                      searchSocials?.map((s) => (
+                        <div
+                          onClick={() => handleSocialSet(s.url, s.name, s.img)}
+                          className="h-8 w-full flex items-center gap-4 mb-2 hover:bg-blue-200 px-2"
+                        >
+                          <img className="w-6" src={s.img} alt="" />
+                          <h1 className="text-gray-900">{s.name}</h1>
+                        </div>
+                      ))
+                    }
+                  </>
+                    :
+                    <>
+                      {
+                        socials?.map((s) => (
+                          <div
+                            onClick={() => handleSocialSet(s.url, s.name, s.img)}
+                            className="h-8 w-full flex items-center gap-4 mb-2 hover:bg-blue-200 px-2"
+                          >
+                            <img className="w-6" src={s.img} alt="" />
+                            <h1 className="text-gray-900">{s.name}</h1>
+                          </div>
+                        ))
+                      }
+                    </>
+                  }
                 </div>
               </div>
-            )}
+            )
+            }
           </div>
 
-          <div className="rounded-[50px] h-14 w-full bg-gray-200">
+          <div className="rounded-[50px] h-12 w-full bg-gray-200">
             <input
               onChange={(e) => dispatch(setInputError(e.target.value))}
               className="w-full h-full rounded-[50px] px-4 focus:text-gray-700 text-gray-400 bg-gray-200 focus:outline-none border-none"
@@ -128,14 +156,14 @@ const SocialTab = () => {
           </div>
 
           {inputError && selectedSocial !== "Select Popular Social Link" ? (
-            <button className="flex justify-center items-center gap-1 px-4 rounded-[50px] h-14 w-56 mx-auto md:w-full bg-blue-600">
+            <button className="flex justify-center items-center gap-1 px-4 rounded-[50px] h-12 w-56 mx-auto md:w-full bg-blue-600 hover:bg-blue-700 duration-150">
               <h1 className="text-white font-semibold">+ Add</h1>
               <h1 className="text-white font-semibold">
                 {selectedSocial}
               </h1>
             </button>
           ) : (
-            <button disabled className="cursor-not-allowed flex justify-center items-center gap-1 px-4 rounded-[50px] h-14 w-56 mx-auto md:w-full bg-[#9FC1EA]">
+            <button disabled className="cursor-not-allowed flex justify-center items-center gap-1 px-4 rounded-[50px] h-12 w-56 mx-auto md:w-full bg-[#9FC1EA]">
               <h1 className="text-white font-semibold">
                 + Add
               </h1>

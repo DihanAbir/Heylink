@@ -4,64 +4,54 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import SmallLoader from "../../../components/loaders/SmallLoader";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
 
 const Login = () => {
   const token = localStorage.getItem("HeyLinkToken");
-  const location = useLocation()
   const navigate = useNavigate()
-  const from = location.state?.from?.pathname || '/'
 
   const [isLoasding, setIsLoading] = useState(false)
-
-
   const { setUserData } = useContext(AuthContext)
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
 
   const refetchNav = (token) => {
-    fetch(`http://localhost:8000/app/v1/user/me`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                "content-type": "application/json",
-            },
-        })
-            .then((res) => res.json())
-            .then((data) => setUserData(data?.data));
-     
+    fetch(`https://hey.ahmadalanazi.com/app/v1/user/me`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "content-type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setUserData(data?.data));
   }
 
   const handleLogin = (data) => {
     setIsLoading(true)
-    axios.post(`http://localhost:8000/app/v1/user/login`, data, {
+    axios.post(`https://hey.ahmadalanazi.com/app/v1/user/login`, data, {
       headers: {
         Authorization: token,
         "content-type": "application/json",
       },
     })
       .then((res) => {
-        console.log(res.data.data.token);
-        localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
-        refetchNav(res?.data?.data?.token)
+        // console.log(res.data.data.token);
+        if (res?.data?.data?.token) {
+          localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
+          refetchNav(res?.data?.data?.token)
+          setIsLoading(false)
 
+          setTimeout(() => {
+            const getToken = localStorage.getItem("HeyLinkToken");
+            getToken && toast.success('User Login Successfully')
 
+            getToken && navigate('/dashboard');
 
-        setIsLoading(false)
-        
-        setTimeout(() => {
-          const getToken = localStorage.getItem("HeyLinkToken");
-          console.log('getToken ', getToken )
-          getToken && toast.success('User Login Successfully')
-
-          // getToken && window.location.reload(true)
-
-          getToken &&  navigate('/');
-          
-        }, 1000)
-
-        
+          }, 1000)
+        }
       });
   };
   return (
@@ -120,9 +110,9 @@ const Login = () => {
             </div>
             {/* ---------Forget password--------- */}
 
-            <button type="submit" className="h-12 w-full flex justify-center items-center bg-[#239ae7] text-white rounded-[50px] my-4">
+            <button type="submit" className="h-12 w-full flex justify-center items-center bg-[#239ae7] hover:bg-blue-600 duration-150 text-white rounded-[50px] my-4">
               <h1 className="font-bold" >
-                {!isLoasding ? "Log in" : "Loging loading...."}
+                {!isLoasding ? "Log in" : <SmallLoader />}
               </h1>
             </button>
             <div>

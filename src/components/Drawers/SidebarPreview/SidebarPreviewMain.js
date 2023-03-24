@@ -4,12 +4,17 @@ import { Buffer } from "buffer";
 import { Link } from "react-router-dom";
 import arrowRight from '../../../assets/icons/right-arrow.svg'
 import avatar from '../../../assets/avatars/user-avatar.png'
-import PageLoader from "../../loaders/PageLoader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
+import SmallLoader from "../../loaders/SmallLoader";
+import SendMessageForm from "../../ViewLiveComponents/SendMessageForm";
+import { setViewShareDrawer } from "../../../Slices/previewSlice";
+import ShareButtomDrawer from "../ShareButtomDrawers/ShareButtomDrawer";
 const SidebarPreviewMain = () => {
   const { render } = useSelector((state) => state.getData)
+  const { viewShareDrawer } = useSelector((state) => state.previewSlice)
   const { userData } = useContext(AuthContext)
+  const dispatch = useDispatch()
 
   const linksData = useFetch("links/common");
   const socialData = useFetch("links/social");
@@ -17,14 +22,26 @@ const SidebarPreviewMain = () => {
   const menuData = useFetch("links/menu");
   const locationsData = useFetch("links/location");
   const musicData = useFetch("links/music");
-  // const cryptoData = useFetch("links/crypto");
-  // const commerceData = useFetch("links/commerce");
-  // const appsData = useFetch("links/apps");
-
-  // console.log(userData);
 
   const [openLocationData, setOpenLocationData] = useState(false)
   const [openMenuData, setOpenMenuData] = useState(false)
+
+  const [data, setData] = useState([])
+
+
+  // console.log(socialData);
+
+  useEffect(() => {
+    if (userData?._id) {
+      console.log(userData?.username);
+      fetch(`https://hey.ahmadalanazi.com/${userData?.username}`)
+        .then((res) => res.json())
+        .then((data) => {
+          const { messageData } = data?.data
+          setData(messageData[0])
+        });
+    }
+  }, []);
 
 
   const bufferToImage = (data) => {
@@ -51,14 +68,14 @@ const SidebarPreviewMain = () => {
       <div className=" bg-black pr-1 w-[310px] h-[640px] rounded-[50px] flex justify-center items-center relative">
         <div className=" h-1 w-16 bg-gray-300 rounded-3xl absolute top-6"></div>
         <div
-          className="flex flex-col justify-start items-center bg-[#ffc31b] h-[530px] w-[300px] mx-auto overflow-y-auto overflow-x-hidden">
-          {render ? <PageLoader />
+          className="relative flex flex-col justify-start items-center bg-[#ffc31b] h-[530px] w-[300px] mx-auto overflow-y-auto overflow-x-hidden">
+          {render && !userData?._id ? <SmallLoader />
             :
 
             <>
               <div className="flex flex-col justify-center items-center mt-6">
                 <img
-                  className="rounded-full w-20 h-20"
+                  className="rounded-full w-20 h-20 object-cover"
                   src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
                   alt="prifle image"
                 />
@@ -81,9 +98,13 @@ const SidebarPreviewMain = () => {
                           >
                             {item.link.slice(0, 40)}
                           </a>
-                          <svg className="w-4" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M24.112 29.996c-3.304 0-5.892-2.577-5.892-5.866 0-.935.039-1.606.114-2.102l-7.543-3.934c-1.096 1.642-2.977 2.716-4.907 2.716-3.304 0-5.891-2.577-5.891-5.867 0-3.288 2.587-5.866 5.891-5.866 1.26 0 2.514.624 3.051.891.345.173.834.608 1.308 1.078l8.007-5.763c.285-3.005 2.757-5.28 5.862-5.28 3.304 0 5.892 2.576 5.892 5.865s-2.588 5.866-5.892 5.866c-1.636 0-3.155-.662-4.171-1.817a1.102 1.102 0 01.104-1.561 1.112 1.112 0 011.569.104c.584.664 1.518 1.061 2.498 1.061 2.058 0 3.67-1.604 3.67-3.653 0-2.048-1.612-3.652-3.67-3.652-2.056 0-3.669 1.604-3.669 3.652 0 .355-.17.689-.459.897l-9.225 6.641a1.115 1.115 0 01-1.472-.149c-.539-.586-1.18-1.204-1.371-1.322-.337-.167-1.296-.644-2.032-.644-2.058 0-3.67 1.604-3.67 3.652 0 2.049 1.612 3.653 3.67 3.653 1.588 0 2.946-1.239 3.412-2.403a1.11 1.11 0 01.648-.627c.295-.11.621-.088.901.057l9.337 4.87a1.103 1.103 0 01.401 1.607c-.041.143-.14.641-.14 2.03 0 2.048 1.613 3.652 3.669 3.652 2.058 0 3.67-1.604 3.67-3.652s-1.612-3.652-3.67-3.652c-.708 0-.874.067-1.391.325a1.12 1.12 0 01-1.494-.495 1.105 1.105 0 01.5-1.485c.79-.395 1.298-.559 2.385-.559 3.304 0 5.892 2.577 5.892 5.866 0 3.289-2.588 5.866-5.892 5.866z" fill=""></path></svg>
+                          <svg onClick={() => dispatch(setViewShareDrawer(item?._id))} className="w-4" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 30 30"><path d="M24.112 29.996c-3.304 0-5.892-2.577-5.892-5.866 0-.935.039-1.606.114-2.102l-7.543-3.934c-1.096 1.642-2.977 2.716-4.907 2.716-3.304 0-5.891-2.577-5.891-5.867 0-3.288 2.587-5.866 5.891-5.866 1.26 0 2.514.624 3.051.891.345.173.834.608 1.308 1.078l8.007-5.763c.285-3.005 2.757-5.28 5.862-5.28 3.304 0 5.892 2.576 5.892 5.865s-2.588 5.866-5.892 5.866c-1.636 0-3.155-.662-4.171-1.817a1.102 1.102 0 01.104-1.561 1.112 1.112 0 011.569.104c.584.664 1.518 1.061 2.498 1.061 2.058 0 3.67-1.604 3.67-3.653 0-2.048-1.612-3.652-3.67-3.652-2.056 0-3.669 1.604-3.669 3.652 0 .355-.17.689-.459.897l-9.225 6.641a1.115 1.115 0 01-1.472-.149c-.539-.586-1.18-1.204-1.371-1.322-.337-.167-1.296-.644-2.032-.644-2.058 0-3.67 1.604-3.67 3.652 0 2.049 1.612 3.653 3.67 3.653 1.588 0 2.946-1.239 3.412-2.403a1.11 1.11 0 01.648-.627c.295-.11.621-.088.901.057l9.337 4.87a1.103 1.103 0 01.401 1.607c-.041.143-.14.641-.14 2.03 0 2.048 1.613 3.652 3.669 3.652 2.058 0 3.67-1.604 3.67-3.652s-1.612-3.652-3.67-3.652c-.708 0-.874.067-1.391.325a1.12 1.12 0 01-1.494-.495 1.105 1.105 0 01.5-1.485c.79-.395 1.298-.559 2.385-.559 3.304 0 5.892 2.577 5.892 5.866 0 3.289-2.588 5.866-5.892 5.866z" fill=""></path></svg>
                         </div>
                       }
+                      {/* 
+                      {
+                        viewShareDrawer === item?._id && <ShareButtomDrawer />
+                      } */}
                     </>
                     )}
                   </div>
@@ -99,18 +120,20 @@ const SidebarPreviewMain = () => {
                           item?.bottom === 'icon' ?
                             <a
                               key={index}
+                              target="_blank"
                               href={`https://${item?.name}/${item?.link}`}
                               className="flex justify-center items-center"
                             >
-                              <img src={item?.image} alt="" className="rounded-full h-[30px] w-[40px]" />
+                              <img src={item?.image} alt="" className="rounded-full h-8 w-8 object-cover" />
                             </a>
                             :
                             <a
                               key={index}
+                              target="_blank"
                               href={`https://${item?.name}/${item?.link}`}
                               className="h-14 w-full bg-purple-200 border-white border flex justify-center items-center gap-2"
                             >
-                              <img src={item?.image} alt="" className="rounded-full h-[20px] w-[25px]" />
+                              <img src={item?.image} alt="" className="rounded-full h-8 w-8 object-cover" />
                               <h1 className="text-purple-600 font-semibold">{item?.name}</h1>
                             </a>
                         }
@@ -215,6 +238,16 @@ const SidebarPreviewMain = () => {
                   )
                 }
 
+
+                {
+                  data && data?.turnOnOffMessage === 'true' &&
+                  <SendMessageForm messageData={data} />
+                }
+
+
+
+
+
               </div>
             </>
 
@@ -223,10 +256,17 @@ const SidebarPreviewMain = () => {
         <div className=" h-8 w-8 bg-gray-300 rounded-full absolute bottom-3"></div>
       </div>
 
-      <Link to={`/${userData.username}`}
-        className="w-32 h-8 bg-blue-600 rounded-2xl flex justify-center items-center mx-auto mt-4">
-        <h1 className="text-white font-semibold">View Live</h1>
-      </Link>
+      {
+        userData?._id ? <Link to={`/${userData?.username}`}
+          className="w-32 h-8 bg-blue-600 rounded-2xl flex justify-center items-center mx-auto mt-4">
+          <h1 className="text-white font-semibold">View Live</h1>
+        </Link>
+          :
+          <button disabled
+            className="w-32 h-8 bg-gray-600 rounded-2xl flex justify-center items-center mx-auto mt-4">
+            <h1 className="text-white font-semibold">View Live</h1>
+          </button>
+      }
 
     </div>
   );

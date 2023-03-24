@@ -68,10 +68,10 @@ const ViewLive = () => {
                             :
                             <div
                                 className="flex flex-col justify-start items-center">
-                                <div className="flex flex-col justify-center items-center mt-6">
+                                <div className="flex flex-col justify-center items-center overflow-hidden mt-6">
                                     <img
-                                        className="rounded-full w-20 h-20 border"
-                                        src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
+                                        className="rounded-full w-20 h-20 border object-cover"
+                                        src={`data:image/png;base64, ${base64}`}
                                         alt=""
                                     />
                                     <h2 className="font-bold text-2xl mt-2 text-center">{userData?.username}</h2>
@@ -115,7 +115,7 @@ const ViewLive = () => {
                                                                 href={`https://${item?.name}/${item?.link}`}
                                                                 className="flex justify-center items-center"
                                                             >
-                                                                <img src={item?.image} alt="" className="rounded-full h-[40px] w-[50px]" />
+                                                                <img src={item?.image} alt="" className="rounded-full h-8 w-8 object-cover" />
                                                             </a>
                                                             :
                                                             <a
@@ -124,7 +124,7 @@ const ViewLive = () => {
                                                                 href={`https://${item?.name}/${item?.link}`}
                                                                 className="h-16 w-full bg-purple-200 border-white border flex justify-center items-center gap-2"
                                                             >
-                                                                <img src={item?.image} alt="" className="rounded-full h-[30px] w-[40px]" />
+                                                                <img src={item?.image} alt="" className="rounded-full h-8 w-8 object-cover" />
                                                                 <h1 className="text-purple-600 font-semibold md:text-2xl">{item?.name}</h1>
                                                             </a>
                                                     }

@@ -17,9 +17,11 @@ const AllSocialLinks = ({ socialLink }) => {
   const { open, deleteModal, openInputChange1 } = useSelector((state) => state.controllerSlice)
   const dispatch = useDispatch()
 
+  // console.log(socialLink);
+
   // handle update social link name
   const handleUpdateSocialLinkName = () => {
-    fetch(`http://localhost:8000/app/v1/links/social/${socialLink?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -46,7 +48,7 @@ const AllSocialLinks = ({ socialLink }) => {
   }
 
   const handleButtonORIcon = (input) => {
-    fetch(`http://localhost:8000/app/v1/links/social/${socialLink?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -74,13 +76,13 @@ const AllSocialLinks = ({ socialLink }) => {
           <div className="w-full flex flex-col md:flex-row md:justify-between gap-2 md:items-center">
             <div className="flex items-center gap-4">
               <img
-                className="w-6"
-                src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png"
+                className="w-6 h-6 object-cover"
+                src={socialLink?.image}
                 alt=""
               />
               <h1 className="flex items-center gap-1">
                 <span className="text-gray-300">My</span>
-                <span className="text-gray-300">{socialLink.name}</span>
+                <span className="text-gray-300">{socialLink?.name}</span>
               </h1>
             </div>
 
@@ -110,7 +112,8 @@ const AllSocialLinks = ({ socialLink }) => {
                     </>
                 }
                 {
-                  socialLinkNameUpdateSuccess?.id === socialLink?._id && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
+                  socialLinkNameUpdateSuccess?.id === socialLink?._id && <img className='w-4 cursor-pointer'
+                    src={blueRight} alt="" />
                 }
               </div>
             </div>

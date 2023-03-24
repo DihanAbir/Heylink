@@ -9,6 +9,7 @@ import menuSlice from "../Slices/menuSlice";
 import messageSlice from "../Slices/messageSlice";
 import musicSlice from "../Slices/musicSlice";
 import navberSlice from "../Slices/navberSlice";
+import previewSlice from "../Slices/previewSlice";
 import socialSlice from "../Slices/socialSlice";
 
 const rootReducer = combineReducers({
@@ -25,6 +26,8 @@ const rootReducer = combineReducers({
 
   appearanceSlice: appearanceSlice,
   messageSlice: messageSlice,
+
+  previewSlice: previewSlice,
 });
 
 export default rootReducer;

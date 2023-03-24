@@ -29,7 +29,7 @@ const Banner = () => {
           <p className="my-8 font-semibold text-2xl">
             Place all your necessary links <br /> in one location.
           </p>
-          <Link to="" className="">
+          <Link to="/login" className="">
             <PrimaryButtons>Start For Free</PrimaryButtons>
           </Link>
           <span className="my-6 block font-semibold">

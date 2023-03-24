@@ -3,7 +3,7 @@ import appearance from '../../assets/icons/appearance.svg'
 import security from '../../assets/icons/security.svg'
 import billing from '../../assets/icons/billing.svg'
 import logout from '../../assets/icons/logout.svg'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
 
 const ProfileDropdown = ({ setViewProfile }) => {
@@ -19,7 +19,7 @@ const ProfileDropdown = ({ setViewProfile }) => {
             navigate('/login')
         }, [300])
 
-        
+
 
 
     }
@@ -48,10 +48,11 @@ const ProfileDropdown = ({ setViewProfile }) => {
                     <span className='text-center text-gray-600 text-sm '>{userData?.email && userData?.email}</span>
                 </div>
                 <hr className='mb-2 border-gray-400' />
-                <div className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
+                <Link to='/dashboard/appearance' onClick={() => setViewProfile(false)}
+                    className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
                     <img className='w-6 col-span-1' src={appearance} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Appearance</h1>
-                </div>
+                </Link>
                 <div className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
                     <img className='w-6 col-span-1' src={security} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Password & Security</h1>

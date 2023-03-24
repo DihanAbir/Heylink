@@ -94,7 +94,7 @@ const DashboardNavber = () => {
                     </Link>
 
                     {/* -----------language dropdown----------- */}
-                    <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
+                    {/* <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
 
                         <div className='relative inline-block'>
                             <img onClick={() => dispatch(setShowLanguage(!showLanguage))} className='w-8' src={selectedLanguage.img} alt="" />
@@ -102,7 +102,7 @@ const DashboardNavber = () => {
                                 showLanguage && <DropdownCountries />
                             }
                         </div>
-                    </div>
+                    </div> */}
                     {/* -----------language dropdown----------- */}
 
                     <div className='relative'>

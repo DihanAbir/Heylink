@@ -21,7 +21,7 @@ const AvatarTitle = () => {
 
     const handleUpdate = () => {
         const profileTitle = { profiletitle: newProfileTitle }
-        fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
+        fetch(`https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -46,7 +46,7 @@ const AvatarTitle = () => {
         const formData = new FormData();
         formData.append("file", e.target.files[0]);
 
-        const url = `http://localhost:8000/app/v1/user/${userData?._id}`;
+        const url = `https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`;
         fetch(url, {
             method: "PATCH",
             headers: {

@@ -57,7 +57,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link name update--------------
   const handleUpdateLinkName = () => {
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -79,7 +79,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link url update--------------
   const handleUpdateLinkURL = () => {
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -112,64 +112,64 @@ const CreateLinkCustomize = ({ url }) => {
     }
   }
 
-  const handleActiveFrom = (date) => {
-    const startDate = new Date(date);
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ activeFrom: startDate }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.data.acknowledged) {
-          toast.success('Active From Added')
-          dispatch(setRenderReducer({ render: true }))
-          dispatch(setStartDateCalander(''))
-        }
-      });
-  }
+  // const handleActiveFrom = (date) => {
+  //   const startDate = new Date(date);
+  //   fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({ activeFrom: startDate }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data?.data.acknowledged) {
+  //         toast.success('Active From Added')
+  //         dispatch(setRenderReducer({ render: true }))
+  //         dispatch(setStartDateCalander(''))
+  //       }
+  //     });
+  // }
 
 
-  const handleActiveUntile = (date) => {
-    const endDate = new Date(date);
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ activeUntile: endDate }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.data.acknowledged) {
-          toast.success('Active Untile Added')
-          dispatch(setRenderReducer({ render: true }))
-          dispatch(setEndDateCalander(''))
-        }
-      });
-  }
+  // const handleActiveUntile = (date) => {
+  //   const endDate = new Date(date);
+  //   fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({ activeUntile: endDate }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data?.data.acknowledged) {
+  //         toast.success('Active Untile Added')
+  //         dispatch(setRenderReducer({ render: true }))
+  //         dispatch(setEndDateCalander(''))
+  //       }
+  //     });
+  // }
 
-  const handleMoveUpdate = (input) => {
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ moveToBottom: input })
-    })
-      .then(res => res.json())
-      .then(data => {
-        if (data?.data.acknowledged) {
-          toast.success('Successfully Updated')
-          dispatch(setRenderReducer({ render: true }))
-        }
-      })
-  }
+  // const handleMoveUpdate = (input) => {
+  //   fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+  //     method: 'PATCH',
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+  //       "content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({ moveToBottom: input })
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       if (data?.data.acknowledged) {
+  //         toast.success('Successfully Updated')
+  //         dispatch(setRenderReducer({ render: true }))
+  //       }
+  //     })
+  // }
 
   // image convarte buffer
   const buff = Buffer.from(
@@ -186,7 +186,7 @@ const CreateLinkCustomize = ({ url }) => {
     const formData = new FormData();
     formData.append("file", data.image[0]);
 
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
+    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
@@ -214,10 +214,10 @@ const CreateLinkCustomize = ({ url }) => {
 
           <form onChange={handleSubmit(ImageUpload)}
             encType="multipart/form-data"
-            class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
+            class="relative w-14 h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
           >
             <img
-              className="w-12 h-12 cursor-pointer"
+              className="w-14 h-14 cursor-pointer"
               src={`${url?.image ? `data:image/png;base64, ${base64}` : emptyImage}`}
               alt=""
             />

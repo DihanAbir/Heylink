@@ -1,42 +1,37 @@
 import { createSlice } from "@reduxjs/toolkit";
+import facebook from '../assets/icons/socials/facebook.png'
+import twitter from '../assets/icons/socials/twitter.png'
+import linkedin from '../assets/icons/socials/linkedin.png'
+import youtube from '../assets/icons/socials/youtube.png'
 
 const initialState = {
-    socials: [{
-        id: "1",
-        name: "Facebook",
-        url: "https://facebook.com/",
-        img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-    },
-    {
-        id: "2",
-        name: "WhatsUp",
-        url: "https://whatsup.com/",
-        img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-    },
-    {
-        id: "3",
-        name: "LinkedIn",
-        url: "https://linkedin.com/",
-        img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-    },
-    {
-        id: "4",
-        name: "twitter",
-        url: "https://twitter.com/",
-        img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-    },
-    {
-        id: "5",
-        name: "twitter",
-        url: "https://twitter.com/",
-        img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-    },
-    {
-        id: "6",
-        name: "twitter",
-        url: "https://twitter.com/",
-        img: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png",
-    }],
+    socials: [
+        {
+            id: "1",
+            name: "Facebook",
+            url: "https://www.facebook.com/",
+            img: facebook,
+        },
+        {
+            id: "2",
+            name: "Twitter",
+            url: "https://www.twitter.com/",
+            img: twitter,
+        },
+        {
+            id: "3",
+            name: "Linkedin",
+            url: "https://www.linkedin.com/in/",
+            img: linkedin,
+        },
+        {
+            id: "4",
+            name: "Youtube",
+            url: "https://www.youtube.com/",
+            img: youtube,
+        },
+    ],
+    searchSocials: [],
     open: '',
     selectedSocial: 'Select Popular Social Link',
     usernamePlacehoder: 'Paste Your Social Link here',
@@ -53,6 +48,9 @@ export const socialSlice = createSlice({
     reducers: {
         setOpen: (state, action) => {
             state.open = action.payload;
+        },
+        setSearchSocials: (state, action) => {
+            state.searchSocials = action.payload;
         },
         setSelectedSocial: (state, action) => {
             state.selectedSocial = action.payload;
@@ -81,6 +79,7 @@ export const socialSlice = createSlice({
 
 export const {
     setOpen,
+    setSearchSocials,
     setSelectedSocial,
     setUsernamePlaceholder,
     setSocialImg,

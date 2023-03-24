@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Buffer } from "buffer";
 import arrowRight from '../../assets/icons/right-arrow.svg'
 import avatar from '../../assets/avatars/user-avatar.png'
@@ -6,6 +6,7 @@ import useFetch from "../../Hoock/Hoock";
 import PageLoader from "../../components/loaders/PageLoader";
 import { AuthContext } from "../../ContextAPI/AuthProvider/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import SendMessageForm from "../../components/ViewLiveComponents/SendMessageForm";
 const SmallDevicePreview = () => {
     const { userData } = useContext(AuthContext)
     const linksData = useFetch("links/common");
@@ -15,10 +16,37 @@ const SmallDevicePreview = () => {
     const locationsData = useFetch("links/location");
     const musicData = useFetch("links/music");
 
+    const token = localStorage.getItem('HeyLinkToken')
+
     const navigate = useNavigate()
 
     const [openLocationData, setOpenLocationData] = useState(false)
     const [openMenuData, setOpenMenuData] = useState(false)
+
+    const [data, setData] = useState([])
+
+
+    const handleMessageData = () => {
+        // console.log(userData?.username);
+        fetch(`https://hey.ahmadalanazi.com/${userData?.username}`)
+            .then((res) => res.json())
+            .then((data) => {
+                const { messageData } = data?.data
+                setData(messageData[0])
+            });
+    }
+
+    useEffect(() => {
+        if (userData === null || !token) {
+            navigate('/login')
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!userData === null && userData?._id) {
+            handleMessageData()
+        }
+    }, []);
 
     const bufferToImage = (data) => {
         const buff = Buffer.from(
@@ -30,8 +58,6 @@ const SmallDevicePreview = () => {
         );
         return buff?.toString("base64");
     };
-
-    const { username } = userData;
 
     // image convarte buffer
     const buff = Buffer.from(
@@ -48,13 +74,13 @@ const SmallDevicePreview = () => {
                 <div className="max-w-[880px] mx-auto">
                     <div
                         className="flex flex-col justify-start items-center">
-                        <div className="flex flex-col justify-center items-center mt-6">
+                        <div className="flex flex-col justify-center items-center overflow-hidden mt-6">
                             <img
-                                className="rounded-full w-20 border"
+                                className="rounded-full w-20 h-20 border object-cover"
                                 src={`data:image/png;base64, ${base64}`}
                                 alt=""
                             />
-                            <h2 className="font-bold text-2xl mt-2 text-center">{username}</h2>
+                            <h2 className="font-bold text-2xl mt-2 text-center">{userData?.username}</h2>
                         </div>
 
                         <div className="grid grid-cols-1 gap-4 mx-auto w-full px-2 mt-4 pb-4">
@@ -94,7 +120,7 @@ const SmallDevicePreview = () => {
                                                         href={`https://${item?.name}/${item?.link}`}
                                                         className="flex justify-center items-center"
                                                     >
-                                                        <img src={item?.image} alt="" className="rounded-full h-[30px] w-[40px]" />
+                                                        <img src={item?.image} alt="" className="rounded-full h-8 w-8 object-cover" />
                                                     </a>
                                                     :
                                                     <a
@@ -102,7 +128,7 @@ const SmallDevicePreview = () => {
                                                         href={`https://${item?.name}/${item?.link}`}
                                                         className="h-14 w-full bg-purple-200 border-white border flex justify-center items-center gap-2"
                                                     >
-                                                        <img src={item?.image} alt="" className="rounded-full h-[20px] w-[25px]" />
+                                                        <img src={item?.image} alt="" className="rounded-full h-8 w-8 object-cover" />
                                                         <h1 className="text-purple-600 font-semibold">{item?.name}</h1>
                                                     </a>
                                             }
@@ -206,6 +232,11 @@ const SmallDevicePreview = () => {
                                         }
                                     </div>
                                 )
+                            }
+
+                            {
+                                data && data?.turnOnOffMessage === 'true' &&
+                                <SendMessageForm messageData={data} />
                             }
 
                         </div>
