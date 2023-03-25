@@ -40,7 +40,7 @@ const Signup = () => {
             // console.log('getToken ', getToken)
             getToken && toast.success('User Login Successfully')
 
-            getToken && navigate('/dashboard');
+            getToken && navigate('/');
 
           }, 1000)
         }

@@ -48,7 +48,7 @@ const Login = () => {
             const getToken = localStorage.getItem("HeyLinkToken");
             getToken && toast.success('User Login Successfully')
 
-            getToken && navigate('/dashboard');
+            getToken && navigate('/');
 
           }, 1000)
         }

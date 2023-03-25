@@ -52,16 +52,14 @@ const SmallDevicePreview = () => {
         const buff = Buffer.from(
             data?.image?.data?.data
                 ? data?.image?.data?.data
-                : [
-                    "https://heylink.me/cdn-cgi/image/f=auto,q=85,fit=crop,w=200/https://api.heylink.me/static/images/defaults/avatar_user.png",
-                ]
+                : avatar
         );
         return buff?.toString("base64");
     };
 
     // image convarte buffer
     const buff = Buffer.from(
-        userData?.image?.data?.data ? userData?.image?.data?.data : "https://heylink.me/cdn-cgi/image/f=auto,q=85,fit=crop,w=200/https://api.heylink.me/static/images/defaults/avatar_user.png"
+        userData?.image?.data?.data ? userData?.image?.data?.data : avatar
     );
     const base64 = buff?.toString("base64");
 
@@ -77,7 +75,8 @@ const SmallDevicePreview = () => {
                         <div className="flex flex-col justify-center items-center overflow-hidden mt-6">
                             <img
                                 className="rounded-full w-20 h-20 border object-cover"
-                                src={`data:image/png;base64, ${base64}`}
+                                // src={`data:image/png;base64, ${base64}`}
+                                src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
                                 alt=""
                             />
                             <h2 className="font-bold text-2xl mt-2 text-center">{userData?.username}</h2>
