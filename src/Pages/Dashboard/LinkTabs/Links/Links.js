@@ -58,6 +58,22 @@ const Links = () => {
                         <h1 className={`text-gray-600 pt-1 ${viewTab === 2 && 'text-blue-900'}`}>Social</h1>
                     </Link>
 
+
+                    <Link to='/dashboard/links/locations' onClick={() => setViewTab(6)}
+                        className={`flex flex-col items-center py-2 rounded-md w-20
+                        ${viewTab === 6 && 'bg-blue-50'}`}>
+                        <div
+                            className={`bg-gray-200 rounded-full flex justify-center items-center w-10 h-10
+                    ${viewTab === 6 && 'bg-green-600'}`}>
+                            <svg width="26" height="26" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 17C17.206 17 19 15.206 19 13C19 10.794 17.206 9 15 9C12.794 9 11 10.794 11 13C11 15.206 12.794 17 15 17ZM15 11C16.103 11 17 11.897 17 13C17 14.103 16.103 15 15 15C13.897 15 13 14.103 13 13C13 11.897 13.897 11 15 11Z" fill={viewTab === 6 ? 'white' : 'gray'} />
+                                <path d="M14.4201 24.814C14.5893 24.9349 14.7921 24.9998 15.0001 24.9998C15.2081 24.9998 15.4108 24.9349 15.5801 24.814C15.8841 24.599 23.0291 19.44 23.0001 13C23.0001 8.589 19.4111 5 15.0001 5C10.5891 5 7.00009 8.589 7.00009 12.995C6.97109 19.44 14.1161 24.599 14.4201 24.814ZM15.0001 7C18.3091 7 21.0001 9.691 21.0001 13.005C21.0211 17.443 16.6121 21.428 15.0001 22.735C13.3891 21.427 8.97909 17.441 9.00009 13C9.00009 9.691 11.6911 7 15.0001 7Z" fill={viewTab === 6 ? 'white' : 'gray'} />
+                            </svg>
+
+                        </div>
+                        <h1 className={`text-gray-600 pt-1 ${viewTab === 6 && 'text-blue-900'}`}>Locations</h1>
+                    </Link>
+
                     {/* <Link to='/dashboard/links/gallery' onClick={() => setViewTab(3)}
                         className={`flex flex-col items-center py-2 rounded-md w-20
                     ${viewTab === 3 && 'bg-blue-50'}`}>
@@ -73,7 +89,7 @@ const Links = () => {
                     </Link> */}
 
 
-                    <Link to='/dashboard/links/menu' onClick={() => setViewTab(4)}
+                    {/* <Link to='/dashboard/links/menu' onClick={() => setViewTab(4)}
                         className={`flex flex-col items-center py-2 rounded-md w-20
                     ${viewTab === 4 && 'bg-blue-50'}`}>
                         <div
@@ -87,7 +103,7 @@ const Links = () => {
 
                         </div>
                         <h1 className={`text-gray-600 pt-1 ${viewTab === 4 && 'text-blue-900'}`}>Menu</h1>
-                    </Link>
+                    </Link> */}
 
 
                     {/* <Link to='/dashboard/links/crypto' onClick={() => setViewTab(5)}
@@ -108,7 +124,7 @@ const Links = () => {
 
 
                     {/* --------------show only medium device ++ for responsive --------------------- */}
-                    <Link to='/dashboard/links/locations' onClick={() => setViewTab(6)}
+                    {/* <Link to='/dashboard/links/locations' onClick={() => setViewTab(6)}
                         className={`hidden md:block md:flex flex-col items-center py-2 rounded-md w-20
                     ${viewTab === 6 && 'bg-blue-50'}`}>
                         <div
@@ -121,10 +137,10 @@ const Links = () => {
 
                         </div>
                         <h1 className={`text-gray-600 pt-1 ${viewTab === 6 && 'text-blue-900'}`}>Locations</h1>
-                    </Link>
+                    </Link> */}
 
 
-                    <Link to='/dashboard/links/music' onClick={() => setViewTab(7)}
+                    {/* <Link to='/dashboard/links/music' onClick={() => setViewTab(7)}
                         className={`hidden md:block md:flex flex-col items-center py-2 rounded-md w-20
                     ${viewTab === 7 && 'bg-blue-50'}`}>
                         <div
@@ -137,7 +153,7 @@ const Links = () => {
 
                         </div>
                         <h1 className={`text-gray-600 pt-1 ${viewTab === 7 && 'text-blue-900'}`}>Music</h1>
-                    </Link>
+                    </Link> */}
 
 
                     {/* <Link to='/dashboard/links/commerce' onClick={() => setViewTab(8)}
@@ -155,7 +171,7 @@ const Links = () => {
                     </Link> */}
 
 
-                    <Link to='/dashboard/links/apps' onClick={() => setViewTab(9)}
+                    {/* <Link to='/dashboard/links/apps' onClick={() => setViewTab(9)}
                         className={`hidden md:block md:flex flex-col items-center py-2 rounded-md w-20
                     ${viewTab === 9 && 'bg-blue-50'}`}>
                         <div
@@ -166,12 +182,12 @@ const Links = () => {
                             </svg>
                         </div>
                         <h1 className={`text-gray-600 pt-1 ${viewTab === 9 && 'text-blue-900'}`}>Apps</h1>
-                    </Link>
+                    </Link> */}
                     {/* --------------show only medium device ++ for responsive --------------------- */}
 
 
                     {/* -----more button click to another button show_------ */}
-                    <div onClick={() => setViewMore(!viewMore)}
+                    {/* <div onClick={() => setViewMore(!viewMore)}
                         className={`relative md:hidden flex flex-col items-center py-2 rounded-md w-20
                     ${viewMore && 'bg-blue-50'}`}>
                         <div
@@ -243,7 +259,7 @@ const Links = () => {
                                 </div>
                             </div>
                         }
-                    </div>
+                    </div> */}
                     {/* -----more button click to another button show_------ */}
                 </div>
             </div>

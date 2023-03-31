@@ -43,24 +43,24 @@ const Navber = () => {
                 <div className='md:flex justify-between items-center md:gap-12 text-[18px]'>
                     <Link to='/' className='flex items-center gap-2'>
                         <img className='w-6 inline' src={logo} alt="" />
-                        <h1 className='inline-block font-bold md:text-2xl hover:text-sky-500 duration-300 text-md'>HeyLink.me</h1>
+                        <h1 className='inline-block font-bold md:text-2xl hover:text-sky-500 duration-300 text-md'>ShowMore.info</h1>
                     </Link>
 
-                    <Link to='/templates'>
+                    {/* <Link to='/templates'>
                         <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Free Templates</h1>
-                    </Link>
+                    </Link> */}
 
                     {/* -----------services route click to view services dropdown----------- */}
-                    <div onClick={() => setViewServices(!viewServices)} className='relative'>
+                    {/* <div onClick={() => setViewServices(!viewServices)} className='relative'>
                         <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Services & Help</h1>
                         {
                             viewServices && <ServicesDropdown />
                         }
-                    </div>
+                    </div> */}
 
-                    <Link to='/pricing'>
+                    {/* <Link to='/pricing'>
                         <h1 className='hidden lg:block hover:text-sky-500 duration-300'>Pricing</h1>
-                    </Link>
+                    </Link> */}
                 </div>
 
                 {/* -----------language dropdown----------- */}

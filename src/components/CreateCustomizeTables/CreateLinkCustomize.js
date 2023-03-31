@@ -203,18 +203,19 @@ const CreateLinkCustomize = ({ url }) => {
   };
 
   return (
-    <div>
-      <div className="relative w-full my-6 border border-gray-200 rounded-md cursor-pointer">
-        <div className="h-28 flex justify-between items-center gap-2 md:gap-6 py-4 px-2 md:px-6">
-          <div>
-            <img className="w-5" src={swap} alt="" />
-          </div>
+    <div className="relative flex items-center gap-4 w-full my-6 cursor-pointer">
+      <div>
+        <img className="w-5" src={swap} alt="" />
+      </div>
+      <div className=" border border-gray-200 rounded-[60px] w-full">
+        <div className="h-20 flex justify-between items-center gap-6 py-4 px-4">
+
 
           {/* -----------image upload input field end----------- */}
 
           <form onChange={handleSubmit(ImageUpload)}
             encType="multipart/form-data"
-            class="relative w-14 h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
+            class="relative w-14 h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-full overflow-hidden"
           >
             <img
               className="w-14 h-14 cursor-pointer"
@@ -234,7 +235,7 @@ const CreateLinkCustomize = ({ url }) => {
           <div className="flex-grow flex flex-col gap-2">
             <div className="flex justify-between items-center">
               <input onChange={(e) => linkNameChange(e.target.value)}
-                className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 font-bold ${openInputChange1 === url?._id ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"}`}
+                className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-black font-bold ${openInputChange1 === url?._id ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"}`}
                 type="text" disabled={openInputChange1 === url?._id ? false : true}
                 defaultValue={url.linkTitle ? url.linkTitle : url?.link} name="linkName"
               />
@@ -257,16 +258,17 @@ const CreateLinkCustomize = ({ url }) => {
             </div>
 
             <div className="flex justify-between items-center">
-              <div className="flex items-center w-full gap-2">
-                <a target="_blank" href={url?.link}>
+              {/* <a target="_blank" href={url?.link} className="flex items-center w-full gap-2"> */}
+              <a target="_blank" href={url?.link} className="flex items-center gap-2">
+                {/* <a target="_blank" href={url?.link}>
                   <img className="w-6" src={linkClick} alt="" />
-                </a>
+                </a> */}
                 <input onChange={(e) => linkURLChange(e.target.value)}
-                  className={`mr-3 px-2 h-8 bg-white rounded w-full text-sm focus:outline-none text-blue-600 
+                  className={`mr-3 px-2 h-6 bg-white rounded w-full text-sm focus:outline-none text-blue-600 
                   ${openInputChange2 === url?._id ? "border border-blue-600" : "border-none cursor-pointer"}`}
                   type="text" disabled={openInputChange2 === url?._id ? false : true}
                   defaultValue={url?.link} name="linkURL" />
-              </div>
+              </a>
 
               {
                 linkURL?.id === url?._id && linkURL.linkURL ?
@@ -288,14 +290,14 @@ const CreateLinkCustomize = ({ url }) => {
           </div>
           {/* -----------edit  and input icon end----------- */}
 
-          <div className="flex md:justify-center items-center gap-2 md:gap-6">
+          <div className="flex md:justify-center items-center gap-6">
             <div className="relative cursor-pointer">
               <div
                 onClick={() => dispatch(setDeleteModal(deleteModal ? '' : url?._id))}
-                className="hidden md:block md:flex flex-col justify-center items-center gap-2"
+                className="flex flex-col justify-center items-center gap-2"
               >
                 <img className="w-4" src={deletes} alt="" />
-                <span className="text-sm text-gray-500">Delete</span>
+                {/* <span className="text-sm text-gray-500">Delete</span> */}
               </div>
               {deleteModal === url?._id && (
                 <DeleteModal

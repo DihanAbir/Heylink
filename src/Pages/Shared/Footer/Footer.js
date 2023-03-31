@@ -46,11 +46,11 @@ const Footer = () => {
                             </a>
                         </div>
                     </div>
-                    <div>
+                    {/* <div>
                         <h1 className='hidden md:block text-gray-400 text-xl'>Powered by Persollo</h1>
-                    </div>
+                    </div> */}
                     <div>
-                        <h1 className='hidden md:block text-gray-400 text-xl'>© HeyLink.me, 2023</h1>
+                        <h1 className='hidden md:block text-gray-400 text-xl'>© ShowMore.info, 2023</h1>
                     </div>
                 </div>
             </div>

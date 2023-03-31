@@ -68,7 +68,7 @@ const SidebarPreviewMain = () => {
       <div className=" bg-black pr-1 w-[310px] h-[640px] rounded-[50px] flex justify-center items-center relative">
         <div className=" h-1 w-16 bg-gray-300 rounded-3xl absolute top-6"></div>
         <div
-          className="relative flex flex-col justify-start items-center bg-[#ffc31b] h-[530px] w-[300px] mx-auto overflow-y-auto overflow-x-hidden">
+          className="relative flex flex-col justify-start items-center bg-[#ffc31b] h-[530px] w-[300px] mx-auto overflow-y-auto overflow-x-hidden scrollBar">
           {render && !userData?._id ? <SmallLoader />
             :
 

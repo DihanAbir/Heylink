@@ -51,12 +51,12 @@ const DashboardNavber = () => {
             <div className='flex justify-between lg:gap-8 items-center text-[18px]'>
                 <Link to='/' className='flex items-center gap-2'>
                     <img className='w-6 inline' src={logo} alt="" />
-                    <h1 className='inline-block font-bold md:text-2xl text-blue-800 duration-300 text-md'>HeyLink</h1>
+                    <h1 className='inline-block font-bold md:text-2xl text-blue-800 duration-300 text-md'>ShowMore.info</h1>
                 </Link>
 
                 <div className='hidden lg:block flex-grow lg:flex justify-between items-center bg-gray-100 px-6 rounded-[50px] h-12 w-80'>
                     <div className='flex items-center'>
-                        <h1 className='text-gray-500 text-[16px]'>heylink/</h1>
+                        <h1 className='text-gray-500 text-[16px]'>ShowMore.info/</h1>
                         <Link className='underline text-blue-900 text-[16px]'
                             target='_blank'
                             to={`/${userData?.username}`}>
@@ -75,7 +75,7 @@ const DashboardNavber = () => {
 
                 <div className='flex justify-between items-center gap-6'>
                     {/* -----------bell icon start----------- */}
-                    <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
+                    {/* <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
 
                         <div className='relative inline-block'>
                             <img onClick={() => setViewNotification(!viewNotification)} className='w-5' src={bell} alt="" />
@@ -83,15 +83,15 @@ const DashboardNavber = () => {
                                 viewNotification && <Notification />
                             }
                         </div>
-                    </div>
+                    </div> */}
                     {/* -----------bell icon end----------- */}
 
-                    <Link to='/billing/subscription' className='hidden lg:block lg:flex justify-between gap-4 items-center bg-[#393AA7] h-10 px-4 rounded-[50px]'>
+                    {/* <Link to='/billing/subscription' className='hidden lg:block lg:flex justify-between gap-4 items-center bg-[#393AA7] h-10 px-4 rounded-[50px]'>
                         <div className='flex items-center gap-3'>
                             <img className='w-6' src={star} alt="" />
                             <h1 className='text-white text-sm'>Unlock PRO</h1>
                         </div>
-                    </Link>
+                    </Link> */}
 
                     {/* -----------language dropdown----------- */}
                     {/* <div className='flex justify-between items-center gap-3 md:gap-12 text-[18px]'>
@@ -118,7 +118,7 @@ const DashboardNavber = () => {
             {/* ------------only small device show------------ */}
             <div className='lg:hidden my-12 w-full flex justify-between items-center bg-gray-100 px-6 rounded-[50px] h-12'>
                 <div className='flex items-center'>
-                    <h1 className='text-gray-500 text-[16px]'>heylink/</h1>
+                    <h1 className='text-gray-500 text-[16px]'>ShowMore.info/</h1>
                     <Link className='underline text-blue-900 text-[16px]' target='_blank'
                         to={`/${userData?.username}`}>
                         {userData?.username && userData?.username}

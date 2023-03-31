@@ -20,7 +20,7 @@ const Appearance = () => {
 
     return (
         <section className='min-h-screen py-6 cursor-pointer'>
-            <div onClick={() => dispatch(setOpenJump(!openJump))}
+            {/* <div onClick={() => dispatch(setOpenJump(!openJump))}
                 className='flex justify-between items-center gap-4 mb-4'>
                 <h1>Quickly jump to:</h1>
                 <div className='relative flex-grow md:flex-grow-0'>
@@ -40,18 +40,18 @@ const Appearance = () => {
                         </div>
                     }
                 </div>
-            </div>
+            </div> */}
             <div className='grid grid-cols-1 md:grid-cols-2 gap-6 w-full'>
-                <Shortcut />
+                {/* <Shortcut /> */}
                 <UserName />
-                <ShortUserName />
-                <LayoutSimple />
+                {/* <ShortUserName /> */}
+                {/* <LayoutSimple /> */}
                 <AvatarTitle />
             </div>
-            <div className='mt-6'>
+            {/* <div className='mt-6'>
                 <PlacementManager />
-                {/* <CustomeTheme /> */}
-            </div>
+                <CustomeTheme />
+            </div> */}
         </section>
     );
 };

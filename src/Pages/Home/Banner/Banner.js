@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import PrimaryButtons from "../../../components/Buttons/PrimaryButtons";
 import Navber from "../../Shared/Navber/Navber";
+import img1 from "../../../assets/images/home-images/img1.png"
 
 const Banner = () => {
 
@@ -12,7 +13,7 @@ const Banner = () => {
       <div
         className="grid md:grid-cols-3 px-6 md:px-16 max-w-[1440px] mx-auto"
         style={{
-          backgroundImage: `url('https://cdn-f.heylink.me/static/img/index-header-img.png')`,
+          backgroundImage: `url(${img1})`,
           backgroundSize: "1000px",
           backgroundPosition: "300px",
           backgroundRepeat: "no-repeat",
@@ -33,7 +34,7 @@ const Banner = () => {
             <PrimaryButtons>Start For Free</PrimaryButtons>
           </Link>
           <span className="my-6 block font-semibold">
-            Already on HeyLink.me?
+            Already on ShowMore.info?
             <Link to="/login" className="underline">
               Log In
             </Link>
@@ -42,7 +43,7 @@ const Banner = () => {
 
         <div className="md:hidden w-72">
           <img
-            src="https://cdn-f.heylink.me/static/img/index-header-img.png"
+            src={img1}
             alt=""
           />
         </div>
