@@ -67,13 +67,14 @@ const AllSocialLinks = ({ socialLink }) => {
 
   return (
     <div>
-      <div className="relative w-full my-6 border border-gray-200 rounded-md cursor-pointer">
-        <div className="h-28 flex justify-between items-center gap-4 md:gap-6 py-4 px-2 md:px-6">
-          <div>
-            <img className="w-5" src={swap} alt="" />
-          </div>
+      <div className="relative my-6 flex items-center gap-4 w-full cursor-pointer">
+        <div>
+          <img className="w-5" src={swap} alt="" />
+        </div>
+        <div className="h-20 border border-gray-200 rounded-[70px] flex justify-between items-center gap-4 md:gap-6 py-4 px-2 md:px-6 w-full">
 
-          <div className="w-full flex flex-col md:flex-row md:justify-between gap-2 md:items-center">
+
+          <div className="w-full flex flex-row justify-between gap-2 items-center">
             <div className="flex items-center gap-4">
               <img
                 className="w-6 h-6 object-cover"
@@ -120,7 +121,7 @@ const AllSocialLinks = ({ socialLink }) => {
           </div>
         </div>
 
-        {open === socialLink?._id && (
+        {/* {open === socialLink?._id && (
           <div className="flex flex-col justify-center items-center gap-2 h-36 border-t border-gray-200 py-4 sm:py-0">
             <div className="relative cursor-pointer flex justify-center flex-wrap sm:flex-nowrap items-center gap-6">
               <div>
@@ -167,15 +168,15 @@ const AllSocialLinks = ({ socialLink }) => {
               )}
             </div>
           </div>
-        )}
+        )} */}
 
         {/* -----------toggler button start----------- */}
-        <div
+        {/* <div
           onClick={() => dispatch(setOpen(open ? '' : socialLink?._id))}
           className="cursor-pointer h-6 bg-gray-200 w-full flex justify-center items-center"
         >
           <img className="w-4" src={open === socialLink?._id ? upArrow : downArrow} alt="" />
-        </div>
+        </div> */}
         {/* -----------toggler button end----------- */}
       </div>
     </div>
