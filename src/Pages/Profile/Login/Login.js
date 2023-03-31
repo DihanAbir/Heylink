@@ -115,16 +115,16 @@ const Login = () => {
                 {!isLoasding ? "Log in" : <SmallLoader />}
               </h1>
             </button>
-            <div>
+            {/* <div>
               <p className="text-center text-sm text-gray-600">
                 Or sign up with Google or Facebook
               </p>
-            </div>
+            </div> */}
           </form>
           {/* ---------login form end--------- */}
 
 
-          <div className="mt-4 cursor-pointer">
+          {/* <div className="mt-4 cursor-pointer">
             <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px]">
               <img
                 className="w-6"
@@ -136,10 +136,10 @@ const Login = () => {
                 <span className="font-semibold text-gray-600">Google</span>
               </h1>
             </div>
-          </div>
+          </div> */}
 
 
-          <div className="mt-4 cursor-pointer">
+          {/* <div className="mt-4 cursor-pointer">
             <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px]">
               <img
                 className="w-6"
@@ -151,7 +151,7 @@ const Login = () => {
                 <span className="font-semibold text-gray-600">Facebook</span>
               </h1>
             </div>
-          </div>
+          </div> */}
 
 
           <div className="mt-6">

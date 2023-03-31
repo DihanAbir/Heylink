@@ -30,12 +30,12 @@ const Banner = () => {
           <p className="my-8 font-semibold text-2xl">
             Place all your necessary links <br /> in one location.
           </p>
-          <Link to="/login" className="">
+          <Link to="/signup" className="">
             <PrimaryButtons>Start For Free</PrimaryButtons>
           </Link>
           <span className="my-6 block font-semibold">
             Already on ShowMore.info?
-            <Link to="/login" className="underline">
+            <Link to="/login" className="underline ml-2 hover:text-sky-600 duration-300">
               Log In
             </Link>
           </span>
