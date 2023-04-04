@@ -207,7 +207,7 @@ const CreateLinkCustomize = ({ url }) => {
       <div>
         <img className="w-5" src={swap} alt="" />
       </div>
-      <div className=" border border-gray-200 rounded-[60px] w-full">
+      <div className=" border border-gray-200 rounded-[60px] w-full bg-white">
         <div className="h-20 flex justify-between items-center gap-6 py-4 px-4">
 
 

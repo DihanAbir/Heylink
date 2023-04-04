@@ -33,7 +33,7 @@ const initialState = {
     ],
     searchSocials: [],
     open: '',
-    selectedSocial: 'Select Popular Social Link',
+    selectedSocial: 'Social Link',
     usernamePlacehoder: 'Paste Your Social Link here',
     socialImg: '',
     search: false,
