@@ -10,6 +10,7 @@ import LayoutSimple from '../QuicklyItems/LayoutSimple';
 import Shortcut from '../QuicklyItems/Shortcut';
 import ShortUserName from '../QuicklyItems/ShortUserName';
 import UserName from '../QuicklyItems/UserName';
+import PageAppearance from '../QuicklyItems/PageAppearance';
 
 const Appearance = () => {
     const { jumpItems, openJump, openJumpName } = useSelector((state) => state.appearanceSlice)
@@ -47,6 +48,7 @@ const Appearance = () => {
                 {/* <ShortUserName /> */}
                 {/* <LayoutSimple /> */}
                 <AvatarTitle />
+                <PageAppearance />
             </div>
             {/* <div className='mt-6'>
                 <PlacementManager />

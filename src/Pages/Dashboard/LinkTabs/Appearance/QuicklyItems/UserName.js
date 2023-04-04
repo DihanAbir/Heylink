@@ -57,58 +57,50 @@ const UserName = () => {
         }
     });
     return (
-        <section id='shortcut' className='mb-4'>
-            <div className='flex items-center justify-between'>
-                <h1 onClick={() => dispatch(setOpenUsername(!openUsername))} className='text-left font-semibold text-blue-900 mb-2'>USERNAME</h1>
-                {
-                    openUsername ? <img onClick={() => dispatch(setOpenUsername(!openUsername))} src={arrowDown} alt="" />
-                        :
-                        <img onClick={() => dispatch(setOpenUsername(!openUsername))} src={arrowRight} alt="" />
-                }
-            </div>
-            {
-                openUsername && <div className='flex justify-between items-center gap-4 px-2 border rounded-xl w-full h-20'>
+        <section id='shortcut' className='col-span-2 mb-4 bg-white'>
+            <h1 className='text-left font-bold text-black'>USERNAME</h1>
+            <div className='flex justify-between items-center gap-4 px-2 border rounded-xl w-full h-20'>
 
-                    <div ref={modalRef} className='flex items-center justify-between gap-2 w-full' >
-                        <div className='flex-grow'>
-                            <div className='flex-grow flex items-center gap-1'>
-                                <h1 className='text-gray-500'>heylink.me/</h1>
-                                <input onChange={(e) => dispatch(setNewUsername(e.target.value))} className={`bg-white flex-grow focus:outline-none border-none ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue={userData?.username} />
+                <div ref={modalRef} className='flex items-center justify-between gap-2 w-full' >
+
+                    <div className='flex-grow flex items-center gap-1'>
+                        <h1 className='text-gray-500 text-xl'>showmore.info/</h1>
+                        <input onChange={(e) => dispatch(setNewUsername(e.target.value))}
+                            className={`bg-white w-full flex-grow focus:outline-none border-none text-black font-bold text-xl ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue={userData?.username} />
+                        {
+                            newUsername ? <>
                                 {
-                                    newUsername ? <>
-                                        {
-                                            newUsername !== userData?.username ?
-                                                <button onClick={() => handleUpdate()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
-                                                    <span>SAVE</span>
-                                                </button>
-                                                :
-                                                <>
-                                                    {
-                                                        userNameUpdateSuccess === false && <img onClick={() => dispatch(setInputChange(!inputChange))}
-                                                            className='w-4 cursor-pointer' src={edit} alt="" />
-                                                    }
-                                                </>
-                                        }
-                                        {
-                                            userNameUpdateSuccess === true && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
-                                        }
-                                    </>
+                                    newUsername !== userData?.username ?
+                                        <button onClick={() => handleUpdate()} className="w-12 h-8 rounded-md bg-blue-600 text-[12px] text-white font-semibold">
+                                            <span>SAVE</span>
+                                        </button>
                                         :
-                                        <img onClick={() => dispatch(setInputChange(!inputChange))} className='w-4' src={edit} alt="" />
+                                        <>
+                                            {
+                                                userNameUpdateSuccess === false && <img onClick={() => dispatch(setInputChange(!inputChange))}
+                                                    className='w-4 cursor-pointer' src={edit} alt="" />
+                                            }
+                                        </>
                                 }
-                            </div>
-                            <h1 className='text-sm text-gray-500'>Profile Username</h1>
-                        </div>
+                                {
+                                    userNameUpdateSuccess === true && <img className='w-4 cursor-pointer' src={blueRight} alt="" />
+                                }
+                            </>
+                                :
+                                <img onClick={() => dispatch(setInputChange(!inputChange))} className='w-4' src={edit} alt="" />
+                        }
+                    </div>
 
-                        <div className='relative'>
-                            <div onClick={() => setViewModal(!viewModal)} className="w-8 h-8 p-1 bg-blue-600 rounded-full flex justify-center items-center"><svg className='w-4 text-white' xmlns="http://www.w3.org/2000/svg" width="56" height="50" viewBox="0 0 56 50"><path d="M33.128 41.786v-6.243h22.873v6.243H33.128zM46.934 8.2h9.067v6.243h-9.067V8.2zM30.758 22.645c-5.122 0-9.599-3.357-10.997-8.202H-.009V8.2h19.77c1.398-4.845 5.875-8.202 10.997-8.202 6.307 0 11.436 5.079 11.436 11.324 0 6.244-5.129 11.323-11.436 11.323zm0-16.405c-2.829 0-5.133 2.28-5.133 5.082 0 2.8 2.304 5.081 5.133 5.081 2.828 0 5.131-2.281 5.131-5.081 0-2.802-2.303-5.082-5.131-5.082zM16.95 27.339c6.307 0 11.437 5.08 11.437 11.326 0 6.245-5.13 11.323-11.437 11.323-5.12 0-9.599-3.356-10.997-8.202H-.009v-6.243h5.962c1.398-4.846 5.877-8.204 10.997-8.204zm0 16.407c2.829 0 5.132-2.281 5.132-5.081 0-2.802-2.303-5.082-5.132-5.082-2.829 0-5.132 2.28-5.132 5.082 0 2.8 2.303 5.081 5.132 5.081z" fill='white' ></path></svg></div>
-                            {
-                                viewModal && <AppearanceShareModal />
-                            }
-                        </div>
+                    <div className='relative'>
+                        <svg className='bg-blue-600 rounded-full hover:bg-blue-800 duration-150' width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="20" fill="current" />
+                            <rect x="10.5" y="16.5" width="12" height="12" rx="2.5" stroke="white" />
+                            <rect x="17.5" y="10.5" width="12" height="12" rx="2.5" fill="current" stroke="white" />
+                        </svg>
                     </div>
                 </div>
-            }
+            </div>
+
         </section>
     );
 };

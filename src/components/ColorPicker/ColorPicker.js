@@ -13,7 +13,7 @@ const ColorPicker = ({ getColor, closePicker }) => {
     useEffect(() => {
         let handler = (e) => {
             if (!outSideRef.current.contains(e.target)) {
-                closePicker(false)
+                closePicker(0)
             }
         };
         document.addEventListener("mousedown", handler);

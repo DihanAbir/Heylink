@@ -53,14 +53,14 @@ const ProfileDropdown = ({ setViewProfile }) => {
                     <img className='w-6 col-span-1' src={appearance} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Appearance</h1>
                 </Link>
-                <div className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
+                <Link to="/forgot-password" className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
                     <img className='w-6 col-span-1' src={security} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Password & Security</h1>
-                </div>
-                <div className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
+                </Link>
+                {/* <div className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
                     <img className='w-6 col-span-1' src={billing} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Billing & Subscription</h1>
-                </div>
+                </div> */}
                 <div onClick={() => handleLogout()} className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
                     <img className='w-6 col-span-1' src={logout} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Log out</h1>
