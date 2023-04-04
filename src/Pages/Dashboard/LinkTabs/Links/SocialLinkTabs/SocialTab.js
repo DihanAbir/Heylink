@@ -145,10 +145,10 @@ const SocialTab = () => {
             }
           </div>
 
-          <div className="rounded-[50px] h-12 w-full bg-gray-200">
+          <div className="rounded-[50px] h-12 w-full bg-blue-50">
             <input
               onChange={(e) => dispatch(setInputError(e.target.value))}
-              className="w-full h-full rounded-[50px] px-4 focus:text-gray-700 text-gray-400 bg-gray-200 focus:outline-none border-none"
+              className="w-full h-full rounded-[50px] px-4 focus:text-gray-400 text-gray-400 bg-blue-50 focus:outline-none border-none"
               name="username"
               type="text"
               placeholder={`${usernamePlacehoder}usrname`}

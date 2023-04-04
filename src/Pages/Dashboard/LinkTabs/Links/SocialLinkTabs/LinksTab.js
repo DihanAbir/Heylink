@@ -59,13 +59,13 @@ const LinksTab = () => {
       <form onSubmit={handleUrl}
         className="flex justify-between md:px-6 w-full lg:max-w-[980px] mx-auto">
         <div className="flex-grow">
-          <div className=" flex items-center bg-gray-200 rounded-3xl">
+          <div className=" flex items-center bg-blue-50 rounded-3xl">
             <div className="cursor-pointer w-12 h-12 border-r border-gray-400 flex justify-center items-center">
               <img src={link} alt="" />
             </div>
             <input
               onChange={(e) => dispatch(setErrorUrl(e.target.value))}
-              className="flex-grow focus:outline-none focus:bg-red-50 bg-gray-200 lg:rounded-r-3xl h-12 px-2 w-full border-none"
+              className="flex-grow focus:outline-none focus:bg-red-50 bg-blue-50 lg:rounded-r-3xl h-12 px-2 w-full border-none"
               type="text"
               name="url"
               placeholder="Paste Your Link Here"
