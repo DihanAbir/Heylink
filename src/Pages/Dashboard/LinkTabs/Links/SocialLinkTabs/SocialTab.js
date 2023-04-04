@@ -82,7 +82,7 @@ const SocialTab = () => {
   return (
     <section className="min-h-screen pb-6">
       <div className="px-2 w-full lg:max-w-[960px] mx-auto cursor-pointer">
-        <form onSubmit={handleSubmit} className="grid md:grid-cols-3 gap-6">
+        <form onSubmit={handleSubmit} className="grid md:grid-cols-3 gap-6 w-full">
           <div className="relative">
             <div
               onClick={() => dispatch(setSearch(!search))}
@@ -102,9 +102,9 @@ const SocialTab = () => {
                 className="w-full top-12 border-x border-b right-0 cursor-pointer absolute z-50 border bg-gray-50 shadow"
               >
                 <div className="p-3">
-                  <div className="w-full h-12 border border-blue-600 bg-gray-200">
+                  <div className="w-full h-12 border border-blue-600 bg-white">
                     <input onChange={(e) => handleSearchSocial(e.target.value)}
-                      className="w-full h-full rounded-[50px] px-4 focus:text-gray-700 text-gray-400 bg-gray-200 focus:outline-none border-none"
+                      className="w-full h-full rounded-[50px] px-4 text-gray-400 bg-white focus:outline-none border-none"
                       type="search"
                       placeholder="Start typing or select..."
                     />
@@ -156,14 +156,14 @@ const SocialTab = () => {
           </div>
 
           {inputError && selectedSocial !== "Select Popular Social Link" ? (
-            <button className="flex justify-center items-center gap-1 px-4 rounded-[50px] h-12 w-56 mx-auto md:w-full bg-blue-600 hover:bg-blue-700 duration-150">
+            <button className=" flex justify-center items-center gap-1 px-4 rounded-[50px] h-12 mx-auto w-full bg-blue-600 hover:bg-blue-700 duration-150">
               <h1 className="text-white font-semibold">+ Add</h1>
               <h1 className="text-white font-semibold">
                 {selectedSocial}
               </h1>
             </button>
           ) : (
-            <button disabled className="cursor-not-allowed flex justify-center items-center gap-1 px-4 rounded-[50px] h-12 w-56 mx-auto md:w-full bg-[#9FC1EA]">
+            <button disabled className="cursor-not-allowed  flex justify-center items-center gap-1 px-4 rounded-[50px] h-12 mx-auto w-full bg-[#9FC1EA]">
               <h1 className="text-white font-semibold">
                 + Add
               </h1>
