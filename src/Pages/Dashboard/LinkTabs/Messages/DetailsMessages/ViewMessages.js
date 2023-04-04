@@ -208,14 +208,14 @@ const ViewMessages = ({ message }) => {
 
     return (
         <div className='mt-4'>
-            <div className='flex justify-between items-center w-full h-full mb-4'>
+            {/* <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2'>
                     <h1 className='text-gray-500 text-left'>Display shortcut on scroll</h1>
                     <SmallIcon>?</SmallIcon>
                     <ProButton />
                 </div>
                 <ProToggleSwitch />
-            </div>
+            </div> */}
 
             <div className='mb-4'>
                 <h1 className='text-black font-bold text-left'>Appearance</h1>
@@ -348,7 +348,7 @@ const ViewMessages = ({ message }) => {
             {/* -------------------------------------------------------------- */}
 
 
-
+            {/* 
             <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2' >
                     <input onClick={() => setCustomFieldChecked1(!customFieldChecked1)} checked={customFieldChecked1} type="checkbox" name="customField1" id="customField1" />
@@ -377,7 +377,7 @@ const ViewMessages = ({ message }) => {
                 </div>
 
                 <ProToggleSwitch />
-            </div>
+            </div> */}
 
         </div>
     );

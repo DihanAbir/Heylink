@@ -15,7 +15,6 @@ import swap from "../../assets/icons/link-customize-icons/swap.svg";
 import edit from "../../assets/icons/link-customize-icons/edit.svg";
 import EffectsModal from "../Modals/CustomizeLinkModals/EffectsModal";
 import FastLinkProModal from "../Modals/CustomizeLinkModals/FastLinkProModal";
-import ImageUploadModal from "../Modals/CustomizeLinkModals/ImageUploadModal";
 import DeleteModal from "../Modals/CommonModals/DeleteModal";
 import { Buffer } from "buffer";
 import DefaultSwitch from "../ToggleSwitch/DefaultSwitch";

@@ -9,14 +9,19 @@ import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwi
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
 import { Buffer } from "buffer";
+import ImageUploadModal from '../../../../../components/Modals/CustomizeLinkModals/ImageUploadModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUploadImageModal } from '../../../../../Slices/controllerSlice';
 
 const AvatarTitle = () => {
     const { userData, setLoading } = useContext(AuthContext)
-    const [open, setOpen] = useState(true)
     const [inputChange, setInputChange] = useState(false)
     const [profileTitleUpdateSuccess, setProfileTitleUpdateSuccess] = useState(false)
     const [newProfileTitle, setNewProfileTitle] = useState('')
     const [viewModal, setViewModal] = useState(false)
+
+    const { uploadImageModal } = useSelector((state) => state.controllerSlice)
+    const dispatch = useDispatch()
 
 
     const handleUpdate = () => {
@@ -41,27 +46,6 @@ const AvatarTitle = () => {
             });
     }
 
-    // handle profile image update
-    const handleProfileImageUpdate = (e) => {
-        const formData = new FormData();
-        formData.append("file", e.target.files[0]);
-
-        const url = `https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`;
-        fetch(url, {
-            method: "PATCH",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
-            },
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data?.data.acknowledged) {
-                    toast.success('Profile Image Updated')
-                    setLoading(true)
-                }
-            });
-    }
 
     // image convarte buffer
     const buff = Buffer.from(
@@ -87,17 +71,23 @@ const AvatarTitle = () => {
         <section id='avatar-Title' className='mb-4 col-span-2 bg-white w-full'>
             <h1 className='text-left font-bold text-black'>AVATAR & TITLE</h1>
 
-            <div className='p-2 md:p-4 border rounded-xl w-full h-fit'>
-                <div className='flex items-center gap-4'>
+            <div className='relative p-2 md:p-4 border rounded-xl w-full h-fit'>
+                <div className='relative flex items-center gap-4'>
                     <img className='w-16 h-16 rounded-full'
                         src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
                         alt="prifle image" />
 
-                    <button className='relative flex justify-center items-center cursor-pointer w-36 h-10 rounded-3xl text-white bg-blue-600'>
+                    <button onClick={() => dispatch(setUploadImageModal(true))} className='relative flex justify-center items-center cursor-pointer w-36 h-10 rounded-3xl text-white bg-blue-600'>
                         <h1 className='cursor-pointer'>Upload Avatar</h1>
-                        <input onChange={handleProfileImageUpdate} className='w-full h-full opacity-0 absolute cursor-pointer z-20' type="file" name="image" id="" />
                     </button>
+
+
                 </div>
+                {
+                    uploadImageModal && <ImageUploadModal endPoint={`user/${userData?._id}`} />
+                }
+
+
                 <div ref={modalRef} className='mt-6'>
                     <h1 className='text-sm text-gray-500 flex items-center gap-2 mt-2'>
                         <span className='text-black font-bold text-xl'>Profile Title</span>

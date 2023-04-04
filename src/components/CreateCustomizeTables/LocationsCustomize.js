@@ -15,7 +15,6 @@ import DeleteModal from "../Modals/CommonModals/DeleteModal";
 import ProButton from '../Buttons/ProButton';
 import { ToastBar, toast } from 'react-hot-toast';
 import { ServiceContext } from '../../ContextAPI/ServiceProvider/ServiceProvider';
-import ImageUploadModal from '../Modals/CustomizeLinkModals/ImageUploadModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRenderReducer } from '../../Slices/getDataSlice';
 import { setOpen, setOpenInputChange1, setOpenInputChange2, setDeleteModal, setUploadImageModal } from '../../Slices/controllerSlice';
