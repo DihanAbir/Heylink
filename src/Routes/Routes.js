@@ -8,8 +8,8 @@ import Analytics from '../Pages/Dashboard/LinkTabs/Analytics/Analytics/Analytics
 import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance/Appearance';
 import Links from '../Pages/Dashboard/LinkTabs/Links/Links';
 import AppsTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/AppsTab';
-import CommerceTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/CommerceTab';
-import CryptoTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/CryptoTab';
+// import CommerceTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/CommerceTab';
+// import CryptoTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/CryptoTab';
 import GalleryTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/GalleryTab';
 import LinksTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/LinksTab';
 import LocationsTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/LocationsTab';
@@ -24,11 +24,11 @@ import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import Home from '../Pages/Home/Home/Home';
 import SmallDevicePreview from '../Pages/LiveViewPage/SmallDevicePreview';
 import PricingCards from '../Pages/PricingCards/PricingCards';
-import ForgotPassword from '../Pages/Profile/ForgotPassword/ForgotPassword';
 import Login from '../Pages/Profile/Login/Login';
 import Signup from '../Pages/Profile/Signup/Signup';
 import Templates from '../Pages/Templates/Templates';
 import PriveteRoute from './PriveteRoute/PriveteRoute';
+import PasswordSecurity from '../Pages/Dashboard/PasswordSecurity/PasswordSecurity';
 
 const router = createBrowserRouter([
     {
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
             { path: '/pricing', element: <PriveteRoute><PricingCards></PricingCards></PriveteRoute> },
             { path: '/signup', element: <Signup></Signup> },
             { path: '/login', element: <Login></Login> },
-            { path: '/forgot-password', element: <ForgotPassword></ForgotPassword> }
+            { path: '/password-security', element: <PasswordSecurity /> }
         ]
     },
     {

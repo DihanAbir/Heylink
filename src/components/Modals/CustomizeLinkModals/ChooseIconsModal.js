@@ -4,18 +4,18 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 
 const icons = [
-    { id: "1", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "2", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "3", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "4", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "5", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "6", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "7", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
+    { id: "1", url: "https://cdn-icons-png.flaticon.com/128/3135/3135715.png" },
+    { id: "2", url: "https://cdn-icons-png.flaticon.com/128/4138/4138124.png" },
+    { id: "3", url: "https://cdn-icons-png.flaticon.com/128/3670/3670147.png" },
+    { id: "4", url: "https://cdn-icons-png.flaticon.com/128/149/149071.png" },
+    { id: "5", url: "https://cdn-icons-png.flaticon.com/128/3670/3670051.png" },
+    { id: "6", url: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png" },
+    { id: "7", url: "https://cdn-icons-png.flaticon.com/128/3670/3670151.png" },
     { id: "8", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "9", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "10", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "11", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    { id: "12", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
+    // { id: "9", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
+    // { id: "10", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
+    // { id: "11", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
+    // { id: "12", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
 ]
 
 const ChooseIconsModal = ({ closeModal }) => {
