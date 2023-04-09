@@ -38,8 +38,8 @@ const ChangePassword = ({ closeModal }) => {
         <div className='fixed z-40 min-h-screen min-w-full left-0 right-0 top-0 w-full h-full bg-gray-600 bg-opacity-75 flex justify-center items-center cursor-pointer'>
 
             <div draggable ref={modalRef} className={`z-500 w-80 md:w-[800px] h-fit p-4 flex flex-col justify-center items-center gap-4 rounded-xl border bg-white ${modal ? "opacity-50" : "opacity-100 duration-1000"}`}>
-                <div className='bg-white rounded-2xl w-full mx-auto p-6'>
-                    <h1 className='text-3xl font-semibold text-gray-900 text-center'>Password Recovery</h1>
+                <div className='bg-white rounded-2xl w-full mx-auto'>
+                    <h1 className='text-xl font-semibold text-gray-900 text-center'>Password Recovery</h1>
 
                     {/* ---------Forgot password form start--------- */}
                     <form onSubmit={handleSubmit(handlePasswrodReset)}

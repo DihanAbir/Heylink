@@ -38,8 +38,8 @@ const ChangeEmail = ({ closeModal }) => {
         <div className='fixed z-40 min-h-screen min-w-full left-0 right-0 top-0 w-full h-full bg-gray-600 bg-opacity-75 flex justify-center items-center cursor-pointer'>
 
             <div draggable ref={modalRef} className={`z-500 w-80 md:w-[800px] h-fit p-4 flex flex-col justify-center items-center gap-4 rounded-xl border bg-white ${modal ? "opacity-50" : "opacity-100 duration-1000"}`}>
-                <div className='bg-white rounded-2xl w-full mx-auto p-6'>
-                    <h1 className='text-3xl font-semibold text-gray-900 text-center'>Password Recovery</h1>
+                <div className='bg-white rounded-2xl w-full mx-auto'>
+                    <h1 className='text-xl font-semibold text-gray-900 text-center'>Change The Email for Your Personal Account</h1>
 
                     {/* ---------Forgot password form start--------- */}
                     <form onSubmit={handleSubmit(handlePasswrodReset)}
@@ -51,14 +51,14 @@ const ChangeEmail = ({ closeModal }) => {
 
                         <input
                             className='w-full h-14 bg-[#E5E7EB] px-3 rounded-3xl border hover:border-blue-600 focus:outline-none focus:border-blue-600'
-                            type="password" name="new_password" placeholder='New Password' required />
+                            type="email" name="new_Email" placeholder='New Email' required />
 
                         <input
                             className='w-full h-14 bg-[#E5E7EB] px-3 rounded-3xl border hover:border-blue-600 focus:outline-none focus:border-blue-600'
-                            type="password" name="repeat_new_password" placeholder='Repeat New Password' required />
+                            type="email" name="repeat_new_Email" placeholder='Repeat New Email' required />
 
                         <div className='h-12 flex justify-center items-center bg-[#239ae7] text-white rounded-[50px] my-4'>
-                            <button className='font-bold' type='submit'>Change Password</button>
+                            <button className='font-bold' type='submit'>Change Email</button>
                         </div>
                     </form>
                     {/* ---------Forgot password form end--------- */}
