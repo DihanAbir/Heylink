@@ -117,7 +117,6 @@ const LocationsCustomize = ({ location }) => {
     return (
         <>
             <div className='relative w-full my-6 cursor-pointer'>
-
                 <div className='relative flex gap-4 w-full'>
                     <div className='mt-6'>
                         <img className='w-5' src={swap} alt="" />
