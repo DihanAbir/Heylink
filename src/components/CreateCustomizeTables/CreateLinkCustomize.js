@@ -171,37 +171,6 @@ const CreateLinkCustomize = ({ url }) => {
   //     })
   // }
 
-  // image convarte buffer
-  const buff = Buffer.from(
-    url?.image?.data?.data ? url?.image?.data?.data : emptyImage
-  );
-  const base64 = buff?.toString("base64");
-
-  const {
-    register,
-    handleSubmit
-  } = useForm();
-
-  const ImageUpload = (data) => {
-    const formData = new FormData();
-    formData.append("file", data.image[0]);
-
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
-      },
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.data.acknowledged) {
-          toast.success('Image Upload Successfully')
-          dispatch(setRenderReducer({ render: true }))
-        }
-      });
-  };
-
   return (
     <div className="relative flex items-center gap-4 w-full my-6 cursor-pointer">
       <div>

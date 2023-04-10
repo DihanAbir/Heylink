@@ -1,12 +1,13 @@
 import React from 'react';
-import { useState } from 'react';
+import noImg from "../../../../assets/icons/no-img.png";
 
 const LocationItems = ({ location, view }) => {
     return (
         <div className="w-full min-h-12 max-h-fit rounded-[32px] p-2 border-2 border-[#E5E7EB] bg-white">
 
             <div className="flex items-center gap-2">
-                <img className="w-12 h-12 rounded-full object-cover" src="https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" alt="" />
+                <img className="w-12 h-12 rounded-full object-cover"
+                    src={`${location?.image ? location?.image : noImg}`} alt="" />
 
                 <span className="text-black font-bold">{location?.name?.slice(0, 20)}</span>
             </div>

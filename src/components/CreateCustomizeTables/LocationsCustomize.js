@@ -20,6 +20,7 @@ import { setRenderReducer } from '../../Slices/getDataSlice';
 import { setOpen, setOpenInputChange1, setOpenInputChange2, setDeleteModal, setUploadImageModal } from '../../Slices/controllerSlice';
 import { setLocationAddressUpdateSuccess, setMapAddressUpdateSuccess, setMarkersOnTheMapAddress, setNewAddress } from '../../Slices/locationSlice';
 import { useForm } from 'react-hook-form';
+import ImageUploadModal from '../Modals/CustomizeLinkModals/ImageUploadModal';
 
 const LocationsCustomize = ({ location }) => {
     const {
@@ -100,32 +101,6 @@ const LocationsCustomize = ({ location }) => {
         }
     }
 
-    const {
-        register,
-        handleSubmit
-    } = useForm();
-
-    const ImageUpload = (data) => {
-        const formData = new FormData();
-        formData.append("file", data.image[0]);
-
-
-        fetch(`http://localhost:8000/app/v1/links/location/${location?._id}`, {
-            method: "PATCH",
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
-            },
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data?.data.acknowledged) {
-                    toast.success('Image Upload Successfully')
-                    dispatch(setRenderReducer({ render: true }))
-                }
-            });
-    };
-
     let editRef = useRef()
     useEffect(() => {
         let handler = (e) => {
@@ -154,23 +129,19 @@ const LocationsCustomize = ({ location }) => {
 
                             {/* -----------image upload input field end----------- */}
 
-                            <form onChange={handleSubmit(ImageUpload)}
-                                encType="multipart/form-data"
+                            <div onClick={() => dispatch(setUploadImageModal(location?._id))}
                                 class="relative w-14 h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-full overflow-hidden"
                             >
                                 <img
                                     className="w-14 h-14 cursor-pointer"
-                                    // src={`${url?.image ? `data:image/png;base64, ${base64}` : emptyImage}`}
-                                    src={emptyImage}
+                                    src={`${location?.image ? location?.image : emptyImage}`}
                                     alt=""
                                 />
-                                <input
-                                    {...register("image", { required: "image is Required" })}
-                                    type="file"
-                                    name="image"
-                                    className="w-full h-full absolute opacity-0 cursor-pointer"
-                                />
-                            </form>
+                            </div>
+                            {
+                                uploadImageModal === location?._id && <ImageUploadModal
+                                    endPoint={`links/location/${location?._id}`} />
+                            }
 
                             {/* <div className=''>
                         <div
