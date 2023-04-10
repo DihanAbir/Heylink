@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRef } from 'react';
+import SmallLoader from '../../loaders/SmallLoader';
 
 const icons = [
     { id: "1", url: "https://cdn-icons-png.flaticon.com/128/3135/3135715.png" },
@@ -18,8 +19,16 @@ const icons = [
     // { id: "12", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
 ]
 
-const ChooseIconsModal = ({ closeModal }) => {
+const ChooseIconsModal = ({ imageUpload, closeModal }) => {
     const [selectedIcon, setSelectedIcon] = useState('')
+    const [sendLoading, setSendLoading] = useState(false)
+
+    const handleLoader = (data) => {
+        imageUpload(data)
+        setTimeout(() => {
+            setSendLoading(true)
+        }, 1000)
+    }
 
     let modalRef = useRef();
     useEffect(() => {
@@ -50,8 +59,11 @@ const ChooseIconsModal = ({ closeModal }) => {
                 </div>
 
                 {
-                    selectedIcon ? <button className='text-white text-xl font-semibold flex justify-center items-center w-52 h-12 rounded-3xl bg-[#215FC1]'>
-                        <span>Choose</span>
+                    selectedIcon ? <button onClick={() => handleLoader(selectedIcon)}
+                        className='text-white text-xl font-semibold flex justify-center items-center w-52 h-12 rounded-3xl bg-[#215FC1]'>
+                        <span>
+                            {!sendLoading ? "Choose" : <SmallLoader />}
+                        </span>
                     </button>
                         :
                         <button disabled className='text-white cursor-not-allowed text-xl font-semibold flex justify-center items-center w-52 h-12 rounded-3xl bg-[#84aff3]'>

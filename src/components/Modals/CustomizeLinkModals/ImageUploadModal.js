@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
@@ -13,23 +12,43 @@ const ImageUploadModal = ({ closeModal, endPoint }) => {
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
 
-  const { register, handleSubmit } = useForm();
-
-  const ImageUpload = (data) => {
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0]
     const formData = new FormData();
-    formData.append("file", data.image[0]);
+    formData.append("image", image);
 
-    const url = `https://hey.ahmadalanazi.com/app/v1/${endPoint}`;
+    try {
+      const response = await fetch("https://api.imgbb.com/1/upload?key=932ae96b4af949bccda61ebea8105393", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.data.url) {
+        imageUpload(data.data.url)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  const imageUpload = (imageURL) => {
+    console.log(imageURL, endPoint);
+    const url = `http://localhost:8000/app/v1/${endPoint}`;
     fetch(url, {
       method: "PATCH",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "Content-Type": "application/json",
       },
-      body: formData,
+      body: JSON.stringify({ image: `${imageURL}` }),
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         if (data?.data.acknowledged) {
+          setOpen(false)
+          dispatch(setUploadImageModal(""))
           toast.success('Image Upload Successfully')
           dispatch(setRenderReducer({ render: true }))
         }
@@ -57,16 +76,13 @@ const ImageUploadModal = ({ closeModal, endPoint }) => {
       <div className="p-2">
         <div className="w-full flex justify-end">
           <img
-            onClick={() => closeModal(false)}
+            onClick={() => dispatch(setUploadImageModal(""))}
             className="w-3"
             src={close}
             alt=""
           />
         </div>
-        <form
-          onChange={handleSubmit(ImageUpload)}
-          encType="multipart/form-data"
-        >
+        <div>
           <div className="grid grid-cols-2 gap-6 mt-3">
             <div
               className="relative w-24 h-24 flex justify-center items-center text-[#A2A7C2] hover:text-white bg-[#F2F3F8] hover:bg-blue-600 rounded-xl"
@@ -76,11 +92,10 @@ const ImageUploadModal = ({ closeModal, endPoint }) => {
                   <span className="p-2 text-center text-sm">
                     Upload Your own Image
                   </span>
-                  <input
-                    {...register("image", { required: "image is Required" })}
+                  <input onChange={(e) => handleImageUpload(e)}
                     type="file"
                     name="image"
-                    className="w-6 absolute opacity-0 cursor-pointer"
+                    className="w-24 h-24 top-0 z-40 absolute opacity-0 cursor-pointer"
                   />
                 </div>
               </label>
@@ -98,10 +113,10 @@ const ImageUploadModal = ({ closeModal, endPoint }) => {
 
 
           </div>
-        </form>
+        </div>
 
         {
-          open && <ChooseIconsModal closeModal={setOpen} />
+          open && <ChooseIconsModal imageUpload={imageUpload} closeModal={setOpen} />
         }
       </div>
     </div>

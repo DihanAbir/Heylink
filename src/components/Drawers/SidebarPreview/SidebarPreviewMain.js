@@ -73,7 +73,7 @@ const SidebarPreviewMain = () => {
               <div className="flex flex-col justify-center items-center mt-6">
                 <img
                   className="rounded-full w-20 h-20 object-cover"
-                  src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
+                  src={`${userData?.image ? userData?.image : avatar}`}
                   alt="prifle image"
                 />
                 <h2 className="font-bold text-2xl mt-2 text-center">{profiletitle}</h2>

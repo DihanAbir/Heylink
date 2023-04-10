@@ -23,10 +23,12 @@ const AvatarTitle = () => {
     const { uploadImageModal } = useSelector((state) => state.controllerSlice)
     const dispatch = useDispatch()
 
+    console.log(userData);
+
 
     const handleUpdate = () => {
         const profileTitle = { profiletitle: newProfileTitle }
-        fetch(`https://hey.ahmadalanazi.com/app/v1/user/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -74,7 +76,7 @@ const AvatarTitle = () => {
             <div className='relative p-2 md:p-4 border rounded-xl w-full h-fit'>
                 <div className='relative flex items-center gap-4'>
                     <img className='w-16 h-16 rounded-full'
-                        src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
+                        src={`${userData?.image ? userData?.image : avatar}`}
                         alt="prifle image" />
 
                     <button onClick={() => dispatch(setUploadImageModal(true))} className='relative flex justify-center items-center cursor-pointer w-36 h-10 rounded-3xl text-white bg-blue-600'>

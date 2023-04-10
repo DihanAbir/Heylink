@@ -76,7 +76,7 @@ const SmallDevicePreview = () => {
                             <img
                                 className="rounded-full w-20 h-20 border object-cover"
                                 // src={`data:image/png;base64, ${base64}`}
-                                src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`}
+                                src={`${userData?.image ? userData?.image : avatar}`}
                                 alt=""
                             />
                             <h2 className="font-bold text-2xl mt-2 text-center">{userData?.profiletitle}</h2>
