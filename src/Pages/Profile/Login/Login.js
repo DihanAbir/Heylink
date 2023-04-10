@@ -19,7 +19,7 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
 
   const refetchNav = (token) => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/user/me`, {
+    fetch(`http://localhost:8000/app/v1/user/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "content-type": "application/json",
@@ -31,7 +31,7 @@ const Login = () => {
 
   const handleLogin = (data) => {
     setIsLoading(true)
-    axios.post(`https://hey.ahmadalanazi.com/app/v1/user/login`, data, {
+    axios.post(`http://localhost:8000/app/v1/user/login`, data, {
       headers: {
         Authorization: token,
         "content-type": "application/json",

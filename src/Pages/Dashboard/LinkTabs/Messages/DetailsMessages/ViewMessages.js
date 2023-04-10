@@ -40,7 +40,7 @@ const ViewMessages = ({ message }) => {
     const [customField3, setCustomField3] = useState('')
 
     const handleUpdateMessageText = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -58,7 +58,7 @@ const ViewMessages = ({ message }) => {
 
 
     const handleUpdateSuccessMessageText = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -87,7 +87,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleNameFieldChacked = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -102,7 +102,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleEmailFieldChacked = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -116,7 +116,7 @@ const ViewMessages = ({ message }) => {
             });
     }
     const handlePhoneNumberFieldChacked = (input) => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -131,7 +131,7 @@ const ViewMessages = ({ message }) => {
     }
 
     const handleUpdateNamePlaceholder = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -149,7 +149,7 @@ const ViewMessages = ({ message }) => {
 
 
     const handleUpdateEmailPlaceholder = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -165,7 +165,7 @@ const ViewMessages = ({ message }) => {
             });
     }
     const handleUpdatePhoneNumberPlaceholder = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/message/${message?._id}`, {
+        fetch(`http://localhost:8000/app/v1/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

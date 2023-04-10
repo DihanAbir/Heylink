@@ -25,10 +25,10 @@ const DashboardNavber = () => {
     // console.log(userData);
 
     // image convarte buffer
-    const buff = Buffer.from(
-        userData?.image?.data?.data ? userData?.image?.data?.data : avatar
-    );
-    const base64 = buff?.toString("base64");
+    // const buff = Buffer.from(
+    //     userData?.image?.data?.data ? userData?.image?.data?.data : avatar
+    // );
+    // const base64 = buff?.toString("base64");
 
     let dropdownRef = useRef();
 
@@ -107,7 +107,7 @@ const DashboardNavber = () => {
 
                     <div className='relative'>
                         <img onClick={() => setViewProfile(!viewProfile)} className='rounded-full w-12 h-12'
-                            src={`${userData?.image ? `data:image/png;base64, ${base64}` : avatar}`} alt="" />
+                            src={`${userData?.image ? userData?.image : avatar}`} alt="" />
                         {
                             viewProfile && <ProfileDropdown setViewProfile={setViewProfile} />
                         }

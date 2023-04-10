@@ -26,6 +26,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setRenderReducer } from "../../Slices/getDataSlice";
 import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
 import { useForm } from "react-hook-form";
+import ImageUploadModal from "../Modals/CustomizeLinkModals/ImageUploadModal";
 
 const CreateLinkCustomize = ({ url }) => {
   const {
@@ -56,7 +57,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link name update--------------
   const handleUpdateLinkName = () => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -78,7 +79,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link url update--------------
   const handleUpdateLinkURL = () => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -113,7 +114,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // const handleActiveFrom = (date) => {
   //   const startDate = new Date(date);
-  //   fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+  //   fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
   //     method: "PATCH",
   //     headers: {
   //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -134,7 +135,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // const handleActiveUntile = (date) => {
   //   const endDate = new Date(date);
-  //   fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+  //   fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
   //     method: "PATCH",
   //     headers: {
   //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -153,7 +154,7 @@ const CreateLinkCustomize = ({ url }) => {
   // }
 
   // const handleMoveUpdate = (input) => {
-  //   fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+  //   fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
   //     method: 'PATCH',
   //     headers: {
   //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -185,7 +186,7 @@ const CreateLinkCustomize = ({ url }) => {
     const formData = new FormData();
     formData.append("file", data.image[0]);
 
-    fetch(`https://hey.ahmadalanazi.com/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`
@@ -206,28 +207,23 @@ const CreateLinkCustomize = ({ url }) => {
       <div>
         <img className="w-5" src={swap} alt="" />
       </div>
-      <div className=" border border-gray-200 rounded-[60px] w-full bg-white">
+      <div className="relative border border-gray-200 rounded-[60px] w-full bg-white">
         <div className="h-20 flex justify-between items-center gap-6 py-4 px-4">
 
 
           {/* -----------image upload input field end----------- */}
-
-          <form onChange={handleSubmit(ImageUpload)}
-            encType="multipart/form-data"
+          <div onClick={() => dispatch(setUploadImageModal(url?._id))}
             class="relative w-14 h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-full overflow-hidden"
           >
             <img
               className="w-14 h-14 cursor-pointer"
-              src={`${url?.image ? `data:image/png;base64, ${base64}` : emptyImage}`}
+              src={`${url?.image ? url?.image : emptyImage}`}
               alt=""
             />
-            <input
-              {...register("image", { required: "image is Required" })}
-              type="file"
-              name="image"
-              className="w-full h-full absolute opacity-0 cursor-pointer"
-            />
-          </form>
+          </div>
+          {
+            uploadImageModal === url?._id && <ImageUploadModal endPoint={`links/common/${url?._id}`} />
+          }
           {/* -----------image upload input field end----------- */}
 
           {/* -----------edit and input  icon start----------- */}

@@ -1,4 +1,5 @@
 import React from 'react';
+import noImg from "../../../../assets/icons/no-img.png";
 
 const LinkItems = ({ item }) => {
     return (
@@ -11,7 +12,8 @@ const LinkItems = ({ item }) => {
                           w-full h-[66px] px-2 bg-white">
 
                     <div className="flex items-center gap-2">
-                        <img className="w-12 h-12 rounded-full object-cover" src="https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" alt="" />
+                        <img className="w-12 h-12 rounded-full object-cover"
+                            src={`${item?.image ? item?.image : noImg}`} alt="" />
 
                         <span className="text-black font-bold">{item.link.slice(0, 20)}</span>
                     </div>

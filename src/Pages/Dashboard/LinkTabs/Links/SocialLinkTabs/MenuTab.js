@@ -26,7 +26,7 @@ const MenuTab = () => {
                 ItemPrice: ''
             },
         };
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu`, {
+        fetch(`http://localhost:8000/app/v1/links/menu`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

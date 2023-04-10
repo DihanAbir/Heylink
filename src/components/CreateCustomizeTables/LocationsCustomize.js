@@ -47,7 +47,7 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const handleUpdateMarkerOnTheMapAddress = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/location/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -68,7 +68,7 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const handleUpdateLocation = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/location/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -110,7 +110,7 @@ const LocationsCustomize = ({ location }) => {
         formData.append("file", data.image[0]);
 
 
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v1/links/location/${location?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`

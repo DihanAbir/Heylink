@@ -31,7 +31,7 @@ const SidebarPreviewMain = () => {
   useEffect(() => {
     if (userData?._id) {
       console.log(userData?.username);
-      fetch(`https://hey.ahmadalanazi.com/${userData?.username}`)
+      fetch(`http://localhost:8000/${userData?.username}`)
         .then((res) => res.json())
         .then((data) => {
           const { messageData } = data?.data

@@ -15,7 +15,7 @@ const Signup = () => {
   const { setUserData } = useContext(AuthContext)
 
   const refetchNav = (token) => {
-    fetch(`https://hey.ahmadalanazi.com/app/v1/user/me`, {
+    fetch(`http://localhost:8000/app/v1/user/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "content-type": "application/json",
@@ -27,7 +27,7 @@ const Signup = () => {
   }
 
   const handleSignup = (data) => {
-    axios.post(`https://hey.ahmadalanazi.com/app/v1/user/signup`, data)
+    axios.post(`http://localhost:8000/app/v1/user/signup`, data)
       .then((res) => {
         // console.log(res.data.data.token);
         if (res?.data?.data?.token) {

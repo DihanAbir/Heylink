@@ -18,7 +18,7 @@ const MessageTable = () => {
     // get all messages
     useEffect(() => {
         setLoading(true)
-        fetch(`https://hey.ahmadalanazi.com/app/v1/all-messages/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v1/all-messages/${userData?._id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",

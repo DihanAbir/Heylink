@@ -28,7 +28,7 @@ const SmallDevicePreview = () => {
 
     const handleMessageData = () => {
         // console.log(userData?.username);
-        fetch(`https://hey.ahmadalanazi.com/${userData?.username}`)
+        fetch(`http://localhost:8000/${userData?.username}`)
             .then((res) => res.json())
             .then((data) => {
                 const { messageData } = data?.data

@@ -17,7 +17,7 @@ const MenuItems = ({ menuId, item }) => {
 
     // handle update item name
     const handleUpdateItemName = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu/${menuId}`, {
+        fetch(`http://localhost:8000/app/v1/links/menu/${menuId}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -36,7 +36,7 @@ const MenuItems = ({ menuId, item }) => {
 
     // handle update item price
     const handleUpdateItemPrice = () => {
-        fetch(`https://hey.ahmadalanazi.com/app/v1/links/menu/${menuId}`, {
+        fetch(`http://localhost:8000/app/v1/links/menu/${menuId}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
