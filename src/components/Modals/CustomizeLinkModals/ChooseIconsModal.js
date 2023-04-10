@@ -4,25 +4,30 @@ import { useEffect } from 'react';
 import { useRef } from 'react';
 import SmallLoader from '../../loaders/SmallLoader';
 
+import img1 from "../../../assets/icons/build-icons/img1.png"
+import img2 from "../../../assets/icons/build-icons/img2.png"
+import img3 from "../../../assets/icons/build-icons/img3.png"
+import img4 from "../../../assets/icons/build-icons/img4.png"
+import img5 from "../../../assets/icons/build-icons/img5.png"
+import img6 from "../../../assets/icons/build-icons/img6.png"
+import img7 from "../../../assets/icons/build-icons/img7.png"
+import img8 from "../../../assets/icons/build-icons/img8.png"
+
 const icons = [
-    { id: "1", url: "https://cdn-icons-png.flaticon.com/128/3135/3135715.png" },
-    { id: "2", url: "https://cdn-icons-png.flaticon.com/128/4138/4138124.png" },
-    { id: "3", url: "https://cdn-icons-png.flaticon.com/128/3670/3670147.png" },
-    { id: "4", url: "https://cdn-icons-png.flaticon.com/128/149/149071.png" },
-    { id: "5", url: "https://cdn-icons-png.flaticon.com/128/3670/3670051.png" },
-    { id: "6", url: "https://cdn-icons-png.flaticon.com/128/5968/5968764.png" },
-    { id: "7", url: "https://cdn-icons-png.flaticon.com/128/3670/3670151.png" },
-    { id: "8", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    // { id: "9", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    // { id: "10", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    // { id: "11", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
-    // { id: "12", url: "https://www.shutterstock.com/image-photo/head-shot-portrait-close-smiling-260nw-1714666150.jpg" },
+    { id: "1", img: img1 },
+    { id: "2", img: img2 },
+    { id: "3", img: img3 },
+    { id: "4", img: img4 },
+    { id: "5", img: img5 },
+    { id: "6", img: img6 },
+    { id: "7", img: img7 },
+    { id: "8", img: img8 },
 ]
 
 const ChooseIconsModal = ({ imageUpload, closeModal }) => {
-    const [selectedIcon, setSelectedIcon] = useState('')
+    const [selectedIcon, setSelectedIcon] = useState(null)
     const [sendLoading, setSendLoading] = useState(false)
-
+    console.log(selectedIcon);
     const handleLoader = (data) => {
         imageUpload(data)
         setTimeout(() => {
@@ -49,10 +54,10 @@ const ChooseIconsModal = ({ imageUpload, closeModal }) => {
                 <div className='grid grid-cols-4 gap-6 bg-white '>
                     {
                         icons?.map((icon, i) => (
-                            <button key={i} onClick={() => setSelectedIcon(icon?.url)}
+                            <button key={i} onClick={() => setSelectedIcon(icon?.img)}
                                 className={`w-14 h-14 rounded-full
-                            ${selectedIcon === icon?.url && "border-4 border-blue-600"}`}>
-                                <img className='w-full h-full object-cover rounded-full' src={icon?.url} alt="" />
+                            ${selectedIcon === icon?.img && "border-4 border-blue-600"}`}>
+                                <img className='w-full h-full object-cover rounded-full' src={icon?.img} alt="" />
                             </button>
                         ))
                     }
