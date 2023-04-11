@@ -22,6 +22,13 @@ const UserName = () => {
 
     const [viewModal, setViewModal] = useState(false)
 
+    // copy from username input
+    function copy(text) {
+        const copyText = `showmore.info/${userData?.username}`
+        navigator.clipboard.writeText(copyText)
+        toast.success(`${copyText} Copy Successfull`)
+    }
+
     const handleUpdate = () => {
         fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
             method: "PATCH",
@@ -92,7 +99,7 @@ const UserName = () => {
                     </div>
 
                     <div className='relative'>
-                        <svg className='bg-blue-600 rounded-full hover:bg-blue-800 duration-150' width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg onClick={() => copy()} className='bg-blue-600 rounded-full hover:bg-blue-800 duration-150' width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect width="40" height="40" rx="20" fill="current" />
                             <rect x="10.5" y="16.5" width="12" height="12" rx="2.5" stroke="white" />
                             <rect x="17.5" y="10.5" width="12" height="12" rx="2.5" fill="current" stroke="white" />

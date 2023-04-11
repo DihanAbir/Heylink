@@ -62,8 +62,6 @@ const ChangeEmail = ({ closeModal }) => {
         },);
     },)
 
-    console.log(modal);
-
 
     let modalRef = useRef();
     useEffect(() => {
@@ -128,11 +126,12 @@ const ChangeEmail = ({ closeModal }) => {
                             </div>
                         }
 
-                        <div className='h-12 flex justify-center items-center bg-[#239ae7] hover:bg-sky-700 duration-150 text-white rounded-[50px] my-4'>
-                            <button className='font-bold' type='submit'>
+                        <button type='submit'
+                            className='h-12 flex justify-center items-center bg-[#239ae7] hover:bg-sky-700 duration-150 text-white rounded-[50px] my-4'>
+                            <span className='font-bold'>
                                 {!sendLoading ? "Change Email" : <SmallLoader />}
-                            </button>
-                        </div>
+                            </span>
+                        </button>
                     </form>
                     {/* ---------Forgot password form end--------- */}
 
