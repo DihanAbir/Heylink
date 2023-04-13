@@ -19,7 +19,7 @@ const LinkItems = ({ item }) => {
                         <img className="w-12 h-12 rounded-full object-cover"
                             src={`${item?.image ? item?.image : noImg}`} alt="" />
 
-                        <span className="font-bold">{item.link.slice(0, 20)}</span>
+                        <span className="font-bold">{item?.linkTitle ? item?.linkTitle.slice(0, 20) : item.link.slice(0, 20)}</span>
                     </div>
 
                     <svg width="16" height="16" viewBox="0 0 19 33" fill="none" xmlns="http://www.w3.org/2000/svg">
