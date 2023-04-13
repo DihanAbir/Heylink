@@ -11,7 +11,7 @@ import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../../../../ContextAPI/ServiceProvider/ServiceProvider';
 import ChackedSwitch from '../../../../../components/ToggleSwitch/ChackedSwitch';
 
-const ViewMessages = ({ message }) => {
+const ViewMessages = ({ message, reFetch }) => {
     const {
         messageText,
         successMessageText,
@@ -52,6 +52,7 @@ const ViewMessages = ({ message }) => {
             .then((data) => {
                 toast.success('Update Successfully')
                 dispatch(setMessageTextUpdateSuccess(true))
+                reFetch()
                 dispatch(setMessageText(''))
             });
     }
@@ -70,6 +71,7 @@ const ViewMessages = ({ message }) => {
             .then((data) => {
                 toast.success('Update Successfully')
                 dispatch(setSuccessMessageTextUpdateSuccess(true))
+                reFetch()
                 dispatch(setSuccessMessageText(''))
             });
     }
@@ -97,6 +99,7 @@ const ViewMessages = ({ message }) => {
         })
             .then(res => res.json())
             .then((data) => {
+                reFetch()
                 toast.success('Update Successfully')
             });
     }
@@ -112,6 +115,7 @@ const ViewMessages = ({ message }) => {
         })
             .then(res => res.json())
             .then((data) => {
+                reFetch()
                 toast.success('Update Successfully')
             });
     }
@@ -126,6 +130,7 @@ const ViewMessages = ({ message }) => {
         })
             .then(res => res.json())
             .then((data) => {
+                reFetch()
                 toast.success('Update Successfully')
             });
     }
@@ -141,6 +146,7 @@ const ViewMessages = ({ message }) => {
         })
             .then(res => res.json())
             .then((data) => {
+                reFetch()
                 toast.success('Update Successfully')
                 dispatch(setNamePlaceholderUpdateSuccess(true))
                 dispatch(setNamePlaceholderText(''))
@@ -159,6 +165,7 @@ const ViewMessages = ({ message }) => {
         })
             .then(res => res.json())
             .then((data) => {
+                reFetch()
                 toast.success('Update Successfully')
                 dispatch(setEmailPlaceholderUpdateSuccess(true))
                 dispatch(setEmailPlaceholderText(''))
@@ -175,6 +182,7 @@ const ViewMessages = ({ message }) => {
         })
             .then(res => res.json())
             .then((data) => {
+                reFetch()
                 toast.success('Update Successfully')
                 dispatch(setPhoneNumberPlaceholderUpdateSuccess(true))
                 dispatch(setPhoneNumberPlaceholderText(''))

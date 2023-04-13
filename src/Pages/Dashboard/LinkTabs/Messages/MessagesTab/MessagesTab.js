@@ -19,7 +19,7 @@ const MessagesTab = () => {
         dispatch(setOpenTab(false))
     }, [])
 
-    useEffect(() => {
+    const getMessage = () => {
         fetch(`http://localhost:8000/app/v2/message`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -28,7 +28,12 @@ const MessagesTab = () => {
         })
             .then((res) => res.json())
             .then((data) => setMessageData(data.data[0]));
+    }
+
+    useEffect(() => {
+        getMessage()
     }, []);
+
 
     const handleToggleSwitch = (input) => {
         if (messageData) {
@@ -59,7 +64,8 @@ const MessagesTab = () => {
                         getToggle={handleToggleSwitch} />
                 </div>
                 {
-                    messageData?.turnOnOffMessage === 'true' && <ViewMessages message={messageData} />
+                    messageData?.turnOnOffMessage === 'true' && <ViewMessages message={messageData}
+                        reFetch={getMessage} />
                 }
             </div>
             <MessageTable />
