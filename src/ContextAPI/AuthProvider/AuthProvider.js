@@ -9,7 +9,7 @@ const AuthProvider = ({ children }) => {
     // user data reFetch if user data updated
     const userRefetch = () => {
         if (token) {
-            fetch(`http://localhost:8000/app/v1/user/me`, {
+            fetch(`http://localhost:8000/app/v2/user/me`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                     "content-type": "application/json",
@@ -24,7 +24,7 @@ const AuthProvider = ({ children }) => {
         if (!userData?._id) {
             setLoading(true)
             if (token) {
-                fetch(`http://localhost:8000/app/v1/user/me`, {
+                fetch(`http://localhost:8000/app/v2/user/me`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                         "content-type": "application/json",

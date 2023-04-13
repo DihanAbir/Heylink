@@ -28,7 +28,7 @@ const DeleteModal = ({ id, endPoint }) => {
 
 
   const DeleteHandle = () => {
-    const url = `http://localhost:8000/app/v1/links/${endPoint}/${id}`;
+    const url = `http://localhost:8000/app/v2/${endPoint}/${id}`;
     fetch(url, {
       method: "DELETE",
       headers: {

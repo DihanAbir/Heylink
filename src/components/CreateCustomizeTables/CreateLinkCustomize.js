@@ -49,7 +49,7 @@ const CreateLinkCustomize = ({ url }) => {
   // console.log(url);
 
   const handleToggleSwitch = (input) => {
-    handleDefaultSwitch(url?._id, { show: input }, 'links/common',)
+    handleDefaultSwitch(url?._id, { show: input }, 'links',)
     if (loader) {
       dispatch(setRenderReducer({ render: true }))
     }
@@ -57,7 +57,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link name update--------------
   const handleUpdateLinkName = () => {
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v2/links/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -79,7 +79,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // link url update--------------
   const handleUpdateLinkURL = () => {
-    fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
+    fetch(`http://localhost:8000/app/v2/links/${url?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -114,7 +114,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // const handleActiveFrom = (date) => {
   //   const startDate = new Date(date);
-  //   fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
+  //   fetch(`http://localhost:8000/app/v2/links/${url?._id}`, {
   //     method: "PATCH",
   //     headers: {
   //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -135,7 +135,7 @@ const CreateLinkCustomize = ({ url }) => {
 
   // const handleActiveUntile = (date) => {
   //   const endDate = new Date(date);
-  //   fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
+  //   fetch(`http://localhost:8000/app/v2/links/${url?._id}`, {
   //     method: "PATCH",
   //     headers: {
   //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -154,7 +154,7 @@ const CreateLinkCustomize = ({ url }) => {
   // }
 
   // const handleMoveUpdate = (input) => {
-  //   fetch(`http://localhost:8000/app/v1/links/common/${url?._id}`, {
+  //   fetch(`http://localhost:8000/app/v2/links/${url?._id}`, {
   //     method: 'PATCH',
   //     headers: {
   //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -191,7 +191,7 @@ const CreateLinkCustomize = ({ url }) => {
             />
           </div>
           {
-            uploadImageModal === url?._id && <ImageUploadModal endPoint={`links/common/${url?._id}`} />
+            uploadImageModal === url?._id && <ImageUploadModal endPoint={`links/${url?._id}`} />
           }
           {/* -----------image upload input field end----------- */}
 
@@ -265,7 +265,7 @@ const CreateLinkCustomize = ({ url }) => {
               </div>
               {deleteModal === url?._id && (
                 <DeleteModal
-                  endPoint={"common"}
+                  endPoint={"links"}
                   id={url._id}
                 ></DeleteModal>
               )}

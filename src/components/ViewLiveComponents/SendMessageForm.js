@@ -18,22 +18,24 @@ const SendMessageForm = ({ messageData, refetch }) => {
     }
 
     const handleMessageSend = (data) => {
-        // const newMessage = data.userInfo = userData._id
-        fetch(`http://localhost:8000/app/v1/all-messages`, {
-            method: 'POST',
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(data)
-        })
-            .then(res => res.json())
-            .then((data) => {
-                toast.success('Message Send Successfully')
-                playSound()
-                dispatch(setSuccessfull(true))
-                reset()
-            });
+        data.userInfo = userData?._id
+        if (data?.userInfo) {
+            fetch(`http://localhost:8000/app/v2/all-messages`, {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                    "content-type": "application/json",
+                },
+                body: JSON.stringify(data)
+            })
+                .then(res => res.json())
+                .then((data) => {
+                    toast.success('Message Send Successfully')
+                    playSound()
+                    dispatch(setSuccessfull(true))
+                    reset()
+                });
+        }
     }
 
     return (

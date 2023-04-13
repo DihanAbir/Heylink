@@ -23,7 +23,7 @@ const SocialTab = () => {
   const { render } = useSelector((state) => state.getData)
   const dispatch = useDispatch()
   const { userData } = useContext(AuthContext)
-  const data = useFetch("links/social");
+  const data = useFetch("social");
 
   let dropdownRef = useRef();
   useEffect(() => {
@@ -63,7 +63,7 @@ const SocialTab = () => {
       userInfo: userData?._id,
     };
 
-    fetch(`http://localhost:8000/app/v1/links/social`, {
+    fetch(`http://localhost:8000/app/v2/social`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

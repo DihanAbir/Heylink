@@ -18,7 +18,7 @@ const Signup = () => {
   const { setUserData } = useContext(AuthContext)
 
   const refetchNav = (token) => {
-    fetch(`http://localhost:8000/app/v1/user/me`, {
+    fetch(`http://localhost:8000/app/v2/user/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "content-type": "application/json",
@@ -32,7 +32,7 @@ const Signup = () => {
   // handle signup
   const handleSignup = (data) => {
     setIsLoading(true)
-    axios.post(`http://localhost:8000/app/v1/user/signup`, data)
+    axios.post(`http://localhost:8000/app/v2/user/signup`, data)
       .then((res) => {
         if (res?.data?.data?.token) {
           localStorage.setItem("HeyLinkToken", res?.data?.data?.token);

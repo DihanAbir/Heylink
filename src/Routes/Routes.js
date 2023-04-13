@@ -4,22 +4,22 @@ import DashboardLayout from '../Layout/DashboardLayout';
 import Main from '../Layout/Main';
 import ViewLiveLayout from '../Layout/ViewLiveLayout';
 import Dashboard from '../Pages/Dashboard/Dashboard/Dashboard';
-import Analytics from '../Pages/Dashboard/LinkTabs/Analytics/Analytics/Analytics';
 import Appearance from '../Pages/Dashboard/LinkTabs/Appearance/Appearance/Appearance';
 import Links from '../Pages/Dashboard/LinkTabs/Links/Links';
 import AppsTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/AppsTab';
 // import CommerceTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/CommerceTab';
 // import CryptoTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/CryptoTab';
-import GalleryTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/GalleryTab';
 import LinksTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/LinksTab';
 import LocationsTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/LocationsTab';
-import MenuTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MenuTab';
-import MusicTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MusicTab';
 import SocialTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/SocialTab';
 import MessagesTab from '../Pages/Dashboard/LinkTabs/Messages/MessagesTab/MessagesTab';
-import Settings from '../Pages/Dashboard/LinkTabs/Settings/Settings';
-import Signups from '../Pages/Dashboard/LinkTabs/Signups/Signups/Signups';
-import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription/Subscription';
+// import Analytics from '../Pages/Dashboard/LinkTabs/Analytics/Analytics/Analytics';
+// import GalleryTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/GalleryTab';
+// import MenuTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MenuTab';
+// import MusicTab from '../Pages/Dashboard/LinkTabs/Links/SocialLinkTabs/MusicTab';
+// import Settings from '../Pages/Dashboard/LinkTabs/Settings/Settings';
+// import Signups from '../Pages/Dashboard/LinkTabs/Signups/Signups/Signups';
+// import Subscription from '../Pages/Dashboard/LinkTabs/Subscription/Subscription/Subscription';
 import ErrorPage from '../Pages/ErrorPage/ErrorPage';
 import Home from '../Pages/Home/Home/Home';
 import SmallDevicePreview from '../Pages/LiveViewPage/SmallDevicePreview';
@@ -59,20 +59,20 @@ const router = createBrowserRouter([
                             { path: '/dashboard/', element: <LinksTab></LinksTab> },
                             { path: '/dashboard/links', element: <LinksTab /> },
                             { path: '/dashboard/links/social', element: <SocialTab /> },
-                            { path: '/dashboard/links/gallery', element: <GalleryTab /> },
-                            { path: '/dashboard/links/menu', element: <MenuTab /> },
+                            // { path: '/dashboard/links/gallery', element: <GalleryTab /> },
+                            // { path: '/dashboard/links/menu', element: <MenuTab /> },
                             // { path: '/dashboard/links/crypto', element: <CryptoTab /> },
                             { path: '/dashboard/links/locations', element: <LocationsTab /> },
-                            { path: '/dashboard/links/music', element: <MusicTab /> },
+                            // { path: '/dashboard/links/music', element: <MusicTab /> },
                             // { path: '/dashboard/links/commerce', element: <CommerceTab /> },
-                            { path: '/dashboard/links/apps', element: <AppsTab /> },
+                            // { path: '/dashboard/links/apps', element: <AppsTab /> },
                         ]
                     },
                     { path: '/dashboard/appearance', element: <Appearance></Appearance> },
-                    { path: '/dashboard/settings', element: <Settings /> },
-                    { path: '/dashboard/analytics', element: <Analytics /> },
-                    { path: '/dashboard/signups', element: <Signups /> },
-                    { path: '/dashboard/billing/subscription', element: <Subscription /> },
+                    // { path: '/dashboard/settings', element: <Settings /> },
+                    // { path: '/dashboard/analytics', element: <Analytics /> },
+                    // { path: '/dashboard/signups', element: <Signups /> },
+                    // { path: '/dashboard/billing/subscription', element: <Subscription /> },
                     { path: '/dashboard/messages', element: <MessagesTab /> },
                 ]
             },

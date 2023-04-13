@@ -18,7 +18,7 @@ const UserName = () => {
         userNameUpdateSuccess,
     } = useSelector((state) => state.appearanceSlice)
     const dispatch = useDispatch()
-    const { userData, setLoading } = useContext(AuthContext)
+    const { userData, userRefetch } = useContext(AuthContext)
 
     const [viewModal, setViewModal] = useState(false)
 
@@ -30,7 +30,7 @@ const UserName = () => {
     }
 
     const handleUpdate = () => {
-        fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -42,7 +42,7 @@ const UserName = () => {
             .then((data) => {
                 if (data?.data.acknowledged) {
                     toast.success('User Name Updated')
-                    setLoading(true)
+                    userRefetch()
                     dispatch(setNewUsername(''))
                     dispatch(setUserNameUpdateSuccess(true))
                     dispatch(setInputChange(false))

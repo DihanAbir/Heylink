@@ -30,7 +30,7 @@ const ChangeEmail = ({ closeModal }) => {
                 currentPassword: data?.currentPassword
             }
             setSendLoading(true)
-            fetch(`http://localhost:8000/app/v1/user/change-email`, {
+            fetch(`http://localhost:8000/app/v2/user/change-email`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

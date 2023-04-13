@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
@@ -6,9 +6,11 @@ import { setRenderReducer } from "../../../Slices/getDataSlice";
 import ChooseIconsModal from "./ChooseIconsModal";
 import { useState } from "react";
 import { setUploadImageModal } from "../../../Slices/controllerSlice";
+import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 
 // setUploadImageModal
 const ImageUploadModal = ({ closeModal, endPoint }) => {
+  const { userRefetch } = useContext(AuthContext)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
 
@@ -33,8 +35,8 @@ const ImageUploadModal = ({ closeModal, endPoint }) => {
 
 
   const imageUpload = (imageURL) => {
-    console.log(imageURL, endPoint);
-    const url = `http://localhost:8000/app/v1/${endPoint}`;
+    // console.log(imageURL, endPoint);
+    const url = `http://localhost:8000/app/v2/${endPoint}`;
     fetch(url, {
       method: "PATCH",
       headers: {
@@ -49,6 +51,7 @@ const ImageUploadModal = ({ closeModal, endPoint }) => {
         if (data?.data.acknowledged) {
           setOpen(false)
           dispatch(setUploadImageModal(""))
+          userRefetch()
           toast.success('Image Upload Successfully')
           dispatch(setRenderReducer({ render: true }))
         }

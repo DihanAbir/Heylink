@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setUploadImageModal } from '../../../../../Slices/controllerSlice';
 
 const AvatarTitle = () => {
-    const { userData, setLoading } = useContext(AuthContext)
+    const { userData, userRefetch } = useContext(AuthContext)
     const [inputChange, setInputChange] = useState(false)
     const [profileTitleUpdateSuccess, setProfileTitleUpdateSuccess] = useState(false)
     const [newProfileTitle, setNewProfileTitle] = useState('')
@@ -22,12 +22,12 @@ const AvatarTitle = () => {
     const { uploadImageModal } = useSelector((state) => state.controllerSlice)
     const dispatch = useDispatch()
 
-    console.log(userData);
+    // console.log(userData);
 
 
     const handleUpdate = () => {
         const profileTitle = { profiletitle: newProfileTitle }
-        fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -42,7 +42,7 @@ const AvatarTitle = () => {
                     setNewProfileTitle('')
                     setInputChange(false)
                     setProfileTitleUpdateSuccess(true)
-                    setLoading(true)
+                    userRefetch()
                 }
             });
     }

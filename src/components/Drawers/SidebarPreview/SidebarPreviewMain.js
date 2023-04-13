@@ -15,12 +15,12 @@ const SidebarPreviewMain = () => {
   const { userData } = useContext(AuthContext)
   const dispatch = useDispatch()
 
-  const linksData = useFetch("links/common");
-  const socialData = useFetch("links/social");
+  const linksData = useFetch("links");
+  const socialData = useFetch("social");
   // const galleryData = useFetch("links/gallery");
   // const menuData = useFetch("links/menu");
   // const musicData = useFetch("links/music");
-  const locationsData = useFetch("links/location");
+  const locationsData = useFetch("locations");
 
   const [data, setData] = useState([])
 

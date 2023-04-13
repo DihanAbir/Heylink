@@ -15,7 +15,7 @@ import { setErrorUrl, setShowError } from "../../../../../Slices/linksSlice";
 const LinksTab = () => {
   const { userData } = useContext(AuthContext)
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
-  const data = useFetch("links/common");
+  const data = useFetch("links");
   const dispatch = useDispatch()
 
   // console.log(data);
@@ -31,9 +31,7 @@ const LinksTab = () => {
       userInfo: userData?._id,
     };
 
-    // console.log(data);
-
-    fetch(`http://localhost:8000/app/v1/links/common`, {
+    fetch(`http://localhost:8000/app/v2/links`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

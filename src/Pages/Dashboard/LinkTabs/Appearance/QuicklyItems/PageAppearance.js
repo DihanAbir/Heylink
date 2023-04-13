@@ -15,7 +15,7 @@ const PageAppearance = () => {
     // const {backgroundColor,pageTextColor, } = userData
 
     const handleUpdate = (data) => {
-        fetch(`http://localhost:8000/app/v1/user/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

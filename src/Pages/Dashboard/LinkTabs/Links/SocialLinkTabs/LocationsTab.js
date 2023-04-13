@@ -19,7 +19,7 @@ const LocationsTab = () => {
     const { render } = useSelector((state) => state.getData)
     const dispatch = useDispatch()
     const { userData } = useContext(AuthContext)
-    const data = useFetch("links/location")
+    const data = useFetch("locations")
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -29,7 +29,7 @@ const LocationsTab = () => {
             name: selectLocation,
             userInfo: userData?._id,
         };
-        fetch(`http://localhost:8000/app/v1/links/location`, {
+        fetch(`http://localhost:8000/app/v2/locations`, {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
