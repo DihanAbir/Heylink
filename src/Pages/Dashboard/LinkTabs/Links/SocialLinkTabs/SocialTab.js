@@ -155,7 +155,7 @@ const SocialTab = () => {
             />
           </div>
 
-          {inputError && selectedSocial !== "Select Popular Social Link" ? (
+          {inputError && selectedSocial !== "Select Popular Social Link" && socialImg ? (
             <button className=" flex justify-center items-center gap-1 px-4 rounded-[50px] h-12 mx-auto w-full bg-blue-600 hover:bg-blue-700 duration-150">
               <h1 className="text-white font-semibold">+ Add</h1>
               <h1 className="text-white font-semibold">

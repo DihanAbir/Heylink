@@ -21,7 +21,7 @@ const AllSocialLinks = ({ socialLink }) => {
 
   // handle update social link name
   const handleUpdateSocialLinkName = () => {
-    fetch(`http://localhost:8000/app/v2/links/social/${socialLink?._id}`, {
+    fetch(`http://localhost:8000/app/v2/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -48,7 +48,7 @@ const AllSocialLinks = ({ socialLink }) => {
   }
 
   const handleButtonORIcon = (input) => {
-    fetch(`http://localhost:8000/app/v2/links/social/${socialLink?._id}`, {
+    fetch(`http://localhost:8000/app/v2/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -119,6 +119,23 @@ const AllSocialLinks = ({ socialLink }) => {
               </div>
             </div>
           </div>
+
+          <div className="relative">
+            <div
+              onClick={() => dispatch(setDeleteModal(deleteModal ? '' : socialLink?._id))}
+              className="flex flex-col justify-center items-center gap-2 my-1"
+            >
+              <img className="w-4" src={deletes} alt="" />
+              <span className="text-sm text-gray-500">Delete</span>
+            </div>
+            {deleteModal === socialLink?._id && (
+              <DeleteModal
+                endPoint={"social"}
+                id={socialLink._id}
+              ></DeleteModal>
+            )}
+          </div>
+
         </div>
 
         {/* {open === socialLink?._id && (

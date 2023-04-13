@@ -25,7 +25,7 @@ const SidebarPreviewMain = () => {
   const [data, setData] = useState([])
 
 
-  // console.log(linksData);
+  // console.log(socialData);
 
   useEffect(() => {
     if (userData?._id) {

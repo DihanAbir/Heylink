@@ -70,13 +70,13 @@ const DeleteModal = ({ id, endPoint }) => {
         <div className="flex justify-center items-center gap-6 mt-4">
           <button
             onClick={() => closeModal(false)}
-            class="bg-red-500 px-4 py-2 rounded-md text-md text-white"
+            class="bg-red-500 hover:bg-red-600 duration-200 px-4 py-2 rounded-md text-md text-white"
           >
             Cancel
           </button>
           <button
             onClick={() => DeleteHandle()}
-            class="bg-indigo-500 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"
+            class="bg-indigo-500 hover:bg-indigo-600 duration-200 px-7 py-2 ml-2 rounded-md text-md text-white font-semibold"
           >
             Delete
           </button>
