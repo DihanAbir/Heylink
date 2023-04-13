@@ -8,12 +8,15 @@ import { setDeleteModal } from '../../../../../Slices/controllerSlice';
 import { setAllMessages } from '../../../../../Slices/messageSlice';
 import './MessagesTab.module.css'
 
+import { CSVLink, CSVDownload } from "react-csv";
+
 const MessageTable = () => {
     const { allMessages } = useSelector((state) => state.messageSlice)
     const { deleteModal, render } = useSelector((state) => state.controllerSlice)
     const dispatch = useDispatch()
     const { userData } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
+
 
     // get all messages
     useEffect(() => {
@@ -31,7 +34,6 @@ const MessageTable = () => {
     return (
         <div className='w-full h-full rounded-xl border p-4 mt-6 mb-4 cursor-pointer'>
             <h1 className='text-gray-900 font-bold text-left'>Messages</h1>
-
             <table className=''>
                 <thead>
                     <tr className=''>
@@ -80,10 +82,13 @@ const MessageTable = () => {
                 }
             </table>
 
-            <button className='relative mt-6 w-44 h-12 bg-blue-600 rounded-3xl flex justify-center items-center gap-2'>
-                <img className='w-5' src={download} alt="" />
-                <span className='text-white font-semibold'>Export to CSV</span>
-            </button>
+
+            <CSVLink data={allMessages}>
+                <button className='relative mt-6 w-44 h-12 bg-blue-600 hover:bg-blue-700 duration-200 active:bg-green-600 active:duration-300 rounded-3xl flex justify-center items-center gap-2'>
+                    <img className='w-5' src={download} alt="" />
+                    <span className='text-white font-semibold'>Export to CSV</span>
+                </button>
+            </CSVLink>
         </div>
     );
 };

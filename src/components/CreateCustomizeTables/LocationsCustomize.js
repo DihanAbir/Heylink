@@ -13,16 +13,18 @@ import DefaultSwitch from '../ToggleSwitch/DefaultSwitch';
 import ProToggleSwitch from '../ToggleSwitch/ProToggleSwitch';
 import DeleteModal from "../Modals/CommonModals/DeleteModal";
 import ProButton from '../Buttons/ProButton';
-import { ToastBar, toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../ContextAPI/ServiceProvider/ServiceProvider';
 import { useDispatch, useSelector } from 'react-redux';
 import { setRenderReducer } from '../../Slices/getDataSlice';
 import { setOpen, setOpenInputChange1, setOpenInputChange2, setDeleteModal, setUploadImageModal } from '../../Slices/controllerSlice';
 import { setLocationAddressUpdateSuccess, setMapAddressUpdateSuccess, setMarkersOnTheMapAddress, setNewAddress } from '../../Slices/locationSlice';
-import { useForm } from 'react-hook-form';
 import ImageUploadModal from '../Modals/CustomizeLinkModals/ImageUploadModal';
 
 const LocationsCustomize = ({ location }) => {
+
+    console.log(location);
+
     const {
         newAddress,
         markersOnTheMapAddress,
@@ -41,14 +43,15 @@ const LocationsCustomize = ({ location }) => {
     const { handleDefaultSwitch, loader } = useContext(ServiceContext)
 
     const handleToggleSwitch = (input) => {
-        handleDefaultSwitch(location?._id, { show: input }, 'links/location',)
+        console.log(input);
+        handleDefaultSwitch(location?._id, { show: input }, 'locations',)
         if (loader) {
             dispatch(setRenderReducer({ render: true }))
         }
     }
 
     const handleUpdateMarkerOnTheMapAddress = () => {
-        fetch(`http://localhost:8000/app/v2/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v2/locations/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -69,7 +72,7 @@ const LocationsCustomize = ({ location }) => {
     }
 
     const handleUpdateLocation = () => {
-        fetch(`http://localhost:8000/app/v2/links/location/${location?._id}`, {
+        fetch(`http://localhost:8000/app/v2/locations/${location?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -139,7 +142,7 @@ const LocationsCustomize = ({ location }) => {
                             </div>
                             {
                                 uploadImageModal === location?._id && <ImageUploadModal
-                                    endPoint={`links/location/${location?._id}`} />
+                                    endPoint={`locations/${location?._id}`} />
                             }
 
                             {/* <div className=''>
