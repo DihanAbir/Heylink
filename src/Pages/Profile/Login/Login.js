@@ -4,7 +4,7 @@ import React, { useContext } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SmallLoader from "../../../components/loaders/SmallLoader";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
@@ -12,6 +12,8 @@ import Navber from "../../Shared/Navber/Navber";
 const Login = () => {
   const token = localStorage.getItem("HeyLinkToken");
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/dashboard'
 
   const [isLoasding, setIsLoading] = useState(false)
   const { setUserData } = useContext(AuthContext)
@@ -38,7 +40,6 @@ const Login = () => {
       },
     })
       .then((res) => {
-        // console.log(res.data.data.token);
         if (res?.data?.data?.token) {
           localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
           refetchNav(res?.data?.data?.token)
@@ -48,7 +49,7 @@ const Login = () => {
             const getToken = localStorage.getItem("HeyLinkToken");
             getToken && toast.success('User Login Successfully')
 
-            getToken && navigate('/');
+            getToken && navigate(from, { replace: true });
 
           }, 1000)
         }
@@ -102,7 +103,7 @@ const Login = () => {
             {/* ---------Forget password--------- */}
             <div className="flex justify-center items-center">
               <Link
-                to="/forgot-password"
+                to="/password-security"
                 className="underline text-center text-gray-600 hover:text-gray-900"
               >
                 Forgot Password?

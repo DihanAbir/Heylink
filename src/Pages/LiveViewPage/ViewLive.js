@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Buffer } from "buffer";
 import avatar from '../../assets/avatars/user-avatar.png'
 import PageLoader from "../../components/loaders/PageLoader";
 import { useLocation } from "react-router-dom";
@@ -32,24 +31,9 @@ const ViewLive = () => {
             });
     }
 
-
-    const bufferToImage = (data) => {
-        const buff = Buffer.from(
-            data?.image?.data?.data
-                ? data?.image?.data?.data
-                : avatar
-        );
-        return buff?.toString("base64");
-    };
-
-    // image convarte buffer
-    const buff = Buffer.from(
-        userData?.image?.data?.data ? userData?.image?.data?.data : avatar
-    );
-    const base64 = buff?.toString("base64");
-
     return (
-        <section className="w-full min-h-screen bg-[#ffc31b]">
+        <section className={`w-full min-h-screen`}
+            style={{ backgroundColor: `${userData?.backgroundColor}`, color: `${userData?.pageTextColor}` }} >
 
 
             {data?.length === 0 ? <PageLoader />
@@ -57,7 +41,7 @@ const ViewLive = () => {
                 <div className="max-w-[880px] mx-auto">
                     {
                         !userData ? <div className="flex justify-center items-center w-full min-h-screen">
-                            <h1 className="text-white font-bold text-3xl md:text-4xl text-center">
+                            <h1 className="font-bold text-3xl md:text-4xl text-center">
                                 URL is Wrong
                             </h1>
                         </div>
@@ -71,7 +55,7 @@ const ViewLive = () => {
                                         src={`${userData?.image ? userData?.image : avatar}`}
                                         alt=""
                                     />
-                                    <h2 className="font-bold text-2xl mt-2 text-center">{userData?.profiletitle}</h2>
+                                    <h2 className="font-bold text-2xl mt-2 text-center">{userData?.profiletitle ? userData?.profiletitle : userData?.username}</h2>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-4 mx-auto w-full px-2 mt-4 pb-4">

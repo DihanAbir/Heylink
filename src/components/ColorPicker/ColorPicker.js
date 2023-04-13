@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SketchPicker } from 'react-color';
 
-const ColorPicker = ({ getColor, closePicker }) => {
+const ColorPicker = ({ getColor, closePicker, action }) => {
     const [color, setColor] = useState('');
 
     const handleChangeComplete = (color) => {
@@ -14,6 +14,7 @@ const ColorPicker = ({ getColor, closePicker }) => {
         let handler = (e) => {
             if (!outSideRef.current.contains(e.target)) {
                 closePicker(0)
+                action()
             }
         };
         document.addEventListener("mousedown", handler);

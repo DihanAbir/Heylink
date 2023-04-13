@@ -22,14 +22,6 @@ const DashboardNavber = () => {
     const [viewBreadCramp, setViewBreadCramp] = useState(false)
     const [viewNotification, setViewNotification] = useState(false)
 
-    // console.log(userData);
-
-    // image convarte buffer
-    // const buff = Buffer.from(
-    //     userData?.image?.data?.data ? userData?.image?.data?.data : avatar
-    // );
-    // const base64 = buff?.toString("base64");
-
     let dropdownRef = useRef();
 
     useEffect(() => {
@@ -54,7 +46,7 @@ const DashboardNavber = () => {
                     <h1 className='inline-block font-bold md:text-2xl text-blue-800 duration-300 text-md'>ShowMore.info</h1>
                 </Link>
 
-                <div className='hidden lg:block flex-grow lg:flex justify-between items-center bg-gray-100 px-6 rounded-[50px] h-12 w-80'>
+                <div className='hidden lg:block flex-grow lg:flex justify-between items-center bg-[#EFF6FF] px-6 rounded-[50px] h-12 w-80'>
                     <div className='flex items-center'>
                         <h1 className='text-gray-500 text-[16px]'>ShowMore.info/</h1>
                         <Link className='underline text-blue-900 text-[16px]'
@@ -116,7 +108,7 @@ const DashboardNavber = () => {
             </div>
 
             {/* ------------only small device show------------ */}
-            <div className='lg:hidden mt-4 w-full flex justify-between items-center bg-gray-100 px-6 rounded-[50px] h-12'>
+            <div className='lg:hidden mt-4 w-full flex justify-between items-center bg-[#EFF6FF] px-6 rounded-[50px] h-12'>
                 <div className='flex items-center'>
                     <h1 className='text-gray-500 text-[16px]'>ShowMore.info/</h1>
                     <Link className='underline text-blue-900 text-[16px]' target='_blank'

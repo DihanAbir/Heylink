@@ -6,10 +6,8 @@ const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
     const token = localStorage.getItem('HeyLinkToken')
 
-    // console.log(userData);
-
-    useEffect(() => {
-        setLoading(true)
+    // user data reFetch if user data updated
+    const userRefetch = () => {
         if (token) {
             fetch(`http://localhost:8000/app/v1/user/me`, {
                 headers: {
@@ -20,15 +18,32 @@ const AuthProvider = ({ children }) => {
                 .then((res) => res.json())
                 .then((data) => setUserData(data?.data));
         }
-        else {
-            setUserData(null)
+    }
+
+    useEffect(() => {
+        if (!userData?._id) {
+            setLoading(true)
+            if (token) {
+                fetch(`http://localhost:8000/app/v1/user/me`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                        "content-type": "application/json",
+                    },
+                })
+                    .then((res) => res.json())
+                    .then((data) => setUserData(data?.data));
+            }
+            else {
+                setUserData(null)
+            }
+            setLoading(false)
         }
-        setLoading(false)
-    }, [loading]);
+    }, [token]);
 
 
     const authInfo = {
         userData,
+        userRefetch,
         setUserData,
         loading,
         setLoading

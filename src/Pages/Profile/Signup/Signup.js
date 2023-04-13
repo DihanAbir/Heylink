@@ -3,7 +3,7 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SmallLoader from "../../../components/loaders/SmallLoader";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
@@ -11,6 +11,9 @@ import Navber from "../../Shared/Navber/Navber";
 const Signup = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/dashboard'
+
   const [isLoasding, setIsLoading] = useState(false)
   const { setUserData } = useContext(AuthContext)
 
@@ -23,13 +26,14 @@ const Signup = () => {
     })
       .then((res) => res.json())
       .then((data) => setUserData(data?.data));
-
   }
 
+
+  // handle signup
   const handleSignup = (data) => {
+    setIsLoading(true)
     axios.post(`http://localhost:8000/app/v1/user/signup`, data)
       .then((res) => {
-        // console.log(res.data.data.token);
         if (res?.data?.data?.token) {
           localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
           refetchNav(res?.data?.data?.token)
@@ -37,10 +41,9 @@ const Signup = () => {
 
           setTimeout(() => {
             const getToken = localStorage.getItem("HeyLinkToken");
-            // console.log('getToken ', getToken)
             getToken && toast.success('User Login Successfully')
 
-            getToken && navigate('/');
+            getToken && navigate(from, { replace: true });
 
           }, 1000)
         }

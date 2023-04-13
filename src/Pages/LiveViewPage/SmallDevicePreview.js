@@ -64,8 +64,8 @@ const SmallDevicePreview = () => {
     const base64 = buff?.toString("base64");
 
     return (
-        <section className="w-full min-h-screen bg-[#ffc31b]">
-
+        <section className="w-full min-h-screen"
+            style={{ backgroundColor: `${userData?.backgroundColor}`, color: `${userData?.pageTextColor}` }}>
 
             {linksData.length === 0 ? <PageLoader />
                 :
@@ -79,7 +79,7 @@ const SmallDevicePreview = () => {
                                 src={`${userData?.image ? userData?.image : avatar}`}
                                 alt=""
                             />
-                            <h2 className="font-bold text-2xl mt-2 text-center">{userData?.profiletitle}</h2>
+                            <h2 className="font-bold text-2xl mt-2 text-center">{userData?.profiletitle ? userData?.profiletitle : userData?.username}</h2>
                         </div>
 
                         <div className="grid grid-cols-1 gap-4 mx-auto w-full px-2 mt-4 pb-4">

@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import useFetch from "../../../Hoock/Hoock";
-import { Buffer } from "buffer";
 import { Link } from "react-router-dom";
 import arrowRight from '../../../assets/icons/right-arrow.svg'
 import avatar from '../../../assets/avatars/user-avatar.png'
@@ -40,32 +39,14 @@ const SidebarPreviewMain = () => {
     }
   }, []);
 
-
-  const bufferToImage = (data) => {
-    const buff = Buffer.from(data?.image?.data?.data
-      ? data?.image?.data?.data
-      : [
-        "https://heylink.me/cdn-cgi/image/f=auto,q=85,fit=crop,w=200/https://api.heylink.me/static/images/defaults/avatar_user.png",
-      ]
-    );
-    return buff?.toString("base64");
-  };
-
-  const { profiletitle } = userData;
-
-  // image convarte buffer
-  const buff = Buffer.from(
-    userData?.image?.data?.data ? userData?.image?.data?.data : avatar
-  );
-  const base64 = buff?.toString("base64");
-
   return (
     <div className="fixed flex flex-col justify-center items-center cursor-pointer">
 
-      <div className=" bg-black pr-1 w-[310px] h-[640px] rounded-[50px] flex justify-center items-center relative">
+      <div className=" bg-black pr-1 w-[320px] h-[640px] rounded-[50px] flex justify-center items-center relative">
         <div className=" h-1 w-16 bg-gray-300 rounded-3xl absolute top-6"></div>
         <div
-          className="relative flex flex-col justify-start items-center bg-[#FFB219] h-[530px] w-[300px] mx-auto overflow-y-auto overflow-x-hidden scrollBar">
+          className="relative flex flex-col justify-start items-center h-[530px] w-[300px] mx-auto overflow-y-auto overflow-x-hidden scrollBar"
+          style={{ backgroundColor: `${userData?.backgroundColor}`, color: `${userData?.pageTextColor}` }} >
           {render && !userData?._id ? <SmallLoader />
             :
 
@@ -76,7 +57,7 @@ const SidebarPreviewMain = () => {
                   src={`${userData?.image ? userData?.image : avatar}`}
                   alt="prifle image"
                 />
-                <h2 className="font-bold text-2xl mt-2 text-center">{profiletitle}</h2>
+                <h2 className="font-bold text-2xl mt-2 text-center">{userData?.profiletitle ? userData?.profiletitle : userData?.username}</h2>
               </div>
 
               <div className="grid grid-cols-1 gap-4 mx-auto w-full px-2 mt-4 pb-4">

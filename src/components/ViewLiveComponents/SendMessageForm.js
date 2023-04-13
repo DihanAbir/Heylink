@@ -44,7 +44,7 @@ const SendMessageForm = ({ messageData, refetch }) => {
                     <h1 className='text-green-600 font-semibold text-2xl'>{messageData?.successMessageText ? messageData?.successMessageText : 'Your message was sent successfully!'}</h1>
                 </div>
                     :
-                    <div className="w-full h-fit bg-white rounded-[32px] border-2 border-[#E5E7EB] p-2">
+                    <div className="w-full h-fit bg-slate-200 rounded-[32px] border-2 border-[#E5E7EB] p-2">
                         <form onSubmit={handleSubmit(handleMessageSend)} className="">
                             <div className="mb-4">
                                 <input
@@ -111,8 +111,9 @@ const SendMessageForm = ({ messageData, refetch }) => {
                             }
 
 
-                            <button className="w-full h-12 bg-[#E5E7EB] rounded-[60px] border flex justify-center items-center gap-3" type="submit">
-                                <h1 className="text-rose-600 text-xl font-semibold">Send Message</h1>
+                            <button className="w-full h-12 rounded-[60px] border flex justify-center items-center gap-3" type="submit"
+                                style={{ backgroundColor: `${userData?.buttonBackgroundColor}`, color: `${userData?.buttonTextColor}` }} >
+                                <h1 className="text-xl font-semibold">Send Message</h1>
                                 <svg className="w-6" xmlns="https://www.w3.org/2000/svg" fill='current' viewBox="0 0 20 20"><path d="M19.5 9.3L1.2.1C1.1 0 .9 0 .8 0 .6 0 .5.1.3.2.2.3.1.4.1.6 0 .7 0 .9.1 1l2.5 9-2.5 9v.4c0 .1.1.2.2.3.1.1.2.2.3.2 0 .1.1.1.3.1.1 0 .3 0 .4-.1l18.3-9.2c.1-.1.3-.2.3-.3s.1-.2.1-.4 0-.3-.1-.4c-.1-.2-.2-.3-.4-.3zM2.2 17.6L4 10.8l5-.8-5-.8-1.8-6.8L17.3 10 2.2 17.6z"></path></svg>
                             </button>
                         </form>

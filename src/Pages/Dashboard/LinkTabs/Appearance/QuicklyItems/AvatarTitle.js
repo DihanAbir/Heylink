@@ -8,7 +8,6 @@ import ProButton from '../../../../../components/Buttons/ProButton';
 import ProToggleSwitch from '../../../../../components/ToggleSwitch/ProToggleSwitch';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
 import { toast } from 'react-hot-toast';
-import { Buffer } from "buffer";
 import ImageUploadModal from '../../../../../components/Modals/CustomizeLinkModals/ImageUploadModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUploadImageModal } from '../../../../../Slices/controllerSlice';
@@ -47,13 +46,6 @@ const AvatarTitle = () => {
                 }
             });
     }
-
-
-    // image convarte buffer
-    const buff = Buffer.from(
-        userData?.image?.data?.data ? userData?.image?.data?.data : avatar
-    );
-    const base64 = buff?.toString("base64");
 
 
     let modalRef = useRef();
