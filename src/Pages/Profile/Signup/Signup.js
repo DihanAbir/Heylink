@@ -15,6 +15,12 @@ const Signup = () => {
   const from = location.state?.from?.pathname || '/dashboard'
 
   const [isLoasding, setIsLoading] = useState(false)
+  const [emailResult, setEmailResult] = useState("")
+  const [usernameResult, setUsernameResult] = useState("")
+  const [passwordResult, setPasswordResult] = useState("")
+
+  console.log(emailResult, usernameResult);
+
   const { setUserData } = useContext(AuthContext)
 
   const refetchNav = (token) => {
@@ -29,11 +35,21 @@ const Signup = () => {
   }
 
 
-  // handle signup
-  const handleSignup = (data) => {
+  const handleSignupReady = (data) => {
     setIsLoading(true)
     axios.post(`http://localhost:8000/app/v2/user/signup`, data)
       .then((res) => {
+
+        console.log(res.data);
+        if (res?.data?.message?.emailMessage) {
+          setEmailResult(res?.data?.message?.emailMessage)
+          setIsLoading(false)
+        }
+        if (res?.data?.message?.usernameMessage) {
+          setUsernameResult(res?.data?.message?.usernameMessage)
+          setIsLoading(false)
+        }
+
         if (res?.data?.data?.token) {
           localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
           refetchNav(res?.data?.data?.token)
@@ -48,6 +64,28 @@ const Signup = () => {
           }, 1000)
         }
       });
+  }
+
+
+  // handle signup
+  const handleSignup = (data) => {
+
+    if (data?.password.length < 6) {
+      return setPasswordResult("password is too short"); // password is too short
+    }
+    if (data?.password.length > 12) {
+      return setPasswordResult("password is too long"); // password is too long
+    }
+    if (!/[A-Z]/.test(data?.password)) {
+      return setPasswordResult("password does not contain at least one capital letter"); // password does not contain at least one capital letter
+    }
+    if (!/[a-z]/.test(data?.password)) {
+      return setPasswordResult("password does not contain at least one small letter"); // password does not contain at least one small letter
+    }
+
+    else {
+      handleSignupReady(data)
+    }
   };
 
   return (
@@ -68,11 +106,19 @@ const Signup = () => {
                 id="email"
                 label="Email Address"
                 variant="standard"
+                onChange={(e) => setEmailResult("")}
               />
               {errors.email && (
                 <div className="bg-red-200 h-6 w-full flex justify-end items-center">
                   <p className="text-gray-900 text-sm py-3 px-2">
                     {errors.email.message}
+                  </p>
+                </div>
+              )}
+              {emailResult && (
+                <div className="bg-red-200 h-6 w-full flex justify-end items-center">
+                  <p className="text-gray-900 text-sm py-3 px-2">
+                    {emailResult}
                   </p>
                 </div>
               )}
@@ -85,11 +131,19 @@ const Signup = () => {
                 id="username"
                 label="username"
                 variant="standard"
+                onChange={(e) => setUsernameResult("")}
               />
               {errors.username && (
                 <div className="bg-red-200 h-6 w-full flex justify-end items-center">
                   <p className="text-gray-900 text-sm py-3 px-2">
                     {errors.username.message}
+                  </p>
+                </div>
+              )}
+              {usernameResult && (
+                <div className="bg-red-200 h-6 w-full flex justify-end items-center">
+                  <p className="text-gray-900 text-sm py-3 px-2">
+                    {usernameResult}
                   </p>
                 </div>
               )}
@@ -102,11 +156,19 @@ const Signup = () => {
                 id="password"
                 label="password"
                 variant="standard"
+                onChange={(e) => setPasswordResult("")}
               />
               {errors.password && (
                 <div className="bg-red-200 h-6 w-full flex justify-end items-center">
                   <p className="text-gray-900 text-sm py-3 px-2">
                     {errors.password.message}
+                  </p>
+                </div>
+              )}
+              {passwordResult && (
+                <div className="bg-red-200 h-6 w-full flex justify-end items-center">
+                  <p className="text-gray-900 text-sm py-3 px-2">
+                    {passwordResult}
                   </p>
                 </div>
               )}
