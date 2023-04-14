@@ -21,6 +21,7 @@ const UserName = () => {
     const { userData, userRefetch } = useContext(AuthContext)
 
     const [viewModal, setViewModal] = useState(false)
+    const [usernameResult, setUsernameResult] = useState("")
 
     // copy from username input
     function copy(text) {
@@ -29,8 +30,14 @@ const UserName = () => {
         toast.success(`${copyText} Copy Successfull`)
     }
 
+
+    const handleUsernameSet = (e) => {
+        dispatch(setNewUsername(e.target.value))
+        setUsernameResult("")
+    }
+
     const handleUpdate = () => {
-        fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
+        fetch(`http://localhost:8000/app/v2/user/username/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -40,6 +47,9 @@ const UserName = () => {
         })
             .then((res) => res.json())
             .then((data) => {
+                if (data.message) {
+                    setUsernameResult(data.message)
+                }
                 if (data?.data.acknowledged) {
                     toast.success('User Name Updated')
                     userRefetch()
@@ -66,13 +76,14 @@ const UserName = () => {
     return (
         <section id='shortcut' className='col-span-2 mb-4 bg-white'>
             <h1 className='text-left font-bold text-black'>USERNAME</h1>
-            <div className='flex justify-between items-center gap-4 px-2 border rounded-xl w-full h-20'>
+            <div className={`relative flex flex-col justify-center items-start px-2 rounded-xl w-full h-24
+            ${usernameResult ? "border border-red-500" : "border"}`}>
 
                 <div ref={modalRef} className='flex items-center justify-between gap-2 w-full' >
 
                     <div className='flex-grow flex items-center gap-1'>
                         <h1 className='text-gray-500 text-xl'>showmore.info/</h1>
-                        <input onChange={(e) => dispatch(setNewUsername(e.target.value))}
+                        <input onChange={(e) => handleUsernameSet(e)}
                             className={`bg-white w-full flex-grow focus:outline-none border-none text-black font-bold text-xl ${inputChange && 'bg-blue-200'}`} disabled={!inputChange} type="text" defaultValue={userData?.username} />
                         {
                             newUsername ? <>
@@ -106,6 +117,13 @@ const UserName = () => {
                         </svg>
                     </div>
                 </div>
+
+                <div className='absolute bottom-2 left-2'>
+                    {
+                        usernameResult && <span className='text-sm text-red-500' >{usernameResult}</span>
+                    }
+                </div>
+
             </div>
 
         </section>

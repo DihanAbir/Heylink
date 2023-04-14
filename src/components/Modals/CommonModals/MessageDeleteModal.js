@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import close from "../../../assets/icons/link-customize-icons/close.svg";
 import { setDeleteModal } from '../../../Slices/controllerSlice';
 
-const MessageDeleteModal = ({ id, endPoint }) => {
+const MessageDeleteModal = ({ id, endPoint, reFetch }) => {
     const token = localStorage.getItem("HeyLinkToken");
 
     const closeModal = () => {
@@ -40,6 +40,7 @@ const MessageDeleteModal = ({ id, endPoint }) => {
             .then((res) => res.json())
             .then((data) => {
                 if (data?.data.acknowledged) {
+                    reFetch()
                     toast.success('Delete Successfully')
                     dispatch(setDeleteModal(''))
                 }

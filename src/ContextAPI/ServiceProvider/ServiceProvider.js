@@ -6,7 +6,7 @@ const ServiceProvider = ({ children }) => {
     const [loader, setLoader] = useState(false);
 
     // handle toggle switch
-    const handleDefaultSwitch = (id, toggleData, endPoint) => {
+    const handleDefaultSwitch = (id, toggleData, endPoint, reFetch) => {
         fetch(`http://localhost:8000/app/v2/${endPoint}/${id}`, {
             method: 'PATCH',
             headers: {
@@ -18,6 +18,7 @@ const ServiceProvider = ({ children }) => {
             .then(res => res.json())
             .then(data => {
                 if (data?.data.acknowledged) {
+                    reFetch && reFetch()
                     toast.success('Switch Updated')
                     setLoader(true)
                 }

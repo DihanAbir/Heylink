@@ -37,7 +37,7 @@ const MessagesTab = () => {
 
     const handleToggleSwitch = (input) => {
         if (messageData) {
-            handleDefaultSwitch(messageData?._id, { turnOnOffMessage: input }, 'message',)
+            handleDefaultSwitch(messageData?._id, { turnOnOffMessage: input }, 'message', getMessage)
         }
         else if (!messageData) {
             fetch(`http://localhost:8000/app/v2/message`, {

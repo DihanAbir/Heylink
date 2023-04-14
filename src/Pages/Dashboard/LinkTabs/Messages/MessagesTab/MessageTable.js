@@ -17,9 +17,7 @@ const MessageTable = () => {
     const { userData } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
 
-
-    // get all messages
-    useEffect(() => {
+    const getAllMessages = () => {
         setLoading(true)
         fetch(`http://localhost:8000/app/v2/all-messages`, {
             headers: {
@@ -30,6 +28,11 @@ const MessageTable = () => {
             .then((res) => res.json())
             .then((data) => dispatch(setAllMessages(data.data)));
         setLoading(false)
+    }
+
+    // get all messages
+    useEffect(() => {
+        getAllMessages()
     }, [])
     return (
         <div className='w-full h-full rounded-xl border p-4 mt-6 mb-4 cursor-pointer'>
@@ -73,7 +76,7 @@ const MessageTable = () => {
                                             <svg onClick={() => dispatch(setDeleteModal(message._id))}
                                                 className='w-3' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 22"><path d="M9.998 12.521l2.294-2.281 1.414 1.407-2.293 2.281 2.293 2.281-1.414 1.407-2.294-2.281-2.293 2.281-1.413-1.407 2.293-2.281-2.293-2.281 1.413-1.407 2.293 2.281zM4.999 2.984v-.995c0-1.098.895-1.989 2-1.989h6c1.104 0 2 .891 2 1.989v.995h3c1.105 0 2 .891 2 1.99v1.99a1.994 1.994 0 01-2 1.989h-.08l-.92 10.944a1.994 1.994 0 01-2 1.989h-10c-1.105 0-2-.89-1.997-1.907L2.078 8.953h-.079c-1.106 0-2-.89-2-1.989v-1.99c0-1.099.894-1.99 2-1.99h3zm0 1.99h-3v1.99h16v-1.99h-13zm-.914 3.979l.914 10.944h10l.003-.083.91-10.861H4.085zm8.914-5.969v-.995h-6v.995h6z"></path></svg></td>
                                         {
-                                            deleteModal === message._id && <MessageDeleteModal id={message?._id} endPoint={"all-messages"} />
+                                            deleteModal === message._id && <MessageDeleteModal id={message?._id} endPoint={"all-messages"} reFetch={getAllMessages} />
                                         }
                                     </tr>
                                 ))

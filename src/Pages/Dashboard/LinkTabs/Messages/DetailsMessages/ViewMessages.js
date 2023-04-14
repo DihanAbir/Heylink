@@ -70,8 +70,8 @@ const ViewMessages = ({ message, reFetch }) => {
             .then(res => res.json())
             .then((data) => {
                 toast.success('Update Successfully')
-                dispatch(setSuccessMessageTextUpdateSuccess(true))
                 reFetch()
+                dispatch(setSuccessMessageTextUpdateSuccess(true))
                 dispatch(setSuccessMessageText(''))
             });
     }
@@ -205,13 +205,13 @@ const ViewMessages = ({ message, reFetch }) => {
         }
     }
     const handleNameToggleSwitch = (input) => {
-        handleDefaultSwitch(message?._id, { turnOnName: input }, 'message',)
+        handleDefaultSwitch(message?._id, { turnOnName: input }, 'message', reFetch)
     }
     const handleEmailToggleSwitch = (input) => {
-        handleDefaultSwitch(message?._id, { turnOnEmail: input }, 'message',)
+        handleDefaultSwitch(message?._id, { turnOnEmail: input }, 'message', reFetch)
     }
     const handlePhoneNumberToggleSwitch = (input) => {
-        handleDefaultSwitch(message?._id, { turnOnPhoneNumber: input }, 'message',)
+        handleDefaultSwitch(message?._id, { turnOnPhoneNumber: input }, 'message', reFetch)
     }
 
     return (
