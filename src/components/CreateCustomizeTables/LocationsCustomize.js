@@ -22,8 +22,9 @@ import { setLocationAddressUpdateSuccess, setMapAddressUpdateSuccess, setMarkers
 import ImageUploadModal from '../Modals/CustomizeLinkModals/ImageUploadModal';
 
 const LocationsCustomize = ({ location }) => {
+    const { fetchData, handleDefaultSwitch, loader } = useContext(ServiceContext)
 
-    console.log(location);
+    // console.log(location);
 
     const {
         newAddress,
@@ -40,7 +41,6 @@ const LocationsCustomize = ({ location }) => {
     } = useSelector((state) => state.controllerSlice)
 
     const dispatch = useDispatch()
-    const { handleDefaultSwitch, loader } = useContext(ServiceContext)
 
     const handleToggleSwitch = (input) => {
         console.log(input);
@@ -62,8 +62,9 @@ const LocationsCustomize = ({ location }) => {
             .then(res => res.json())
             .then(data => {
                 if (data?.data.acknowledged) {
+                    fetchData("locations")
                     toast.success('Location Updated')
-                    dispatch(setRenderReducer({ render: true }))
+                    // dispatch(setRenderReducer({ render: true }))
                     dispatch(setMarkersOnTheMapAddress({ id: '', address: '' }))
                     dispatch(setMapAddressUpdateSuccess({ id: location?._id }))
                     dispatch(setOpenInputChange2(location?._id))
@@ -83,8 +84,9 @@ const LocationsCustomize = ({ location }) => {
             .then(res => res.json())
             .then(data => {
                 if (data?.data.acknowledged) {
+                    fetchData("locations")
                     toast.success('Location Updated')
-                    dispatch(setRenderReducer({ render: true }))
+                    // dispatch(setRenderReducer({ render: true }))
                     dispatch(setNewAddress({ id: '', address: '' }))
                     dispatch(setLocationAddressUpdateSuccess({ id: location?._id }))
                     dispatch(setOpenInputChange1(''))
@@ -142,7 +144,7 @@ const LocationsCustomize = ({ location }) => {
                             </div>
                             {
                                 uploadImageModal === location?._id && <ImageUploadModal
-                                    endPoint={`locations/${location?._id}`} />
+                                    endPoint={`locations`} id={location?._id} />
                             }
 
                             {/* <div className=''>
@@ -212,7 +214,7 @@ const LocationsCustomize = ({ location }) => {
                                     </div>
                                     {deleteModal === location?._id && (
                                         <DeleteModal
-                                            endPoint={"location"}
+                                            endPoint={"locations"}
                                             id={location._id}
                                         ></DeleteModal>
                                     )}

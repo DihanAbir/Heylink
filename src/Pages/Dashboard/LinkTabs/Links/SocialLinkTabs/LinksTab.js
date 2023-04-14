@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import link from "../../../../../assets/icons/link.svg";
 import threeSocial from "../../../../../assets/icons/three-social.svg";
 import uparrow from "../../../../../assets/icons/gif-images/up-arrow.gif";
@@ -10,18 +10,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { setRenderReducer } from "../../../../../Slices/getDataSlice";
 import PageLoader from "../../../../../components/loaders/PageLoader";
 import { setErrorUrl, setShowError } from "../../../../../Slices/linksSlice";
+import { ServiceContext } from "../../../../../ContextAPI/ServiceProvider/ServiceProvider";
 
 
 const LinksTab = () => {
-  const { userData } = useContext(AuthContext)
   const [openAdvancedLinkModal, setOpenAdvancedLinkModal] = useState(false);
-  const data = useFetch("links");
-  const dispatch = useDispatch()
-
-  // console.log(data);
-
-  const { render } = useSelector((state) => state.getData);
+  const { userData } = useContext(AuthContext)
+  const { fetchData, data, setData, isLoading } = useContext(ServiceContext)
   const { errorUrl, showError } = useSelector((state) => state.linksSlice);
+
+  useEffect(() => {
+    setData([])
+    fetchData("links")
+  }, [])
+
+
+  const dispatch = useDispatch()
 
   const handleUrl = (event) => {
     event.preventDefault();
@@ -42,12 +46,11 @@ const LinksTab = () => {
       .then((res) => res.json())
       .then((data) => {
         event.target.reset();
-
-        // data = useFetch("common");
+        fetchData("links")
         toast.success("Link URL Add Successfully");
         setErrorUrl("");
         dispatch(setErrorUrl({ errorUrl: '' }));
-        dispatch(setRenderReducer({ render: true }));
+        // dispatch(setRenderReducer({ render: true }));
       });
   };
 
@@ -109,7 +112,7 @@ const LinksTab = () => {
         </div>
       </div> */}
 
-      {render ? <PageLoader />
+      {isLoading ? <PageLoader />
         :
         <>
           {/* --------------Create Link------------ */}

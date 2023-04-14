@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import ImageUploadModal from "../Modals/CustomizeLinkModals/ImageUploadModal";
 
 const CreateLinkCustomize = ({ url }) => {
+  const { fetchData, data, setData, isLoading, loader, handleDefaultSwitch } = useContext(ServiceContext)
   const {
     openEffcetsModal,
     fastLinkProModal,
@@ -43,13 +44,12 @@ const CreateLinkCustomize = ({ url }) => {
     linkNameUpdateSuccess,
   } = useSelector((state) => state.linksSlice);
   const { open, uploadImageModal, deleteModal } = useSelector((state) => state.controllerSlice);
-  const { loader, handleDefaultSwitch } = useContext(ServiceContext)
   const dispatch = useDispatch()
 
   // console.log(url);
 
-  const handleToggleSwitch = (input) => {
-    handleDefaultSwitch(url?._id, { show: input }, 'links',)
+  const handleToggleSwitch = (input,) => {
+    handleDefaultSwitch(url?._id, { show: input }, 'links')
     if (loader) {
       dispatch(setRenderReducer({ render: true }))
     }
@@ -68,8 +68,9 @@ const CreateLinkCustomize = ({ url }) => {
       .then(res => res.json())
       .then(data => {
         if (data?.data.acknowledged) {
+          fetchData("links")
           toast.success('Link Title Updated')
-          dispatch(setRenderReducer({ render: true }))
+          // dispatch(setRenderReducer({ render: true }))
           dispatch(setLinkName({ id: '', linkName: '' }))
           dispatch(setLinkNameUpdateSuccess({ id: url?._id }))
           dispatch(setOpenInputChange1(''))
@@ -90,8 +91,9 @@ const CreateLinkCustomize = ({ url }) => {
       .then(res => res.json())
       .then(data => {
         if (data?.data.acknowledged) {
+          fetchData("links")
           toast.success('Link URL Updated')
-          dispatch(setRenderReducer({ render: true }))
+          // dispatch(setRenderReducer({ render: true }))
           dispatch(setLinkURL({ id: '', linkURL: '' }))
           dispatch(setLinkURLUpdateSuccess({ id: url?._id }))
           dispatch(setOpenInputChange2(''))
@@ -191,7 +193,7 @@ const CreateLinkCustomize = ({ url }) => {
             />
           </div>
           {
-            uploadImageModal === url?._id && <ImageUploadModal endPoint={`links/${url?._id}`} />
+            uploadImageModal === url?._id && <ImageUploadModal endPoint={`links`} id={url?._id} />
           }
           {/* -----------image upload input field end----------- */}
 

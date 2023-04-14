@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import downArrow from "../../assets/icons/link-customize-icons/down-arrow.svg";
 import upArrow from "../../assets/icons/link-customize-icons/up-arrow.svg";
 import swap from "../../assets/icons/link-customize-icons/swap.svg";
@@ -11,8 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setSocialLinkName, setSocialLinkNameUpdateSuccess } from "../../Slices/socialSlice";
 import { setOpen, setDeleteModal, setOpenInputChange1 } from "../../Slices/controllerSlice";
 import { setRenderReducer } from "../../Slices/getDataSlice";
+import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
 
 const AllSocialLinks = ({ socialLink }) => {
+  const { fetchData } = useContext(ServiceContext)
   const { socialLinkName, socialLinkNameUpdateSuccess } = useSelector((state) => state.socialSlice)
   const { open, deleteModal, openInputChange1 } = useSelector((state) => state.controllerSlice)
   const dispatch = useDispatch()
@@ -32,8 +34,9 @@ const AllSocialLinks = ({ socialLink }) => {
       .then(res => res.json())
       .then(data => {
         if (data?.data.acknowledged) {
+          fetchData("social")
           toast.success('Link URL Updated')
-          dispatch(setRenderReducer({ render: true }))
+          // dispatch(setRenderReducer({ render: true }))
           dispatch(setSocialLinkName({ id: '', linkName: '' }))
           dispatch(setSocialLinkNameUpdateSuccess({ id: socialLink?._id }))
           dispatch(setOpenInputChange1(''))
@@ -59,6 +62,7 @@ const AllSocialLinks = ({ socialLink }) => {
       .then(res => res.json())
       .then(data => {
         if (data?.data.acknowledged) {
+          fetchData("social")
           toast.success('Data Successfully Updated')
           dispatch(setRenderReducer({ render: true }))
         }

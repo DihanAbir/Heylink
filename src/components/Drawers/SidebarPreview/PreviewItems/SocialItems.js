@@ -1,7 +1,7 @@
 import React from 'react';
 
 const SocialItems = ({ item }) => {
-    console.log(item);
+    // console.log(item);
     return (
         <a
             target="_blank"

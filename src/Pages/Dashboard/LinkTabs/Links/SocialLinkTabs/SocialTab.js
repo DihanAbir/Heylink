@@ -9,6 +9,7 @@ import { AuthContext } from "../../../../../ContextAPI/AuthProvider/AuthProvider
 import useFetch from "../../../../../Hoock/Hoock";
 import { setRenderReducer } from "../../../../../Slices/getDataSlice";
 import { setInputError, setSearch, setSearchSocials, setSelectedSocial, setSocialImg, setUsernamePlaceholder } from "../../../../../Slices/socialSlice";
+import { ServiceContext } from "../../../../../ContextAPI/ServiceProvider/ServiceProvider";
 
 const SocialTab = () => {
   const {
@@ -22,8 +23,14 @@ const SocialTab = () => {
   } = useSelector((state) => state.socialSlice)
   const { render } = useSelector((state) => state.getData)
   const dispatch = useDispatch()
+  const { fetchData, data, setData, isLoading } = useContext(ServiceContext)
   const { userData } = useContext(AuthContext)
-  const data = useFetch("social");
+  // const data = useFetch("social");
+
+  useEffect(() => {
+    setData([])
+    fetchData("social")
+  }, [])
 
   let dropdownRef = useRef();
   useEffect(() => {
@@ -74,8 +81,9 @@ const SocialTab = () => {
       .then(res => res.json())
       .then((data) => {
         event.target.reset();
+        fetchData("social")
         toast.success('Socail Address Add Successfully')
-        dispatch(setRenderReducer({ render: true }))
+        // dispatch(setRenderReducer({ render: true }))
         dispatch(setInputError(''))
       });
   };

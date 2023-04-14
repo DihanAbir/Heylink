@@ -1,17 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
-export const getFetchData = createAsyncThunk("posts/getFetchData", async () => {
-    const res = await axios.get('https://jsonplaceholder.typicode.com/posts')
-    console.log(res.data);
-    return res.data
-})
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     render: true,
-    data: [],
-    isLoading: false,
-    error: null
+    linksData: []
 };
 
 export const getDataSlice = createSlice({
@@ -21,22 +12,14 @@ export const getDataSlice = createSlice({
         setRenderReducer: (state, action) => {
             state.render = action.payload.render;
         },
-    },
-    extraReducers: (builder) => {
-        builder.addCase(getFetchData.pending, (state) => {
-            state.isLoading = true;
-        });
-        builder.addCase(getFetchData.fulfilled, (state, action) => {
-            state.isLoading = false;
-            state.data = action.payload;
-            state.error = null;
-        });
-        builder.addCase(getFetchData.rejected, (state, action) => {
-            state.isLoading = false;
-            state.error = action.error.message;
-        });
+        setLinksData: (state, action) => {
+            state.linksData = action.payload;
+        },
     }
 });
 
-export const { setRenderReducer } = getDataSlice.actions;
+export const {
+    setRenderReducer,
+    setLinksData
+} = getDataSlice.actions;
 export default getDataSlice.reducer;

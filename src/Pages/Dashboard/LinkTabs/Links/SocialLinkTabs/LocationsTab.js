@@ -6,9 +6,9 @@ import empty from '../../../../../assets/icons/locations-tab-icons/empty.svg'
 import LocationsCustomize from '../../../../../components/CreateCustomizeTables/LocationsCustomize';
 import PageLoader from '../../../../../components/loaders/PageLoader';
 import { AuthContext } from '../../../../../ContextAPI/AuthProvider/AuthProvider';
-import useFetch from '../../../../../Hoock/Hoock';
 import { setRenderReducer } from '../../../../../Slices/getDataSlice';
 import { setSelectedLocation, setSearch } from '../../../../../Slices/locationSlice';
+import { ServiceContext } from '../../../../../ContextAPI/ServiceProvider/ServiceProvider';
 
 const LocationsTab = () => {
     const {
@@ -18,8 +18,13 @@ const LocationsTab = () => {
     } = useSelector((state) => state.locationSlice)
     const { render } = useSelector((state) => state.getData)
     const dispatch = useDispatch()
+    const { fetchData, data, setData, isLoading } = useContext(ServiceContext)
     const { userData } = useContext(AuthContext)
-    const data = useFetch("locations")
+
+    useEffect(() => {
+        setData([])
+        fetchData("locations")
+    }, [])
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -39,8 +44,9 @@ const LocationsTab = () => {
         })
             .then(res => res.json())
             .then((data) => {
+                fetchData("locations")
                 toast.success('Location Add Successfully')
-                dispatch(setRenderReducer({ render: true }))
+                // dispatch(setRenderReducer({ render: true }))
                 dispatch(setSelectedLocation(''))
                 event.target.reset()
             });

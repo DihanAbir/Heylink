@@ -10,9 +10,11 @@ import SendMessageForm from "../../ViewLiveComponents/SendMessageForm";
 import LocationItems from "./PreviewItems/LocationItems";
 import LinkItems from "./PreviewItems/LinkItems";
 import SocialItems from "./PreviewItems/SocialItems";
+import { ServiceContext } from "../../../ContextAPI/ServiceProvider/ServiceProvider";
 const SidebarPreviewMain = () => {
   const { render } = useSelector((state) => state.getData)
   const { userData } = useContext(AuthContext)
+  const { getData } = useContext(ServiceContext)
   const dispatch = useDispatch()
 
   const linksData = useFetch("links");

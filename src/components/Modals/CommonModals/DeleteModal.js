@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import close from "../../../assets/icons/link-customize-icons/close.svg";
 import { setDeleteModal } from "../../../Slices/controllerSlice";
 import { setRenderReducer } from "../../../Slices/getDataSlice";
+import { ServiceContext } from "../../../ContextAPI/ServiceProvider/ServiceProvider";
 
 const DeleteModal = ({ id, endPoint }) => {
+  const { fetchData } = useContext(ServiceContext)
   const token = localStorage.getItem("HeyLinkToken");
 
   const closeModal = () => {
@@ -39,8 +41,9 @@ const DeleteModal = ({ id, endPoint }) => {
       .then((res) => res.json())
       .then((data) => {
         if (data?.data.acknowledged) {
+          fetchData(endPoint)
           toast.success('Delete Successfully')
-          dispatch(setRenderReducer({ render: true }))
+          // dispatch(setRenderReducer({ render: true }))
           dispatch(setDeleteModal(''))
         }
       });

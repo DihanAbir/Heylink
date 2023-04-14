@@ -34,6 +34,9 @@ const SendMessageForm = ({ messageData, refetch }) => {
                     playSound()
                     dispatch(setSuccessfull(true))
                     reset()
+                    setTimeout(() => {
+                        dispatch(setSuccessfull(false))
+                    }, 5000);
                 });
         }
     }

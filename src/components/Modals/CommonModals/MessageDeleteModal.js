@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import close from "../../../assets/icons/link-customize-icons/close.svg";
 import { setDeleteModal } from '../../../Slices/controllerSlice';
+import { ServiceContext } from '../../../ContextAPI/ServiceProvider/ServiceProvider';
 
 const MessageDeleteModal = ({ id, endPoint, reFetch }) => {
     const token = localStorage.getItem("HeyLinkToken");
+    const { data, fetchData } = useContext(ServiceContext)
 
     const closeModal = () => {
         dispatch(setDeleteModal(''))

@@ -7,10 +7,12 @@ import ChooseIconsModal from "./ChooseIconsModal";
 import { useState } from "react";
 import { setUploadImageModal } from "../../../Slices/controllerSlice";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
+import { ServiceContext } from "../../../ContextAPI/ServiceProvider/ServiceProvider";
 
 // setUploadImageModal
-const ImageUploadModal = ({ closeModal, endPoint }) => {
+const ImageUploadModal = ({ closeModal, endPoint, id }) => {
   const { userRefetch } = useContext(AuthContext)
+  const { fetchData } = useContext(ServiceContext)
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
 
@@ -36,7 +38,8 @@ const ImageUploadModal = ({ closeModal, endPoint }) => {
 
   const imageUpload = (imageURL) => {
     // console.log(imageURL, endPoint);
-    const url = `http://localhost:8000/app/v2/${endPoint}`;
+    const url = `http://localhost:8000/app/v2/${endPoint}/${id}`;
+    setOpen(false)
     fetch(url, {
       method: "PATCH",
       headers: {
@@ -47,13 +50,12 @@ const ImageUploadModal = ({ closeModal, endPoint }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         if (data?.data.acknowledged) {
-          setOpen(false)
-          dispatch(setUploadImageModal(""))
+          fetchData(endPoint)
           userRefetch()
+          dispatch(setUploadImageModal(""))
           toast.success('Image Upload Successfully')
-          dispatch(setRenderReducer({ render: true }))
+          // dispatch(setRenderReducer({ render: true }))
         }
       });
   };
