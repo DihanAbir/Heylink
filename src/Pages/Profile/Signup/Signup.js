@@ -19,8 +19,6 @@ const Signup = () => {
   const [usernameResult, setUsernameResult] = useState("")
   const [passwordResult, setPasswordResult] = useState("")
 
-  console.log(emailResult, usernameResult);
-
   const { setUserData } = useContext(AuthContext)
 
   const refetchNav = (token) => {
