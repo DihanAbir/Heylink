@@ -1,23 +1,21 @@
-import React, { useContext } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
+import { useRouter } from "next/router";
+import { useAuth } from "@/Hooks/getAuth";
+import SmallLoader from "@/components/Loaders/SmallLoader";
 
-const PriveteRoute = ({ children }) => {
-    const { userData, loading } = useContext(AuthContext)
-    const location = useLocation()
+const PrivateRoute = ({ children }) => {
+    const router = useRouter();
+    const { user, loading } = useAuth();
 
     if (loading) {
-        <div className='w-full h-full fixed top-0 left-0 right-0 bg-blue-500 bg-opacity-5 flex justify-center items-center mx-auto' role="status">
-            <div class="w-12 h-12 rounded-full animate-spin border-4 border-solid border-green-500 border-t-transparent shadow-md"></div>
-        </div>
+        return <SmallLoader />
     }
 
-    if (userData?._id && loading === false) {
+    if (user?._id && loading === false) {
         return children
     }
-    else if (!userData && loading === false) {
-        return <Navigate to='/login' state={{ from: location }} replace ></Navigate>
+    else if (!user && loading === false) {
+        router.push("/login");
     }
 };
 
-export default PriveteRoute;
+export default PrivateRoute;
