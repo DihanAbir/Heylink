@@ -8,12 +8,9 @@ import SmallLoader from '../../loaders/SmallLoader';
 
 const ChangePassword = ({ closeModal }) => {
     const { userData } = useContext(AuthContext)
-    const [modal, setModal] = useState(true)
     const [passwordError, setPasswordError] = useState("")
     const [sendLoading, setSendLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm()
-
-    console.log(userData);
 
     const handlePasswordChange = (data) => {
         if (data.newPassword !== data.repeatNewPassword) {
@@ -53,15 +50,6 @@ const ChangePassword = ({ closeModal }) => {
     }
 
 
-    useEffect(() => {
-        setTimeout(() => {
-            setModal(false)
-        },);
-    },)
-
-    console.log(modal);
-
-
     let modalRef = useRef();
     useEffect(() => {
         let handler = (e) => {
@@ -77,7 +65,7 @@ const ChangePassword = ({ closeModal }) => {
     return (
         <div className='fixed z-40 min-h-screen min-w-full left-0 right-0 top-0 w-full h-full bg-gray-600 bg-opacity-75 flex justify-center items-center cursor-pointer'>
 
-            <div draggable ref={modalRef} className={`z-500 w-80 md:w-[800px] h-fit p-4 flex flex-col justify-center items-center gap-4 rounded-xl border bg-white ${modal ? "opacity-50" : "opacity-100 duration-1000"}`}>
+            <div draggable ref={modalRef} className={`z-500 w-80 md:w-[800px] h-fit p-4 flex flex-col justify-center items-center gap-4 rounded-xl border bg-white zoom-in`}>
                 <div className='bg-white rounded-2xl w-full mx-auto'>
                     <h1 className='text-xl font-semibold text-gray-900 text-center'>Password Recovery</h1>
 

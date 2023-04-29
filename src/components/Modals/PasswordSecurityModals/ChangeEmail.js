@@ -10,12 +10,11 @@ import { toast } from 'react-hot-toast';
 
 const ChangeEmail = ({ closeModal }) => {
     const { userData } = useContext(AuthContext)
-    const [modal, setModal] = useState(true)
     const [emailError, setEmailError] = useState("")
     const [sendLoading, setSendLoading] = useState(false)
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    console.log(userData);
+    // console.log(userData);
 
     const handleEmailChange = (data) => {
         console.log(data);
@@ -56,13 +55,6 @@ const ChangeEmail = ({ closeModal }) => {
     }
 
 
-    useEffect(() => {
-        setTimeout(() => {
-            setModal(false)
-        },);
-    },)
-
-
     let modalRef = useRef();
     useEffect(() => {
         let handler = (e) => {
@@ -78,7 +70,7 @@ const ChangeEmail = ({ closeModal }) => {
     return (
         <div className='fixed z-40 min-h-screen min-w-full left-0 right-0 top-0 w-full h-full bg-gray-600 bg-opacity-75 flex justify-center items-center cursor-pointer'>
 
-            <div ref={modalRef} className={`z-500 w-80 md:w-[800px] h-fit p-4 flex flex-col justify-center items-center gap-4 rounded-xl border bg-white ${modal ? "opacity-50" : "opacity-100 duration-1000"}`}>
+            <div ref={modalRef} className={`z-500 w-80 md:w-[800px] h-fit p-4 flex flex-col justify-center items-center gap-4 rounded-xl border bg-white zoom-in`}>
                 <div className='bg-white rounded-2xl w-full mx-auto'>
                     <h1 className='text-xl font-semibold text-gray-900 text-center'>Change The Email for Your Personal Account</h1>
 

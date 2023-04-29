@@ -4,6 +4,7 @@ export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState({})
     const [loading, setLoading] = useState(false)
+    const token = localStorage.getItem('HeyLinkToken')
 
     // user data reFetch if user data updated
     const userRefetch = () => {
