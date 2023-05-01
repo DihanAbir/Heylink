@@ -51,18 +51,15 @@ const MessageDeleteModal = ({ id, endPoint, reFetch }) => {
     return (
         <div
             ref={dropdownRef}
-            className="cursor-pointer w-60 absolute -right-8 border z-50 mt-2 rounded-md bg-gray-50 shadow"
+            className="cursor-pointer w-60 absolute right-12 top-0 border z-50 mt-2 rounded-md bg-gray-50 shadow zoom-in"
         >
-            <div className="p-3">
-                <div className="w-full flex justify-end">
-                    <img
-                        onClick={() => closeModal()}
-                        className="w-3"
-                        src={close}
-                        alt=""
-                    />
-
-                </div>
+            <div className="p-2 relative">
+                <button onClick={() => closeModal()}
+                    className="absolute top-1 right-1 w-8 h-8 flex justify-center items-center rounded-full bg-sky-100 hover:bg-sky-500 text-black hover:text-white duration-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
                 <div>
                     <h1 className="text-gray-900 font-bold text-center py-2">Delete</h1>
                     <p className="text-sm text-red-400 text-center">
