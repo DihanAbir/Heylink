@@ -5,9 +5,9 @@ const DefaultSwitch = ({ initialToggle, getToggle }) => {
     return (
         <div className="flex flex-col justify-center items-center ">
             <div onClick={() => getToggle(!initialToggle)}
-                className={`w-11 h-[22px] flex items-center rounded-full p-1 cursor-pointer
+                className={`w-10 md:w-11 h-[18px] md:h-[22px] flex items-center rounded-full p-1 cursor-pointer
             ${initialToggle ? 'bg-[#D9D9D9]' : 'bg-[#D9D9D9]'}`}>
-                <div className={`h-4 w-4 rounded-full shadow-md transform duration-300 ease-in-out
+                <div className={`h-3 md:h-4 w-3 md:w-4 rounded-full shadow-md transform duration-300 ease-in-out
             ${initialToggle ? 'bg-[#58D809] transform translate-x-5' : 'bg-white'}`}>
                 </div>
             </div>

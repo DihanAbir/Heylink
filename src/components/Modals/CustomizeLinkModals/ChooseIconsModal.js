@@ -50,7 +50,7 @@ const ChooseIconsModal = ({ imageUpload, closeModal }) => {
     return (
         <div className='fixed z-40 min-h-screen min-w-full left-0 right-0 top-0 w-full h-full bg-gray-600 bg-opacity-75 flex justify-center items-center'>
 
-            <div ref={modalRef} className='z-500 w-80 h-fit p-4 flex flex-col justify-center items-center gap-4 rounded-xl border bg-white'>
+            <div ref={modalRef} className='z-500 w-80 h-fit p-4 flex flex-col justify-center items-center gap-4 rounded-xl border bg-white zoom-in'>
                 <div className='grid grid-cols-4 gap-6 bg-white '>
                     {
                         icons?.map((icon, i) => (

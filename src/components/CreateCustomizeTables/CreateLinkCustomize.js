@@ -174,20 +174,20 @@ const CreateLinkCustomize = ({ url }) => {
   // }
 
   return (
-    <div className="relative flex items-center gap-4 w-full my-6 cursor-pointer">
+    <div className="relative flex items-center gap-2 md:gap-4 w-full my-6 cursor-pointer">
       <div>
-        <img className="w-5" src={swap} alt="" />
+        <img className="w-3 md:w-5" src={swap} alt="" />
       </div>
       <div className="relative border border-gray-200 rounded-[60px] w-full bg-white">
-        <div className="h-20 flex justify-between items-center gap-6 py-4 px-4">
+        <div className="h-20 flex justify-between items-center gap-2 md:gap-6 py-2 md:py-4 px-2 md:px-4">
 
 
           {/* -----------image upload input field end----------- */}
           <div onClick={() => dispatch(setUploadImageModal(url?._id))}
-            class="relative w-14 h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-full overflow-hidden"
+            class="relative w-10 md:w-14 h-10 md:h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-full overflow-hidden"
           >
             <img
-              className="w-14 h-14 cursor-pointer"
+              className="w-10 md:w-14 h-10 md:h-14 cursor-pointer"
               src={`${url?.image ? url?.image : emptyImage}`}
               alt=""
             />
@@ -199,9 +199,9 @@ const CreateLinkCustomize = ({ url }) => {
 
           {/* -----------edit and input  icon start----------- */}
           <div className="flex-grow flex flex-col gap-2">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-2">
               <input onChange={(e) => linkNameChange(e.target.value)}
-                className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-black font-bold ${openInputChange1 === url?._id ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"}`}
+                className={`px-2 h-8 bg-white rounded w-full focus:outline-none text-black font-bold ${openInputChange1 === url?._id ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"}`}
                 type="text" disabled={openInputChange1 === url?._id ? false : true}
                 defaultValue={url.linkTitle ? url.linkTitle : url?.link} name="linkName"
               />
@@ -223,11 +223,11 @@ const CreateLinkCustomize = ({ url }) => {
               }
             </div>
 
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center gap-2">
               {/* <a target="_blank" href={url?.link} className="flex items-center w-full gap-2"> */}
 
               <input onChange={(e) => linkURLChange(e.target.value)}
-                className={`mr-3 px-2 h-6 bg-white rounded w-full text-sm focus:outline-none text-blue-600 
+                className={`px-2 h-6 bg-white rounded w-full text-sm focus:outline-none text-blue-600 
                   ${openInputChange2 === url?._id ? "border border-blue-600" : "border-none cursor-pointer"}`}
                 type="text" disabled={openInputChange2 === url?._id ? false : true}
                 defaultValue={url?.link} name="linkURL" />
@@ -253,7 +253,7 @@ const CreateLinkCustomize = ({ url }) => {
           </div>
           {/* -----------edit  and input icon end----------- */}
 
-          <div className="flex md:justify-center items-center gap-6">
+          <div className="flex flex-col md:flex-row justify-center md:items-center gap-2 md:gap-6">
             <div className="relative cursor-pointer">
               <div
                 onClick={() => dispatch(setDeleteModal(deleteModal ? '' : url?._id))}

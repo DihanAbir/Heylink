@@ -112,7 +112,7 @@ const LocationsTab = () => {
 
             {/* ------------------------------------------------- */}
             {
-                render ? <PageLoader />
+                isLoading ? <PageLoader />
                     :
                     <div>
                         {

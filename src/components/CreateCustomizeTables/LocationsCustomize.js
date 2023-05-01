@@ -122,22 +122,22 @@ const LocationsCustomize = ({ location }) => {
     return (
         <>
             <div className='relative w-full my-6 cursor-pointer'>
-                <div className='relative flex gap-4 w-full'>
+                <div className='relative flex gap-2 md:gap-4 w-full'>
                     <div className='mt-6'>
-                        <img className='w-5' src={swap} alt="" />
+                        <img className='w-3 md:w-5' src={swap} alt="" />
                     </div>
                     <div className='w-full'>
-                        <div className={`relative border border-gray-200 h-20 flex justify-between items-center gap-2 md:gap-6 py-4 px-4 w-full
+                        <div className={`relative border border-gray-200 h-16 md:h-20 flex justify-between items-center gap-2 md:gap-6 py-4 px-2 md:px-4 w-full
                         ${open === location?._id ? "rounded-t-3xl" : "rounded-[60px]"}`}>
 
 
                             {/* -----------image upload input field end----------- */}
 
                             <div onClick={() => dispatch(setUploadImageModal(location?._id))}
-                                class="relative w-14 h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-full overflow-hidden"
+                                class="relative w-10 md:w-14 h-10 md:h-14 flex justify-center items-center mx-auto bg-gray-200 rounded-full overflow-hidden"
                             >
                                 <img
-                                    className="w-14 h-14 cursor-pointer"
+                                    className="w-10 md:w-14 h-10 md:h-14 cursor-pointer"
                                     src={`${location?.image ? location?.image : emptyImage}`}
                                     alt=""
                                 />
@@ -147,43 +147,13 @@ const LocationsCustomize = ({ location }) => {
                                     endPoint={`locations`} id={location?._id} />
                             }
 
-                            {/* <div className=''>
-                        <div
-                            onClick={() => dispatch(setUploadImageModal(uploadImageModal ? '' : location?._id))}
-                            class="relative w-12 h-12 flex justify-center items-center mx-auto bg-gray-200 rounded-md"
-                        >
-                            <label class="flex justify-center items-center">
-                                <div class=" relative flex cursor-pointer items-center justify-center">
-                                    {
-                                        location?.image ? <img
-                                            className="w-12 h-12 cursor-pointer"
-                                            // src={`data:image/png;base64, ${base64}`}
-                                            alt="" />
-                                            :
-                                            <img
-                                                className="w-12 h-12 cursor-pointer"
-                                                src=''
-                                                alt=""
-                                            />
-                                    }
-                                </div>
-                            </label>
-                        </div>
-                        {uploadImageModal === location?._id && (
-                            <ImageUploadModal
-                                url={location}
-                                endPoint='location'
-                            />
-                        )}
-                    </div> */}
-
                             {/* -----------image upload input field end----------- */}
 
                             {/* -----------edit and input  icon start----------- */}
                             <div className='flex-grow flex flex-col gap-2'>
-                                <div className='flex justify-between items-center cursor-pointer'>
+                                <div className='flex justify-between items-center cursor-pointer gap-2'>
                                     <input onChange={(e) => locationChange(e.target.value)}
-                                        className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 
+                                        className={`px-2 h-8 bg-white rounded w-full focus:outline-none text-gray-700 
                                 ${openInputChange1 === location?._id ? 'font-normal bg-blue-100 border border-blue-600' : 'font-bold  border-none cursor-pointer'}`} type="text" disabled={!openInputChange1} defaultValue={location?.name} name='address' />
                                     {
                                         newAddress?.id === location?._id && newAddress?.address ?
@@ -205,12 +175,12 @@ const LocationsCustomize = ({ location }) => {
                             </div>
                             {/* -----------edit  and input icon end----------- */}
 
-                            <div className='flex md:justify-center items-center gap-2 md:gap-6'>
+                            <div className='flex flex-col md:flex-row justify-center items-center gap-2 md:gap-6'>
                                 <div className='relative'>
                                     <div
-                                        onClick={() => dispatch(setDeleteModal(deleteModal ? '' : location?._id))} className='hidden md:block md:flex flex-col justify-center items-center gap-2'>
+                                        onClick={() => dispatch(setDeleteModal(deleteModal ? '' : location?._id))} className='md:flex flex-col justify-center items-center gap-2'>
                                         <img className='w-4' src={deletes} alt="" />
-                                        <span className='text-sm text-gray-500'>Delete</span>
+                                        <span className='text-sm text-gray-500 hidden md:block'>Delete</span>
                                     </div>
                                     {deleteModal === location?._id && (
                                         <DeleteModal

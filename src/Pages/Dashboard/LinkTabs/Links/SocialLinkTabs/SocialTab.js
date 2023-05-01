@@ -27,6 +27,8 @@ const SocialTab = () => {
   const { userData } = useContext(AuthContext)
   // const data = useFetch("social");
 
+  console.log(data);
+
   useEffect(() => {
     setData([])
     fetchData("social")
@@ -97,7 +99,7 @@ const SocialTab = () => {
               className="relative border-b flex justify-between items-center px-4 h-12 w-full bg-white"
             >
               <div className="flex items-center gap-4">
-                <img className="w-6" src={socialImg && socialImg} alt="" />
+                {socialImg && <img className="w-6" src={socialImg && socialImg} alt="" />}
                 <h1>{selectedSocial}</h1>
               </div>
               <div>
@@ -184,7 +186,7 @@ const SocialTab = () => {
       </div>
 
       {
-        render ? <PageLoader />
+        isLoading ? <PageLoader />
           :
           <div>
             {data?.length > 0 && data?.map((socialLink) => <AllSocialLinks socialLink={socialLink} />)}

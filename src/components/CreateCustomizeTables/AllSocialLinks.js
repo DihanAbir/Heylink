@@ -71,21 +71,21 @@ const AllSocialLinks = ({ socialLink }) => {
 
   return (
     <div>
-      <div className="relative my-6 flex items-center gap-4 w-full cursor-pointer">
+      <div className="relative my-6 flex items-center gap-2 md:gap-4 w-full cursor-pointer">
         <div>
-          <img className="w-5" src={swap} alt="" />
+          <img className="w-3 md:w-5" src={swap} alt="" />
         </div>
-        <div className="h-20 border border-gray-200 rounded-[70px] flex justify-between items-center gap-4 md:gap-6 py-4 px-2 md:px-6 w-full bg-white">
+        <div className="h-16 md:h-20 border border-gray-200 rounded-[70px] flex justify-between items-center gap-4 md:gap-6 py-4 px-2 md:px-6 w-full bg-white">
 
 
           <div className="w-full flex flex-row justify-between gap-2 items-center">
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 md:gap-4">
               <img
-                className="w-10 h-10 rounded-full object-cover"
+                className="min-w-[40px] h-10 rounded-full object-cover"
                 src={socialLink?.image}
                 alt=""
               />
-              <h1 className="flex items-center gap-1">
+              <h1 className="flex items-center gap-1 hidden md:block">
                 <span className="text-gray-300">My</span>
                 <span className="text-gray-300">{socialLink?.name}</span>
               </h1>
@@ -95,7 +95,7 @@ const AllSocialLinks = ({ socialLink }) => {
               <div className="flex justify-between items-center">
                 <input
                   onChange={(e) => socialLinkNameChange(e.target.value)}
-                  className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-black font-bold text-xl
+                  className={`mr-3 px-2 h-8 bg-white rounded w-full focus:outline-none text-black font-bold md:text-xl
                       ${openInputChange1 === socialLink?._id ? "bg-blue-100 border border-blue-600" : "border-none cursor-pointer"
                     }`}
                   type="text"
@@ -130,7 +130,7 @@ const AllSocialLinks = ({ socialLink }) => {
               className="flex flex-col justify-center items-center gap-2 my-1"
             >
               <img className="w-4" src={deletes} alt="" />
-              <span className="text-sm text-gray-500">Delete</span>
+              <span className="text-sm text-gray-500 hidden md:block">Delete</span>
             </div>
             {deleteModal === socialLink?._id && (
               <DeleteModal

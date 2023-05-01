@@ -76,7 +76,7 @@ const ImageUploadModal = ({ closeModal, endPoint, id }) => {
   return (
     <div
       ref={dropdownRef}
-      className="cursor-pointer absolute border bottom-0 z-50 mt-2 rounded-md bg-white shadow"
+      className="cursor-pointer absolute border bottom-0 z-50 mt-2 rounded-md bg-white shadow "
     >
       <div className="p-2">
         <div className="w-full flex justify-end">

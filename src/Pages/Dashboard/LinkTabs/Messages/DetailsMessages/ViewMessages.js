@@ -11,6 +11,11 @@ import { toast } from 'react-hot-toast';
 import { ServiceContext } from '../../../../../ContextAPI/ServiceProvider/ServiceProvider';
 import ChackedSwitch from '../../../../../components/ToggleSwitch/ChackedSwitch';
 
+const openEye = <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16"> <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" /> <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" /> </svg>
+
+const closeEye = <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16"> <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z" /> <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z" /> </svg>
+
+
 const ViewMessages = ({ message, reFetch }) => {
     const {
         messageText,
@@ -271,8 +276,17 @@ const ViewMessages = ({ message, reFetch }) => {
             {/* -----------name part----------- */}
             <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2' >
-                    <input onClick={() => handleNameFieldChacked(message?.nameFieldChacked === 'true' ? 'false' : 'true')} checked={message?.nameFieldChacked === 'true' ? true : false}
-                        type="checkbox" name="name" id="name" />
+
+                    {/* <input onClick={() => handleNameFieldChacked(message?.nameFieldChacked === 'true' ? 'false' : 'true')} checked={message?.nameFieldChacked === 'true' ? true : false}
+                        type="checkbox" name="name" id="name" /> */}
+
+                    <button onClick={() => handleNameFieldChacked(message?.nameFieldChacked === 'true' ? 'false' : 'true')}
+                        className='text-gray-500 hover:text-sky-500' >
+                        {
+                            message?.nameFieldChacked === 'true' ? openEye : closeEye
+                        }
+                    </button>
+
                     <input onChange={(e) => handleNamePlaceholderValid(e.target.value)} className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='name' id='name'
                         defaultValue={message?.namePlaceholder ? message?.namePlaceholder : 'Your Name'} />
                     {
@@ -298,8 +312,14 @@ const ViewMessages = ({ message, reFetch }) => {
             {/* -----------email part----------- */}
             <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2' >
-                    <input onClick={() => handleEmailFieldChacked(message?.emailFieldChacked === 'true' ? 'false' : 'true')} checked={message?.emailFieldChacked === 'true' ? true : false}
-                        type="checkbox" name="email" id="email" />
+
+                    <button onClick={() => handleEmailFieldChacked(message?.emailFieldChacked === 'true' ? 'false' : 'true')}
+                        className='text-gray-500 hover:text-sky-500' >
+                        {
+                            message?.emailFieldChacked === 'true' ? openEye : closeEye
+                        }
+                    </button>
+
                     <input onChange={(e) => handleEmailPlaceholderValid(e.target.value)}
                         className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='email' id='email'
                         defaultValue={message?.emailPlaceholder ? message?.emailPlaceholder : 'Your Email Address'} />
@@ -328,8 +348,14 @@ const ViewMessages = ({ message, reFetch }) => {
             {/* -----------phoneNumber part----------- */}
             <div className='flex justify-between items-center w-full h-full mb-4'>
                 <div className='flex items-center gap-2' >
-                    <input onClick={() => handlePhoneNumberFieldChacked(message?.phoneNumberFieldChacked === 'true' ? 'false' : 'true')} checked={message?.phoneNumberFieldChacked === 'true' ? true : false}
-                        type="checkbox" name="phone" id="phone" />
+
+                    <button onClick={() => handlePhoneNumberFieldChacked(message?.phoneNumberFieldChacked === 'true' ? 'false' : 'true')}
+                        className='text-gray-500 hover:text-sky-500' >
+                        {
+                            message?.phoneNumberFieldChacked === 'true' ? openEye : closeEye
+                        }
+                    </button>
+
                     <input onChange={(e) => handlePhoneNumberPlaceholderValid(e.target.value)}
                         className='text-gray-600 w-full h-8 border-b focus:outline-none text-sm' type="text" name='phone' id='phone'
                         defaultValue={message?.phoneNumberPlaceholder ? message?.phoneNumberPlaceholder : 'Your Phone Number'} />
