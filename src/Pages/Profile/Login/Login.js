@@ -8,18 +8,25 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import SmallLoader from "../../../components/loaders/SmallLoader";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
+import { GoogleAuthProvider } from "firebase/auth";
+import UsernameModal from "../../../components/Modals/usernameModal/UsernameModal";
 
 const Login = () => {
+  const { userRefetch, userData, setUserData, signupWithGoogle } = useContext(AuthContext)
   const token = localStorage.getItem("HeyLinkToken");
   const navigate = useNavigate()
   const location = useLocation()
+  const googleProvider = new GoogleAuthProvider()
   const from = location.state?.from?.pathname || '/dashboard'
 
   const [isLoasding, setIsLoading] = useState(false)
+  const [isLoasdingGoogle, setIsLoadingGoogle] = useState(false)
   const [emailResult, setEmailResult] = useState("")
   const [passwordResult, setPasswordResult] = useState("")
 
-  const { setUserData } = useContext(AuthContext)
+  const [socialData, setSocialData] = useState(null)
+  const [usernameModal, setUsernameModal] = useState(false)
+
 
   const { register, handleSubmit, formState: { errors }, } = useForm();
 
@@ -33,6 +40,60 @@ const Login = () => {
       .then((res) => res.json())
       .then((data) => setUserData(data?.data));
   }
+
+
+
+  // handle save user by social user
+  const handleSaveUser = (newUser) => {
+    setIsLoadingGoogle(true)
+    fetch(`http://localhost:8000/app/v2/user/signup/withsocial`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(newUser)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data?.message?.usernameMessage) {
+          setUsernameModal(true)
+          setIsLoadingGoogle(false)
+        }
+        if (data?.token) {
+          localStorage.setItem("HeyLinkToken", data.token);
+          userRefetch()
+          userData && toast.success('User Login Successfully')
+          navigate(from, { replace: true });
+        }
+        setIsLoadingGoogle(false)
+      })
+  }
+
+
+  const handleLoginWithGoogle = () => {
+    signupWithGoogle(googleProvider)
+      .then(result => {
+        const user = result.user
+        const newUser = {
+          email: user.email,
+          profiletitle: user.displayName,
+          username: user.displayName.toLowerCase().replaceAll(" ", "").replace(".", ""),
+          image: user.photoURL,
+          createWith: "google"
+        }
+        const filteredNewUser = Object.fromEntries(
+          Object.entries(newUser).filter(([key, value]) => value)
+        );
+        if (filteredNewUser) {
+          handleSaveUser(filteredNewUser);
+          setSocialData(filteredNewUser)
+        }
+      })
+      .catch(err => console.log(err))
+  }
+
+
 
   const handleLogin = (data) => {
     setIsLoading(true)
@@ -155,19 +216,22 @@ const Login = () => {
           {/* ---------login form end--------- */}
 
 
-          {/* <div className="mt-4 cursor-pointer">
-            <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px]">
+          <div onClick={() => handleLoginWithGoogle()} className="mt-4 cursor-pointer">
+            <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px] hover:bg-gray-200">
               <img
                 className="w-6"
                 src="https://cdn-f.heylink.me/static/media/ic_google.f9a3cace.svg"
                 alt=""
               />
-              <h1 className="flex items-center gap-2">
-                <span>Login With</span>
-                <span className="font-semibold text-gray-600">Google</span>
-              </h1>
+              <div className="flex items-center gap-2">
+                {!isLoasdingGoogle ? <div className="flex items-center gap-2">
+                  <span>Login With</span>
+                  <span className="font-semibold text-gray-600">Google</span>
+                </div> : <SmallLoader />}
+              </div>
+
             </div>
-          </div> */}
+          </div>
 
 
           {/* <div className="mt-4 cursor-pointer">
@@ -195,6 +259,12 @@ const Login = () => {
           </div>
         </div>
       </div>
+
+
+      {
+        usernameModal && <UsernameModal closeModal={setUsernameModal} handleSaveUser={handleSaveUser} newUser={socialData} />
+      }
+
     </section>
   );
 };

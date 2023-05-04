@@ -7,30 +7,25 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import SmallLoader from "../../../components/loaders/SmallLoader";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
+import { GoogleAuthProvider } from "firebase/auth";
+import UsernameModal from "../../../components/Modals/usernameModal/UsernameModal";
 
 const Signup = () => {
+  const { userRefetch, userData, setUserData, signupWithGoogle } = useContext(AuthContext)
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const navigate = useNavigate()
   const location = useLocation()
+  const googleProvider = new GoogleAuthProvider()
   const from = location.state?.from?.pathname || '/dashboard'
 
   const [isLoasding, setIsLoading] = useState(false)
+  const [isLoasdingGoogle, setIsLoasdingGoogle] = useState(false)
   const [emailResult, setEmailResult] = useState("")
   const [usernameResult, setUsernameResult] = useState("")
   const [passwordResult, setPasswordResult] = useState("")
 
-  const { setUserData } = useContext(AuthContext)
-
-  const refetchNav = (token) => {
-    fetch(`http://localhost:8000/app/v2/user/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "content-type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setUserData(data?.data));
-  }
+  const [socialData, setSocialData] = useState(null)
+  const [usernameModal, setUsernameModal] = useState(false)
 
 
   const handleSignupReady = (data) => {
@@ -50,7 +45,8 @@ const Signup = () => {
 
         if (res?.data?.data?.token) {
           localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
-          refetchNav(res?.data?.data?.token)
+          // refetchNav(res?.data?.data?.token)
+          userRefetch()
           setIsLoading(false)
 
           setTimeout(() => {
@@ -62,6 +58,58 @@ const Signup = () => {
           }, 1000)
         }
       });
+  }
+
+
+
+  // handle save user by social user
+  const handleSaveUser = (newUser) => {
+    setIsLoasdingGoogle(true)
+    fetch(`http://localhost:8000/app/v2/user/signup/withsocial`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(newUser)
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        if (data?.message?.usernameMessage) {
+          setUsernameModal(true)
+          setIsLoasdingGoogle(false)
+        }
+        if (data?.token) {
+          localStorage.setItem("HeyLinkToken", data.token);
+          userRefetch()
+          userData && toast.success('User Login Successfully')
+          navigate(from, { replace: true });
+        }
+        setIsLoasdingGoogle(false)
+      })
+  }
+
+
+  const handleSignupWithGoogle = () => {
+    signupWithGoogle(googleProvider)
+      .then(result => {
+        const user = result.user
+        const newUser = {
+          email: user.email,
+          profiletitle: user.displayName,
+          username: user.displayName.toLowerCase().replaceAll(" ", "").replace(".", ""),
+          image: user.photoURL,
+          createWith: "google"
+        }
+        const filteredNewUser = Object.fromEntries(
+          Object.entries(newUser).filter(([key, value]) => value)
+        );
+        if (filteredNewUser) {
+          handleSaveUser(filteredNewUser);
+          setSocialData(filteredNewUser)
+        }
+      })
+      .catch(err => console.log(err))
   }
 
 
@@ -185,19 +233,23 @@ const Signup = () => {
           </form>
           {/* ---------signup form end--------- */}
 
-          {/* <div className="mt-4 cursor-pointer">
-            <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px]">
+          <div onClick={() => handleSignupWithGoogle()}
+            className="mt-4 cursor-pointer">
+            <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px] hover:bg-gray-200">
               <img
                 className="w-6"
                 src="https://cdn-f.heylink.me/static/media/ic_google.f9a3cace.svg"
                 alt=""
               />
-              <h1 className="flex items-center gap-2">
-                <span>Signup With</span>
-                <span className="font-semibold text-gray-600">Google</span>
-              </h1>
+              <div className="flex items-center gap-2">
+                {!isLoasdingGoogle ? <div className="flex items-center gap-2">
+                  <span>Signup With</span>
+                  <span className="font-semibold text-gray-600">Google</span>
+                </div> : <SmallLoader />}
+              </div>
+
             </div>
-          </div> */}
+          </div>
 
           {/* <div className="mt-4 cursor-pointer">
             <div className="flex justify-center items-center gap-3 py-3 px-4 shadow shadow-gray-400 rounded-[50px]">
@@ -222,6 +274,11 @@ const Signup = () => {
           </div>
         </div>
       </div>
+
+      {
+        usernameModal && <UsernameModal closeModal={setUsernameModal} handleSaveUser={handleSaveUser} newUser={socialData} />
+      }
+
     </section>
   );
 };

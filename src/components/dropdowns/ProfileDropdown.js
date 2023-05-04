@@ -2,25 +2,23 @@ import React, { useContext, useEffect, useRef } from 'react';
 import appearance from '../../assets/icons/appearance.svg'
 import security from '../../assets/icons/security.svg'
 import billing from '../../assets/icons/billing.svg'
-import logout from '../../assets/icons/logout.svg'
+import logoutImage from '../../assets/icons/logout.svg'
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
 
 const ProfileDropdown = ({ setViewProfile }) => {
-    const { userData, setUserData } = useContext(AuthContext)
+    const { userData, setUserData, logout } = useContext(AuthContext)
 
 
     const navigate = useNavigate()
     const handleLogout = () => {
+        logout()
         localStorage.removeItem('HeyLinkToken')
 
         setUserData({})
         setTimeout(() => {
             navigate('/login')
         }, [300])
-
-
-
 
     }
 
@@ -62,7 +60,7 @@ const ProfileDropdown = ({ setViewProfile }) => {
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Billing & Subscription</h1>
                 </div> */}
                 <div onClick={() => handleLogout()} className='grid grid-cols-5 items-center hover:bg-gray-200 p-2 mb-2 rounded'>
-                    <img className='w-6 col-span-1' src={logout} alt="" />
+                    <img className='w-6 col-span-1' src={logoutImage} alt="" />
                     <h1 className='col-span-4 text-gray-500 text-[16px] font-semibold'>Log out</h1>
                 </div>
             </div>

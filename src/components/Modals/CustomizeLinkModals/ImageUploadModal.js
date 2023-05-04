@@ -16,26 +16,6 @@ const ImageUploadModal = ({ closeModal, endPoint, id }) => {
   const [open, setOpen] = useState(false)
   const dispatch = useDispatch()
 
-  const handleImageUpload = async (e) => {
-    console.log(e);
-    const image = e.target.files[0]
-    const formData = new FormData();
-    formData.append("image", image);
-
-    try {
-      const response = await fetch("https://api.imgbb.com/1/upload?key=932ae96b4af949bccda61ebea8105393", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      if (data.data.url) {
-        imageUpload(data.data.url)
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
 
   const imageUpload = (imageURL) => {
     // console.log(imageURL, endPoint);
@@ -60,6 +40,28 @@ const ImageUploadModal = ({ closeModal, endPoint, id }) => {
         }
       });
   };
+
+
+  const handleImageUpload = async (e) => {
+    console.log(e);
+    const image = e.target.files[0]
+    const formData = new FormData();
+    formData.append("image", image);
+
+    try {
+      const response = await fetch("https://api.imgbb.com/1/upload?key=932ae96b4af949bccda61ebea8105393", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      if (data.data.url) {
+        imageUpload(data.data.url)
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   let dropdownRef = useRef();
   useEffect(() => {

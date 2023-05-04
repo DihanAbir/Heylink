@@ -78,7 +78,7 @@ const AvatarTitle = () => {
 
                 </div>
                 {
-                    uploadImageModal && <ImageUploadModal endPoint={`user/${userData?._id}`} />
+                    uploadImageModal && <ImageUploadModal endPoint={`user`} id={userData?._id} />
                 }
 
 
