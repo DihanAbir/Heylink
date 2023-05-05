@@ -29,6 +29,7 @@ import Signup from '../Pages/Profile/Signup/Signup';
 import Templates from '../Pages/Templates/Templates';
 import PriveteRoute from './PriveteRoute/PriveteRoute';
 import PasswordSecurity from '../Pages/Dashboard/PasswordSecurity/PasswordSecurity';
+import { SendEmail } from '../Pages/sendemail/SendEmail';
 
 const router = createBrowserRouter([
     {
@@ -42,7 +43,8 @@ const router = createBrowserRouter([
             { path: '/pricing', element: <PriveteRoute><PricingCards></PricingCards></PriveteRoute> },
             { path: '/signup', element: <Signup></Signup> },
             { path: '/login', element: <Login></Login> },
-            { path: '/password-security', element: <PasswordSecurity /> }
+            { path: '/password-security', element: <PasswordSecurity /> },
+            { path: '/sendemail', element: <SendEmail /> }
         ]
     },
     {

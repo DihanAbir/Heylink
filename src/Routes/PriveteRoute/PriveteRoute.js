@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
+import EmailVerifyModal from '../../components/Modals/UserManagementModals/EmailVerifyModal';
 
 const PriveteRoute = ({ children }) => {
     const { userData, loading } = useContext(AuthContext)
+    const [openEmailVerifyModal, setOpenEmailVerifyModal] = useState(false)
     const location = useLocation()
 
     if (loading) {
@@ -12,8 +14,19 @@ const PriveteRoute = ({ children }) => {
         </div>
     }
 
+    // { openEmailVerifyModal && }
+    if (openEmailVerifyModal) {
+        return <EmailVerifyModal />
+    }
+
     if (userData?._id && loading === false) {
-        return children
+        if (userData?.verified === "false") {
+            // alert("user unverified")
+            setOpenEmailVerifyModal(true)
+        }
+        else {
+            return children
+        }
     }
     else if (!userData && loading === false) {
         return <Navigate to='/login' state={{ from: location }} replace ></Navigate>

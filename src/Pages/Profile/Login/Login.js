@@ -9,7 +9,7 @@ import SmallLoader from "../../../components/loaders/SmallLoader";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
 import { GoogleAuthProvider } from "firebase/auth";
-import UsernameModal from "../../../components/Modals/usernameModal/UsernameModal";
+import UsernameModal from "../../../components/Modals/UserManagementModals/UsernameModal";
 
 const Login = () => {
   const { userRefetch, userData, setUserData, signupWithGoogle } = useContext(AuthContext)
@@ -80,7 +80,8 @@ const Login = () => {
           profiletitle: user.displayName,
           username: user.displayName.toLowerCase().replaceAll(" ", "").replace(".", ""),
           image: user.photoURL,
-          createWith: "google"
+          createWith: "google",
+          verified: "true"
         }
         const filteredNewUser = Object.fromEntries(
           Object.entries(newUser).filter(([key, value]) => value)

@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -8,24 +8,89 @@ import SmallLoader from "../../../components/loaders/SmallLoader";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
 import { GoogleAuthProvider } from "firebase/auth";
-import UsernameModal from "../../../components/Modals/usernameModal/UsernameModal";
+import UsernameModal from "../../../components/Modals/UserManagementModals/UsernameModal";
+import Loader from "../../../components/loaders/Loader";
+import EmailVerifyModal from "../../../components/Modals/UserManagementModals/EmailVerifyModal";
+import app from '../../../Firebase/Firebase.config';
+import { getAuth, isSignInWithEmailLink, sendSignInLinkToEmail, signInWithEmailLink } from 'firebase/auth';
 
 const Signup = () => {
   const { userRefetch, userData, setUserData, signupWithGoogle } = useContext(AuthContext)
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const navigate = useNavigate()
   const location = useLocation()
+  const auth = getAuth(app)
+  const { search } = location;
   const googleProvider = new GoogleAuthProvider()
   const from = location.state?.from?.pathname || '/dashboard'
 
+  const [openSendEmailModal, setOpenSendEmailModal] = useState(false)
   const [isLoasding, setIsLoading] = useState(false)
-  const [isLoasdingGoogle, setIsLoasdingGoogle] = useState(false)
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false)
   const [emailResult, setEmailResult] = useState("")
   const [usernameResult, setUsernameResult] = useState("")
   const [passwordResult, setPasswordResult] = useState("")
 
   const [socialData, setSocialData] = useState(null)
   const [usernameModal, setUsernameModal] = useState(false)
+  const [email, setEmail] = useState("")
+
+
+  const handleUpdateUser = (updateData) => {
+    fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.data.acknowledged) {
+          userRefetch()
+          toast.success("Verified User")
+          navigate("/dashboard")
+        }
+      });
+  }
+
+  useEffect(() => {
+    if (isSignInWithEmailLink(auth, window.location.href)) {
+      signInWithEmailLink(auth, localStorage.getItem('email'), window.location.href)
+        .then((result) => {
+          const user = result?.user
+          if (user?.emailVerified) {
+            const updateData = {
+              profiletitle: user.displayName,
+              image: user.photoURL && user.photoURL,
+              verified: "true"
+            }
+            handleUpdateUser(updateData)
+          }
+          console.log(result?.user);
+          setOpenSendEmailModal(false)
+          localStorage.removeItem('email');
+        }).catch((err) => {
+          console.log(err.message);
+        })
+    }
+  }, [search, navigate]);
+
+  const handleSendEmail = (email) => {
+    setEmail(email)
+    sendSignInLinkToEmail(auth, email, {
+      url: 'http://localhost:3000/signup',
+      handleCodeInApp: true,
+    })
+      .then((result) => {
+        localStorage.setItem('email', email);
+        setIsLoading(false)
+        setOpenSendEmailModal(true)
+      }).catch(err => {
+        console.log(err.message);
+      })
+  }
 
 
   const handleSignupReady = (data) => {
@@ -44,18 +109,9 @@ const Signup = () => {
         }
 
         if (res?.data?.data?.token) {
+          handleSendEmail(res?.data?.data?.result?.email)
           localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
-          // refetchNav(res?.data?.data?.token)
           userRefetch()
-          setIsLoading(false)
-
-          setTimeout(() => {
-            const getToken = localStorage.getItem("HeyLinkToken");
-            getToken && toast.success('User Login Successfully')
-
-            getToken && navigate(from, { replace: true });
-
-          }, 1000)
         }
       });
   }
@@ -64,7 +120,7 @@ const Signup = () => {
 
   // handle save user by social user
   const handleSaveUser = (newUser) => {
-    setIsLoasdingGoogle(true)
+    setIsLoadingGoogle(true)
     fetch(`http://localhost:8000/app/v2/user/signup/withsocial`, {
       method: "POST",
       headers: {
@@ -74,10 +130,10 @@ const Signup = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data?.message?.usernameMessage) {
           setUsernameModal(true)
-          setIsLoasdingGoogle(false)
+          setIsLoadingGoogle(false)
         }
         if (data?.token) {
           localStorage.setItem("HeyLinkToken", data.token);
@@ -85,7 +141,7 @@ const Signup = () => {
           userData && toast.success('User Login Successfully')
           navigate(from, { replace: true });
         }
-        setIsLoasdingGoogle(false)
+        setIsLoadingGoogle(false)
       })
   }
 
@@ -99,7 +155,8 @@ const Signup = () => {
           profiletitle: user.displayName,
           username: user.displayName.toLowerCase().replaceAll(" ", "").replace(".", ""),
           image: user.photoURL,
-          createWith: "google"
+          createWith: "google",
+          verified: "true"
         }
         const filteredNewUser = Object.fromEntries(
           Object.entries(newUser).filter(([key, value]) => value)
@@ -225,11 +282,11 @@ const Signup = () => {
                 {!isLoasding ? "Sign Up" : <SmallLoader />}
               </h1>
             </button>
-            {/* <div>
+            <div>
               <p className="text-center text-sm text-gray-600">
-                Or sign up with Google or Facebook
+                Or sign up with Google
               </p>
-            </div> */}
+            </div>
           </form>
           {/* ---------signup form end--------- */}
 
@@ -242,10 +299,8 @@ const Signup = () => {
                 alt=""
               />
               <div className="flex items-center gap-2">
-                {!isLoasdingGoogle ? <div className="flex items-center gap-2">
-                  <span>Signup With</span>
-                  <span className="font-semibold text-gray-600">Google</span>
-                </div> : <SmallLoader />}
+                <span>Signup With</span>
+                <span className="font-semibold text-gray-600">Google</span>
               </div>
 
             </div>
@@ -278,6 +333,10 @@ const Signup = () => {
       {
         usernameModal && <UsernameModal closeModal={setUsernameModal} handleSaveUser={handleSaveUser} newUser={socialData} />
       }
+
+      {isLoasding && <Loader />}
+      {isLoadingGoogle && <Loader />}
+      {openSendEmailModal && <EmailVerifyModal email={email} />}
 
     </section>
   );
