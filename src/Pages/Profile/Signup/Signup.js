@@ -36,24 +36,7 @@ const Signup = () => {
   const [email, setEmail] = useState("")
 
 
-  const handleUpdateUser = (updateData) => {
-    fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
-      method: "PATCH",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updateData),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.data.acknowledged) {
-          userRefetch()
-          toast.success("Verified User")
-          navigate("/dashboard")
-        }
-      });
-  }
+
 
   useEffect(() => {
     if (isSignInWithEmailLink(auth, window.location.href)) {
@@ -66,7 +49,24 @@ const Signup = () => {
               image: user.photoURL && user.photoURL,
               verified: "true"
             }
-            handleUpdateUser(updateData)
+            userRefetch()
+            fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
+              method: "PATCH",
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(updateData),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data?.data.acknowledged) {
+                  userRefetch()
+                  setIsLoading(false)
+                  navigate("/dashboard")
+                  toast.success("Verified User")
+                }
+              });
           }
           console.log(result?.user);
           setOpenSendEmailModal(false)
@@ -84,10 +84,14 @@ const Signup = () => {
       handleCodeInApp: true,
     })
       .then((result) => {
+        userRefetch()
         localStorage.setItem('email', email);
         setIsLoading(false)
         setOpenSendEmailModal(true)
       }).catch(err => {
+        if (err.message) {
+          navigate("/dashboard")
+        }
         console.log(err.message);
       })
   }
@@ -109,9 +113,9 @@ const Signup = () => {
         }
 
         if (res?.data?.data?.token) {
+          userRefetch()
           handleSendEmail(res?.data?.data?.result?.email)
           localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
-          userRefetch()
         }
       });
   }
