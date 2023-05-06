@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../ContextAPI/AuthProvider/AuthProvider';
 import EmailVerifyModal from '../../components/Modals/UserManagementModals/EmailVerifyModal';
+import VerifyRequestModal from '../../components/Modals/UserManagementModals/VerifyRequestModal';
 
 const PriveteRoute = ({ children }) => {
     const { userData, loading } = useContext(AuthContext)
@@ -16,7 +17,7 @@ const PriveteRoute = ({ children }) => {
 
     // { openEmailVerifyModal && }
     if (openEmailVerifyModal) {
-        return <EmailVerifyModal />
+        return <VerifyRequestModal />
     }
 
     if (userData?._id && loading === false) {

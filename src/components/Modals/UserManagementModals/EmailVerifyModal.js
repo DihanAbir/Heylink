@@ -1,5 +1,6 @@
 import React from 'react';
 import img from "../../../assets/icons/sendEmail.png"
+import { Link } from 'react-router-dom';
 
 const EmailVerifyModal = ({ email }) => {
     const storedEmail = localStorage.getItem("email")
@@ -12,9 +13,9 @@ const EmailVerifyModal = ({ email }) => {
                 <div className='flex flex-col items-center justify-center gap-2 text-center'>
                     <p>You've entered <strong>{email ? email : storedEmail}</strong> as the email address for your account.</p>
                     <p>please verify this email address</p>
-                    <button className='w-44 h-12 bg-blue-600 hover:bg-blue-700 duration-150 flex items-center justify-center rounded text-white mx-auto'>
+                    <Link target='_blank' to="https://mail.google.com/" className='w-44 h-12 bg-blue-600 hover:bg-blue-700 duration-150 flex items-center justify-center rounded text-white mx-auto'>
                         <span>Go to Email</span>
-                    </button>
+                    </Link>
                 </div>
 
             </div>

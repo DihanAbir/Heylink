@@ -13,6 +13,7 @@ import Loader from "../../../components/loaders/Loader";
 import EmailVerifyModal from "../../../components/Modals/UserManagementModals/EmailVerifyModal";
 import app from '../../../Firebase/Firebase.config';
 import { getAuth, isSignInWithEmailLink, sendSignInLinkToEmail, signInWithEmailLink } from 'firebase/auth';
+import VerifySuccessModal from "../../../components/Modals/UserManagementModals/VerifySuccessModal";
 
 const Signup = () => {
   const { userRefetch, userData, setUserData, signupWithGoogle } = useContext(AuthContext)
@@ -24,6 +25,7 @@ const Signup = () => {
   const googleProvider = new GoogleAuthProvider()
   const from = location.state?.from?.pathname || '/dashboard'
 
+  const [verifySuccessModal, setVerifySuccessModal] = useState(false)
   const [openSendEmailModal, setOpenSendEmailModal] = useState(false)
   const [isLoasding, setIsLoading] = useState(false)
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false)
@@ -49,7 +51,6 @@ const Signup = () => {
               image: user.photoURL && user.photoURL,
               verified: "true"
             }
-            userRefetch()
             fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
               method: "PATCH",
               headers: {
@@ -60,22 +61,21 @@ const Signup = () => {
             })
               .then((res) => res.json())
               .then((data) => {
+                userRefetch()
                 if (data?.data.acknowledged) {
-                  userRefetch()
+                  setVerifySuccessModal(true)
                   setIsLoading(false)
-                  navigate("/dashboard")
-                  toast.success("Verified User")
                 }
               });
           }
-          console.log(result?.user);
+          // console.log(result?.user);
           setOpenSendEmailModal(false)
           localStorage.removeItem('email');
         }).catch((err) => {
           console.log(err.message);
         })
     }
-  }, [search, navigate]);
+  }, [search, navigate, userData?._id]);
 
   const handleSendEmail = (email) => {
     setEmail(email)
@@ -283,7 +283,7 @@ const Signup = () => {
 
             <button type="submit" className="h-12 w-full flex justify-center items-center bg-[#239ae7] hover:bg-blue-600 duration-150 text-white rounded-[50px] my-4">
               <h1 className="font-bold">
-                {!isLoasding ? "Sign Up" : <SmallLoader />}
+                Sign Up
               </h1>
             </button>
             <div>
@@ -341,6 +341,8 @@ const Signup = () => {
       {isLoasding && <Loader />}
       {isLoadingGoogle && <Loader />}
       {openSendEmailModal && <EmailVerifyModal email={email} />}
+      {verifySuccessModal && <VerifySuccessModal closeModal={setVerifySuccessModal} />}
+
 
     </section>
   );
