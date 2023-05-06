@@ -30,6 +30,7 @@ const VerifyRequestModal = () => {
                             image: user.photoURL && user.photoURL,
                             verified: "true"
                         }
+                        setIsLoading(true)
                         fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
                             method: "PATCH",
                             headers: {
@@ -42,8 +43,8 @@ const VerifyRequestModal = () => {
                             .then((data) => {
                                 userRefetch()
                                 if (data?.data.acknowledged) {
-                                    setVerifySuccessModal(true)
                                     setIsLoading(false)
+                                    setVerifySuccessModal(true)
                                 }
                             });
                     }
