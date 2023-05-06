@@ -32,7 +32,7 @@ const Dashboard = () => {
                         {/* -------Preview Drawer icon start------- */}
                         <PreviewDrawer preview={preview} setPreview={setPreview} />
                     </div>
-                    <div className={`${!preview && 'hidden'}`}>
+                    <div className={`hidden lg:block ${!preview && 'hidden'}`}>
                         <SidebarPreviewMain />
                     </div>
 

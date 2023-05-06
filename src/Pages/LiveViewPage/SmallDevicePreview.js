@@ -1,83 +1,60 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Buffer } from "buffer";
+import useFetch from "../../Hoock/Hoock";
+import { Link } from "react-router-dom";
 import arrowRight from '../../assets/icons/right-arrow.svg'
 import avatar from '../../assets/avatars/user-avatar.png'
-import useFetch from "../../Hoock/Hoock";
-import PageLoader from "../../components/loaders/PageLoader";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../../ContextAPI/AuthProvider/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import SmallLoader from "../../components/loaders/SmallLoader";
 import SendMessageForm from "../../components/ViewLiveComponents/SendMessageForm";
 import LocationItems from "../../components/Drawers/SidebarPreview/PreviewItems/LocationItems";
 import LinkItems from "../../components/Drawers/SidebarPreview/PreviewItems/LinkItems";
-import SocialItems from "../../components/Drawers/SidebarPreview/PreviewItems/SocialItems";
+import SocialItems from "../../components/Drawers/SidebarPreview/PreviewItems/SocialItems"
+import { ServiceContext } from "../../ContextAPI/ServiceProvider/ServiceProvider";
 const SmallDevicePreview = () => {
+    const { render } = useSelector((state) => state.getData)
     const { userData } = useContext(AuthContext)
-    const linksData = useFetch("links/common");
-    const socialData = useFetch("links/social");
+    const { getData } = useContext(ServiceContext)
+    const dispatch = useDispatch()
+
+    const linksData = useFetch("links");
+    const socialData = useFetch("social");
     // const galleryData = useFetch("links/gallery");
     // const menuData = useFetch("links/menu");
     // const musicData = useFetch("links/music");
-    const locationsData = useFetch("links/location");
-
-    const token = localStorage.getItem('HeyLinkToken')
-
-    const navigate = useNavigate()
+    const locationsData = useFetch("locations");
 
     const [data, setData] = useState([])
 
 
-    const handleMessageData = () => {
-        // console.log(userData?.username);
-        fetch(`http://localhost:8000/${userData?.username}`)
-            .then((res) => res.json())
-            .then((data) => {
-                const { messageData } = data?.data
-                setData(messageData[0])
-            });
-    }
+    // console.log(socialData);
 
     useEffect(() => {
-        if (userData === null || !token) {
-            navigate('/login')
-        }
-    }, [])
-
-    useEffect(() => {
-        if (!userData === null && userData?._id) {
-            handleMessageData()
+        if (userData?._id) {
+            console.log(userData?.username);
+            fetch(`http://localhost:8000/${userData?.username}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    const { messageData } = data?.data
+                    setData(messageData[0])
+                });
         }
     }, []);
 
-    const bufferToImage = (data) => {
-        const buff = Buffer.from(
-            data?.image?.data?.data
-                ? data?.image?.data?.data
-                : avatar
-        );
-        return buff?.toString("base64");
-    };
-
-    // image convarte buffer
-    const buff = Buffer.from(
-        userData?.image?.data?.data ? userData?.image?.data?.data : avatar
-    );
-    const base64 = buff?.toString("base64");
-
     return (
-        <section className="w-full min-h-screen"
-            style={{ backgroundColor: `${userData?.backgroundColor}`, color: `${userData?.pageTextColor}` }}>
+        <div style={{ backgroundColor: `${userData?.backgroundColor}`, color: `${userData?.pageTextColor}` }}>
+            <div
+                className="max-w-[800px] h-screen relative flex flex-col justify-start items-center mx-auto overflow-y-auto overflow-x-hidden scrollBar"
+            >
+                {render && !userData?._id ? <SmallLoader />
+                    :
 
-            {linksData.length === 0 ? <PageLoader />
-                :
-                <div className="max-w-[880px] mx-auto">
-                    <div
-                        className="flex flex-col justify-start items-center">
-                        <div className="flex flex-col justify-center items-center overflow-hidden mt-6">
+                    <>
+                        <div className="flex flex-col justify-center items-center mt-6">
                             <img
-                                className="rounded-full w-20 h-20 border object-cover"
-                                // src={`data:image/png;base64, ${base64}`}
+                                className="rounded-full w-20 h-20 object-cover"
                                 src={`${userData?.image ? userData?.image : avatar}`}
-                                alt=""
+                                alt="prifle image"
                             />
                             <h2 className="font-bold text-2xl mt-2 text-center">{userData?.profiletitle ? userData?.profiletitle : userData?.username}</h2>
                         </div>
@@ -107,11 +84,13 @@ const SmallDevicePreview = () => {
                                 <div className="grid grid-cols-1 gap-4 w-full">
                                     {locationsData.map((location, index) => <>
                                         {
-                                            location?.show === 'true' && <LocationItems key={index} location={location} view="public" />
+                                            location?.show === 'true' && <LocationItems key={index} location={location} />
                                         }
                                     </>)}
                                 </div>
                             )}
+
+
 
                             {
                                 data && data?.turnOnOffMessage === 'true' &&
@@ -119,20 +98,11 @@ const SmallDevicePreview = () => {
                             }
 
                         </div>
-                    </div>
+                    </>
 
-                </div>
-
-            }
-
-
-            <div className='cursor-pointer block lg:hidden flex justify-center'>
-                <div onClick={() => navigate(-1)} className='fixed bottom-8 right-auto flex gap-2 items-center justify-center w-10 h-10 rounded-full bg-gray-300 border border-blue-900'>
-                    <img className='w-4' src='https://cdn-f.heylink.me/static/media/ic_close.5c9d2dc7.svg' alt="" />
-                </div>
+                }
             </div>
-
-        </section>
+        </div>
     );
 };
 
