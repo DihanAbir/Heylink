@@ -87,15 +87,27 @@ const MessageTable = () => {
                 }
             </table>
 
-
-            <div className='w-44'>
-                <CSVLink data={allMessages}>
-                    <button className='relative mt-6 w-44 h-12 bg-blue-600 hover:bg-blue-700 duration-200 active:bg-green-600 active:duration-300 rounded-3xl flex justify-center items-center gap-2'>
-                        <img className='w-5' src={download} alt="" />
-                        <span className='text-white font-semibold'>Export to CSV</span>
+            {
+                allMessages.length > 0 ? (
+                    <button className='w-44'>
+                        <CSVLink data={allMessages} >
+                            <button className='relative mt-6 w-44 h-12 bg-blue-600 hover:bg-blue-700 duration-200 active:bg-green-600 active:duration-300 rounded-3xl flex justify-center items-center gap-2'>
+                                <img className='w-5' src={download} alt="" />
+                                <span className='text-white font-semibold'>Export to CSV</span>
+                            </button>
+                        </CSVLink>
                     </button>
-                </CSVLink>
-            </div>
+                )
+                    :
+                    <button disabled className='w-44'>
+                        <button className='relative mt-6 w-44 h-12 bg-blue-300 rounded-3xl flex justify-center items-center gap-2'>
+                            <img className='w-5' src={download} alt="" />
+                            <span className='text-white font-semibold'>Export to CSV</span>
+                        </button>
+                    </button>
+            }
+
+
         </div>
     );
 };

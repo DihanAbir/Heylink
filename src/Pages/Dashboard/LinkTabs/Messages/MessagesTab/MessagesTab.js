@@ -39,7 +39,7 @@ const MessagesTab = () => {
         if (messageData) {
             handleDefaultSwitch(messageData?._id, { turnOnOffMessage: input }, 'message', getMessage)
         }
-        else if (!messageData) {
+        if (!messageData) {
             fetch(`http://localhost:8000/app/v2/message`, {
                 method: 'POST',
                 headers: {
@@ -50,6 +50,7 @@ const MessagesTab = () => {
             })
                 .then(res => res.json())
                 .then((data) => {
+                    getMessage()
                     toast.success('Message Add Successfully')
                 });
         }
@@ -68,7 +69,11 @@ const MessagesTab = () => {
                         reFetch={getMessage} />
                 }
             </div>
-            <MessageTable />
+
+            {
+                messageData?.turnOnOffMessage === "true" && <MessageTable />
+            }
+
         </section>
     );
 };
