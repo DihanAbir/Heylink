@@ -46,7 +46,7 @@ const SendMessageForm = ({ messageData, refetch }) => {
             {
                 successfull ? <div className='w-full h-fit flex flex-col md:flex-row justify-center items-center bg-green-100 border-4 border-green-600 py-4 px-2 gap-2'>
                     <img className='w-16' src={img1} alt="" />
-                    <h1 className='text-green-600 font-semibold text-2xl'>{messageData?.successMessageText ? messageData?.successMessageText : 'Your message was sent successfully!'}</h1>
+                    <h1 className='text-green-600 font-semibold'>{messageData?.successMessageText ? messageData?.successMessageText : 'Your message was sent successfully!'}</h1>
                 </div>
                     :
                     <div className="w-full h-fit bg-slate-200 rounded-[32px] border-2 border-[#E5E7EB] p-2">

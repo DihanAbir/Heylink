@@ -12,7 +12,7 @@ import { CSVLink, CSVDownload } from "react-csv";
 
 const MessageTable = () => {
     const { allMessages } = useSelector((state) => state.messageSlice)
-    const { deleteModal, render } = useSelector((state) => state.controllerSlice)
+    const { deleteModal, render, successfull } = useSelector((state) => state.controllerSlice)
     const dispatch = useDispatch()
     const { userData } = useContext(AuthContext)
     const [loading, setLoading] = useState(false)
@@ -33,7 +33,8 @@ const MessageTable = () => {
     // get all messages
     useEffect(() => {
         getAllMessages()
-    }, [])
+    }, [successfull])
+
     return (
         <div className='w-full h-full rounded-xl border p-4 mt-6 mb-4 cursor-pointer'>
             <h1 className='text-gray-900 font-bold text-left'>Messages</h1>
