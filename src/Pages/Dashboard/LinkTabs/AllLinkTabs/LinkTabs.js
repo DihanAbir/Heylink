@@ -13,7 +13,7 @@ const LinkTabs = () => {
     const { pathname } = useLocation()
     const { openTab } = useSelector((state) => state.controllerSlice)
     const dispatch = useDispatch()
-    console.log(pathname === '/dashboard/appearance');
+    // console.log(pathname === '/dashboard/appearance');
 
     useEffect(() => {
         dispatch(setOpenTab(true))
@@ -21,7 +21,7 @@ const LinkTabs = () => {
 
     useEffect(() => {
         if (pathname === '/dashboard' || pathname === '/dashboard/links' || pathname === '/dashboard/social' || pathname === '/dashboard/gallery' || pathname === '/dashboard/menu' || pathname === '/dashboard/locations' || pathname === '/dashboard/music' || pathname === '/dashboard/apps') {
-            console.log('dddddddddd');
+            // console.log('dddddddddd');
             dispatch(setOpenTab(true))
         }
         else {

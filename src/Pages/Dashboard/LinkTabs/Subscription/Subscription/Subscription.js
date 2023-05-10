@@ -21,7 +21,7 @@ const Subscription = () => {
         e.target.reset()
         setCouponCode('')
     }
-    console.log(selectedCountry)
+    // console.log(selectedCountry)
     const handleSetOption = (option) => {
         setSelectedCountry(option)
         setShowCountries(false)

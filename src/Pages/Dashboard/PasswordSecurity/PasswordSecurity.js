@@ -11,7 +11,7 @@ const PasswordSecurity = () => {
     const [openModal, setOpenModal] = useState(0)
 
 
-    console.log(userData);
+    // console.log(userData);
     return (
         <main className='relative bg-white mx-auto'>
             <div className='bg-[#393AA7]'>

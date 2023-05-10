@@ -27,7 +27,7 @@ const SocialTab = () => {
   const { userData } = useContext(AuthContext)
   // const data = useFetch("social");
 
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     setData([])

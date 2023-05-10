@@ -119,7 +119,7 @@ const MusicDesignCustomize = ({ url }) => {
 
     const handleAddStore = (e) => {
         e.preventDefault()
-        console.log(musicLink)
+        // console.log(musicLink)
         e.target.reset()
     }
 

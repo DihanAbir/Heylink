@@ -9,7 +9,7 @@ const Images = () => {
     const [deleteModal, setDeleteModal] = useState(false)
     const [imageLinkURL, setImageLinkURL] = useState('')
 
-    console.log(imageLinkURL)
+    // console.log(imageLinkURL)
     return (
         <section className='mt-4'>
             <h1 className='text-black font-semibold mb-2'>Images <span>(1)</span></h1>

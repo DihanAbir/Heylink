@@ -43,7 +43,7 @@ const LocationsCustomize = ({ location }) => {
     const dispatch = useDispatch()
 
     const handleToggleSwitch = (input) => {
-        console.log(input);
+        // console.log(input);
         handleDefaultSwitch(location?._id, { show: input }, 'locations',)
         if (loader) {
             dispatch(setRenderReducer({ render: true }))

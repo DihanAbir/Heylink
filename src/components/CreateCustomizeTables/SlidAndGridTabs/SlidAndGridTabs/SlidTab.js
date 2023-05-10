@@ -40,7 +40,7 @@ const SlidTab = () => {
             }
         }
 
-        console.log(slidTabData);
+        // console.log(slidTabData);
     }
 
     return (

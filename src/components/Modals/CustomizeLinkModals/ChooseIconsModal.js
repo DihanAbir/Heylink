@@ -27,7 +27,7 @@ const icons = [
 const ChooseIconsModal = ({ imageUpload, closeModal }) => {
     const [selectedIcon, setSelectedIcon] = useState(null)
     const [sendLoading, setSendLoading] = useState(false)
-    console.log(selectedIcon);
+    // console.log(selectedIcon);
     const handleLoader = (data) => {
         imageUpload(data)
         setTimeout(() => {

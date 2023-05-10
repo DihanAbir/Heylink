@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import SmallLoader from "../../../components/loaders/SmallLoader";
 import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
 import { GoogleAuthProvider } from "firebase/auth";
@@ -72,7 +71,7 @@ const Signup = () => {
           setOpenSendEmailModal(false)
           localStorage.removeItem('email');
         }).catch((err) => {
-          console.log(err.message);
+          // console.log(err.message);
         })
     }
   }, [search, navigate, userData?._id]);
@@ -80,7 +79,7 @@ const Signup = () => {
   const handleSendEmail = (email) => {
     setEmail(email)
     sendSignInLinkToEmail(auth, email, {
-      url: 'http://localhost:3000/signup',
+      url: 'https://showmore.info/signup',
       handleCodeInApp: true,
     })
       .then((result) => {
@@ -92,7 +91,7 @@ const Signup = () => {
         if (err.message) {
           navigate("/dashboard")
         }
-        console.log(err.message);
+        // console.log(err.message);
       })
   }
 
@@ -102,7 +101,7 @@ const Signup = () => {
     axios.post(`http://localhost:8000/app/v2/user/signup`, data)
       .then((res) => {
 
-        console.log(res.data);
+        // console.log(res.data);
         if (res?.data?.message?.emailMessage) {
           setEmailResult(res?.data?.message?.emailMessage)
           setIsLoading(false)
@@ -176,7 +175,10 @@ const Signup = () => {
           setSocialData(filteredNewUser)
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        // console.log(err)
+      }
+      )
   }
 
 

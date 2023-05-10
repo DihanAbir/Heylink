@@ -34,7 +34,7 @@ const ChangePassword = ({ closeModal }) => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
+                    // console.log(data);
                     if (data.error) {
                         setPasswordError(data.error)
                         setSendLoading(false)

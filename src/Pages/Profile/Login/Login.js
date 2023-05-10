@@ -56,7 +56,7 @@ const Login = () => {
     })
       .then(res => res.json())
       .then(data => {
-        console.log(data);
+        // console.log(data);
         if (data?.message?.usernameMessage) {
           setUsernameModal(true)
           setIsLoadingGoogle(false)
@@ -97,7 +97,10 @@ const Login = () => {
           setSocialData(filteredNewUser)
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        // console.log(err)
+      }
+      )
   }
 
 

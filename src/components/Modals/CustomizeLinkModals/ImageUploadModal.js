@@ -43,7 +43,7 @@ const ImageUploadModal = ({ closeModal, endPoint, id }) => {
 
 
   const handleImageUpload = async (e) => {
-    console.log(e);
+    // console.log(e);
     const image = e.target.files[0]
     const formData = new FormData();
     formData.append("image", image);

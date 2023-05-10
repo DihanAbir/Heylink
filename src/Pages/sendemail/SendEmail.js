@@ -34,7 +34,7 @@ export const SendEmail = () => {
             signInWithEmailLink(auth, localStorage.getItem('email'), window.location.href)
                 .then((result) => {
                     // we can get the user from result.user but no need in this case
-                    console.log(result);
+                    // console.log(result);
                     localStorage.removeItem('email');
                     setInitialLoading(false);
                     setInitialError('');
@@ -56,7 +56,7 @@ export const SendEmail = () => {
         })
             .then(() => {
                 localStorage.setItem('email', email);
-                console.log(auth, email);
+                // console.log(auth, email);
                 alert('We have sent you an email with a link to sign in');
             }).catch(err => {
                 setLoginLoading(false);

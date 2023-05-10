@@ -31,7 +31,7 @@ const SmallDevicePreview = () => {
 
     useEffect(() => {
         if (userData?._id) {
-            console.log(userData?.username);
+            // console.log(userData?.username);
             fetch(`http://localhost:8000/${userData?.username}`)
                 .then((res) => res.json())
                 .then((data) => {

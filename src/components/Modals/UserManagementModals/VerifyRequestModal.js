@@ -52,7 +52,7 @@ const VerifyRequestModal = () => {
                     setOpenSendEmailModal(false)
                     localStorage.removeItem('email');
                 }).catch((err) => {
-                    console.log(err.message);
+                    // console.log(err.message);
                 })
         }
     }, [search, navigate, userData?._id]);
@@ -60,7 +60,7 @@ const VerifyRequestModal = () => {
     const handleSendEmail = (email) => {
         setIsLoading(true)
         sendSignInLinkToEmail(auth, email, {
-            url: 'http://localhost:3000/dashboard',
+            url: 'https://showmore.info/dashboard',
             handleCodeInApp: true,
         })
             .then((result) => {
@@ -72,7 +72,7 @@ const VerifyRequestModal = () => {
                 if (err.message) {
                     navigate("/dashboard")
                 }
-                console.log(err.message);
+                // console.log(err.message);
             })
     }
 

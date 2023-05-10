@@ -17,7 +17,7 @@ const ChangeEmail = ({ closeModal }) => {
     // console.log(userData);
 
     const handleEmailChange = (data) => {
-        console.log(data);
+        // console.log(data);
         if (data.newEmail !== data.repeatNewEmail) {
             setEmailError("New Email and Repeat Email Not Match")
         }
@@ -39,7 +39,7 @@ const ChangeEmail = ({ closeModal }) => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data);
+                    // console.log(data);
                     if (data.error) {
                         setEmailError(data.error)
                         setSendLoading(false)
