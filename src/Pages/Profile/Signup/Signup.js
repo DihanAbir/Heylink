@@ -142,10 +142,15 @@ const Signup = () => {
         if (data?.token) {
           localStorage.setItem("HeyLinkToken", data.token);
           userRefetch()
-          userData && toast.success('User Login Successfully')
-          navigate(from, { replace: true });
+          setTimeout(() => {
+            const getToken = localStorage.getItem("HeyLinkToken");
+            getToken && toast.success('User Login Successfully')
+
+            getToken && navigate(from, { replace: true });
+
+          }, 1000)
         }
-        setIsLoadingGoogle(false)
+        userData && setIsLoadingGoogle(false)
       })
   }
 
@@ -166,6 +171,7 @@ const Signup = () => {
           Object.entries(newUser).filter(([key, value]) => value)
         );
         if (filteredNewUser) {
+          setIsLoadingGoogle(true)
           handleSaveUser(filteredNewUser);
           setSocialData(filteredNewUser)
         }

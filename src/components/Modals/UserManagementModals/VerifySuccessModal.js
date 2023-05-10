@@ -1,18 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import img from "../../../assets/icons/tick.png"
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../ContextAPI/AuthProvider/AuthProvider';
+import Loader from '../../loaders/Loader';
 
 const VerifySuccessModal = ({ closeModal }) => {
     const { userRefetch, userData, setUserData } = useContext(AuthContext)
+    const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     const handleRedirect = () => {
+        setIsLoading(true)
         userRefetch()
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 3000);
+
         if (userData?.verified === "true") {
             navigate("/dashboard")
+            closeModal(false)
         }
         closeModal(false)
-        navigate("/dashboard")
     }
     return (
         <div className='fixed z-40 min-h-screen min-w-full left-0 right-0 top-0 w-full h-full bg-gray-900 bg-opacity-75 flex justify-center items-center cursor-pointer'>
@@ -31,6 +38,7 @@ const VerifySuccessModal = ({ closeModal }) => {
                 </div>
 
             </div>
+            {isLoading && <Loader />}
         </div>
     );
 };

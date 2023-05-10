@@ -10,6 +10,7 @@ import { AuthContext } from "../../../ContextAPI/AuthProvider/AuthProvider";
 import Navber from "../../Shared/Navber/Navber";
 import { GoogleAuthProvider } from "firebase/auth";
 import UsernameModal from "../../../components/Modals/UserManagementModals/UsernameModal";
+import Loader from "../../../components/loaders/Loader";
 
 const Login = () => {
   const { userRefetch, userData, setUserData, signupWithGoogle } = useContext(AuthContext)
@@ -20,7 +21,7 @@ const Login = () => {
   const from = location.state?.from?.pathname || '/dashboard'
 
   const [isLoasding, setIsLoading] = useState(false)
-  const [isLoasdingGoogle, setIsLoadingGoogle] = useState(false)
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false)
   const [emailResult, setEmailResult] = useState("")
   const [passwordResult, setPasswordResult] = useState("")
 
@@ -63,10 +64,15 @@ const Login = () => {
         if (data?.token) {
           localStorage.setItem("HeyLinkToken", data.token);
           userRefetch()
+          setTimeout(() => {
+            const getToken = localStorage.getItem("HeyLinkToken")
+            getToken && toast.success('User Login Successfully')
+
+            getToken && navigate(from, { replace: true });
+
+          }, 1000)
           userData && toast.success('User Login Successfully')
-          navigate(from, { replace: true });
         }
-        setIsLoadingGoogle(false)
       })
   }
 
@@ -225,10 +231,8 @@ const Login = () => {
                 alt=""
               />
               <div className="flex items-center gap-2">
-                {!isLoasdingGoogle ? <div className="flex items-center gap-2">
-                  <span>Login With</span>
-                  <span className="font-semibold text-gray-600">Google</span>
-                </div> : <SmallLoader />}
+                <span>Login With</span>
+                <span className="font-semibold text-gray-600">Google</span>
               </div>
 
             </div>
@@ -265,6 +269,9 @@ const Login = () => {
       {
         usernameModal && <UsernameModal closeModal={setUsernameModal} handleSaveUser={handleSaveUser} newUser={socialData} />
       }
+
+      {isLoasding && <Loader />}
+      {isLoadingGoogle && <Loader />}
 
     </section>
   );
