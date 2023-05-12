@@ -38,7 +38,7 @@ const LinksTab = () => {
     fetch(`https://3twn4n.xn--b5bp.com/app/v2/links`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
         "content-type": "application/json",
       },
       body: JSON.stringify(data),

@@ -32,7 +32,7 @@ const ChangeEmail = ({ closeModal }) => {
             fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/change-email`, {
                 method: "PATCH",
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                    Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(updateData),
@@ -45,7 +45,7 @@ const ChangeEmail = ({ closeModal }) => {
                         setSendLoading(false)
                     }
                     if (data.token) {
-                        localStorage.setItem("HeyLinkToken", data?.token)
+                        localStorage.setItem("ShowmoreinfoToken", data?.token)
                         setSendLoading(false)
                         toast.success("Email Change Successfull")
                         closeModal(false)

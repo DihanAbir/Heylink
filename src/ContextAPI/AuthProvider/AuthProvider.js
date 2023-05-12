@@ -6,6 +6,9 @@ export const AuthContext = createContext()
 const AuthProvider = ({ children }) => {
     const [userData, setUserData] = useState({})
     const [loading, setLoading] = useState(false)
+
+    const [openEmailVerifyModal, setOpenEmailVerifyModal] = useState(false)
+
     const token = localStorage.getItem('HeyLinkToken')
     const auth = getAuth(app)
     // console.log(userData);
@@ -13,7 +16,7 @@ const AuthProvider = ({ children }) => {
     const userRefetch = () => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/me`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
         })
@@ -27,7 +30,7 @@ const AuthProvider = ({ children }) => {
             if (token) {
                 fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/me`, {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                        Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                         "content-type": "application/json",
                     },
                 })
@@ -86,6 +89,8 @@ const AuthProvider = ({ children }) => {
         setLoading,
         signupWithGoogle,
         logout,
+        openEmailVerifyModal,
+        setOpenEmailVerifyModal,
     }
     return (
         <AuthContext.Provider value={authInfo}>

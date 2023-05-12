@@ -8,7 +8,7 @@ import { ServiceContext } from "../../../ContextAPI/ServiceProvider/ServiceProvi
 
 const DeleteModal = ({ id, endPoint }) => {
   const { fetchData } = useContext(ServiceContext)
-  const token = localStorage.getItem("HeyLinkToken");
+  const token = localStorage.getItem("ShowmoreinfoToken");
 
   const closeModal = () => {
     dispatch(setDeleteModal(''))

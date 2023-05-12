@@ -21,7 +21,7 @@ const MessageTable = () => {
         setLoading(true)
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/all-messages`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
         })

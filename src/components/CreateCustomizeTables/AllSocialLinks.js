@@ -26,7 +26,7 @@ const AllSocialLinks = ({ socialLink }) => {
     fetch(`https://3twn4n.xn--b5bp.com/app/v2/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
         "content-type": "application/json",
       },
       body: JSON.stringify({ link: socialLinkName?.linkName })
@@ -54,7 +54,7 @@ const AllSocialLinks = ({ socialLink }) => {
     fetch(`https://3twn4n.xn--b5bp.com/app/v2/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
         "content-type": "application/json",
       },
       body: JSON.stringify({ bottom: input })

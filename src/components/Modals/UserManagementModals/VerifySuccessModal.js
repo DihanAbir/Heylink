@@ -5,10 +5,11 @@ import { AuthContext } from '../../../ContextAPI/AuthProvider/AuthProvider';
 import Loader from '../../loaders/Loader';
 
 const VerifySuccessModal = ({ closeModal }) => {
-    const { userRefetch, userData, setUserData } = useContext(AuthContext)
+    const { userRefetch, userData, setOpenEmailVerifyModal } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
     const handleRedirect = () => {
+        setOpenEmailVerifyModal(false)
         setIsLoading(true)
         userRefetch()
         setTimeout(() => {

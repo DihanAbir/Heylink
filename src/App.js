@@ -9,7 +9,7 @@ import store from "./store";
 // import { AuthContext } from "./ContextAPI/AuthProvider/AuthProvider";
 
 function App() {
-  // const token = localStorage.getItem("HeyLinkToken")
+  // const token = localStorage.getItem("ShowmoreinfoToken")
   // const { userData } = useContext(AuthContext)
 
   // const [loading, setLoading] = useState(true);

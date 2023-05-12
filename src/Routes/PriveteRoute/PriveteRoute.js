@@ -5,8 +5,7 @@ import VerifyRequestModal from '../../components/Modals/UserManagementModals/Ver
 import Loader from '../../components/loaders/Loader';
 
 const PriveteRoute = ({ children }) => {
-    const { userData, loading } = useContext(AuthContext)
-    const [openEmailVerifyModal, setOpenEmailVerifyModal] = useState(false)
+    const { userData, loading, openEmailVerifyModal, setOpenEmailVerifyModal } = useContext(AuthContext)
     const location = useLocation()
 
     if (loading) {

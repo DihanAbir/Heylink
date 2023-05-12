@@ -40,7 +40,7 @@ const UserName = () => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/username/${userData?._id}`, {
             method: "PATCH",
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ username: newUsername }),

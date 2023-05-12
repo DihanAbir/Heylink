@@ -37,7 +37,7 @@ const UsernameModal = ({ closeModal, newUser }) => {
                         setUsernameError(data?.message?.usernameMessage)
                     }
                     if (data?.token) {
-                        localStorage.setItem("HeyLinkToken", data.token);
+                        localStorage.setItem("ShowmoreinfoToken", data.token);
                         userRefetch()
                         userData && toast.success('User Login Successfully')
                         closeModal(false)

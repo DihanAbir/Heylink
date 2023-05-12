@@ -44,7 +44,7 @@ const MenuListCustomize = ({ menu }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/menu`, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ item: { itemText: 'D', ItemPrice: 'T' } })
@@ -61,7 +61,7 @@ const MenuListCustomize = ({ menu }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/menu/${menu?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ name: menuName })
@@ -82,7 +82,7 @@ const MenuListCustomize = ({ menu }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/menu/${menu?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ currency: input })

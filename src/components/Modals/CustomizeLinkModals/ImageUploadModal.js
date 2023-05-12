@@ -24,7 +24,7 @@ const ImageUploadModal = ({ closeModal, endPoint, id }) => {
     fetch(url, {
       method: "PATCH",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ image: `${imageURL}` }),

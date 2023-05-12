@@ -14,7 +14,7 @@ import Loader from "../../../components/loaders/Loader";
 
 const Login = () => {
   const { userRefetch, userData, setUserData, signupWithGoogle } = useContext(AuthContext)
-  const token = localStorage.getItem("HeyLinkToken");
+  const token = localStorage.getItem("ShowmoreinfoToken");
   const navigate = useNavigate()
   const location = useLocation()
   const googleProvider = new GoogleAuthProvider()
@@ -62,10 +62,10 @@ const Login = () => {
           setIsLoadingGoogle(false)
         }
         if (data?.token) {
-          localStorage.setItem("HeyLinkToken", data.token);
+          localStorage.setItem("ShowmoreinfoToken", data.token);
           userRefetch()
           setTimeout(() => {
-            const getToken = localStorage.getItem("HeyLinkToken")
+            const getToken = localStorage.getItem("ShowmoreinfoToken")
             getToken && toast.success('User Login Successfully')
 
             getToken && navigate(from, { replace: true });
@@ -126,12 +126,12 @@ const Login = () => {
         }
 
         if (res?.data?.data?.token) {
-          localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
+          localStorage.setItem("ShowmoreinfoToken", res?.data?.data?.token);
           refetchNav(res?.data?.data?.token)
           setIsLoading(false)
 
           setTimeout(() => {
-            const getToken = localStorage.getItem("HeyLinkToken");
+            const getToken = localStorage.getItem("ShowmoreinfoToken");
             getToken && toast.success('User Login Successfully')
 
             getToken && navigate(from, { replace: true });

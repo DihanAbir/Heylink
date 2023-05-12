@@ -22,7 +22,7 @@ const MessagesTab = () => {
     const getMessage = () => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
         })
@@ -43,7 +43,7 @@ const MessagesTab = () => {
             fetch(`https://3twn4n.xn--b5bp.com/app/v2/message`, {
                 method: 'POST',
                 headers: {
-                    Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                    Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                     "content-type": "application/json",
                 },
                 body: JSON.stringify({ turnOnOffMessage: true, userInfo: userData, })

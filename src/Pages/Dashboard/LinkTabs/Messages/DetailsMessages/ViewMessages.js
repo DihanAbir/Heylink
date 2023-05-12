@@ -48,7 +48,7 @@ const ViewMessages = ({ message, reFetch }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ messageText: messageText })
@@ -67,7 +67,7 @@ const ViewMessages = ({ message, reFetch }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ successMessageText: successMessageText })
@@ -97,7 +97,7 @@ const ViewMessages = ({ message, reFetch }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ nameFieldChacked: input })
@@ -113,7 +113,7 @@ const ViewMessages = ({ message, reFetch }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ emailFieldChacked: input })
@@ -128,7 +128,7 @@ const ViewMessages = ({ message, reFetch }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ phoneNumberFieldChacked: input })
@@ -144,7 +144,7 @@ const ViewMessages = ({ message, reFetch }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ namePlaceholder: namePlaceholderText })
@@ -163,7 +163,7 @@ const ViewMessages = ({ message, reFetch }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ emailPlaceholder: emailPlaceholderText })
@@ -180,7 +180,7 @@ const ViewMessages = ({ message, reFetch }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify({ phoneNumberPlaceholder: phoneNumberPlaceholderText })

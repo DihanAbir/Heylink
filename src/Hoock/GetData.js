@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 // get fetch data
 const useGetData = (endpoint) => {
     const [data, setData] = useState(null);
-    const token = localStorage.getItem("HeyLinkToken")
+    const token = localStorage.getItem("ShowmoreinfoToken")
 
     useEffect(() => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/${endpoint}`, {

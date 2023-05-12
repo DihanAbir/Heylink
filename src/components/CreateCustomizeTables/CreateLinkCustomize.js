@@ -60,7 +60,7 @@ const CreateLinkCustomize = ({ url }) => {
     fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/${url?._id}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
         "content-type": "application/json",
       },
       body: JSON.stringify({ linkTitle: linkName?.linkName })
@@ -83,7 +83,7 @@ const CreateLinkCustomize = ({ url }) => {
     fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/${url?._id}`, {
       method: 'PATCH',
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
         "content-type": "application/json",
       },
       body: JSON.stringify({ link: linkURL?.linkURL })
@@ -119,7 +119,7 @@ const CreateLinkCustomize = ({ url }) => {
   //   fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/${url?._id}`, {
   //     method: "PATCH",
   //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+  //       Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
   //       "content-type": "application/json",
   //     },
   //     body: JSON.stringify({ activeFrom: startDate }),
@@ -140,7 +140,7 @@ const CreateLinkCustomize = ({ url }) => {
   //   fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/${url?._id}`, {
   //     method: "PATCH",
   //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+  //       Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
   //       "content-type": "application/json",
   //     },
   //     body: JSON.stringify({ activeUntile: endDate }),
@@ -159,7 +159,7 @@ const CreateLinkCustomize = ({ url }) => {
   //   fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/${url?._id}`, {
   //     method: 'PATCH',
   //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+  //       Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
   //       "content-type": "application/json",
   //     },
   //     body: JSON.stringify({ moveToBottom: input })

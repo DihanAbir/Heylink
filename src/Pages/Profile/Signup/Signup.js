@@ -53,7 +53,7 @@ const Signup = () => {
             fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/${userData?._id}`, {
               method: "PATCH",
               headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
               },
               body: JSON.stringify(updateData),
@@ -114,7 +114,7 @@ const Signup = () => {
         if (res?.data?.data?.token) {
           userRefetch()
           handleSendEmail(res?.data?.data?.result?.email)
-          localStorage.setItem("HeyLinkToken", res?.data?.data?.token);
+          localStorage.setItem("ShowmoreinfoToken", res?.data?.data?.token);
         }
       });
   }
@@ -139,10 +139,10 @@ const Signup = () => {
           setIsLoadingGoogle(false)
         }
         if (data?.token) {
-          localStorage.setItem("HeyLinkToken", data.token);
+          localStorage.setItem("ShowmoreinfoToken", data.token);
           userRefetch()
           setTimeout(() => {
-            const getToken = localStorage.getItem("HeyLinkToken");
+            const getToken = localStorage.getItem("ShowmoreinfoToken");
             getToken && toast.success('User Login Successfully')
 
             getToken && navigate(from, { replace: true });

@@ -6,7 +6,7 @@ import { ServiceContext } from "../ContextAPI/ServiceProvider/ServiceProvider";
 // get fetch data
 const useFetch = (endpoint) => {
   const { getData, fetchData } = useContext(ServiceContext)
-  const token = localStorage.getItem("HeyLinkToken")
+  const token = localStorage.getItem("ShowmoreinfoToken")
   const { render } = useSelector((state) => state.getData);
   const [data, setData] = useState([]);
   const dispatch = useDispatch()

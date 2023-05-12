@@ -6,7 +6,7 @@ const ServiceProvider = ({ children }) => {
     const [loader, setLoader] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([])
-    const token = localStorage.getItem("HeyLinkToken")
+    const token = localStorage.getItem("ShowmoreinfoToken")
 
 
     const fetchData = (endPoint) => {
@@ -30,7 +30,7 @@ const ServiceProvider = ({ children }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/${endPoint}/${id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify(toggleData)
@@ -50,7 +50,7 @@ const ServiceProvider = ({ children }) => {
         fetch(`https://3twn4n.xn--b5bp.com/app/v2/${endPoint}/${id}`, {
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
+                Authorization: `Bearer ${localStorage.getItem("ShowmoreinfoToken")}`,
                 "content-type": "application/json",
             },
             body: JSON.stringify(data)
