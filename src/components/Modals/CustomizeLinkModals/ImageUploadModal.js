@@ -19,7 +19,7 @@ const ImageUploadModal = ({ closeModal, endPoint, id }) => {
 
   const imageUpload = (imageURL) => {
     // console.log(imageURL, endPoint);
-    const url = `http://localhost:8000/app/v2/${endPoint}/${id}`;
+    const url = `https://3twn4n.xn--b5bp.com/app/v2/${endPoint}/${id}`;
     setOpen(false)
     fetch(url, {
       method: "PATCH",

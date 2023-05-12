@@ -26,7 +26,7 @@
 //                 ItemPrice: ''
 //             },
 //         };
-//         fetch(`http://localhost:8000/app/v2/links/menu`, {
+//         fetch(`https://3twn4n.xn--b5bp.com/app/v2/links/menu`, {
 //             method: 'POST',
 //             headers: {
 //                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

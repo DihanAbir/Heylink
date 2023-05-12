@@ -30,7 +30,7 @@ const DeleteModal = ({ id, endPoint }) => {
 
 
   const DeleteHandle = () => {
-    const url = `http://localhost:8000/app/v2/${endPoint}/${id}`;
+    const url = `https://3twn4n.xn--b5bp.com/app/v2/${endPoint}/${id}`;
     fetch(url, {
       method: "DELETE",
       headers: {

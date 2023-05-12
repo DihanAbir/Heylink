@@ -32,7 +32,7 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors }, } = useForm();
 
   const refetchNav = (token) => {
-    fetch(`http://localhost:8000/app/v2/user/me`, {
+    fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/me`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "content-type": "application/json",
@@ -47,7 +47,7 @@ const Login = () => {
   // handle save user by social user
   const handleSaveUser = (newUser) => {
     setIsLoadingGoogle(true)
-    fetch(`http://localhost:8000/app/v2/user/signup/withsocial`, {
+    fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/signup/withsocial`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -107,7 +107,7 @@ const Login = () => {
 
   const handleLogin = (data) => {
     setIsLoading(true)
-    axios.post(`http://localhost:8000/app/v2/user/login`, data, {
+    axios.post(`https://3twn4n.xn--b5bp.com/app/v2/user/login`, data, {
       headers: {
         Authorization: token,
         "content-type": "application/json",

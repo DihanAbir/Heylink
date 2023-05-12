@@ -31,7 +31,7 @@ const VerifyRequestModal = () => {
                             verified: "true"
                         }
                         setIsLoading(true)
-                        fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
+                        fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/${userData?._id}`, {
                             method: "PATCH",
                             headers: {
                                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

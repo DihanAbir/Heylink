@@ -24,7 +24,7 @@ const UsernameModal = ({ closeModal, newUser }) => {
         }
         else {
             setIsLoading(true)
-            fetch(`http://localhost:8000/app/v2/user/signup/withsocial`, {
+            fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/signup/withsocial`, {
                 method: "POST",
                 headers: {
                     "content-type": "application/json"

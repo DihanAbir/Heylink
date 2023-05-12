@@ -30,7 +30,7 @@ const MessageDeleteModal = ({ id, endPoint, reFetch }) => {
 
 
     const DeleteHandle = () => {
-        const url = `http://localhost:8000/app/v2/${endPoint}/${id}`;
+        const url = `https://3twn4n.xn--b5bp.com/app/v2/${endPoint}/${id}`;
         // console.log(url);
         fetch(url, {
             method: "DELETE",

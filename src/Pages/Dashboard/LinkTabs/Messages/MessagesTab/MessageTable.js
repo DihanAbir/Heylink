@@ -19,7 +19,7 @@ const MessageTable = () => {
 
     const getAllMessages = () => {
         setLoading(true)
-        fetch(`http://localhost:8000/app/v2/all-messages`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/all-messages`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",

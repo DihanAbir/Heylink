@@ -50,7 +50,7 @@ const Signup = () => {
               image: user.photoURL && user.photoURL,
               verified: "true"
             }
-            fetch(`http://localhost:8000/app/v2/user/${userData?._id}`, {
+            fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/${userData?._id}`, {
               method: "PATCH",
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -98,7 +98,7 @@ const Signup = () => {
 
   const handleSignupReady = (data) => {
     setIsLoading(true)
-    axios.post(`http://localhost:8000/app/v2/user/signup`, data)
+    axios.post(`https://3twn4n.xn--b5bp.com/app/v2/user/signup`, data)
       .then((res) => {
 
         // console.log(res.data);
@@ -124,7 +124,7 @@ const Signup = () => {
   // handle save user by social user
   const handleSaveUser = (newUser) => {
     setIsLoadingGoogle(true)
-    fetch(`http://localhost:8000/app/v2/user/signup/withsocial`, {
+    fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/signup/withsocial`, {
       method: "POST",
       headers: {
         "content-type": "application/json"

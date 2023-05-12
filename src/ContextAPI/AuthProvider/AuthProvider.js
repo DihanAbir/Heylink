@@ -11,7 +11,7 @@ const AuthProvider = ({ children }) => {
     // console.log(userData);
     // user data reFetch if user data updated
     const userRefetch = () => {
-        fetch(`http://localhost:8000/app/v2/user/me`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/me`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
@@ -25,7 +25,7 @@ const AuthProvider = ({ children }) => {
         if (!userData?._id) {
             setLoading(true)
             if (token) {
-                fetch(`http://localhost:8000/app/v2/user/me`, {
+                fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/me`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                         "content-type": "application/json",

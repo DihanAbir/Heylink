@@ -72,7 +72,7 @@ const SocialTab = () => {
       userInfo: userData?._id,
     };
 
-    fetch(`http://localhost:8000/app/v2/social`, {
+    fetch(`https://3twn4n.xn--b5bp.com/app/v2/social`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

@@ -20,7 +20,7 @@ const MessagesTab = () => {
     }, [])
 
     const getMessage = () => {
-        fetch(`http://localhost:8000/app/v2/message`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
                 "content-type": "application/json",
@@ -40,7 +40,7 @@ const MessagesTab = () => {
             handleDefaultSwitch(messageData?._id, { turnOnOffMessage: input }, 'message', getMessage)
         }
         if (!messageData) {
-            fetch(`http://localhost:8000/app/v2/message`, {
+            fetch(`https://3twn4n.xn--b5bp.com/app/v2/message`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

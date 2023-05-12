@@ -29,7 +29,7 @@ const ChangeEmail = ({ closeModal }) => {
                 currentPassword: data?.currentPassword
             }
             setSendLoading(true)
-            fetch(`http://localhost:8000/app/v2/user/change-email`, {
+            fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/change-email`, {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

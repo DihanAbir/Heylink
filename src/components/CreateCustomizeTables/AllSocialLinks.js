@@ -23,7 +23,7 @@ const AllSocialLinks = ({ socialLink }) => {
 
   // handle update social link name
   const handleUpdateSocialLinkName = () => {
-    fetch(`http://localhost:8000/app/v2/social/${socialLink?._id}`, {
+    fetch(`https://3twn4n.xn--b5bp.com/app/v2/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -51,7 +51,7 @@ const AllSocialLinks = ({ socialLink }) => {
   }
 
   const handleButtonORIcon = (input) => {
-    fetch(`http://localhost:8000/app/v2/social/${socialLink?._id}`, {
+    fetch(`https://3twn4n.xn--b5bp.com/app/v2/social/${socialLink?._id}`, {
       method: 'PATCH',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

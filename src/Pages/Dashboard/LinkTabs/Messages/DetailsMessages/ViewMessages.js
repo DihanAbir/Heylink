@@ -45,7 +45,7 @@ const ViewMessages = ({ message, reFetch }) => {
     const [customField3, setCustomField3] = useState('')
 
     const handleUpdateMessageText = () => {
-        fetch(`http://localhost:8000/app/v2/message/${message?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -64,7 +64,7 @@ const ViewMessages = ({ message, reFetch }) => {
 
 
     const handleUpdateSuccessMessageText = () => {
-        fetch(`http://localhost:8000/app/v2/message/${message?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -94,7 +94,7 @@ const ViewMessages = ({ message, reFetch }) => {
     }
 
     const handleNameFieldChacked = (input) => {
-        fetch(`http://localhost:8000/app/v2/message/${message?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -110,7 +110,7 @@ const ViewMessages = ({ message, reFetch }) => {
     }
 
     const handleEmailFieldChacked = (input) => {
-        fetch(`http://localhost:8000/app/v2/message/${message?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -125,7 +125,7 @@ const ViewMessages = ({ message, reFetch }) => {
             });
     }
     const handlePhoneNumberFieldChacked = (input) => {
-        fetch(`http://localhost:8000/app/v2/message/${message?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -141,7 +141,7 @@ const ViewMessages = ({ message, reFetch }) => {
     }
 
     const handleUpdateNamePlaceholder = () => {
-        fetch(`http://localhost:8000/app/v2/message/${message?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -160,7 +160,7 @@ const ViewMessages = ({ message, reFetch }) => {
 
 
     const handleUpdateEmailPlaceholder = () => {
-        fetch(`http://localhost:8000/app/v2/message/${message?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
@@ -177,7 +177,7 @@ const ViewMessages = ({ message, reFetch }) => {
             });
     }
     const handleUpdatePhoneNumberPlaceholder = () => {
-        fetch(`http://localhost:8000/app/v2/message/${message?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/message/${message?._id}`, {
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

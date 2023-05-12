@@ -20,7 +20,7 @@ const SendMessageForm = ({ messageData, refetch }) => {
     const handleMessageSend = (data) => {
         data.userInfo = userData?._id
         if (data?.userInfo) {
-            fetch(`http://localhost:8000/app/v2/all-messages`, {
+            fetch(`https://3twn4n.xn--b5bp.com/app/v2/all-messages`, {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,

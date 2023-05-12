@@ -37,7 +37,7 @@ const UserName = () => {
     }
 
     const handleUpdate = () => {
-        fetch(`http://localhost:8000/app/v2/user/username/${userData?._id}`, {
+        fetch(`https://3twn4n.xn--b5bp.com/app/v2/user/username/${userData?._id}`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("HeyLinkToken")}`,
